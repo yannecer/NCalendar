@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NCalendar">
+        <attr name="solarTextColor" format="color" />
+        <attr name="lunarTextColor" format="color" />
+        <attr name="hintColor" format="color" />
+        <attr name="selectCircleColor" format="color" />
+        <attr name="solarTextSize" format="float" />
+        <attr name="lunarTextSize" format="float" />
+        <attr name="selectCircleRadius" format="integer" />
+        <attr name="isShowLunar" format="boolean" />
+        <attr name="pageSize" format="integer" />
+
+    </declare-styleable>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/NCalendarDemo.iml" filepath="$PROJECT_DIR$/NCalendarDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ncalendar/ncalendar.iml" filepath="$PROJECT_DIR$/ncalendar/ncalendar.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="solarTextColor">#333333</color>
+    <color name="lunarTextColor">#666666</color>
+    <color name="hintColor">#c1c1c1</color>
+    <color name="selectCircleColor">#00c8aa</color>
+
+</resources>
