@@ -8,4 +8,29 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- activity的标题 -->
+
+    <style name="activity_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+    <style name="text_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <!--activity返回按钮-->
+    <style name="back_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:src">@mipmap/back</item>
+    </style>
+
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_week_num"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <necer.ncalendardemo.view.MWCalendar
+            android:id="@+id/mwCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.necer.ncalendar.calendar.MonthCalendar
+                android:id="@+id/monthCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="#ffffff" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </necer.ncalendardemo.view.MWCalendar>
+
+        <com.necer.ncalendar.calendar.WeekCalendar
+            android:id="@+id/weekCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ffffff"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+</LinearLayout>

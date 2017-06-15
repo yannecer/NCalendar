@@ -3,48 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="necer.ncalendardemo.MainActivity">
+    android:orientation="vertical"
+    tools:context="necer.ncalendardemo.activity.MainActivity">
 
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
-
-    <necer.ncalendardemo.MWCalendar
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></necer.ncalendardemo.MWCalendar>
-
-
-
-<!--
-    <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="aaa"/> -->
-<!--    <Button
-        android:layout_width="match_parent"
+        android:text="月日历"
+        android:onClick="month"
+        />
+     <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="bbb"/>-->
+        android:text="周日历"
+        android:onClick="week"
+        />
+     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="月视图周视图滑动切换"
+        android:onClick="monthAndWeek"
+        />
 
-   <!-- <com.necer.ncalendar.calendar.MonthCalendar
-        android:id="@+id/monthCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:visibility="visible"
 
-        ></com.necer.ncalendar.calendar.MonthCalendar>
-    
-    <com.necer.ncalendar.calendar.WeekCalendar
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:solarTextColor="#ff00ff"
-        app:isShowLunar="true"
-        app:selectCircleRadius="50"
-        app:selectCircleColor="#ff0000"
-        app:pageSize="5"></com.necer.ncalendar.calendar.WeekCalendar>
-    
-    -->
+
+
+
+
 
 </LinearLayout>

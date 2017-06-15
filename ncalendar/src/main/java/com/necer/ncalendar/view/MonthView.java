@@ -21,37 +21,12 @@ import java.util.List;
 
 public class MonthView extends CalendarView {
 
-
     private List<DateTime> monthDateTimeList;
     private List<String> lunarList;
     private List<String> localDateList;
     private OnClickMonthViewListener onClickMonthViewListener;
 
-    private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
 
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            for (int i = 0; i < mRectList.size(); i++) {
-                Rect rect = mRectList.get(i);
-                if (rect.contains((int) e.getX(), (int) e.getY())) {
-                    DateTime selectDateTime = monthDateTimeList.get(i);
-                    if (Utils.isLastMonth(selectDateTime, mInitialDateTime)) {
-                        onClickMonthViewListener.onClickLastMonth(selectDateTime);
-                    } else if (Utils.isNextMonth(selectDateTime, mInitialDateTime)) {
-                        onClickMonthViewListener.onClickNextMonth(selectDateTime);
-                    } else {
-                        onClickMonthViewListener.onClickCurrentMonth(selectDateTime);
-                    }
-                    break;
-                }
-            }
-            return true;
-        }
-    });
 
     public MonthView(Context mContext, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
         super(mContext);
@@ -62,33 +37,7 @@ public class MonthView extends CalendarView {
         lunarList = monthCalendar.lunarList;
         localDateList = monthCalendar.localDateList;
         monthDateTimeList = monthCalendar.dateTimeList;
-
-
-
-
     }
-
-
-/*
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        MyLog.d("onMeasure");
-        MyLog.d("height:::" + height);
-
-        mWidth = widthMode == MeasureSpec.EXACTLY ? width : Utils.getDisplayWidth(getContext());
-        mHeight = height;
-
-        setMeasuredDimension(100, 200);
-
-    }
-*/
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -118,14 +67,19 @@ public class MonthView extends CalendarView {
                         mSorlarPaint.setColor(mSelectCircleColor);
                         int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
                         canvas.drawCircle(rect.centerX(), rect.centerY(), radius, mSorlarPaint);
-                        mSorlarPaint.setColor(Color.WHITE);
-                        canvas.drawCircle(rect.centerX(), rect.centerY(), radius - 5, mSorlarPaint);
+                        mSorlarPaint.setColor(mHollowCircleColor);
+                        canvas.drawCircle(rect.centerX(), rect.centerY(), radius - mHollowCircleStroke, mSorlarPaint);
                         mSorlarPaint.setColor(mSolarTextColor);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else {
                         mSorlarPaint.setColor(mSolarTextColor);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                         drawLunar(canvas, rect, mLunarTextColor, i, j);
+                    }
+
+                    if (mPointList.contains(dateTime.toLocalDate().toString())) {
+                        mSorlarPaint.setColor(mPointColor);
+                        canvas.drawCircle(rect.centerX(), rect.bottom-mPointSize, mPointSize, mSorlarPaint);
                     }
 
                 } else {
@@ -148,9 +102,8 @@ public class MonthView extends CalendarView {
         if (isShowLunar) {
             mLunarPaint.setColor(color);
             String lunar = lunarList.get(i * 7 + j);
-            canvas.drawText(lunar, rect.centerX(), rect.bottom - 10, mLunarPaint);
+            canvas.drawText(lunar, rect.centerX(), rect.bottom - Utils.dp2px(getContext(), 5), mLunarPaint);
         }
-
     }
 
     @Override
@@ -158,5 +111,39 @@ public class MonthView extends CalendarView {
         return mGestureDetector.onTouchEvent(event);
     }
 
+
+    private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            for (int i = 0; i < mRectList.size(); i++) {
+                Rect rect = mRectList.get(i);
+                if (rect.contains((int) e.getX(), (int) e.getY())) {
+                    DateTime selectDateTime = monthDateTimeList.get(i);
+                    if (Utils.isLastMonth(selectDateTime, mInitialDateTime)) {
+                        onClickMonthViewListener.onClickLastMonth(selectDateTime);
+                    } else if (Utils.isNextMonth(selectDateTime, mInitialDateTime)) {
+                        onClickMonthViewListener.onClickNextMonth(selectDateTime);
+                    } else {
+                        onClickMonthViewListener.onClickCurrentMonth(selectDateTime);
+                    }
+                    break;
+                }
+            }
+            return true;
+        }
+    });
+
+
+    //选中的是一月中的第几周
+    public int getWeekRow() {
+        DateTime dateTime = mSelectDateTime == null ? mInitialDateTime : mSelectDateTime;
+        int indexOf = localDateList.indexOf(dateTime.toLocalDate().toString());
+        return indexOf / 7;
+    }
 
 }

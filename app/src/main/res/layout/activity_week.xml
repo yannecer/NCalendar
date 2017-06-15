@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout style="@style/activity_title">
+        <ImageView
+            android:id="@+id/iv_finish"
+            style="@style/back_title" />
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_title"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/tv_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今天"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:padding="10dp"/>
+    </RelativeLayout>
+
+    <include layout="@layout/layout_week_num"/>
+
+    <com.necer.ncalendar.calendar.WeekCalendar
+        android:id="@+id/weekCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:selectCircleColor= "@android:color/holo_red_light"
+        app:pointcolor=  "#00ffff"
+        app:pointSize="1dp"
+        app:solarTextSize= "15sp"/>
+
+</LinearLayout>

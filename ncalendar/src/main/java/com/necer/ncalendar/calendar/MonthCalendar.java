@@ -2,6 +2,7 @@ package com.necer.ncalendar.calendar;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 
 import com.necer.ncalendar.adapter.CalendarAdapter;
 import com.necer.ncalendar.adapter.MonthCalendarAdapter;
@@ -9,6 +10,7 @@ import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.utils.Utils;
+import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.MonthView;
 
 import org.joda.time.DateTime;
@@ -40,6 +42,10 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     @Override
     protected void initCurrentCalendarView() {
         currentMothView = (MonthView) calendarAdapter.getCalendarViews().get(getCurrentItem());
+        if (currentMothView == null) {
+            return;
+        }
+        currentMothView.setPointList(mPointList);
         if (onMonthCalendarPageChangeListener != null && currentMothView != null) {
             DateTime selectDateTime = currentMothView.getSelectDateTime();
             DateTime initialDateTime = currentMothView.getInitialDateTime();
@@ -68,16 +74,26 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     @Override
     public void setDate(int year, int month, int day, boolean smoothScroll) {
         DateTime dateTime = new DateTime(year, month, day, 0, 0, 0);
-        DateTime initialDateTime = calendarAdapter.getCalendarViews().get(getCurrentItem()).getInitialDateTime();
-        int months = Utils.getIntervalMonths(initialDateTime, dateTime);
-
-        int i = getCurrentItem() + months;
-        setCurrentItem(i, smoothScroll);
+        int i = jumpDate(dateTime, smoothScroll);
         MonthView monthView = (MonthView) calendarAdapter.getCalendarViews().get(i);
         if (monthView == null) {
             throw new RuntimeException("Carendar的Count不够！");
         }
         monthView.setSelectDateTime(dateTime);
+    }
+
+    @Override
+    public int jumpDate(DateTime dateTime ,boolean smoothScroll) {
+        SparseArray<CalendarView> calendarViews = calendarAdapter.getCalendarViews();
+        if (calendarViews.size() == 0) {
+            return getCurrentItem();
+        }
+        DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
+        int months = Utils.getIntervalMonths(initialDateTime, dateTime);
+
+        int i = getCurrentItem() + months;
+        setCurrentItem(i,smoothScroll);
+        return i;
     }
 
     @Override
@@ -102,7 +118,7 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         MonthView monthView = (MonthView) calendarAdapter.getCalendarViews().get(currentItem);
         monthView.setSelectDateTime(dateTime);
         //清除其他选中
-        clearSelect(monthView);
+        //clearSelect(monthView);
         if (onClickMonthCalendarListener != null) {
             onClickMonthCalendarListener.onClickMonthCalendar(dateTime);
         }
@@ -113,24 +129,9 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         return currentMothView;
     }
 
-   /* //选中的是一月中的第几周
-    public int getWeekRow() {
-        DateTime dateTime = new DateTime();//今天的DateTime
-        //选中日期为空，且当前月不是今天所在的月
-        if (selectDateTime == null && !Utils.isEqualsMonth(dateTime, i)) {
-            return 0;
-        }
-        //选中日期为空，且当前月是今天所在的月
-        if(selectDateTime == null && Utils.isEqualsMonth(dateTime, mDateTime)){
-            String todayDate = dateTime.toLocalDate().toString();
-            int indexOf = dateList.indexOf(todayDate);
-            return indexOf / 7;
-        }
+    public int getRowHeigh() {
+        return getMeasuredHeight() / 6;
+    }
 
-        String selectDate = this.selectDateTime.toLocalDate().toString();
-        int indexOf = dateList.indexOf(selectDate);
-
-        return indexOf / 7;
-    }*/
 }
 

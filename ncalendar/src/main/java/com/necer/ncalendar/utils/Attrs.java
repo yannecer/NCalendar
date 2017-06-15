@@ -15,4 +15,8 @@ public class Attrs {
     public static boolean isShowLunar ;
 
 
+    public static float pointSize;
+    public static int pointColor;
+    public static int hollowCircleColor;
+    public static int hollowCircleStroke;
 }

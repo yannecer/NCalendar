@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rlCalendar"
         android:layout_width="match_parent"
@@ -12,19 +13,20 @@
             android:id="@+id/weekCalendar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <com.necer.ncalendar.calendar.MonthCalendar
             android:id="@+id/monthCalendar"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="300dp" />
 
     </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>
