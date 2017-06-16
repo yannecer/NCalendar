@@ -79,7 +79,7 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         int i = jumpDate(dateTime, smoothScroll);
         MonthView monthView = (MonthView) calendarAdapter.getCalendarViews().get(i);
         if (monthView == null) {
-            throw new RuntimeException("Carendar的Count不够！");
+            return;
         }
         monthView.setSelectDateTime(dateTime);
     }

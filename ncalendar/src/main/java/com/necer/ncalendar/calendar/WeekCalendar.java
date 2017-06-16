@@ -58,7 +58,8 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         int i = jumpDate(dateTime, smoothScroll);
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(i);
         if (weekView == null) {
-            throw new RuntimeException("Carendar的Count不够！");
+            //throw new RuntimeException("Carendar的Count不够！");
+            return;
         }
         weekView.setSelectDateTime(dateTime);
     }

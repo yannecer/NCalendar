@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="月视图周视图滑动切换"
         android:onClick="monthAndWeek"
+
         />
 
 
