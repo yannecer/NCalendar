@@ -70,7 +70,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
         pointList.add("2017-06-20");
         pointList.add("2017-06-07");
         pointList.add("2017-07-07");
-       // mPointList.addAll(pointList);
         monthCalendar.setPointList(pointList);
 
     }

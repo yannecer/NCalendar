@@ -16,7 +16,5 @@
         <attr name="hollowCircleColor" format="color" />
         <attr name="hollowCircleStroke" format="integer" />
 
-
-
     </declare-styleable>
 </resources>
