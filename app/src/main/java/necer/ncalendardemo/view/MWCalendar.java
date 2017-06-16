@@ -156,7 +156,6 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
             }
         });
 
-
     }
 
     public void fling(int velocityY) {
@@ -218,6 +217,12 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
             }
         });
+    }
+
+
+    public void setDate(int year, int month, int day) {
+        monthCalendar.setDate(year,month,day);
+        weekCalendar.setDate(year,month,day);
     }
 
 

@@ -51,13 +51,12 @@ public class MonthView extends CalendarView {
                 Rect rect = new Rect(j * mWidth / 7, i * mHeight / 6, j * mWidth / 7 + mWidth / 7, i * mHeight / 6 + mHeight / 6);
                 mRectList.add(rect);
                 DateTime dateTime = monthDateTimeList.get(i * 7 + j);
-                //公历
                 Paint.FontMetricsInt fontMetrics = mSorlarPaint.getFontMetricsInt();
                 int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
                 //当月和上下月的颜色不同
                 if (Utils.isEqualsMonth(dateTime, mInitialDateTime)) {
-                    //是初始化的时间且在当月中绘制选中颜色,当天和选中的日期不绘制农历
-                    if (Utils.isToday(dateTime) && Utils.isEqualsMonth(dateTime, mInitialDateTime)) {
+                    //当天和选中的日期不绘制农历
+                    if (Utils.isToday(dateTime)) {
                         mSorlarPaint.setColor(mSelectCircleColor);
                         int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
                         canvas.drawCircle(rect.centerX(), rect.centerY(), radius, mSorlarPaint);
@@ -117,7 +116,6 @@ public class MonthView extends CalendarView {
         public boolean onDown(MotionEvent e) {
             return true;
         }
-
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             for (int i = 0; i < mRectList.size(); i++) {

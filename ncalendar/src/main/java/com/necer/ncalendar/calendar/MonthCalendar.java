@@ -56,7 +56,6 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
 
     @Override
     public void onClickCurrentMonth(DateTime dateTime) {
-
         doClickEvent(dateTime, getCurrentItem());
     }
 

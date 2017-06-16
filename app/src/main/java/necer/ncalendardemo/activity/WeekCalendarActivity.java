@@ -72,9 +72,13 @@ public class WeekCalendarActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_today:
-              //  DateTime dateTime = new DateTime();
-               // weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),true);
-                weekCalendar.setDate(2018, 10, 1);
+                DateTime dateTime = new DateTime();
+                weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),true);
+
+
+              //  weekCalendar.setDate(2017, 10, 1);
+
+
                 break;
             case R.id.iv_finish:
                 finish();

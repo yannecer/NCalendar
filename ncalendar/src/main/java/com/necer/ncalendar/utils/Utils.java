@@ -78,7 +78,6 @@ public class Utils {
      * @return
      */
     public static boolean isNextMonth(DateTime dateTime1, DateTime dateTime2) {
-
         DateTime dateTime = dateTime2.plusMonths(1);
         return dateTime1.getMonthOfYear() == dateTime.getMonthOfYear();
     }
@@ -103,8 +102,6 @@ public class Utils {
         DateTime sunFirstDayOfWeek1 = getSunFirstDayOfWeek(dateTime1);
         DateTime sunFirstDayOfWeek2 = getSunFirstDayOfWeek(dateTime2);
         int days = Days.daysBetween(sunFirstDayOfWeek1, sunFirstDayOfWeek2).getDays();
-
-        MyLog.d("days::" + days);
 
 
         if (days > 0) {

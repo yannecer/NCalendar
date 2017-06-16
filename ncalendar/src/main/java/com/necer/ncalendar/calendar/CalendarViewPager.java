@@ -98,7 +98,6 @@ public abstract class CalendarViewPager extends ViewPager{
     public void setPointList(List<String> pointList) {
         mPointList.clear();
         mPointList.addAll(pointList);
-       // calendarAdapter.get
     }
 
 
