@@ -20,7 +20,7 @@
         app:pointSize="1dp"
         app:solarTextSize= "15sp"/>
         
-//设置监听
+ //设置监听
  monthCalendar.setOnClickMonthCalendarListener(new OnClickMonthCalendarListener() {
             @Override
             public void onClickMonthCalendar(DateTime dateTime) {
@@ -36,14 +36,16 @@
         });
         
         
- //设置表示圆点
+  //设置表示圆点
   List<String> pointList = new ArrayList<>();
   pointList.add("2017-06-15");
   pointList.add("2017-06-20");
   pointList.add("2017-06-07");
   pointList.add("2017-07-07");
   monthCalendar.setPointList(pointList);
-        
+  
+  //跳转日期
+  monthCalendar.setDate(2017, 10, 1);
 ```
 ### 周日历
 ```
@@ -55,14 +57,14 @@
         app:pointcolor=  "#00ffff"
         app:pointSize="1dp"
         app:solarTextSize= "15sp"/>
-//设置监听
+ //设置监听
  weekCalendar.setOnClickWeekCalendarListener(new OnClickWeekCalendarListener() {
             @Override
             public void onClickWeekCalendar(DateTime dateTime) {
                 Toast.makeText(WeekCalendarActivity.this, "选择了：：" + dateTime.toLocalDate(), Toast.LENGTH_SHORT).show();
             }
         });
-weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeListener() {
+ weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeListener() {
             @Override
             public void onWeekCalendarPageSelected(DateTime dateTime) {
                 tv_title.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月");
@@ -70,13 +72,17 @@ weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeLis
             }
         });
        
-//设置表示圆点
+  //设置表示圆点
   List<String> pointList = new ArrayList<>();
   pointList.add("2017-06-15");
   pointList.add("2017-06-20");
   pointList.add("2017-06-07");
   pointList.add("2017-07-07");
   weekCalendar.setPointList(pointList);
+  
+  
+  //跳转日期
+  weekCalendar.setDate(2017, 10, 1);
   
 ```
 支持的属性：
