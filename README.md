@@ -85,8 +85,24 @@
   weekCalendar.setDate(2017, 10, 1);
   
 ```
-支持的属性：
 
+### 周月视图切换
+```
+1.xml设置属性时，只需在后一个初始化的日历中设置属性即可，属性数据保存在静态变量中，后初始化的会把前面的覆盖掉，所以设置后面一个即可。
+
+2.对日历操作，比如跳转日期，需要对WeekCalendar和MonthCalendar同时设置，不然下次切换会出现错位。
+
+3.具体使用设置可参见demo
+```
+
+### 注意：
+```
+  日期跳转可能会抛出“日历的页数不够”的异常，此时请检查日历的pageSize，默认是10000，左右各5000，可自定义，确保选择的日期在pageSize之内，
+  pageSize可以再加，但不可写成Integer.MAX_VALUE，不然跳转时会发生ANR.
+```
+
+
+### 支持的属性：
 
 | 属性| 描述|
 |:---|:---|
@@ -98,7 +114,7 @@
 | selectCircleColor| 选中日期和当天的圆颜色 |
 | selectCircleRadius| 选中和当天圆环半径 |
 | isShowLunar| 是否显示农历 |
-| pageSize| 日历可翻页数量，默认左右各1000 |
+| pageSize| 日历可翻页数量，默认左右各5000 |
 | pointSize| 圆点指示器大小 |
 | pointcolor| 圆点指示器颜色 |
 | hollowCircleColor| 选中空心圆中间的颜色|
