@@ -95,6 +95,13 @@
 3.具体使用设置可参见demo
 ```
 
+### 注意：
+```
+  日期跳转可能会抛出“日历的页数不够”的异常，此时请检查日历的pageSize，默认是10000，左右各5000，可自定义，确保选择的日期在pageSize之内，
+  pageSize可以再加，但不可写成Integer.MAX_VALUE，不然跳转时会发生ANR.
+```
+
+
 ### 支持的属性：
 
 | 属性| 描述|
@@ -107,7 +114,7 @@
 | selectCircleColor| 选中日期和当天的圆颜色 |
 | selectCircleRadius| 选中和当天圆环半径 |
 | isShowLunar| 是否显示农历 |
-| pageSize| 日历可翻页数量，默认左右各1000 |
+| pageSize| 日历可翻页数量，默认左右各5000 |
 | pointSize| 圆点指示器大小 |
 | pointcolor| 圆点指示器颜色 |
 | hollowCircleColor| 选中空心圆中间的颜色|
