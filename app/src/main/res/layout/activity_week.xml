@@ -31,8 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:selectCircleColor= "@android:color/holo_red_light"
-        app:pointcolor=  "#00ffff"
+        app:pointcolor="#00ffff"
         app:pointSize="1dp"
-        app:solarTextSize= "15sp"/>
+        app:solarTextSize="15sp" />
+
 
 </LinearLayout>

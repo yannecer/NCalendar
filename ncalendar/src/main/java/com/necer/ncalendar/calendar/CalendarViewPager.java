@@ -49,7 +49,7 @@ public abstract class CalendarViewPager extends ViewPager{
         Attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, Color.WHITE);
         Attrs.hollowCircleStroke = ta.getInt(R.styleable.NCalendar_hollowCircleStroke, (int) Utils.dp2px(context, 1));
 
-        mPageSize = ta.getInt(R.styleable.NCalendar_pageSize, 2000);
+        mPageSize = ta.getInt(R.styleable.NCalendar_pageSize, 10000);
         ta.recycle();
 
         mPointList = new ArrayList<>();

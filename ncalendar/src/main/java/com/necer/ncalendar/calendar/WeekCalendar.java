@@ -56,6 +56,7 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         DateTime dateTime = new DateTime(year, month, day, 0, 0, 0);
         int i = jumpDate(dateTime, smoothScroll);
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(i);
+
         if (weekView == null) {
             throw new RuntimeException("日历的页数不够");
         }
