@@ -36,6 +36,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
     private int rowHeigh;
 
 
+
     public MWCalendar(Context context) {
         this(context, null);
     }
@@ -137,6 +138,9 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
             @Override
             public void onClickMonthCalendar(DateTime dateTime) {
                 weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
+                if (onClickCalendarListener != null) {
+                    onClickCalendarListener.onClickCalendar(dateTime);
+                }
             }
         });
 
@@ -145,6 +149,9 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
             public void onMonthCalendarPageSelected(DateTime dateTime) {
                 if (weekCalendar != null) {
                     weekCalendar.jumpDate(dateTime,true);
+                }
+                if (onClickCalendarListener != null) {
+                    onClickCalendarListener.onCalendarPageChange(dateTime);
                 }
             }
         });
@@ -175,13 +182,13 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
         int scrollY = getScrollY();
         if (scrollY == 0) {
             STATE = OPEN;
-            weekCalendar.setVisibility(GONE);
+            weekCalendar.setVisibility(INVISIBLE);
         } else if (scrollY == 5 * rowHeigh) {
             STATE = CLOSE;
             weekCalendar.setVisibility(VISIBLE);
         } else {
             int weekRow = monthCalendar.getCurrentMothView().getWeekRow();
-            weekCalendar.setVisibility(scrollY >= weekRow  * rowHeigh ? VISIBLE : GONE);
+            weekCalendar.setVisibility(scrollY >= weekRow  * rowHeigh ? VISIBLE : INVISIBLE);
         }
 
         if (mScroller.computeScrollOffset()) {
@@ -192,17 +199,22 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
     public void setWeekCalendar(WeekCalendar weekCalendar) {
         this.weekCalendar = weekCalendar;
-
         weekCalendar.setOnClickWeekCalendarListener(new OnClickWeekCalendarListener() {
             @Override
             public void onClickWeekCalendar(DateTime dateTime) {
                 monthCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
+                if (onClickCalendarListener != null) {
+                    onClickCalendarListener.onClickCalendar(dateTime);
+                }
             }
         });
         weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeListener() {
             @Override
             public void onWeekCalendarPageSelected(DateTime dateTime) {
                 monthCalendar.jumpDate(dateTime,true);
+                if (onClickCalendarListener != null) {
+                    onClickCalendarListener.onCalendarPageChange(dateTime);
+                }
 
             }
         });
@@ -212,5 +224,17 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
     public RecyclerView getRecyclerView() {
         return recyclerView;
     }
+
+    public interface OnCalendarChangeListener {
+        void onClickCalendar(DateTime dateTime);
+
+        void onCalendarPageChange(DateTime dateTime);
+    }
+
+    private OnCalendarChangeListener onClickCalendarListener;
+    public void setOnClickCalendarListener(OnCalendarChangeListener onClickCalendarListener) {
+        this.onClickCalendarListener = onClickCalendarListener;
+    }
+
 
 }

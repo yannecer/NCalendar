@@ -1,5 +1,4 @@
 package com.necer.ncalendar.calendar;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -58,8 +57,7 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         int i = jumpDate(dateTime, smoothScroll);
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(i);
         if (weekView == null) {
-            //throw new RuntimeException("Carendar的Count不够！");
-            return;
+            throw new RuntimeException("日历的页数不够");
         }
         weekView.setSelectDateTime(dateTime);
     }

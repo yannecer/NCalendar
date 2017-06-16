@@ -27,7 +27,6 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
 
 
-
     public MonthCalendar(Context context) {
         this(context, null);
     }
@@ -79,13 +78,13 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         int i = jumpDate(dateTime, smoothScroll);
         MonthView monthView = (MonthView) calendarAdapter.getCalendarViews().get(i);
         if (monthView == null) {
-            return;
+            throw new RuntimeException("日历的页数不够");
         }
         monthView.setSelectDateTime(dateTime);
     }
 
     @Override
-    public int jumpDate(DateTime dateTime ,boolean smoothScroll) {
+    public int jumpDate(DateTime dateTime, boolean smoothScroll) {
         SparseArray<CalendarView> calendarViews = calendarAdapter.getCalendarViews();
         if (calendarViews.size() == 0) {
             return getCurrentItem();
@@ -94,7 +93,7 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         int months = Utils.getIntervalMonths(initialDateTime, dateTime);
 
         int i = getCurrentItem() + months;
-        setCurrentItem(i,smoothScroll);
+        setCurrentItem(i, smoothScroll);
         return i;
     }
 
@@ -130,7 +129,6 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     public MonthView getCurrentMothView() {
         return currentMothView;
     }
-
 
 
     @Override
