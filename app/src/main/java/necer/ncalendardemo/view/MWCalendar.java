@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,14 +17,8 @@ import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
-import com.necer.ncalendar.utils.MyLog;
-import com.necer.ncalendar.utils.Utils;
-
 import org.joda.time.DateTime;
-
 import necer.ncalendardemo.R;
-import necer.ncalendardemo.adapter.AAAdapter;
-
 /**
  * Created by necer on 2017/6/14.
  */
@@ -39,9 +32,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
     public static final int OPEN = 100;
     public static final int CLOSE = 200;
-
     private static int STATE = 100;//默认开
-
     private int rowHeigh;
 
 
@@ -56,7 +47,6 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
     public MWCalendar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(LinearLayout.VERTICAL);
-
         mScroller = new OverScroller(context);
     }
 
@@ -99,16 +89,13 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
     }
 
-    //
-
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
 
-        boolean hiddenTop = dy > 0 && getScrollY() < rowHeigh * 5;
-        boolean showTop = dy < 0 && getScrollY() >= 0 && !ViewCompat.canScrollVertically(target, -1);
+        boolean hiddenMonthCalendar = dy > 0 && getScrollY() < rowHeigh * 5;
+        boolean showMonthCalendar = dy < 0 && getScrollY() >= 0 && !ViewCompat.canScrollVertically(target, -1);
 
-
-        if (hiddenTop || showTop) {
+        if (hiddenMonthCalendar || showMonthCalendar) {
             scrollBy(0, dy);
             consumed[1] = dy;
         }
@@ -134,9 +121,9 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        rowHeigh = monthCalendar.getRowHeigh();
         ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
         params.height = getMeasuredHeight() - rowHeigh;
-        setMeasuredDimension(getMeasuredWidth(), monthCalendar.getMeasuredHeight() + recyclerView.getMeasuredHeight());
     }
 
 
@@ -144,33 +131,11 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
     protected void onFinishInflate() {
         super.onFinishInflate();
         monthCalendar = (MonthCalendar) findViewById(R.id.monthCalendar);
-
-        post(new Runnable() {
-            @Override
-            public void run() {
-                rowHeigh = monthCalendar.getRowHeigh();
-
-                int h = (int) Utils.dp2px(getContext(), 50);
-
-                MyLog.d("rowHeigh::" + rowHeigh);
-                MyLog.d("hhhh::" + h);
-            }
-        });
-
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new AAAdapter(getContext()));
-
-
-
 
         monthCalendar.setOnClickMonthCalendarListener(new OnClickMonthCalendarListener() {
             @Override
             public void onClickMonthCalendar(DateTime dateTime) {
-
-                MyLog.d("dateTime::"+dateTime.toLocalDate());
-
                 weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
             }
         });
@@ -179,7 +144,6 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
             @Override
             public void onMonthCalendarPageSelected(DateTime dateTime) {
                 if (weekCalendar != null) {
-                   // weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
                     weekCalendar.jumpDate(dateTime,true);
                 }
             }
@@ -238,12 +202,15 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
         weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeListener() {
             @Override
             public void onWeekCalendarPageSelected(DateTime dateTime) {
-               // monthCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
                 monthCalendar.jumpDate(dateTime,true);
 
             }
         });
     }
 
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
 
 }

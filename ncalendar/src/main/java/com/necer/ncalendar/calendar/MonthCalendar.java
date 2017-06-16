@@ -26,6 +26,8 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     private OnClickMonthCalendarListener onClickMonthCalendarListener;
     private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
 
+
+
     public MonthCalendar(Context context) {
         this(context, null);
     }
@@ -129,9 +131,13 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         return currentMothView;
     }
 
-    public int getRowHeigh() {
-        return getMeasuredHeight() / 6;
-    }
 
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        mRowHeigh = heightSize / 6;
+    }
 }
 

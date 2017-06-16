@@ -25,6 +25,7 @@ public abstract class CalendarViewPager extends ViewPager{
     protected CalendarAdapter calendarAdapter;
     protected int mPageSize;
     protected List<String> mPointList;
+    protected int mRowHeigh;
 
     public CalendarViewPager(Context context) {
         this(context,null);
@@ -74,6 +75,9 @@ public abstract class CalendarViewPager extends ViewPager{
                 initCurrentCalendarView();
             }
         });
+    }
+    public int getRowHeigh() {
+        return mRowHeigh;
     }
 
 
