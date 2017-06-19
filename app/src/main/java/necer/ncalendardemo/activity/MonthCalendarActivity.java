@@ -72,11 +72,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
         pointList.add("2017-07-07");
         monthCalendar.setPointList(pointList);
 
-
-        monthCalendar.setDate(2017, 10, 1);
-
-
-
     }
 
     @Override
@@ -85,6 +80,8 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
             case R.id.tv_today:
                 DateTime dateTime = new DateTime();
                 monthCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),true);
+
+
                 break;
             case R.id.iv_finish:
                 finish();
