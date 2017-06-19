@@ -1,5 +1,5 @@
 # NCalendar
-一款安卓日历，月视图，周视图滑动切换
+一款安卓日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
 
 ## 效果图
@@ -12,7 +12,7 @@
 
 ### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:1.0.0'
+compile 'com.necer.ncalendar:ncalendar:1.0.2'
 ```
 
 
@@ -99,20 +99,14 @@ compile 'com.necer.ncalendar:ncalendar:1.0.0'
 ### 周月视图切换
 
 ```
-1.xml设置属性时，只需在后一个初始化的日历中设置属性即可，属性数据保存在静态变量中，
-  后初始化的会把前面的覆盖掉，所以设置后面一个即可。
+1.xml设置属性时，除了startDateTime和endDateTime之外，只需在后一个初始化的日历中设置属性即可，属性数据保存在静态变量中，
+  后初始化的会把前面的覆盖掉，所以设置后面一个即可。周月制图切换慎用startDateTime和endDateTime这两个属性，可能会出现错位的情况。
 
 2.对日历操作，比如跳转日期，需要对WeekCalendar和MonthCalendar同时设置，不然下次切换会出现错位。
 
 3.具体使用设置可参见demo
 ```
 
-### 注意：
-
-```
-  日期跳转可能会抛出“日历的页数不够”的异常，此时请检查日历的pageSize，默认是10000，左右各5000，可自定义，
-  确保选择的日期在pageSize之内，pageSize可以再加，但不可写成Integer.MAX_VALUE，不然跳转时会发生ANR.
-```
 
 
 ### 支持的属性：
@@ -132,6 +126,8 @@ compile 'com.necer.ncalendar:ncalendar:1.0.0'
 | pointcolor| 圆点指示器颜色 |
 | hollowCircleColor| 选中空心圆中间的颜色|
 | hollowCircleStroke| 选中空心圆圆环粗细 |
+| startDateTime| 日历开始时间 "yyyy-MM-dd" |
+| endDateTime| 日历截止时间 "yyyy-MM-dd" |
 
 
 ### View的绘制过程参见：http://blog.csdn.net/y12345654321/article/details/73331253 
