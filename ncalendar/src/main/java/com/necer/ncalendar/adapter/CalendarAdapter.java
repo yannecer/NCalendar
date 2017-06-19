@@ -17,14 +17,16 @@ import org.joda.time.DateTime;
 public abstract class CalendarAdapter extends PagerAdapter{
 
     protected Context mContext;
-    protected int mCount;
+    protected int mCount;//总页数
+    protected int mCurr;//当前位置
     protected SparseArray<CalendarView> mCalendarViews;
     protected DateTime mDateTime;
 
-    public CalendarAdapter(Context context, int count, DateTime dateTime) {
+    public CalendarAdapter(Context context, int count, int curr,DateTime dateTime) {
         this.mDateTime = dateTime;
         this.mContext = context;
         this.mCount = count;
+        this.mCurr = curr;
         mCalendarViews = new SparseArray<>();
     }
     @Override

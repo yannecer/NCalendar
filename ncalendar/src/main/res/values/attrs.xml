@@ -9,12 +9,13 @@
         <attr name="lunarTextSize" format="dimension" />
         <attr name="selectCircleRadius" format="integer" />
         <attr name="isShowLunar" format="boolean" />
-        <attr name="pageSize" format="integer" />
 
         <attr name="pointSize" format="dimension" />
         <attr name="pointcolor" format="color" />
         <attr name="hollowCircleColor" format="color" />
         <attr name="hollowCircleStroke" format="integer" />
+        <attr name="startDateTime" format="string" />
+        <attr name="endDateTime" format="string" />
 
     </declare-styleable>
 </resources>

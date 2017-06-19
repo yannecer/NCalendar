@@ -14,6 +14,7 @@ import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.MonthView;
 
 import org.joda.time.DateTime;
+import org.joda.time.Months;
 
 /**
  * Created by necer on 2017/6/12.
@@ -22,7 +23,7 @@ import org.joda.time.DateTime;
 
 public class MonthCalendar extends CalendarViewPager implements OnClickMonthViewListener {
 
-    private MonthView currentMothView;
+
     private OnClickMonthCalendarListener onClickMonthCalendarListener;
     private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
 
@@ -37,19 +38,20 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
 
     @Override
     protected CalendarAdapter getCalendarAdapter() {
-        return new MonthCalendarAdapter(getContext(), mPageSize, new DateTime(), this);
+        mPageSize = Months.monthsBetween(startDateTime, endDateTime).getMonths() + 1;
+        mCurrPage = Months.monthsBetween(startDateTime, DateTime.now()).getMonths();
+        return new MonthCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this);
     }
 
     @Override
     protected void initCurrentCalendarView() {
-        currentMothView = (MonthView) calendarAdapter.getCalendarViews().get(getCurrentItem());
-        if (currentMothView == null) {
+        currentView = (MonthView) calendarAdapter.getCalendarViews().get(getCurrentItem());
+        if (currentView == null) {
             return;
         }
-        currentMothView.setPointList(mPointList);
-        if (onMonthCalendarPageChangeListener != null && currentMothView != null) {
-            DateTime selectDateTime = currentMothView.getSelectDateTime();
-            DateTime initialDateTime = currentMothView.getInitialDateTime();
+        if (onMonthCalendarPageChangeListener != null && currentView != null) {
+            DateTime selectDateTime = currentView.getSelectDateTime();
+            DateTime initialDateTime = currentView.getInitialDateTime();
             onMonthCalendarPageChangeListener.onMonthCalendarPageSelected(selectDateTime == null ? initialDateTime : selectDateTime);
         }
     }
@@ -77,7 +79,7 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         int i = jumpDate(dateTime, smoothScroll);
         MonthView monthView = (MonthView) calendarAdapter.getCalendarViews().get(i);
         if (monthView == null) {
-            throw new RuntimeException("日历的页数不够");
+            return;
         }
         monthView.setSelectDateTime(dateTime);
     }
@@ -98,10 +100,10 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
 
     @Override
     public DateTime getSelectDateTime() {
-        if (currentMothView == null) {
+        if (currentView == null) {
             return null;
         }
-        return currentMothView.getSelectDateTime();
+        return currentView.getSelectDateTime();
     }
 
     public void setOnClickMonthCalendarListener(OnClickMonthCalendarListener onClickMonthCalendarListener) {
@@ -116,6 +118,9 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     private void doClickEvent(DateTime dateTime, int currentItem) {
         MonthCalendar.this.setCurrentItem(currentItem);
         MonthView monthView = (MonthView) calendarAdapter.getCalendarViews().get(currentItem);
+        if (monthView == null) {
+            return;
+        }
         monthView.setSelectDateTime(dateTime);
         //清除其他选中
         //clearSelect(monthView);
@@ -126,7 +131,7 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     }
 
     public MonthView getCurrentMothView() {
-        return currentMothView;
+        return (MonthView) currentView;
     }
 
 

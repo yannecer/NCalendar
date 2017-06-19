@@ -14,9 +14,6 @@ import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import necer.ncalendardemo.R;
 
 /**
@@ -57,15 +54,6 @@ public class WeekCalendarActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-
-        List<String> pointList = new ArrayList<>();
-        pointList.add("2017-06-15");
-        pointList.add("2017-06-20");
-        pointList.add("2017-06-07");
-        pointList.add("2017-07-07");
-        // mPointList.addAll(pointList);
-        weekCalendar.setPointList(pointList);
-
     }
 
     @Override
@@ -74,10 +62,6 @@ public class WeekCalendarActivity extends AppCompatActivity implements View.OnCl
             case R.id.tv_today:
                 DateTime dateTime = new DateTime();
                 weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),true);
-
-
-              //  weekCalendar.setDate(2017, 10, 1);
-
 
                 break;
             case R.id.iv_finish:

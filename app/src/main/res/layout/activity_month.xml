@@ -36,7 +36,12 @@
         app:selectCircleColor= "@android:color/holo_red_light"
         app:pointcolor="#00c8aa"
         app:pointSize="1dp"
-        app:solarTextSize= "15sp"/>
+        app:solarTextSize= "15sp"
+        app:startDateTime="2000-05-23"
+        app:endDateTime="2020-06-23"
+
+        />
+
 
 
 </LinearLayout>

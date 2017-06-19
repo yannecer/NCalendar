@@ -22,7 +22,8 @@
                 android:id="@+id/monthCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="#ffffff" />
+                android:background="#ffffff"
+               />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -39,7 +40,10 @@
             android:background="#ffffff"
             android:visibility="invisible"
             app:solarTextSize ="14sp"
-            app:selectCircleColor= "@android:color/holo_red_light"/>
+            app:selectCircleColor= "@android:color/holo_red_light"
+            />
+
+
     </RelativeLayout>
 
 

@@ -14,9 +14,6 @@ import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import necer.ncalendardemo.R;
 
 /**
@@ -63,15 +60,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-
-
-        List<String> pointList = new ArrayList<>();
-        pointList.add("2017-06-15");
-        pointList.add("2017-06-20");
-        pointList.add("2017-06-07");
-        pointList.add("2017-07-07");
-        monthCalendar.setPointList(pointList);
-
     }
 
     @Override
@@ -80,8 +68,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
             case R.id.tv_today:
                 DateTime dateTime = new DateTime();
                 monthCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),true);
-
-
                 break;
             case R.id.iv_finish:
                 finish();

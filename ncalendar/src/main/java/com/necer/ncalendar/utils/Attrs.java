@@ -19,4 +19,6 @@ public class Attrs {
     public static int pointColor;
     public static int hollowCircleColor;
     public static int hollowCircleStroke;
+    public static String startDateTime;
+    public static String endDateTime;
 }

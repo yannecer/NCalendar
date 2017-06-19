@@ -30,6 +30,7 @@
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/white"
         app:selectCircleColor= "@android:color/holo_red_light"
         app:pointcolor="#00ffff"
         app:pointSize="1dp"

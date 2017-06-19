@@ -10,10 +10,10 @@ import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.CalendarAdapter;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
+import com.necer.ncalendar.view.CalendarView;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +23,13 @@ import java.util.List;
 public abstract class CalendarViewPager extends ViewPager{
 
     protected CalendarAdapter calendarAdapter;
-    protected int mPageSize;
-    protected List<String> mPointList;
     protected int mRowHeigh;
+    protected CalendarView currentView;
+    protected DateTime startDateTime;
+    protected DateTime endDateTime;
+    protected int mPageSize;
+    protected int mCurrPage;
+
 
     public CalendarViewPager(Context context) {
         this(context,null);
@@ -49,14 +53,17 @@ public abstract class CalendarViewPager extends ViewPager{
         Attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, Color.WHITE);
         Attrs.hollowCircleStroke = ta.getInt(R.styleable.NCalendar_hollowCircleStroke, (int) Utils.dp2px(context, 1));
 
-        mPageSize = ta.getInt(R.styleable.NCalendar_pageSize, 10000);
+        Attrs.startDateTime = ta.getString(R.styleable.NCalendar_startDateTime);
+        Attrs.endDateTime = ta.getString(R.styleable.NCalendar_endDateTime);
         ta.recycle();
 
-        mPointList = new ArrayList<>();
+
+        startDateTime = new DateTime(Attrs.startDateTime == null ? "1901-01-01" : Attrs.startDateTime);
+        endDateTime = new DateTime(Attrs.endDateTime == null ? "2099-12-31" : Attrs.endDateTime);
 
         calendarAdapter = getCalendarAdapter();
         setAdapter(calendarAdapter);
-        setCurrentItem(calendarAdapter.getCount() / 2);
+        setCurrentItem(mCurrPage);
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -96,8 +103,11 @@ public abstract class CalendarViewPager extends ViewPager{
     public abstract DateTime getSelectDateTime();
 
     public void setPointList(List<String> pointList) {
-        mPointList.clear();
-        mPointList.addAll(pointList);
+        if (currentView == null) {
+            return;
+        }
+        currentView.setPointList(pointList);
+        invalidate();
     }
 
 

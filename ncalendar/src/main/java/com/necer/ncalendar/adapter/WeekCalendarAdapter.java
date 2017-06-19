@@ -16,9 +16,8 @@ public class WeekCalendarAdapter extends CalendarAdapter{
 
     private OnClickWeekViewListener mOnClickWeekViewListener;
 
-
-    public WeekCalendarAdapter(Context context, int count, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
-        super(context, count, dateTime);
+    public WeekCalendarAdapter(Context context, int count,int curr, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
+        super(context, count,curr, dateTime);
         this.mOnClickWeekViewListener = onClickWeekViewListener;
     }
 
@@ -28,7 +27,7 @@ public class WeekCalendarAdapter extends CalendarAdapter{
 
         WeekView weekView = (WeekView) mCalendarViews.get(position);
         if (weekView == null) {
-            weekView = new WeekView(mContext, mDateTime.plusDays((position - getCount() / 2) * 7),mOnClickWeekViewListener);
+            weekView = new WeekView(mContext, mDateTime.plusDays((position - mCurr) * 7),mOnClickWeekViewListener);
             mCalendarViews.put(position, weekView);
         }
         container.addView(mCalendarViews.get(position));

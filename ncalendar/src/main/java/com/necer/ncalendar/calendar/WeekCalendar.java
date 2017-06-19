@@ -13,13 +13,13 @@ import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.WeekView;
 
 import org.joda.time.DateTime;
+import org.joda.time.Weeks;
 
 /**
  * Created by necer on 2017/6/13.
  */
 public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewListener {
 
-    private WeekView currentWeekView;
     private OnClickWeekCalendarListener onClickWeekCalendarListener;
     private OnWeekCalendarPageChangeListener onWeekCalendarPageChangeListener;
 
@@ -34,19 +34,27 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
 
     @Override
     protected CalendarAdapter getCalendarAdapter() {
-        return new WeekCalendarAdapter(getContext(), mPageSize, new DateTime(), this);
+
+        DateTime startSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(startDateTime);
+        DateTime endSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(endDateTime);
+        DateTime todaySunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(DateTime.now());
+
+        mPageSize = Weeks.weeksBetween(startSunFirstDayOfWeek, endSunFirstDayOfWeek).getWeeks() + 1;
+        mCurrPage = Weeks.weeksBetween(startSunFirstDayOfWeek, todaySunFirstDayOfWeek).getWeeks();
+
+
+        return new WeekCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this);
     }
 
     @Override
     protected void initCurrentCalendarView() {
-        currentWeekView = (WeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
-        if (currentWeekView == null) {
+        currentView = (WeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
+        if (currentView == null) {
             return;
         }
-        currentWeekView.setPointList(mPointList);
-        if (onWeekCalendarPageChangeListener != null && currentWeekView != null) {
-            DateTime selectDateTime = currentWeekView.getSelectDateTime();
-            DateTime initialDateTime = currentWeekView.getInitialDateTime();
+        if (onWeekCalendarPageChangeListener != null && currentView != null) {
+            DateTime selectDateTime = currentView.getSelectDateTime();
+            DateTime initialDateTime = currentView.getInitialDateTime();
             onWeekCalendarPageChangeListener.onWeekCalendarPageSelected(selectDateTime == null ? initialDateTime : selectDateTime);
         }
     }
@@ -58,7 +66,7 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(i);
 
         if (weekView == null) {
-            throw new RuntimeException("日历的页数不够");
+            return;
         }
         weekView.setSelectDateTime(dateTime);
     }
@@ -88,10 +96,10 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
 
     @Override
     public DateTime getSelectDateTime() {
-        if (currentWeekView == null) {
+        if (currentView == null) {
             return null;
         }
-        return currentWeekView.getSelectDateTime();
+        return currentView.getSelectDateTime();
     }
 
     @Override
