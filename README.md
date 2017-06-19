@@ -8,6 +8,14 @@
 
 
 ## 使用方法
+
+
+### Gradle
+```
+compile 'com.necer.ncalendar:ncalendar:1.0.0'
+```
+
+
 ### 月日历
 ```
 <com.necer.ncalendar.calendar.MonthCalendar
@@ -47,7 +55,9 @@
   //跳转日期
   monthCalendar.setDate(2017, 10, 1);
 ```
+
 ### 周日历
+
 ```
 <com.necer.ncalendar.calendar.WeekCalendar
         android:id="@+id/weekCalendar"
@@ -87,6 +97,7 @@
 ```
 
 ### 周月视图切换
+
 ```
 1.xml设置属性时，只需在后一个初始化的日历中设置属性即可，属性数据保存在静态变量中，
   后初始化的会把前面的覆盖掉，所以设置后面一个即可。
@@ -97,6 +108,7 @@
 ```
 
 ### 注意：
+
 ```
   日期跳转可能会抛出“日历的页数不够”的异常，此时请检查日历的pageSize，默认是10000，左右各5000，可自定义，
   确保选择的日期在pageSize之内，pageSize可以再加，但不可写成Integer.MAX_VALUE，不然跳转时会发生ANR.
