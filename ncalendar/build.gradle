@@ -36,6 +36,9 @@ dependencies {
 
 
 
+
+
+
 def siteUrl = 'https://github.com/yannecer/NCalendar'      // 项目的主页
 def gitUrl = 'https://github.com/yannecer/NCalendar.git'   // Git仓库的url
 group = "com.necer.ncalendar" // Maven Group ID for the artifact，一般填你唯一的包名,就是这引用时 compile'com.necer.ndialog2 ......'
@@ -69,6 +72,15 @@ install {
         }
     }
 }
+
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+
 //打包javadocjar和sourcejar
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
