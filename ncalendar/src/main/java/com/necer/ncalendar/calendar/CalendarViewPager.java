@@ -53,13 +53,13 @@ public abstract class CalendarViewPager extends ViewPager{
         Attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, Color.WHITE);
         Attrs.hollowCircleStroke = ta.getInt(R.styleable.NCalendar_hollowCircleStroke, (int) Utils.dp2px(context, 1));
 
-        Attrs.startDateTime = ta.getString(R.styleable.NCalendar_startDateTime);
-        Attrs.endDateTime = ta.getString(R.styleable.NCalendar_endDateTime);
+        String startString = ta.getString(R.styleable.NCalendar_startDateTime);
+        String endString = ta.getString(R.styleable.NCalendar_endDateTime);
         ta.recycle();
 
 
-        startDateTime = new DateTime(Attrs.startDateTime == null ? "1901-01-01" : Attrs.startDateTime);
-        endDateTime = new DateTime(Attrs.endDateTime == null ? "2099-12-31" : Attrs.endDateTime);
+        startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
+        endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
 
         calendarAdapter = getCalendarAdapter();
         setAdapter(calendarAdapter);
