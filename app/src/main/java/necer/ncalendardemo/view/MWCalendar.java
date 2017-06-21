@@ -17,8 +17,11 @@ import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
+
 import org.joda.time.DateTime;
+
 import necer.ncalendardemo.R;
+
 /**
  * Created by necer on 2017/6/14.
  */
@@ -67,20 +70,16 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
         if (STATE == OPEN) {
             if (scrollY > 100) {
-                mScroller.startScroll(0, scrollY, 0, rowHeigh * 5 - scrollY, 300);
-                invalidate();
+                startScroll(scrollY,rowHeigh * 5 - scrollY,300);
             } else {
-                mScroller.startScroll(0, scrollY, 0,  - scrollY, 100);
-                invalidate();
+                startScroll(scrollY, -scrollY, 300);
             }
         }
         if (STATE == CLOSE) {
-            if (scrollY < rowHeigh * 5-100) {
-                mScroller.startScroll(0, scrollY, 0, -scrollY, 300);
-                invalidate();
+            if (scrollY < rowHeigh * 5 - 100) {
+                startScroll(scrollY, -scrollY, 300);
             } else {
-                mScroller.startScroll(0, scrollY, 0, rowHeigh * 5 - scrollY, 100);
-                invalidate();
+                startScroll(scrollY, rowHeigh * 5 - scrollY, 300);
             }
         }
     }
@@ -157,6 +156,12 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
         });
 
     }
+
+    private void startScroll(int startY,int dy,int duration) {
+        mScroller.startScroll(0, startY, 0, dy, duration);
+        invalidate();
+    }
+
 
     public void fling(int velocityY) {
         mScroller.fling(0, getScrollY(), 0, velocityY, 0, 0, 0, rowHeigh * 6);
@@ -241,5 +246,17 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
         this.onClickCalendarListener = onClickCalendarListener;
     }
 
+
+    public void open() {
+        if (STATE == CLOSE) {
+            startScroll(rowHeigh * 5, -rowHeigh * 5, 300);
+        }
+    }
+
+    public void close() {
+        if (STATE == OPEN) {
+            startScroll(0, rowHeigh * 5 , 300);
+        }
+    }
 
 }
