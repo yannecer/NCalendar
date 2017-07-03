@@ -12,7 +12,7 @@
 
 ### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:1.0.2'
+compile 'com.necer.ncalendar:ncalendar:1.0.3'
 ```
 
 
@@ -130,6 +130,9 @@ compile 'com.necer.ncalendar:ncalendar:1.0.2'
 | endDateTime| 日历截止时间 "yyyy-MM-dd" |
 
 
+### 联系我 qq：619008099 
+
 ### View的绘制过程参见：http://blog.csdn.net/y12345654321/article/details/73331253 
+### 滑动处理参见：http://blog.csdn.net/y12345654321/article/details/73801681
 
 
