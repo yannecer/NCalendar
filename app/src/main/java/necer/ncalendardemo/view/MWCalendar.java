@@ -39,7 +39,6 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
     private int rowHeigh;
 
 
-
     public MWCalendar(Context context) {
         this(context, null);
     }
@@ -70,7 +69,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
         if (STATE == OPEN) {
             if (scrollY > 100) {
-                startScroll(scrollY,rowHeigh * 5 - scrollY,300);
+                startScroll(scrollY, rowHeigh * 5 - scrollY, 300);
             } else {
                 startScroll(scrollY, -scrollY, 300);
             }
@@ -146,8 +145,9 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
         monthCalendar.setOnMonthCalendarPageChangeListener(new OnMonthCalendarPageChangeListener() {
             @Override
             public void onMonthCalendarPageSelected(DateTime dateTime) {
-                if (weekCalendar != null) {
-                    weekCalendar.jumpDate(dateTime,true);
+
+                if (STATE == OPEN) {
+                    weekCalendar.jumpDate(dateTime, true);
                 }
                 if (onClickCalendarListener != null) {
                     onClickCalendarListener.onCalendarPageChange(dateTime);
@@ -157,7 +157,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
     }
 
-    private void startScroll(int startY,int dy,int duration) {
+    private void startScroll(int startY, int dy, int duration) {
         mScroller.startScroll(0, startY, 0, dy, duration);
         invalidate();
     }
@@ -192,7 +192,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
             weekCalendar.setVisibility(VISIBLE);
         } else {
             int weekRow = monthCalendar.getCurrentMothView().getWeekRow();
-            weekCalendar.setVisibility(scrollY >= weekRow  * rowHeigh ? VISIBLE : INVISIBLE);
+            weekCalendar.setVisibility(scrollY >= weekRow * rowHeigh ? VISIBLE : INVISIBLE);
         }
 
         if (mScroller.computeScrollOffset()) {
@@ -215,7 +215,11 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
         weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeListener() {
             @Override
             public void onWeekCalendarPageSelected(DateTime dateTime) {
-                monthCalendar.jumpDate(dateTime,true);
+
+                if (STATE == CLOSE) {
+                    monthCalendar.jumpDate(dateTime, true);
+                }
+
                 if (onClickCalendarListener != null) {
                     onClickCalendarListener.onCalendarPageChange(dateTime);
                 }
@@ -226,8 +230,8 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
 
     public void setDate(int year, int month, int day) {
-        monthCalendar.setDate(year,month,day);
-        weekCalendar.setDate(year,month,day);
+        monthCalendar.setDate(year, month, day);
+        weekCalendar.setDate(year, month, day);
     }
 
 
@@ -242,6 +246,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
     }
 
     private OnCalendarChangeListener onClickCalendarListener;
+
     public void setOnClickCalendarListener(OnCalendarChangeListener onClickCalendarListener) {
         this.onClickCalendarListener = onClickCalendarListener;
     }
@@ -255,7 +260,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent {
 
     public void close() {
         if (STATE == OPEN) {
-            startScroll(0, rowHeigh * 5 , 300);
+            startScroll(0, rowHeigh * 5, 300);
         }
     }
 

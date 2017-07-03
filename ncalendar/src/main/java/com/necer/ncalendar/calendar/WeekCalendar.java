@@ -8,6 +8,7 @@ import com.necer.ncalendar.adapter.WeekCalendarAdapter;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekViewListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
+import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.WeekView;
@@ -63,6 +64,10 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
     public void setDate(int year, int month, int day, boolean smoothScroll) {
         DateTime dateTime = new DateTime(year, month, day, 0, 0, 0);
         int i = jumpDate(dateTime, smoothScroll);
+
+
+
+
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(i);
 
         if (weekView == null) {
@@ -82,6 +87,10 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
         int weeks = Utils.getIntervalWeek(initialDateTime, dateTime);
         int i = getCurrentItem() + weeks;
+
+        MyLog.d("111:::::" + i);
+
+
         setCurrentItem(i, smoothScroll);
         return i;
     }
