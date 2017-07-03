@@ -9,7 +9,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
@@ -82,7 +81,6 @@ public class MonthView extends CalendarView {
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     drawLunar(canvas, rect, mHintColor, i, j);
                 }
-
 
                 if (mPointList.contains(dateTime.toLocalDate().toString())) {
                     mSorlarPaint.setColor(mPointColor);
