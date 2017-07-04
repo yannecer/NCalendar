@@ -61,12 +61,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
         });
 
 
-        monthCalendar.post(new Runnable() {
-            @Override
-            public void run() {
-                monthCalendar.setDate(1901, 1, 1);
-            }
-        });
     }
 
     @Override

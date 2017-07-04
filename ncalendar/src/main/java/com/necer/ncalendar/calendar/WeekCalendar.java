@@ -74,7 +74,6 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
 
     @Override
     public int jumpDate(DateTime dateTime, boolean smoothScroll) {
-       //
         SparseArray<CalendarView> calendarViews = calendarAdapter.getCalendarViews();
         if (calendarViews.size() == 0) {
             return getCurrentItem();
@@ -103,7 +102,9 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
         weekView.setSelectDateTime(dateTime);
         //清除其他选中
-      //  clearSelect(weekView);
+        if (!isMultiple) {
+            clearSelect(weekView);
+        }
         if (onClickWeekCalendarListener != null) {
             onClickWeekCalendarListener.onClickWeekCalendar(dateTime);
         }
@@ -115,7 +116,5 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         mRowHeigh = heightSize ;
-
-        //MyLog.d("onMeasure::" + mRowHeigh);
     }
 }

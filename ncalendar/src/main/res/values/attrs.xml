@@ -18,6 +18,7 @@
         <attr name="endDateTime" format="string" />
         
         <attr name="calendarHeight" format="dimension"/>
+        <attr name="isMultiple" format="boolean"/>
 
     </declare-styleable>
 </resources>

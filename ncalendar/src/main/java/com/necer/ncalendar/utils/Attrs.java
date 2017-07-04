@@ -19,4 +19,5 @@ public class Attrs {
     public static int pointColor;
     public static int hollowCircleColor;
     public static int hollowCircleStroke;
+
 }

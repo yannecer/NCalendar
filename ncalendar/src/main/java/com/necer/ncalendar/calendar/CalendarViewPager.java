@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.CalendarAdapter;
@@ -30,6 +31,8 @@ public abstract class CalendarViewPager extends ViewPager{
     protected int mPageSize;
     protected int mCurrPage;
 
+    protected boolean isMultiple;//是否多选，多选是指周与周，月与月之间
+
 
     public CalendarViewPager(Context context) {
         this(context,null);
@@ -45,13 +48,15 @@ public abstract class CalendarViewPager extends ViewPager{
         Attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, getResources().getColor(R.color.hintColor));
         Attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Utils.sp2px(context,14));
         Attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Utils.sp2px(context,8));
-        Attrs.selectCircleRadius = ta.getInt(R.styleable.NCalendar_selectCircleRadius, (int) Utils.dp2px(context,200));
+        Attrs.selectCircleRadius = ta.getInt(R.styleable.NCalendar_selectCircleRadius, (int) Utils.dp2px(context,20));
         Attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
 
         Attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, (int) Utils.dp2px(context, 2));
         Attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointcolor, getResources().getColor(R.color.selectCircleColor));
         Attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, Color.WHITE);
         Attrs.hollowCircleStroke = ta.getInt(R.styleable.NCalendar_hollowCircleStroke, (int) Utils.dp2px(context, 1));
+
+        isMultiple = ta.getBoolean(R.styleable.NCalendar_isMultiple, true);
 
         String startString = ta.getString(R.styleable.NCalendar_startDateTime);
         String endString = ta.getString(R.styleable.NCalendar_endDateTime);
@@ -129,7 +134,7 @@ public abstract class CalendarViewPager extends ViewPager{
     }
 
 
-   /* protected void clearSelect(CalendarView currentCalendarView) {
+    protected void clearSelect(CalendarView currentCalendarView) {
         SparseArray<CalendarView> monthViews = calendarAdapter.getCalendarViews();
         for (int i = 0; i < monthViews.size(); i++) {
             int key = monthViews.keyAt(i);
@@ -138,6 +143,6 @@ public abstract class CalendarViewPager extends ViewPager{
                 view.clear();
             }
         }
-    }*/
+    }
 
 }

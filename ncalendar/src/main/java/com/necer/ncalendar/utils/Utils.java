@@ -133,7 +133,6 @@ public class Utils {
         return new DateTime().toLocalDate().equals(dateTime.toLocalDate());
     }
 
-
     public static NCalendar getMonthCalendar(DateTime dateTime) {
         DateTime lastMonthDateTime = dateTime.plusMonths(-1);//上个月
         DateTime nextMonthDateTime = dateTime.plusMonths(1);//下个月

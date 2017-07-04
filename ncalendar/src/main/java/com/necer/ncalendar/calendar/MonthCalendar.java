@@ -116,19 +116,14 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         }
         monthView.setSelectDateTime(dateTime);
         //清除其他选中
-        //clearSelect(monthView);
+        if (!isMultiple) {
+            clearSelect(monthView);
+        }
         if (onClickMonthCalendarListener != null) {
             onClickMonthCalendarListener.onClickMonthCalendar(dateTime);
         }
 
     }
-
-/*
-    public MonthView getCurrentMothView() {
-
-    }
-
-*/
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
