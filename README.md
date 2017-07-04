@@ -99,12 +99,39 @@ compile 'com.necer.ncalendar:ncalendar:1.0.4'
 ### 周月视图切换
 
 ```
-1.xml设置属性时，除了startDateTime和endDateTime之外，只需在后一个初始化的日历中设置属性即可，属性数据保存在静态变量中，
-  后初始化的会把前面的覆盖掉，所以设置后面一个即可。周月制图切换慎用startDateTime和endDateTime这两个属性，可能会出现错位的情况。
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
-2.对日历操作，比如跳转日期，需要对WeekCalendar和MonthCalendar同时设置，不然下次切换会出现错位。
+        <com.necer.ncalendar.calendar.MWCalendar
+            android:id="@+id/mWCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:calendarHeight="300dp"
+            app:selectCircleColor="#3388ff">
 
-3.具体使用设置可参见demo
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.necer.ncalendar.calendar.MWCalendar>
+
+   </RelativeLayout>
+   
+ 日历切换类MWCalendar，需要父View为RelativeLayout，子View为NestedScrollingChild的实现类
+ 
+ mwCalendar.setOnClickCalendarListener(new OnCalendarChangeListener() {
+            @Override
+            public void onClickCalendar(DateTime dateTime) {
+
+            }
+
+            @Override
+            public void onCalendarPageChanged(DateTime dateTime) {
+
+            }
+        });
 ```
 
 
