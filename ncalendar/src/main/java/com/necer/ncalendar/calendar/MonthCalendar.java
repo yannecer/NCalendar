@@ -16,6 +16,8 @@ import com.necer.ncalendar.view.MonthView;
 import org.joda.time.DateTime;
 import org.joda.time.Months;
 
+import java.util.List;
+
 /**
  * Created by necer on 2017/6/12.
  * 月视图日历
@@ -37,11 +39,12 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     }
 
     @Override
-    protected CalendarAdapter getCalendarAdapter() {
+    protected CalendarAdapter getCalendarAdapter(List<String> pointList) {
         mPageSize = Months.monthsBetween(startDateTime, endDateTime).getMonths() + 1;
         mCurrPage = Months.monthsBetween(startDateTime, DateTime.now()).getMonths();
-        return new MonthCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this);
+        return new MonthCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this,pointList);
     }
+
 
     @Override
     protected void initCurrentCalendarView() {

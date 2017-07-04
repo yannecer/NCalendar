@@ -15,6 +15,7 @@ import com.necer.ncalendar.view.CalendarView;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,7 @@ public abstract class CalendarViewPager extends ViewPager{
     protected DateTime endDateTime;
     protected int mPageSize;
     protected int mCurrPage;
+    protected List<String> mPointList;
 
     protected boolean isMultiple;//是否多选，多选是指周与周，月与月之间
 
@@ -63,12 +65,12 @@ public abstract class CalendarViewPager extends ViewPager{
         ta.recycle();
 
 
-
+        mPointList = new ArrayList<>();
 
         startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
         endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
 
-        calendarAdapter = getCalendarAdapter();
+        calendarAdapter = getCalendarAdapter(mPointList);
         setAdapter(calendarAdapter);
         setCurrentItem(mCurrPage);
         addOnPageChangeListener(new OnPageChangeListener() {
@@ -101,7 +103,7 @@ public abstract class CalendarViewPager extends ViewPager{
         setDate(year, month, day, false);
     }
 
-    protected abstract CalendarAdapter getCalendarAdapter();
+    protected abstract CalendarAdapter getCalendarAdapter(List<String> pointList);
 
     protected abstract void initCurrentCalendarView();
 
@@ -126,11 +128,12 @@ public abstract class CalendarViewPager extends ViewPager{
     }
 
     public void setPointList(List<String> pointList) {
-        if (currentView == null) {
-            return;
+        //全部页面重绘
+        SparseArray<CalendarView> calendarViews = calendarAdapter.getCalendarViews();
+        for (int i = 0; i < calendarViews.size(); i++) {
+            int key = calendarViews.keyAt(i);
+            calendarViews.get(key).setPointList(pointList);
         }
-        currentView.setPointList(pointList);
-        invalidate();
     }
 
 

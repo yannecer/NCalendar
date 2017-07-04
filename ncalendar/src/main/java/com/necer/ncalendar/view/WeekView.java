@@ -26,8 +26,8 @@ public class WeekView extends CalendarView {
 
     private OnClickWeekViewListener onClickWeekViewListener;
 
-    public WeekView(Context context, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
-        super(context);
+    public WeekView(Context context, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener,List<String> pointList) {
+        super(context,pointList);
         this.onClickWeekViewListener = onClickWeekViewListener;
         this.mInitialDateTime = dateTime;
         Utils.NCalendar monthCalendar = Utils.getWeekCalendar(dateTime);

@@ -10,6 +10,8 @@ import com.necer.ncalendar.view.CalendarView;
 
 import org.joda.time.DateTime;
 
+import java.util.List;
+
 /**
  * Created by necer on 2017/6/13.
  */
@@ -21,12 +23,14 @@ public abstract class CalendarAdapter extends PagerAdapter{
     protected int mCurr;//当前位置
     protected SparseArray<CalendarView> mCalendarViews;
     protected DateTime mDateTime;
+    protected List<String> mPointList;
 
-    public CalendarAdapter(Context context, int count, int curr,DateTime dateTime) {
+    public CalendarAdapter(Context context, int count, int curr, DateTime dateTime, List<String> pointList) {
         this.mDateTime = dateTime;
         this.mContext = context;
         this.mCount = count;
         this.mCurr = curr;
+        this.mPointList = pointList;
         mCalendarViews = new SparseArray<>();
     }
     @Override

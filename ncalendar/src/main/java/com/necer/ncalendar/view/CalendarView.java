@@ -45,6 +45,9 @@ public abstract class CalendarView extends View {
     protected int mWidth;
     protected int mHeight;
 
+
+
+
     public CalendarView(Context context) {
         super(context);
 
@@ -64,11 +67,16 @@ public abstract class CalendarView extends View {
 
 
         mRectList = new ArrayList<>();
-        mPointList = new ArrayList<>();
+        //mPointList = new ArrayList<>();
         mSorlarPaint = getPaint(mSolarTextColor, mSolarTextSize);
         mLunarPaint = getPaint(mLunarTextColor, mLunarTextSize);
 
 
+    }
+
+    public CalendarView(Context context,List<String> pointList) {
+        this(context);
+        mPointList = pointList;
     }
 
     public void setSelectDateTime(DateTime dateTime) {

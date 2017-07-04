@@ -25,6 +25,8 @@ import com.necer.ncalendar.view.MonthView;
 
 import org.joda.time.DateTime;
 
+import java.util.List;
+
 /**
  * Created by necer on 2017/6/14.
  */
@@ -253,6 +255,11 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
     public void setDate(int year, int month, int day) {
         monthCalendar.setDate(year, month, day);
         weekCalendar.setDate(year, month, day);
+    }
+
+    public void setPointList(List<String> pointList) {
+        monthCalendar.setPointList(pointList);
+        weekCalendar.setPointList(pointList);
     }
 
 

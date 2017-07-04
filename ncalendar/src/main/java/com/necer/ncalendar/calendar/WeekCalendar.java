@@ -15,6 +15,8 @@ import com.necer.ncalendar.view.WeekView;
 import org.joda.time.DateTime;
 import org.joda.time.Weeks;
 
+import java.util.List;
+
 /**
  * Created by necer on 2017/6/13.
  */
@@ -33,7 +35,7 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
     }
 
     @Override
-    protected CalendarAdapter getCalendarAdapter() {
+    protected CalendarAdapter getCalendarAdapter(List<String> pointList) {
 
         DateTime startSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(startDateTime);
         DateTime endSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(endDateTime);
@@ -43,8 +45,9 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         mCurrPage = Weeks.weeksBetween(startSunFirstDayOfWeek, todaySunFirstDayOfWeek).getWeeks();
 
 
-        return new WeekCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this);
+        return new WeekCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this,pointList);
     }
+
 
     @Override
     protected void initCurrentCalendarView() {

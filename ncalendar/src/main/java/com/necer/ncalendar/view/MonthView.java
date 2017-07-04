@@ -27,8 +27,8 @@ public class MonthView extends CalendarView {
     private OnClickMonthViewListener onClickMonthViewListener;
 
 
-    public MonthView(Context mContext, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
-        super(mContext);
+    public MonthView(Context mContext, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener,List<String> pointList) {
+        super(mContext,pointList);
         this.mInitialDateTime = dateTime;
         this.onClickMonthViewListener = onClickMonthViewListener;
 
