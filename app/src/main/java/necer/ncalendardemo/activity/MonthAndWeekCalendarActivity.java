@@ -6,15 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
-import com.necer.ncalendar.calendar.WeekCalendar;
+import com.necer.ncalendar.calendar.MWCalendar;
+import com.necer.ncalendar.listener.OnCalendarChangeListener;
 
 import org.joda.time.DateTime;
 
 import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
-import necer.ncalendardemo.view.MWCalendar;
 
 /**
  * Created by necer on 2017/6/15.
@@ -22,34 +21,33 @@ import necer.ncalendardemo.view.MWCalendar;
 
 public class MonthAndWeekCalendarActivity extends AppCompatActivity {
 
-
-    private MWCalendar mwCalendar;
-    private WeekCalendar weekCalendar;
     private RecyclerView recyclerView;
+    private MWCalendar mwCalendar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wm);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mwCalendar = (MWCalendar) findViewById(R.id.mWCalendar);
 
-        mwCalendar = (MWCalendar) findViewById(R.id.mwCalendar);
-        weekCalendar = (WeekCalendar) findViewById(R.id.weekCalendar);
-        mwCalendar.setWeekCalendar(weekCalendar);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new AAAdapter(this));
 
-        mwCalendar.setOnClickCalendarListener(new MWCalendar.OnCalendarChangeListener() {
+        mwCalendar.setOnClickCalendarListener(new OnCalendarChangeListener() {
             @Override
             public void onClickCalendar(DateTime dateTime) {
-                Toast.makeText(MonthAndWeekCalendarActivity.this, "选择了：：" + dateTime.toLocalDate(), Toast.LENGTH_SHORT).show();
+
+              //  MyLog.d("dateTime:onClickCalendar:" + dateTime.toLocalDate());
+
             }
 
             @Override
-            public void onCalendarPageChange(DateTime dateTime) {
+            public void onCalendarPageChanged(DateTime dateTime) {
+               // MyLog.d("dateTime:onCalendarPageChange:" + dateTime.toLocalDate());
 
             }
         });
 
-        recyclerView = mwCalendar.getRecyclerView();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new AAAdapter(this));
     }
 
     public void close(View view) {
@@ -57,7 +55,6 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
     }
 
     public void open(View view) {
-
         mwCalendar.open();
     }
 }

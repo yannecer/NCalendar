@@ -42,13 +42,22 @@ public class Utils {
 
 
     /**
-     * 屏幕高度
+     * 屏幕宽度
      *
      * @param context
      * @return
      */
     public static int getDisplayWidth(Context context) {
         return context.getResources().getDisplayMetrics().widthPixels;
+    }
+    /**
+     * 屏幕高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getDisplayHeight(Context context) {
+        return context.getResources().getDisplayMetrics().heightPixels;
     }
 
     //是否同月

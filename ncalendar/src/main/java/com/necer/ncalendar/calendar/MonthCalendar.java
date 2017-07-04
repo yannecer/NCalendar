@@ -98,13 +98,6 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         return i;
     }
 
-    @Override
-    public DateTime getSelectDateTime() {
-        if (currentView == null) {
-            return null;
-        }
-        return currentView.getSelectDateTime();
-    }
 
     public void setOnClickMonthCalendarListener(OnClickMonthCalendarListener onClickMonthCalendarListener) {
         this.onClickMonthCalendarListener = onClickMonthCalendarListener;
@@ -130,16 +123,20 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
 
     }
 
+/*
     public MonthView getCurrentMothView() {
-        return (MonthView) currentView;
+
     }
 
+*/
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         mRowHeigh = heightSize / 6;
+
+
     }
 }
 

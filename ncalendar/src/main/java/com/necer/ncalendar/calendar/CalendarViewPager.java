@@ -58,6 +58,8 @@ public abstract class CalendarViewPager extends ViewPager{
         ta.recycle();
 
 
+
+
         startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
         endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
 
@@ -82,6 +84,8 @@ public abstract class CalendarViewPager extends ViewPager{
                 initCurrentCalendarView();
             }
         });
+
+        setBackgroundColor(getResources().getColor(android.R.color.white));
     }
     public int getRowHeigh() {
         return mRowHeigh;
@@ -100,7 +104,21 @@ public abstract class CalendarViewPager extends ViewPager{
 
     public abstract int jumpDate(DateTime dateTime,boolean smoothScroll);
 
-    public abstract DateTime getSelectDateTime();
+    public DateTime getSelectDateTime(){
+        if (currentView == null) {
+            return null;
+        }
+        return currentView.getSelectDateTime();
+    }
+
+    public DateTime getInitialDateTime() {
+        return currentView.getInitialDateTime();
+    }
+
+
+    public CalendarView getCurrentCalendarView() {
+        return currentView;
+    }
 
     public void setPointList(List<String> pointList) {
         if (currentView == null) {

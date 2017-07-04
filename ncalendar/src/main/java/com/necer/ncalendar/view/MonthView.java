@@ -27,7 +27,6 @@ public class MonthView extends CalendarView {
     private OnClickMonthViewListener onClickMonthViewListener;
 
 
-
     public MonthView(Context mContext, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
         super(mContext);
         this.mInitialDateTime = dateTime;
@@ -84,7 +83,7 @@ public class MonthView extends CalendarView {
 
                 if (mPointList.contains(dateTime.toLocalDate().toString())) {
                     mSorlarPaint.setColor(mPointColor);
-                    canvas.drawCircle(rect.centerX(), rect.bottom-mPointSize, mPointSize, mSorlarPaint);
+                    canvas.drawCircle(rect.centerX(), rect.bottom - mPointSize, mPointSize, mSorlarPaint);
                 }
             }
         }
@@ -92,6 +91,7 @@ public class MonthView extends CalendarView {
 
     /**
      * 绘制农历
+     *
      * @param canvas
      * @param rect
      * @param i
@@ -116,6 +116,7 @@ public class MonthView extends CalendarView {
         public boolean onDown(MotionEvent e) {
             return true;
         }
+
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             for (int i = 0; i < mRectList.size(); i++) {
@@ -138,8 +139,7 @@ public class MonthView extends CalendarView {
 
 
     //选中的是一月中的第几周
-    public int getWeekRow() {
-        DateTime dateTime = mSelectDateTime == null ? mInitialDateTime : mSelectDateTime;
+    public int getWeekRow(DateTime dateTime) {
         int indexOf = localDateList.indexOf(dateTime.toLocalDate().toString());
         return indexOf / 7;
     }

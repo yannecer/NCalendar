@@ -8,18 +8,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="close"
-            android:onClick="close"/>
+            android:onClick="close"
+            android:text="close" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="open"
-            android:onClick="open"/>
+            android:onClick="open"
+            android:text="open" />
 
     </LinearLayout>
 
@@ -31,36 +33,18 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <necer.ncalendardemo.view.MWCalendar
-            android:id="@+id/mwCalendar"
+        <com.necer.ncalendar.calendar.MWCalendar
+            android:id="@+id/mWCalendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-
-            <com.necer.ncalendar.calendar.MonthCalendar
-                android:id="@+id/monthCalendar"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="#ffffff"
-               />
+            app:selectCircleColor="#3388ff">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+        </com.necer.ncalendar.calendar.MWCalendar>
 
-
-        </necer.ncalendardemo.view.MWCalendar>
-
-        <com.necer.ncalendar.calendar.WeekCalendar
-            android:id="@+id/weekCalendar"
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:background="#ffffff"
-            android:visibility="invisible"
-            app:solarTextSize ="14sp"
-            app:selectCircleColor= "@android:color/holo_red_light"
-            />
     </RelativeLayout>
 
 
