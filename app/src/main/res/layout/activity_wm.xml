@@ -38,7 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:calendarHeight="300dp"
-            app:selectCircleColor="#3388ff">
+            app:selectCircleColor="#3388ff"
+            app:isMultiple="false">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

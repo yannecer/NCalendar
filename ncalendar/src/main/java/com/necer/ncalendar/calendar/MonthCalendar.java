@@ -127,14 +127,5 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
         }
 
     }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        mRowHeigh = heightSize / 6;
-
-
-    }
 }
 

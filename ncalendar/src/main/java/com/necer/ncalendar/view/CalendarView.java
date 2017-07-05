@@ -107,10 +107,10 @@ public abstract class CalendarView extends View {
         return mSelectDateTime;
     }
 
-    public void setPointList(List<String> pointList) {
+/*    public void setPointList(List<String> pointList) {
         mPointList.clear();
         mPointList.addAll(pointList);
         invalidate();
-    }
+    }*/
 
 }

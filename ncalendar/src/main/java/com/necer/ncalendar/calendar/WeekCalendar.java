@@ -112,12 +112,4 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
             onClickWeekCalendarListener.onClickWeekCalendar(dateTime);
         }
     }
-
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        mRowHeigh = heightSize ;
-    }
 }

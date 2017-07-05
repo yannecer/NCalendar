@@ -1,5 +1,4 @@
 package com.necer.ncalendar.calendar;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
@@ -95,6 +94,10 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
 
     @Override
     public void onStopNestedScroll(View target) {
+        //停止滑动，恢复日历的滑动
+        weekCalendar.setScrollEnable(true);
+        monthCalendar.setScrollEnable(true);
+
         int scrollY = getScrollY();
         if (scrollY == 0 || scrollY == rowHeigh * 5) {
             return;
@@ -118,6 +121,9 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+        //滑动时，禁止日历的滑动
+        weekCalendar.setScrollEnable(false);
+        monthCalendar.setScrollEnable(false);
 
         boolean hiddenMonthCalendar = dy > 0 && getScrollY() < rowHeigh * 5;
         boolean showMonthCalendar = dy < 0 && getScrollY() >= 0 && !ViewCompat.canScrollVertically(target, -1);
@@ -163,7 +169,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
 
 
     public void fling(int velocityY) {
-        mScroller.fling(0, getScrollY(), 0, velocityY, 0, 0, 0, rowHeigh * 6);
+        mScroller.fling(0, getScrollY(), 0, velocityY, 0, 0, 0, rowHeigh * 5);
         invalidate();
     }
 
@@ -209,7 +215,14 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
     @Override
     public void onMonthCalendarPageSelected(DateTime dateTime) {
         if (STATE == OPEN) {
-            weekCalendar.jumpDate(dateTime, true);
+
+            DateTime selectDateTime = monthCalendar.getSelectDateTime();
+            if (selectDateTime == null) {
+                weekCalendar.jumpDate(dateTime, true);
+            } else {
+                weekCalendar.setDate(selectDateTime.getYear(), selectDateTime.getMonthOfYear(), selectDateTime.getDayOfMonth());
+            }
+
             if (onClickCalendarListener != null) {
                 onClickCalendarListener.onCalendarPageChanged(dateTime);
             }
@@ -237,8 +250,6 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
     public void onWeekCalendarPageSelected(DateTime dateTime) {
         if (STATE == CLOSE) {
             DateTime selectDateTime = weekCalendar.getSelectDateTime();
-            DateTime initialDateTime = weekCalendar.getInitialDateTime();
-
             if (selectDateTime == null) {
                 monthCalendar.jumpDate(dateTime, true);
             } else {
@@ -280,5 +291,4 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
             startScroll(0, rowHeigh * 5, 300);
         }
     }
-
 }

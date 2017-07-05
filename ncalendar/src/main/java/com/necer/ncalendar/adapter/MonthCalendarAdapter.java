@@ -30,7 +30,7 @@ public class MonthCalendarAdapter extends CalendarAdapter{
         if (monthView == null) {
             int i = position - mCurr;
             DateTime dateTime = this.mDateTime.plusMonths(i);
-            monthView = new MonthView(mContext,dateTime,mOnClickMonthViewListener,mPointList);
+            monthView = new MonthView(mContext, dateTime, mOnClickMonthViewListener, mPointList);
             mCalendarViews.put(position, monthView);
         }
         container.addView(monthView);

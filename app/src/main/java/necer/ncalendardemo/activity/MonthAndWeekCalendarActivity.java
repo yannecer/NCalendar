@@ -13,9 +13,6 @@ import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
 
@@ -53,19 +50,25 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
     }
 
     public void close(View view) {
-        //mwCalendar.close();
+        mwCalendar.close();
 
-        List<String> pointList = new ArrayList<>();
-        pointList.add("2017-06-15");
+       /* List<String> pointList = new ArrayList<>();
+        pointList.add("2017-05-15");
         pointList.add("2017-06-20");
         pointList.add("2017-06-07");
         pointList.add("2017-07-07");
-        mwCalendar.setPointList(pointList);
+        pointList.add("2017-09-07");
+        pointList.add("2017-10-07");
+        pointList.add("2017-10-07");
+        mwCalendar.setPointList(pointList);*/
+
+
+
     }
 
     public void open(View view) {
-       // mwCalendar.open();
+        mwCalendar.open();
 
-        mwCalendar.setDate(2018, 1, 1);
+       // mwCalendar.setDate(2018, 1, 1);
     }
 }

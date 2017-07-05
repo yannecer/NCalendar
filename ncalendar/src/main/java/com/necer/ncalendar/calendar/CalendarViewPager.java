@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.view.MotionEvent;
 
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.CalendarAdapter;
@@ -25,7 +26,6 @@ import java.util.List;
 public abstract class CalendarViewPager extends ViewPager{
 
     protected CalendarAdapter calendarAdapter;
-    protected int mRowHeigh;
     protected CalendarView currentView;
     protected DateTime startDateTime;
     protected DateTime endDateTime;
@@ -94,9 +94,6 @@ public abstract class CalendarViewPager extends ViewPager{
 
         setBackgroundColor(getResources().getColor(android.R.color.white));
     }
-    public int getRowHeigh() {
-        return mRowHeigh;
-    }
 
 
     public void setDate(int year, int month, int day) {
@@ -129,13 +126,15 @@ public abstract class CalendarViewPager extends ViewPager{
 
     public void setPointList(List<String> pointList) {
         //全部页面重绘
+
+        mPointList.clear();
+        mPointList.addAll(pointList);
         SparseArray<CalendarView> calendarViews = calendarAdapter.getCalendarViews();
         for (int i = 0; i < calendarViews.size(); i++) {
             int key = calendarViews.keyAt(i);
-            calendarViews.get(key).setPointList(pointList);
+            calendarViews.get(key).invalidate();
         }
     }
-
 
     protected void clearSelect(CalendarView currentCalendarView) {
         SparseArray<CalendarView> monthViews = calendarAdapter.getCalendarViews();
@@ -148,4 +147,22 @@ public abstract class CalendarViewPager extends ViewPager{
         }
     }
 
+
+    private boolean isScrollEnable=true;
+
+    public void setScrollEnable(boolean isScrollEnable) {
+        this.isScrollEnable = isScrollEnable;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return isScrollEnable ? super.onTouchEvent(ev) : false;
+
+    }
+
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return isScrollEnable ? super.onInterceptTouchEvent(ev) : false;
+    }
 }
