@@ -12,7 +12,7 @@
 
 ### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:1.0.4'
+compile 'com.necer.ncalendar:ncalendar:1.0.6'
 ```
 
 
@@ -99,7 +99,7 @@ compile 'com.necer.ncalendar:ncalendar:1.0.4'
 ### 周月视图切换
 
 ```
-<RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -121,6 +121,7 @@ compile 'com.necer.ncalendar:ncalendar:1.0.4'
    
  日历切换类MWCalendar，需要父View为RelativeLayout，子View为NestedScrollingChild的实现类
  
+ //设置监听
  mwCalendar.setOnClickCalendarListener(new OnCalendarChangeListener() {
             @Override
             public void onClickCalendar(DateTime dateTime) {
@@ -132,6 +133,14 @@ compile 'com.necer.ncalendar:ncalendar:1.0.4'
 
             }
         });
+ //小圆点设置
+ List<String> pointList = new ArrayList<>();
+ pointList.add("2017-05-15");
+ pointList.add("2017-06-20");
+ pointList.add("2017-06-07"); 
+ mwCalendar.setPointList(pointList);
+  //跳转日期    
+  mwCalendar.setDate(2018, 1, 1);
 ```
 
 
@@ -155,6 +164,8 @@ compile 'com.necer.ncalendar:ncalendar:1.0.4'
 | hollowCircleStroke| 选中空心圆圆环粗细 |
 | startDateTime| 日历开始时间 "yyyy-MM-dd" |
 | endDateTime| 日历截止时间 "yyyy-MM-dd" |
+| calendarHeight|日历高度，在MWCalendar中使用 |
+| isMultiple|是否多选|
 
 
 ### 联系我 qq：619008099 
