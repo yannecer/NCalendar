@@ -163,7 +163,6 @@ compile 'com.necer.ncalendar:ncalendar:1.0.6'
 | selectCircleColor| 选中日期和当天的圆颜色 |
 | selectCircleRadius| 选中和当天圆环半径 |
 | isShowLunar| 是否显示农历 |
-| pageSize| 日历可翻页数量，默认左右各5000 |
 | pointSize| 圆点指示器大小 |
 | pointcolor| 圆点指示器颜色 |
 | hollowCircleColor| 选中空心圆中间的颜色|
