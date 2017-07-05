@@ -99,25 +99,24 @@ compile 'com.necer.ncalendar:ncalendar:1.0.6'
 ### 周月视图切换
 
 ```
-    <RelativeLayout
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+    <com.necer.ncalendar.calendar.MWCalendar
+        android:id="@+id/mWCalendar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <com.necer.ncalendar.calendar.MWCalendar
-            android:id="@+id/mWCalendar"
+        android:layout_height="match_parent"
+        app:calendarHeight="300dp"
+        app:selectCircleColor="#3388ff">
+        
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:calendarHeight="300dp"
-            app:selectCircleColor="#3388ff">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.necer.ncalendar.calendar.MWCalendar>
-
-   </RelativeLayout>
+            android:layout_height="match_parent" />
+            
+     </com.necer.ncalendar.calendar.MWCalendar>
+ </RelativeLayout>
    
  日历切换类MWCalendar，需要父View为RelativeLayout，子View为NestedScrollingChild的实现类
  
@@ -133,14 +132,21 @@ compile 'com.necer.ncalendar:ncalendar:1.0.6'
 
             }
         });
+        
+        
+        
  //小圆点设置
  List<String> pointList = new ArrayList<>();
  pointList.add("2017-05-15");
  pointList.add("2017-06-20");
  pointList.add("2017-06-07"); 
  mwCalendar.setPointList(pointList);
-  //跳转日期    
-  mwCalendar.setDate(2018, 1, 1);
+ 
+ 
+ 
+ //跳转日期    
+ mwCalendar.setDate(2018, 1, 1);
+ 
 ```
 
 
