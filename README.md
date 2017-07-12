@@ -12,7 +12,7 @@
 
 ### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:1.0.6'
+compile 'com.necer.ncalendar:ncalendar:1.0.7'
 ```
 
 
@@ -171,6 +171,7 @@ compile 'com.necer.ncalendar:ncalendar:1.0.6'
 | endDateTime| 日历截止时间 "yyyy-MM-dd" |
 | calendarHeight|日历高度，在MWCalendar中使用 |
 | isMultiple|是否多选|
+| duration|自动折叠时间|
 
 
 ### 联系我 qq：619008099 
