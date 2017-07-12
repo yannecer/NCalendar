@@ -1,4 +1,5 @@
 package com.necer.ncalendar.calendar;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
@@ -32,7 +33,7 @@ import java.util.List;
 
 public class MWCalendar extends LinearLayout implements NestedScrollingParent, OnMonthCalendarPageChangeListener, OnClickMonthCalendarListener, OnClickWeekCalendarListener, OnWeekCalendarPageChangeListener {
 
-    private  WeekCalendar weekCalendar;
+    private WeekCalendar weekCalendar;
     private MonthCalendar monthCalendar;
     private View nestedScrollingChild;
     private OverScroller mScroller;
@@ -41,6 +42,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
     public static final int CLOSE = 200;
     private static int STATE = 100;//默认开
     private int rowHeigh;
+    private int duration;
 
     public MWCalendar(Context context) {
         this(context, null);
@@ -55,13 +57,14 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
 
         setOrientation(LinearLayout.VERTICAL);
         mScroller = new OverScroller(context);
-        monthCalendar = new MonthCalendar(context,attrs);
+        monthCalendar = new MonthCalendar(context, attrs);
         addView(monthCalendar);
 
-        weekCalendar = new WeekCalendar(context,attrs);
+        weekCalendar = new WeekCalendar(context, attrs);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
         float dimension = ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 240));
+        duration = ta.getInt(R.styleable.NCalendar_duration, 500);
         ta.recycle();
 
         rowHeigh = (int) (dimension / 6);
@@ -105,16 +108,16 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
 
         if (STATE == OPEN) {
             if (scrollY > 100) {
-                startScroll(scrollY, rowHeigh * 5 - scrollY, 300);
+                startScroll(scrollY, rowHeigh * 5 - scrollY, duration * (rowHeigh * 5 - scrollY) / (rowHeigh * 5));
             } else {
-                startScroll(scrollY, -scrollY, 300);
+                startScroll(scrollY, -scrollY, duration * scrollY / (rowHeigh * 5));
             }
         }
         if (STATE == CLOSE) {
             if (scrollY < rowHeigh * 5 - 100) {
-                startScroll(scrollY, -scrollY, 300);
+                startScroll(scrollY, -scrollY, duration * scrollY / (rowHeigh * 5));
             } else {
-                startScroll(scrollY, rowHeigh * 5 - scrollY, 300);
+                startScroll(scrollY, rowHeigh * 5 - scrollY, duration * (rowHeigh * 5 - scrollY) / (rowHeigh * 5));
             }
         }
     }
@@ -202,7 +205,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
             DateTime dateTime = selectDateTime == null ? initialDateTime : selectDateTime;
 
             MonthView currentCalendarView = (MonthView) monthCalendar.getCurrentCalendarView();
-            int weekRow =  currentCalendarView.getWeekRow(dateTime);
+            int weekRow = currentCalendarView.getWeekRow(dateTime);
             weekCalendar.setVisibility(scrollY >= weekRow * rowHeigh ? VISIBLE : INVISIBLE);
         }
 
@@ -282,13 +285,13 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
 
     public void open() {
         if (STATE == CLOSE) {
-            startScroll(rowHeigh * 5, -rowHeigh * 5, 300);
+            startScroll(rowHeigh * 5, -rowHeigh * 5, duration);
         }
     }
 
     public void close() {
         if (STATE == OPEN) {
-            startScroll(0, rowHeigh * 5, 300);
+            startScroll(0, rowHeigh * 5, duration);
         }
     }
 }

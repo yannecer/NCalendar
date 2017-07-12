@@ -19,6 +19,7 @@
         
         <attr name="calendarHeight" format="dimension"/>
         <attr name="isMultiple" format="boolean"/>
+        <attr name="duration" format="integer"/>
 
     </declare-styleable>
 </resources>
