@@ -1,4 +1,5 @@
 package com.necer.ncalendar.calendar;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -27,7 +28,7 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
 
 
     public WeekCalendar(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public WeekCalendar(Context context, AttributeSet attrs) {
@@ -45,16 +46,13 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         mCurrPage = Weeks.weeksBetween(startSunFirstDayOfWeek, todaySunFirstDayOfWeek).getWeeks();
 
 
-        return new WeekCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this,pointList);
+        return new WeekCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this, pointList);
     }
 
 
     @Override
     protected void initCurrentCalendarView() {
-        currentView = (WeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
-        if (currentView == null) {
-            return;
-        }
+        currentView = calendarAdapter.getCalendarViews().get(getCurrentItem());
         if (onWeekCalendarPageChangeListener != null && currentView != null) {
             DateTime selectDateTime = currentView.getSelectDateTime();
             DateTime initialDateTime = currentView.getInitialDateTime();
@@ -97,7 +95,6 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
     public void setOnWeekCalendarPageChangeListener(OnWeekCalendarPageChangeListener onWeekCalendarPageChangeListener) {
         this.onWeekCalendarPageChangeListener = onWeekCalendarPageChangeListener;
     }
-
 
 
     @Override

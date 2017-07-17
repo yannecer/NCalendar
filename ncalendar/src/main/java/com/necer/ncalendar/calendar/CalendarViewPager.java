@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.MotionEvent;
+import android.view.ViewTreeObserver;
 
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.CalendarAdapter;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by necer on 2017/6/13.
  */
 
-public abstract class CalendarViewPager extends ViewPager{
+public abstract class CalendarViewPager extends ViewPager {
 
     protected CalendarAdapter calendarAdapter;
     protected CalendarView currentView;
@@ -37,7 +38,7 @@ public abstract class CalendarViewPager extends ViewPager{
 
 
     public CalendarViewPager(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public CalendarViewPager(Context context, AttributeSet attrs) {
@@ -48,9 +49,9 @@ public abstract class CalendarViewPager extends ViewPager{
         Attrs.lunarTextColor = ta.getColor(R.styleable.NCalendar_lunarTextColor, getResources().getColor(R.color.lunarTextColor));
         Attrs.selectCircleColor = ta.getColor(R.styleable.NCalendar_selectCircleColor, getResources().getColor(R.color.selectCircleColor));
         Attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, getResources().getColor(R.color.hintColor));
-        Attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Utils.sp2px(context,14));
-        Attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Utils.sp2px(context,8));
-        Attrs.selectCircleRadius = ta.getInt(R.styleable.NCalendar_selectCircleRadius, (int) Utils.dp2px(context,20));
+        Attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Utils.sp2px(context, 14));
+        Attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Utils.sp2px(context, 8));
+        Attrs.selectCircleRadius = ta.getInt(R.styleable.NCalendar_selectCircleRadius, (int) Utils.dp2px(context, 20));
         Attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
 
         Attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, (int) Utils.dp2px(context, 2));
@@ -77,17 +78,20 @@ public abstract class CalendarViewPager extends ViewPager{
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
+
             @Override
             public void onPageSelected(int position) {
                 initCurrentCalendarView();
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
-        post(new Runnable() {
+
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void run() {
+            public void onGlobalLayout() {
                 initCurrentCalendarView();
             }
         });
@@ -106,9 +110,9 @@ public abstract class CalendarViewPager extends ViewPager{
 
     public abstract void setDate(int year, int month, int day, boolean smoothScroll);
 
-    public abstract int jumpDate(DateTime dateTime,boolean smoothScroll);
+    public abstract int jumpDate(DateTime dateTime, boolean smoothScroll);
 
-    public DateTime getSelectDateTime(){
+    public DateTime getSelectDateTime() {
         if (currentView == null) {
             return null;
         }
@@ -116,6 +120,10 @@ public abstract class CalendarViewPager extends ViewPager{
     }
 
     public DateTime getInitialDateTime() {
+       // MyLog.d("getInitialDateTime:::::" + currentView);
+        if (currentView == null) {
+            return null;
+        }
         return currentView.getInitialDateTime();
     }
 
@@ -148,7 +156,7 @@ public abstract class CalendarViewPager extends ViewPager{
     }
 
 
-    private boolean isScrollEnable=true;
+    private boolean isScrollEnable = true;
 
     public void setScrollEnable(boolean isScrollEnable) {
         this.isScrollEnable = isScrollEnable;

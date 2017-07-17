@@ -42,16 +42,13 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
     protected CalendarAdapter getCalendarAdapter(List<String> pointList) {
         mPageSize = Months.monthsBetween(startDateTime, endDateTime).getMonths() + 1;
         mCurrPage = Months.monthsBetween(startDateTime, DateTime.now()).getMonths();
-        return new MonthCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this,pointList);
+        return new MonthCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this, pointList);
     }
 
 
     @Override
     protected void initCurrentCalendarView() {
-        currentView = (MonthView) calendarAdapter.getCalendarViews().get(getCurrentItem());
-        if (currentView == null) {
-            return;
-        }
+        currentView = calendarAdapter.getCalendarViews().get(getCurrentItem());
         if (onMonthCalendarPageChangeListener != null && currentView != null) {
             DateTime selectDateTime = currentView.getSelectDateTime();
             DateTime initialDateTime = currentView.getInitialDateTime();

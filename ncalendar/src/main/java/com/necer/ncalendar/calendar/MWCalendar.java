@@ -201,7 +201,6 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
         } else {
             DateTime selectDateTime = weekCalendar.getSelectDateTime();
             DateTime initialDateTime = weekCalendar.getInitialDateTime();
-
             DateTime dateTime = selectDateTime == null ? initialDateTime : selectDateTime;
 
             MonthView currentCalendarView = (MonthView) monthCalendar.getCurrentCalendarView();
