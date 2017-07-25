@@ -12,7 +12,7 @@
 
 ### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:1.0.7'
+compile 'com.necer.ncalendar:ncalendar:1.0.8'
 ```
 
 
