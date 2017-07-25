@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.necer.ncalendar.calendar.MonthCalendar;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
+import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
 
@@ -57,6 +58,7 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onMonthCalendarPageSelected(DateTime dateTime) {
                 tv_title.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月");
+                MyLog.d("dateTime::" + dateTime);
             }
         });
 

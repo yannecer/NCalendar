@@ -94,6 +94,21 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
         return true;
     }
 
+    @Override
+    public void onNestedScrollAccepted(View child, View target, int axes) {
+       // super.onNestedScrollAccepted(child, target, axes);
+    }
+
+    @Override
+    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+       // super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+    }
+
+    @Override
+    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
+      //  return super.onNestedFling(target, velocityX, velocityY, consumed);
+        return false;
+    }
 
     @Override
     public void onStopNestedScroll(View target) {
