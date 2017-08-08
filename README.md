@@ -174,7 +174,7 @@ compile 'com.necer.ncalendar:ncalendar:1.0.8'
 | duration|自动折叠时间|
 
 
-### 联系我 qq：619008099 
+### 联系我加qq群 ：521039620 
 
 ### View的绘制过程参见：http://blog.csdn.net/y12345654321/article/details/73331253 
 ### 滑动处理参见：http://blog.csdn.net/y12345654321/article/details/73801681
