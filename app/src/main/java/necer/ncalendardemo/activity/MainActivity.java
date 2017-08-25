@@ -28,4 +28,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, MonthAndWeekCalendarActivity.class));
     }
 
+
+    public void ncanlendar(View view) {
+        startActivity(new Intent(this, NCalendarActivity.class));
+    }
+
 }

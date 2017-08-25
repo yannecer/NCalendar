@@ -38,7 +38,6 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
             @Override
             public void onClickCalendar(DateTime dateTime) {
                 MyLog.d("dateTime::" + dateTime.toLocalDate());
-
             }
 
             @Override
@@ -51,7 +50,6 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
 
     public void close(View view) {
         mwCalendar.close();
-
        /* List<String> pointList = new ArrayList<>();
         pointList.add("2017-05-15");
         pointList.add("2017-06-20");
@@ -61,8 +59,6 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
         pointList.add("2017-10-07");
         pointList.add("2017-10-07");
         mwCalendar.setPointList(pointList);*/
-
-
 
     }
 

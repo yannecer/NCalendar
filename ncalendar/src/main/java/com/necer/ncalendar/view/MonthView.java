@@ -9,6 +9,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
+import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
@@ -41,6 +42,9 @@ public class MonthView extends CalendarView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        MyLog.d("onDraw");
+
         mWidth = getWidth();
         mHeight = getHeight();
         mRectList.clear();
@@ -91,7 +95,6 @@ public class MonthView extends CalendarView {
 
     /**
      * 绘制农历
-     *
      * @param canvas
      * @param rect
      * @param i
@@ -143,5 +146,4 @@ public class MonthView extends CalendarView {
         int indexOf = localDateList.indexOf(dateTime.toLocalDate().toString());
         return indexOf / 7;
     }
-
 }
