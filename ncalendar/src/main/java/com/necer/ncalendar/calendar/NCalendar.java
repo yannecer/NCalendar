@@ -1,5 +1,4 @@
 package com.necer.ncalendar.calendar;
-
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,28 +10,20 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
-import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
-import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
-import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
-import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
 import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
-
-import org.joda.time.DateTime;
 
 /**
  * Created by 闫彬彬 on 2017/8/25.
  * QQ:619008099
  */
 
-public class NCalendar extends  LinearLayout implements NestedScrollingParent, OnMonthCalendarPageChangeListener, OnClickMonthCalendarListener, OnClickWeekCalendarListener, OnWeekCalendarPageChangeListener, ValueAnimator.AnimatorUpdateListener  {
+public class NCalendar extends  LinearLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener  {
 
 
-    private WeekCalendar weekCalendar;
+   // private WeekCalendar weekCalendar;
     private MonthCalendar monthCalendar;
     private View nestedScrollingChild;
 
@@ -61,7 +52,7 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
         monthCalendar = new MonthCalendar(context, attrs);
         addView(monthCalendar);
 
-        weekCalendar = new WeekCalendar(context, attrs);
+        //weekCalendar = new WeekCalendar(context, attrs);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
         float dimension = ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 240));
@@ -71,12 +62,12 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
         rowHeigh = (int) (dimension / 6);
         MyLog.d("rowHeigh::" + rowHeigh);
         monthCalendar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, rowHeigh * 6));
-        weekCalendar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, rowHeigh));
+      //  weekCalendar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, rowHeigh));
 
-        monthCalendar.setOnMonthCalendarPageChangeListener(this);
-        monthCalendar.setOnClickMonthCalendarListener(this);
-        weekCalendar.setOnClickWeekCalendarListener(this);
-        weekCalendar.setOnWeekCalendarPageChangeListener(this);
+     //   monthCalendar.setOnMonthCalendarPageChangeListener(this);
+      //  monthCalendar.setOnClickMonthCalendarListener(this);
+      //  weekCalendar.setOnClickWeekCalendarListener(this);
+      //  weekCalendar.setOnWeekCalendarPageChangeListener(this);
 
         monthValueAnimator = new ValueAnimator();
         nestedScrollingChildValueAnimator = new ValueAnimator();
@@ -188,11 +179,21 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
             consumed[1] = dy;
         }
 
-        if (monthTop == -3 * rowHeigh && nestedScrollingChildTop == rowHeigh) {
+        if (monthTop == -3 * rowHeigh && nestedScrollingChildTop == rowHeigh && STATE == OPEN) {
             STATE = CLOSE;
+
+/*
+            //刷新
+            monthCalendar.change(1);
+
+            MyLog.d("刷新");*/
+
+
+
+
         }
 
-        if (monthTop == 0 && nestedScrollingChildTop == rowHeigh * 6) {
+        if (monthTop == 0 && nestedScrollingChildTop == rowHeigh * 6 && STATE == CLOSE) {
             STATE = OPEN;
         }
 
@@ -207,7 +208,6 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
             return true;
         }
         return false;
-
     }
 
     @Override
@@ -229,11 +229,9 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
         if (!(nestedScrollingChild instanceof NestedScrollingChild)) {
             throw new RuntimeException("子view必须实现NestedScrollingChild");
         }
-
-
     }
 
-    @Override
+  /*  @Override
     public void onMonthCalendarPageSelected(DateTime dateTime) {
         if (STATE == OPEN) {
             DateTime selectDateTime = monthCalendar.getSelectDateTime();
@@ -247,16 +245,17 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
                 onClickCalendarListener.onCalendarPageChanged(dateTime);
             }
         }
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public void onClickMonthCalendar(DateTime dateTime) {
         weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
         if (onClickCalendarListener != null) {
             onClickCalendarListener.onClickCalendar(dateTime);
         }
     }
-
+*/
+/*
     @Override
     public void onClickWeekCalendar(DateTime dateTime) {
         monthCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
@@ -264,9 +263,10 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
             onClickCalendarListener.onClickCalendar(dateTime);
         }
     }
+*/
 
 
-    @Override
+/*    @Override
     public void onWeekCalendarPageSelected(DateTime dateTime) {
         if (STATE == CLOSE) {
             DateTime selectDateTime = weekCalendar.getSelectDateTime();
@@ -280,7 +280,7 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, O
                 onClickCalendarListener.onCalendarPageChanged(dateTime);
             }
         }
-    }
+    }*/
 
 
     private OnCalendarChangeListener onClickCalendarListener;

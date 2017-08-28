@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import com.necer.ncalendar.calendar.NCalendar;
-
 import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
 
@@ -28,8 +26,6 @@ public class NCalendarActivity extends Activity{
 
         ncalendar = (NCalendar) findViewById(R.id.ncalendar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new AAAdapter(this));

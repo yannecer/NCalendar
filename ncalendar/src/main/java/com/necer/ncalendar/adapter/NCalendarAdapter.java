@@ -1,13 +1,13 @@
 package com.necer.ncalendar.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.necer.ncalendar.utils.MyLog;
-import com.necer.ncalendar.view.TextVvIEW;
+import com.necer.ncalendar.view.NMonthView;
+import com.necer.ncalendar.view.NWeekView;
 
 import org.joda.time.DateTime;
 
@@ -19,14 +19,14 @@ import java.util.List;
  * QQ:619008099
  */
 
-public class NAdapter extends PagerAdapter {
+public class NCalendarAdapter extends PagerAdapter {
 
 
     private Context mContext;
     private DateTime dateTime;
     private List<String> list;
 
-    public NAdapter(Context mContext) {
+    public NCalendarAdapter(Context mContext) {
         this.mContext = mContext;
         dateTime = new DateTime();
         list = new ArrayList<>();
@@ -52,18 +52,17 @@ public class NAdapter extends PagerAdapter {
 
         // MonthView monthView = new MonthView(mContext, dateTime, null, list);
 
-        TextVvIEW textVvIEW = null;
+        View view;
         if (type == 0) {
-            textVvIEW = new TextVvIEW(mContext, Color.BLACK);
+            view = new NMonthView(mContext);
         } else {
-            textVvIEW = new TextVvIEW(mContext, Color.BLUE);
-
+            view = new NWeekView(mContext);
         }
         MyLog.d("type:::" + type);
-        container.addView(textVvIEW);
+        container.addView(view);
 
 
-        return textVvIEW;
+        return view;
 
     }
 
@@ -79,7 +78,6 @@ public class NAdapter extends PagerAdapter {
         this.type = type;
         notifyDataSetChanged();
 
-        MyLog.d("notifyDataSetChanged");
     }
 
     @Override
