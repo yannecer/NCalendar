@@ -187,7 +187,7 @@ public class Utils {
 
         int days = dateTime.dayOfMonth().getMaximumValue();//当月天数
         int lastMonthDays = lastMonthDateTime.dayOfMonth().getMaximumValue();//上个月的天数
-    //    int nextMonthDays = nextMonthDateTime.dayOfMonth().getMaximumValue();//下个月个月的天数
+        //    int nextMonthDays = nextMonthDateTime.dayOfMonth().getMaximumValue();//下个月个月的天数
 
 
         int firstDayOfWeek = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), 1, 0, 0, 0).getDayOfWeek();//当月第一天周几
@@ -201,13 +201,13 @@ public class Utils {
             //上个月
             if (firstDayOfWeek != 7) {
                 for (int i = 0; i < firstDayOfWeek; i++) {
-                   // dadafa.add(lastMonthDays - (firstDayOfWeek - i - 1) + "");
+                    // dadafa.add(lastMonthDays - (firstDayOfWeek - i - 1) + "");
                     dateTimes.add(new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 1), 0, 0, 0));
                 }
             }
             //当月
             for (int i = 0; i < days; i++) {
-               // dadafa.add((i + 1) + "");
+                // dadafa.add((i + 1) + "");
                 dateTimes.add(new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0));
             }
             //下个月
@@ -220,15 +220,15 @@ public class Utils {
             }
         } else {
             //周一开始的
-            for (int i = 0; i < firstDayOfWeek-1; i++) {
-               // dadafa.add(lastMonthDays - (firstDayOfWeek - i -2) + "");
+            for (int i = 0; i < firstDayOfWeek - 1; i++) {
+                // dadafa.add(lastMonthDays - (firstDayOfWeek - i -2) + "");
                 dateTimes.add(new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 2), 0, 0, 0));
             }
             for (int i = 0; i < days; i++) {
                 //dadafa.add((i + 1) + "");
                 dateTimes.add(new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0));
             }
-            for (int i = 0; i <7-endDayOfWeek ; i++) {
+            for (int i = 0; i < 7 - endDayOfWeek; i++) {
                 //dadafa.add((i + 1) + "");
                 dateTimes.add(new DateTime(nextMonthDateTime.getYear(), nextMonthDateTime.getMonthOfYear(), i + 1, 0, 0, 0));
             }
@@ -250,7 +250,9 @@ public class Utils {
         }
         return dayOfWeek;
     }
-/*    *//**
+/*    */
+
+    /**
      * 某月第一天是周几
      *
      * @return
@@ -262,6 +264,30 @@ public class Utils {
         }
         return dayOfWeek;
     }*/
+    public static NCalendar getWeekCalendar2(DateTime dateTime, int type) {
+        List<DateTime> dateTimeList = new ArrayList<>();
+        List<String> lunarStringList = new ArrayList<>();
+
+        if (type == 0) {
+            dateTime = getSunFirstDayOfWeek(dateTime);
+        } else {
+            dateTime = getMonFirstDayOfWeek(dateTime);
+        }
+
+        NCalendar calendar = new NCalendar();
+        for (int i = 0; i < 7; i++) {
+            DateTime dateTime1 = dateTime.plusDays(i);
+
+            LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
+            String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+
+            dateTimeList.add(dateTime1);
+            lunarStringList.add(lunarDayString);
+        }
+        calendar.dateTimeList = dateTimeList;
+        calendar.lunarList = lunarStringList;
+        return calendar;
+    }
 
 
     /**
@@ -297,6 +323,11 @@ public class Utils {
         } else {
             return dateTime.minusWeeks(1).withDayOfWeek(7);
         }
+    }
+
+    //转化一周从周一开始
+    public static DateTime getMonFirstDayOfWeek(DateTime dateTime) {
+        return dateTime.dayOfWeek().withMinimumValue();
     }
 
 

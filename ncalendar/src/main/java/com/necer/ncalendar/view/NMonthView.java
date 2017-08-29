@@ -33,15 +33,11 @@ public class NMonthView extends NCalendarView {
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
     public NMonthView(Context context) {
-        this(context, null);
+        super(context, null);
     }
 
     public NMonthView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public NMonthView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
     }
 
     public NMonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
@@ -50,7 +46,9 @@ public class NMonthView extends NCalendarView {
 
         mRectList = new ArrayList<>();
         dateTimes = Utils.getMonthCalendar2(dateTime, 0);
+
         mRowNum = dateTimes.size() / 7;
+
         mOnClickMonthViewListener = onClickMonthViewListener;
     }
 
@@ -75,9 +73,6 @@ public class NMonthView extends NCalendarView {
                 } else {
                     baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 10 - mHeight / 12);
                 }
-
-                //int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
-
                 if (mSelectDateTime != null && dateTime.toLocalDate().toString().equals(mSelectDateTime.toLocalDate().toString())) {
                     mSelectRowIndex = i;//选中的行
                     int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), 30);

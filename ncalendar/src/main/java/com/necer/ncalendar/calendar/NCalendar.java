@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NMonthView;
 
@@ -38,7 +37,7 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
     private int rowNum;//行数
     private int selectRowIndex;//被选中的行
 
-    private int duration;
+    private int duration = 240;
 
 
     private int monthCalendarOffset;//月日历需要滑动的距离
@@ -64,7 +63,7 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
         heigh = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
-        duration = ta.getInt(R.styleable.NCalendar_duration, 500);
+        duration = ta.getInt(R.styleable.NCalendar_duration, 240);
         ta.recycle();
 
         rowHeigh = heigh / 5;
@@ -90,7 +89,6 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
 
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        MyLog.d("onNestedScroll::");
     }
 
     @Override
@@ -214,11 +212,11 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
     private void autoOpen(int startMonth, int endMonth, int startChild, int endChild) {
         STATE = OPEN;
         monthValueAnimator.setIntValues(startMonth, endMonth);
-        monthValueAnimator.setDuration(240);
+        monthValueAnimator.setDuration(duration);
         monthValueAnimator.start();
 
         nestedScrollingChildValueAnimator.setIntValues(startChild, endChild);
-        nestedScrollingChildValueAnimator.setDuration(240);
+        nestedScrollingChildValueAnimator.setDuration(duration);
         nestedScrollingChildValueAnimator.start();
     }
 
@@ -226,11 +224,11 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
     private void autoClose(int startMonth, int endMonth, int startChild, int endChild) {
         STATE = CLOSE;
         monthValueAnimator.setIntValues(startMonth, endMonth);
-        monthValueAnimator.setDuration(240);
+        monthValueAnimator.setDuration(duration);
         monthValueAnimator.start();
 
         nestedScrollingChildValueAnimator.setIntValues(startChild, endChild);
-        nestedScrollingChildValueAnimator.setDuration(240);
+        nestedScrollingChildValueAnimator.setDuration(duration);
         nestedScrollingChildValueAnimator.start();
     }
 

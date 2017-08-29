@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.necer.ncalendar.calendar.NMonthCalendar;
-import com.necer.ncalendar.utils.Utils;
-
-import org.joda.time.DateTime;
 
 import necer.ncalendardemo.R;
 
@@ -24,15 +21,6 @@ public class TestActivity extends Activity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
-
-        Utils.getMonthCalendar2(new DateTime("2019-09-01"), 1);
-
-
-        nmcalendar = (NMonthCalendar) findViewById(R.id.nmcalendar);
-
-
-
     }
 
 }

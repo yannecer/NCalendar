@@ -44,6 +44,7 @@ public abstract class NCalendarView extends View {
 
 
 
+
     private Paint getPaint(int paintColor, float paintSize) {
         Paint paint = new Paint();
         paint.setColor(paintColor);
