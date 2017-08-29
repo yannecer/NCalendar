@@ -2,39 +2,35 @@ package com.necer.ncalendar.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.necer.ncalendar.utils.MyLog;
-import com.necer.ncalendar.view.NMonthView;
-import com.necer.ncalendar.view.NWeekView;
+import com.necer.ncalendar.view.NCalendarView;
 
 import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 闫彬彬 on 2017/8/25.
  * QQ:619008099
  */
 
-public class NCalendarAdapter extends PagerAdapter {
+public abstract class NCalendarAdapter extends PagerAdapter {
 
 
-    private Context mContext;
-    private DateTime dateTime;
-    private List<String> list;
+    protected Context mContext;
+    protected int mCount;//总页数
+    protected int mCurr;//当前位置
+    protected SparseArray<NCalendarView> mCalendarViews;
+    protected DateTime mDateTime;
 
-    public NCalendarAdapter(Context mContext) {
+    public NCalendarAdapter(Context mContext, int count, int curr, DateTime dateTime) {
         this.mContext = mContext;
-        dateTime = new DateTime();
-        list = new ArrayList<>();
+        this.mDateTime = dateTime;
+        this.mCurr = curr;
+        this.mCount = count;
+        mCalendarViews = new SparseArray<>();
     }
-
-    private int mCount = 20;
-    private int type;//0,,1
-
 
     @Override
     public int getCount() {
@@ -47,41 +43,12 @@ public class NCalendarAdapter extends PagerAdapter {
         return view == object;
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-
-        // MonthView monthView = new MonthView(mContext, dateTime, null, list);
-
-        View view;
-        if (type == 0) {
-            view = new NMonthView(mContext);
-        } else {
-            view = new NWeekView(mContext);
-        }
-        MyLog.d("type:::" + type);
-        container.addView(view);
-
-
-        return view;
-
-    }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
-
-
-    public void notifyDataSetChanged(int mCount, int type) {
-
-        this.mCount = mCount;
-        this.type = type;
-        notifyDataSetChanged();
-
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
+    public SparseArray<NCalendarView> getCalendarViews() {
+        return mCalendarViews;
     }
 }

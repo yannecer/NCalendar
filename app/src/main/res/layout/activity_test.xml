@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="aaa"/>
+    
+    <com.necer.ncalendar.calendar.NMonthCalendar
+        android:id="@+id/nmcalendar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"></com.necer.ncalendar.calendar.NMonthCalendar>
+
+</LinearLayout>

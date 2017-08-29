@@ -20,6 +20,7 @@
         <activity android:name=".activity.MonthCalendarActivity"/>
         <activity android:name=".activity.WeekCalendarActivity"/>
         <activity android:name=".activity.NCalendarActivity"/>
+        <activity android:name=".activity.TestActivity"/>
 
     </application>
 

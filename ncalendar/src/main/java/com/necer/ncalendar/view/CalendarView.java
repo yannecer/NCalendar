@@ -45,9 +45,6 @@ public abstract class CalendarView extends View {
     protected int mWidth;
     protected int mHeight;
 
-
-
-
     public CalendarView(Context context) {
         super(context);
 

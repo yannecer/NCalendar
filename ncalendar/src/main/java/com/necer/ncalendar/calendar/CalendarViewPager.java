@@ -44,6 +44,7 @@ public abstract class CalendarViewPager extends ViewPager {
     public CalendarViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
         Attrs.solarTextColor = ta.getColor(R.styleable.NCalendar_solarTextColor, getResources().getColor(R.color.solarTextColor));
         Attrs.lunarTextColor = ta.getColor(R.styleable.NCalendar_lunarTextColor, getResources().getColor(R.color.lunarTextColor));

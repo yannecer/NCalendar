@@ -16,6 +16,7 @@ import necer.ncalendardemo.adapter.AAAdapter;
 
 public class NCalendarActivity extends Activity{
 
+
     private NCalendar ncalendar;
     private RecyclerView recyclerView;
 

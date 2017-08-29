@@ -50,6 +50,7 @@ public class Utils {
     public static int getDisplayWidth(Context context) {
         return context.getResources().getDisplayMetrics().widthPixels;
     }
+
     /**
      * 屏幕高度
      *
@@ -103,6 +104,7 @@ public class Utils {
 
     /**
      * 获得两个日期距离几周
+     *
      * @param dateTime1
      * @param dateTime2
      * @return
@@ -172,6 +174,70 @@ public class Utils {
         return nCalendar;
     }
 
+
+    /**
+     * @param dateTime 今天
+     * @param type     0，周日，1周一
+     * @return
+     */
+    public static List<DateTime> getMonthCalendar2(DateTime dateTime, int type) {
+
+        DateTime lastMonthDateTime = dateTime.plusMonths(-1);//上个月
+        DateTime nextMonthDateTime = dateTime.plusMonths(1);//下个月
+
+        int days = dateTime.dayOfMonth().getMaximumValue();//当月天数
+        int lastMonthDays = lastMonthDateTime.dayOfMonth().getMaximumValue();//上个月的天数
+    //    int nextMonthDays = nextMonthDateTime.dayOfMonth().getMaximumValue();//下个月个月的天数
+
+
+        int firstDayOfWeek = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), 1, 0, 0, 0).getDayOfWeek();//当月第一天周几
+
+        int endDayOfWeek = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), days, 0, 0, 0).getDayOfWeek();//当月最后一天周几
+
+        List<DateTime> dateTimes = new ArrayList<>();
+
+        //周日开始的
+        if (type == 0) {
+            //上个月
+            if (firstDayOfWeek != 7) {
+                for (int i = 0; i < firstDayOfWeek; i++) {
+                   // dadafa.add(lastMonthDays - (firstDayOfWeek - i - 1) + "");
+                    dateTimes.add(new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 1), 0, 0, 0));
+                }
+            }
+            //当月
+            for (int i = 0; i < days; i++) {
+               // dadafa.add((i + 1) + "");
+                dateTimes.add(new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+            }
+            //下个月
+            if (endDayOfWeek == 7) {
+                endDayOfWeek = 0;
+            }
+            for (int i = 0; i < 6 - endDayOfWeek; i++) {
+                //dadafa.add((i + 1) + "");
+                dateTimes.add(new DateTime(nextMonthDateTime.getYear(), nextMonthDateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+            }
+        } else {
+            //周一开始的
+            for (int i = 0; i < firstDayOfWeek-1; i++) {
+               // dadafa.add(lastMonthDays - (firstDayOfWeek - i -2) + "");
+                dateTimes.add(new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 2), 0, 0, 0));
+            }
+            for (int i = 0; i < days; i++) {
+                //dadafa.add((i + 1) + "");
+                dateTimes.add(new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+            }
+            for (int i = 0; i <7-endDayOfWeek ; i++) {
+                //dadafa.add((i + 1) + "");
+                dateTimes.add(new DateTime(nextMonthDateTime.getYear(), nextMonthDateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+            }
+        }
+        return dateTimes;
+
+    }
+
+
     /**
      * 某月第一天是周几
      *
@@ -184,6 +250,19 @@ public class Utils {
         }
         return dayOfWeek;
     }
+/*    *//**
+     * 某月第一天是周几
+     *
+     * @return
+     *//*
+    public static int getFirstDayOfWeekOfMonth2(int year, int month) {
+        int dayOfWeek = new DateTime(year, month, 1, 0, 0, 0).getDayOfWeek();
+        if (dayOfWeek == 7) {
+            return 0;
+        }
+        return dayOfWeek;
+    }*/
+
 
     /**
      * 周视图的数据
