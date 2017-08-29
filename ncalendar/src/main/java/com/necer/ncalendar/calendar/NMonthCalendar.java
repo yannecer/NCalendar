@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.adapter.NMonthAdapter;
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.view.NMonthView;
 
 import org.joda.time.DateTime;
@@ -30,33 +29,6 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
 
     public NMonthCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-
-
-        /*
-        addOnPageChangeListener(new OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                NMonthView currView = (NMonthView) calendarAdapter.getCalendarViews().get(position);
-                NMonthView lastView = (NMonthView) calendarAdapter.getCalendarViews().get(position-1);
-                NMonthView nextView = (NMonthView) calendarAdapter.getCalendarViews().get(position + 1);
-
-
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });*/
     }
 
     @Override
@@ -67,7 +39,6 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         return new NMonthAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
     }
 
-
     private int lastPosition;
 
     @Override
@@ -76,21 +47,19 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         NMonthView lastView = (NMonthView) calendarAdapter.getCalendarViews().get(position - 1);
         NMonthView nextView = (NMonthView) calendarAdapter.getCalendarViews().get(position + 1);
 
-        if (lastView != null) {
+        if (lastView != null)
             lastView.clear();
-        }
-        if (nextView != null) {
+
+        if (nextView != null)
             nextView.clear();
-        }
+
 
         if (lastPosition == 0) {
             lastPosition = position;
             currView.setSelectDateTime(mInitialDateTime);
         }
 
-
         DateTime dateTime = mSelectDateTime == null ? mInitialDateTime : mSelectDateTime;
-
 
         if (lastPosition < position) {
             //又滑
@@ -105,10 +74,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             currView.setSelectDateTime(dateTime2);
             mSelectDateTime = dateTime2;
         }
-
         lastPosition = position;
-
-
     }
 
     @Override
@@ -135,11 +101,13 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             return;
         }
         nMonthView.setSelectDateTime(dateTime);
-
         mSelectDateTime = dateTime;
-
-        MyLog.d("mSelectDateTime::" + mSelectDateTime);
-
     }
+
+
+    public NMonthView getCurrectMonthView() {
+        return (NMonthView) calendarAdapter.getCalendarViews().get(getCurrentItem());
+    }
+
 
 }

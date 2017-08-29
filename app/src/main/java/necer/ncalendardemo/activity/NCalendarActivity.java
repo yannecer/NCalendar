@@ -1,8 +1,8 @@
 package necer.ncalendardemo.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.necer.ncalendar.calendar.NCalendar;
@@ -14,8 +14,7 @@ import necer.ncalendardemo.adapter.AAAdapter;
  * QQ:619008099
  */
 
-public class NCalendarActivity extends Activity{
-
+public class NCalendarActivity extends AppCompatActivity {
 
     private NCalendar ncalendar;
     private RecyclerView recyclerView;

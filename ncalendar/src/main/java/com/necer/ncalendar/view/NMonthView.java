@@ -8,12 +8,9 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
 import com.necer.ncalendar.utils.Utils;
-
 import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +27,8 @@ public class NMonthView extends NCalendarView {
 
     private List<DateTime> dateTimes;
     private List<Rect> mRectList;
-    private int lineNum;
+    private int mRowNum;
+    private int mSelectRowIndex;
 
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
@@ -52,8 +50,7 @@ public class NMonthView extends NCalendarView {
 
         mRectList = new ArrayList<>();
         dateTimes = Utils.getMonthCalendar2(dateTime, 0);
-        lineNum = dateTimes.size() / 7;
-
+        mRowNum = dateTimes.size() / 7;
         mOnClickMonthViewListener = onClickMonthViewListener;
     }
 
@@ -65,15 +62,24 @@ public class NMonthView extends NCalendarView {
         mWidth = getWidth();
         mHeight = getHeight();
 
-        for (int i = 0; i < lineNum; i++) {
+        for (int i = 0; i < mRowNum; i++) {
             for (int j = 0; j < 7; j++) {
-                Rect rect = new Rect(j * mWidth / 7, i * mHeight / lineNum, j * mWidth / 7 + mWidth / 7, i * mHeight / lineNum + mHeight / lineNum);
+                Rect rect = new Rect(j * mWidth / 7, i * mHeight / mRowNum, j * mWidth / 7 + mWidth / 7, i * mHeight / mRowNum + mHeight / mRowNum);
                 mRectList.add(rect);
                 DateTime dateTime = dateTimes.get(i * 7 + j);
                 Paint.FontMetricsInt fontMetrics = mSorlarPaint.getFontMetricsInt();
-                int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
+
+                int baseline;//让6行的第一行和5行的第一行在同一直线上，处理选中第一行的滑动
+                if (mRowNum == 5) {
+                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
+                } else {
+                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 10 - mHeight / 12);
+                }
+
+                //int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
 
                 if (mSelectDateTime != null && dateTime.toLocalDate().toString().equals(mSelectDateTime.toLocalDate().toString())) {
+                    mSelectRowIndex = i;//选中的行
                     int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), 30);
                     canvas.drawCircle(rect.centerX(), rect.centerY(), 30, mSorlarPaint);
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
@@ -114,6 +120,13 @@ public class NMonthView extends NCalendarView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return mGestureDetector.onTouchEvent(event);
+    }
+
+    public int getRowNum() {
+        return mRowNum;
+    }
+    public int getSelectRowIndex() {
+        return mSelectRowIndex;
     }
 
 }

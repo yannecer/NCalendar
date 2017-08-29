@@ -20,6 +20,7 @@ import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
+import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.MonthView;
 
@@ -171,6 +172,8 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         ViewGroup.LayoutParams layoutParams = nestedScrollingChild.getLayoutParams();
         layoutParams.height = getMeasuredHeight() - rowHeigh;
+
+        MyLog.d("getMeasuredHeight()::" + getMeasuredHeight());
     }
 
     @Override

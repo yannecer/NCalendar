@@ -1,4 +1,5 @@
 package com.necer.ncalendar.calendar;
+
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,29 +11,37 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
 import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
+import com.necer.ncalendar.view.NMonthView;
 
 /**
  * Created by 闫彬彬 on 2017/8/25.
  * QQ:619008099
  */
 
-public class NCalendar extends  LinearLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener  {
+public class NCalendar extends LinearLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener {
 
 
-   // private WeekCalendar weekCalendar;
-    private MonthCalendar monthCalendar;
+    // private WeekCalendar weekCalendar;
+    private NMonthCalendar monthCalendar;
     private View nestedScrollingChild;
 
     public static final int OPEN = 100;
     public static final int CLOSE = 200;
     private static int STATE = 100;//默认开
     private int rowHeigh;
+    private int heigh;//总的高度
+    private int rowNum;//行数
+    private int selectRowIndex;//被选中的行
 
     private int duration;
+
+
+    private int monthCalendarOffset;//月日历需要滑动的距离
 
     private ValueAnimator monthValueAnimator;
     private ValueAnimator nestedScrollingChildValueAnimator;
@@ -49,31 +58,24 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, V
         super(context, attrs, defStyleAttr);
 
         setOrientation(LinearLayout.VERTICAL);
-        monthCalendar = new MonthCalendar(context, attrs);
+        monthCalendar = new NMonthCalendar(context, attrs);
         addView(monthCalendar);
 
-        //weekCalendar = new WeekCalendar(context, attrs);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
-        float dimension = ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 240));
+        heigh = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
         duration = ta.getInt(R.styleable.NCalendar_duration, 500);
         ta.recycle();
 
-        rowHeigh = (int) (dimension / 6);
-        MyLog.d("rowHeigh::" + rowHeigh);
-        monthCalendar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, rowHeigh * 6));
-      //  weekCalendar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, rowHeigh));
-
-     //   monthCalendar.setOnMonthCalendarPageChangeListener(this);
-      //  monthCalendar.setOnClickMonthCalendarListener(this);
-      //  weekCalendar.setOnClickWeekCalendarListener(this);
-      //  weekCalendar.setOnWeekCalendarPageChangeListener(this);
+        rowHeigh = heigh / 5;
+        monthCalendar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heigh));
 
         monthValueAnimator = new ValueAnimator();
         nestedScrollingChildValueAnimator = new ValueAnimator();
 
         monthValueAnimator.addUpdateListener(this);
         nestedScrollingChildValueAnimator.addUpdateListener(this);
+
     }
 
 
@@ -84,17 +86,15 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, V
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int axes) {
-        // super.onNestedScrollAccepted(child, target, axes);
     }
 
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        // super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+        MyLog.d("onNestedScroll::");
     }
 
     @Override
     public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
-        //  return super.onNestedFling(target, velocityX, velocityY, consumed);
         return false;
     }
 
@@ -104,26 +104,108 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, V
         int monthCalendarTop = monthCalendar.getTop();
         int nestedScrollingChildTop = nestedScrollingChild.getTop();
 
-        if (monthCalendarTop == 0 && nestedScrollingChildTop == rowHeigh * 6) {
+
+        if (monthCalendarTop == 0 && nestedScrollingChildTop == heigh) {
             return;
         }
 
-        if (monthCalendarTop == -rowHeigh * 3 && nestedScrollingChildTop == rowHeigh) {
+        if (monthCalendarTop == -monthCalendarOffset && nestedScrollingChildTop == rowHeigh) {
             return;
         }
 
         if (STATE == OPEN) {
-            if (Math.abs(monthCalendarTop) < rowHeigh) {
-                autoOpen(monthCalendarTop, 0, nestedScrollingChildTop, rowHeigh * 6);
+            if (heigh - nestedScrollingChildTop < rowHeigh) {
+                autoOpen(monthCalendarTop, 0, nestedScrollingChildTop, heigh);
             } else {
-                autoClose(monthCalendarTop, -rowHeigh * 3, nestedScrollingChildTop, rowHeigh);
+                autoClose(monthCalendarTop, -monthCalendarOffset, nestedScrollingChildTop, rowHeigh);
             }
+
         } else {
             if (nestedScrollingChildTop < rowHeigh * 2) {
-                autoClose(monthCalendarTop, -rowHeigh * 3, nestedScrollingChildTop, rowHeigh);
+                autoClose(monthCalendarTop, -monthCalendarOffset, nestedScrollingChildTop, rowHeigh);
             } else {
-                autoOpen(monthCalendarTop, 0, nestedScrollingChildTop, rowHeigh * 6);
+                autoOpen(monthCalendarTop, 0, nestedScrollingChildTop, heigh);
             }
+        }
+    }
+
+
+    @Override
+    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+        int monthTop = monthCalendar.getTop();
+        int nestedScrollingChildTop = nestedScrollingChild.getTop();
+
+        NMonthView currectMonthView = monthCalendar.getCurrectMonthView();
+
+        rowNum = currectMonthView.getRowNum();
+        selectRowIndex = currectMonthView.getSelectRowIndex();
+
+
+        //month需要移动selectRowIndex*h/rowNum ,计算时依每个行高的中点计算
+        monthCalendarOffset = selectRowIndex * heigh / rowNum;
+
+        if (dy > 0 && Math.abs(monthTop) < monthCalendarOffset) {
+            int offset = getOffset(dy, monthCalendarOffset - Math.abs(monthTop));
+            monthCalendar.offsetTopAndBottom(-offset);
+            nestedScrollingChild.offsetTopAndBottom(-offset);
+            consumed[1] = dy;
+        } else if (dy > 0 && nestedScrollingChildTop > rowHeigh) {
+            int offset = getOffset(dy, nestedScrollingChildTop - rowHeigh);
+            nestedScrollingChild.offsetTopAndBottom(-offset);
+            consumed[1] = dy;
+        } else if (dy < 0 && monthTop != 0 && !ViewCompat.canScrollVertically(target, -1)) {
+            int offset = getOffset(Math.abs(dy), Math.abs(monthTop));
+            monthCalendar.offsetTopAndBottom(offset);
+            nestedScrollingChild.offsetTopAndBottom(offset);
+            consumed[1] = dy;
+        } else if (dy < 0 && monthTop == 0 && nestedScrollingChildTop != heigh && !ViewCompat.canScrollVertically(target, -1)) {
+            int offset = getOffset(Math.abs(dy), heigh - nestedScrollingChildTop);
+            nestedScrollingChild.offsetTopAndBottom(offset);
+            consumed[1] = dy;
+        }
+
+        if (monthTop == -monthCalendarOffset && nestedScrollingChildTop == rowHeigh && STATE == OPEN) {
+            STATE = CLOSE;
+        }
+
+        if (monthTop == 0 && nestedScrollingChildTop == heigh && STATE == CLOSE) {
+            STATE = OPEN;
+        }
+
+    }
+
+
+    @Override
+    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
+        //防止快速滑动
+        int nestedScrollingChildTop = nestedScrollingChild.getTop();
+        if (nestedScrollingChildTop > rowHeigh) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int getNestedScrollAxes() {
+        return 0;
+    }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        ViewGroup.LayoutParams layoutParams = nestedScrollingChild.getLayoutParams();
+        layoutParams.height = getMeasuredHeight() - rowHeigh;
+
+
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        nestedScrollingChild = getChildAt(1);
+        if (!(nestedScrollingChild instanceof NestedScrollingChild)) {
+            throw new RuntimeException("子view必须实现NestedScrollingChild");
         }
     }
 
@@ -150,86 +232,9 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, V
         nestedScrollingChildValueAnimator.setIntValues(startChild, endChild);
         nestedScrollingChildValueAnimator.setDuration(240);
         nestedScrollingChildValueAnimator.start();
-        STATE = CLOSE;
     }
 
 
-    @Override
-    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
-        int monthTop = monthCalendar.getTop();
-        int nestedScrollingChildTop = nestedScrollingChild.getTop();
-
-        if (dy > 0 && Math.abs(monthTop) < 3 * rowHeigh) {
-            int offset = getOffset(dy, 3 * rowHeigh - Math.abs(monthTop));
-            monthCalendar.offsetTopAndBottom(-offset);
-            nestedScrollingChild.offsetTopAndBottom(-offset);
-            consumed[1] = dy;
-        } else if (dy > 0 && nestedScrollingChildTop > rowHeigh) {
-            int offset = getOffset(dy, nestedScrollingChildTop - rowHeigh);
-            nestedScrollingChild.offsetTopAndBottom(-offset);
-            consumed[1] = dy;
-        } else if (dy < 0 && monthTop != 0 && !ViewCompat.canScrollVertically(target, -1)) {
-            int offset = getOffset(Math.abs(dy), Math.abs(monthTop));
-            monthCalendar.offsetTopAndBottom(offset);
-            nestedScrollingChild.offsetTopAndBottom(offset);
-            consumed[1] = dy;
-        } else if (dy < 0 && monthTop == 0 && nestedScrollingChildTop != rowHeigh * 6 && !ViewCompat.canScrollVertically(target, -1)) {
-            int offset = getOffset(Math.abs(dy), rowHeigh * 6 - nestedScrollingChildTop);
-            nestedScrollingChild.offsetTopAndBottom(offset);
-            consumed[1] = dy;
-        }
-
-        if (monthTop == -3 * rowHeigh && nestedScrollingChildTop == rowHeigh && STATE == OPEN) {
-            STATE = CLOSE;
-
-/*
-            //刷新
-            monthCalendar.change(1);
-
-            MyLog.d("刷新");*/
-
-
-
-
-        }
-
-        if (monthTop == 0 && nestedScrollingChildTop == rowHeigh * 6 && STATE == CLOSE) {
-            STATE = OPEN;
-        }
-
-    }
-
-
-    @Override
-    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
-        //防止快速滑动
-        int nestedScrollingChildTop = nestedScrollingChild.getTop();
-        if (nestedScrollingChildTop > rowHeigh) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public int getNestedScrollAxes() {
-        return 0;
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        ViewGroup.LayoutParams layoutParams = nestedScrollingChild.getLayoutParams();
-        layoutParams.height = getMeasuredHeight() - rowHeigh;
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        nestedScrollingChild = getChildAt(1);
-        if (!(nestedScrollingChild instanceof NestedScrollingChild)) {
-            throw new RuntimeException("子view必须实现NestedScrollingChild");
-        }
-    }
 
   /*  @Override
     public void onMonthCalendarPageSelected(DateTime dateTime) {
@@ -287,14 +292,6 @@ public class NCalendar extends  LinearLayout implements NestedScrollingParent, V
 
     public void setOnClickCalendarListener(OnCalendarChangeListener onClickCalendarListener) {
         this.onClickCalendarListener = onClickCalendarListener;
-    }
-
-    public void open() {
-        //autoOpen();
-    }
-
-    public void close() {
-        autoClose(0, -rowHeigh * 3, rowHeigh * 6, rowHeigh);
     }
 
 

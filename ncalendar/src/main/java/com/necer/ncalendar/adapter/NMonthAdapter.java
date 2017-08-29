@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.view.NMonthView;
 
 import org.joda.time.DateTime;
@@ -32,10 +31,6 @@ public class NMonthAdapter extends NCalendarAdapter{
             DateTime dateTime = this.mDateTime.plusMonths(i);
             nMonthView = new NMonthView(mContext, dateTime, mOnClickMonthViewListener);
             mCalendarViews.put(position, nMonthView);
-
-
-            MyLog.d("NMonthAdapter：：：position:::" + position);
-
         }
         container.addView(nMonthView);
         return nMonthView;
