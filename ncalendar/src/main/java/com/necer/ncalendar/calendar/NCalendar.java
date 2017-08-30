@@ -1,5 +1,6 @@
 package com.necer.ncalendar.calendar;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,22 +11,30 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
+import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
+import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
+import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
+import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NMonthView;
+
+import org.joda.time.DateTime;
 
 /**
  * Created by 闫彬彬 on 2017/8/25.
  * QQ:619008099
  */
 
-public class NCalendar extends LinearLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener {
+public class NCalendar extends LinearLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener, OnClickMonthCalendarListener, OnClickWeekCalendarListener, OnWeekCalendarPageChangeListener, OnMonthCalendarPageChangeListener {
 
 
-    // private WeekCalendar weekCalendar;
+    private NWeekCalendar weekCalendar;
     private NMonthCalendar monthCalendar;
     private View nestedScrollingChild;
 
@@ -61,6 +70,9 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
         addView(monthCalendar);
 
 
+        weekCalendar = new NWeekCalendar(context, attrs);
+
+
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
         heigh = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
         duration = ta.getInt(R.styleable.NCalendar_duration, 240);
@@ -68,18 +80,57 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
 
         rowHeigh = heigh / 5;
         monthCalendar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heigh));
+        weekCalendar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, rowHeigh));
+
+
+        monthCalendar.setOnClickMonthCalendarListener(this);
+        monthCalendar.setOnMonthCalendarPageChangeListener(this);
+        weekCalendar.setOnClickWeekCalendarListener(this);
+        weekCalendar.setOnWeekCalendarPageChangeListener(this);
 
         monthValueAnimator = new ValueAnimator();
         nestedScrollingChildValueAnimator = new ValueAnimator();
 
         monthValueAnimator.addUpdateListener(this);
         nestedScrollingChildValueAnimator.addUpdateListener(this);
+        nestedScrollingChildValueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                changeState();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+        post(new Runnable() {
+            @Override
+            public void run() {
+                ViewParent parent = getParent();
+                if (!(parent instanceof RelativeLayout)) {
+                    throw new RuntimeException("MWCalendar的父view必须是RelativeLayout");
+                }
+                ((RelativeLayout) parent).addView(weekCalendar);
+                weekCalendar.setVisibility(INVISIBLE);
+            }
+        });
     }
 
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+
         return true;
     }
 
@@ -101,7 +152,6 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
 
         int monthCalendarTop = monthCalendar.getTop();
         int nestedScrollingChildTop = nestedScrollingChild.getTop();
-
 
         if (monthCalendarTop == 0 && nestedScrollingChildTop == heigh) {
             return;
@@ -130,6 +180,7 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+
         int monthTop = monthCalendar.getTop();
         int nestedScrollingChildTop = nestedScrollingChild.getTop();
 
@@ -137,7 +188,6 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
 
         rowNum = currectMonthView.getRowNum();
         selectRowIndex = currectMonthView.getSelectRowIndex();
-
 
         //month需要移动selectRowIndex*h/rowNum ,计算时依每个行高的中点计算
         monthCalendarOffset = selectRowIndex * heigh / rowNum;
@@ -147,27 +197,33 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
             monthCalendar.offsetTopAndBottom(-offset);
             nestedScrollingChild.offsetTopAndBottom(-offset);
             consumed[1] = dy;
+            showMonth();
         } else if (dy > 0 && nestedScrollingChildTop > rowHeigh) {
             int offset = getOffset(dy, nestedScrollingChildTop - rowHeigh);
             nestedScrollingChild.offsetTopAndBottom(-offset);
             consumed[1] = dy;
+            showMonth();
         } else if (dy < 0 && monthTop != 0 && !ViewCompat.canScrollVertically(target, -1)) {
             int offset = getOffset(Math.abs(dy), Math.abs(monthTop));
             monthCalendar.offsetTopAndBottom(offset);
             nestedScrollingChild.offsetTopAndBottom(offset);
             consumed[1] = dy;
+            showMonth();
         } else if (dy < 0 && monthTop == 0 && nestedScrollingChildTop != heigh && !ViewCompat.canScrollVertically(target, -1)) {
             int offset = getOffset(Math.abs(dy), heigh - nestedScrollingChildTop);
             nestedScrollingChild.offsetTopAndBottom(offset);
             consumed[1] = dy;
+            showMonth();
         }
 
-        if (monthTop == -monthCalendarOffset && nestedScrollingChildTop == rowHeigh && STATE == OPEN) {
+        if (nestedScrollingChildTop == rowHeigh) {
             STATE = CLOSE;
+            showWeek();
         }
 
-        if (monthTop == 0 && nestedScrollingChildTop == heigh && STATE == CLOSE) {
+        if (nestedScrollingChildTop == heigh) {
             STATE = OPEN;
+            showMonth();
         }
 
     }
@@ -194,8 +250,6 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         ViewGroup.LayoutParams layoutParams = nestedScrollingChild.getLayoutParams();
         layoutParams.height = getMeasuredHeight() - rowHeigh;
-
-
     }
 
     @Override
@@ -233,57 +287,24 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
     }
 
 
-
-  /*  @Override
-    public void onMonthCalendarPageSelected(DateTime dateTime) {
-        if (STATE == OPEN) {
-            DateTime selectDateTime = monthCalendar.getSelectDateTime();
-            if (selectDateTime == null) {
-                weekCalendar.jumpDate(dateTime, true);
-            } else {
-                weekCalendar.setDate(selectDateTime.getYear(), selectDateTime.getMonthOfYear(), selectDateTime.getDayOfMonth());
-            }
-
-            if (onClickCalendarListener != null) {
-                onClickCalendarListener.onCalendarPageChanged(dateTime);
-            }
-        }
-    }*/
-
-  /*  @Override
-    public void onClickMonthCalendar(DateTime dateTime) {
-        weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
-        if (onClickCalendarListener != null) {
-            onClickCalendarListener.onClickCalendar(dateTime);
-        }
-    }
-*/
-/*
-    @Override
-    public void onClickWeekCalendar(DateTime dateTime) {
-        monthCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
-        if (onClickCalendarListener != null) {
-            onClickCalendarListener.onClickCalendar(dateTime);
-        }
-    }
-*/
-
-
-/*    @Override
-    public void onWeekCalendarPageSelected(DateTime dateTime) {
+    private void changeState() {
         if (STATE == CLOSE) {
-            DateTime selectDateTime = weekCalendar.getSelectDateTime();
-            if (selectDateTime == null) {
-                monthCalendar.jumpDate(dateTime, true);
-            } else {
-                monthCalendar.setDate(selectDateTime.getYear(), selectDateTime.getMonthOfYear(), selectDateTime.getDayOfMonth());
-            }
-
-            if (onClickCalendarListener != null) {
-                onClickCalendarListener.onCalendarPageChanged(dateTime);
-            }
+            showWeek();
+        } else {
+            showMonth();
         }
-    }*/
+    }
+
+
+    private void showMonth() {
+        monthCalendar.setVisibility(VISIBLE);
+        weekCalendar.setVisibility(INVISIBLE);
+    }
+
+    private void showWeek() {
+        monthCalendar.setVisibility(INVISIBLE);
+        weekCalendar.setVisibility(VISIBLE);
+    }
 
 
     private OnCalendarChangeListener onClickCalendarListener;
@@ -320,4 +341,32 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
     }
 
 
+    @Override
+    public void onClickMonthCalendar(DateTime dateTime) {
+
+        //定位month的位置
+
+        weekCalendar.setDateTime(dateTime);
+
+    }
+
+    @Override
+    public void onClickWeekCalendar(DateTime dateTime) {
+        monthCalendar.setDateTime(dateTime);
+    }
+
+    @Override
+    public void onWeekCalendarPageSelected(DateTime dateTime) {
+        if (STATE == CLOSE) {
+            monthCalendar.setDateTime(dateTime);
+        }
+    }
+
+    @Override
+    public void onMonthCalendarPageSelected(DateTime dateTime) {
+
+        if (STATE == OPEN) {
+            weekCalendar.setDateTime(dateTime);
+        }
+    }
 }

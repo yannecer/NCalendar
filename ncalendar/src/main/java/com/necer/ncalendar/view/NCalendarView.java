@@ -3,6 +3,7 @@ package com.necer.ncalendar.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.view.View;
 import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 闫彬彬 on 2017/8/29.
@@ -26,6 +30,8 @@ public abstract class NCalendarView extends View {
     protected Paint mSorlarPaint;
     protected Paint mLunarPaint;
 
+    protected List<Rect> mRectList;
+
 
 
 
@@ -40,6 +46,7 @@ public abstract class NCalendarView extends View {
     public NCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mSorlarPaint = getPaint(Color.parseColor("#000000"), Utils.dp2px(context,15));
+        mRectList = new ArrayList<>();
     }
 
 

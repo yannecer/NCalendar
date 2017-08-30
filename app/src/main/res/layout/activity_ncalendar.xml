@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <include layout="@layout/layout_week_num" />
 
-    <com.necer.ncalendar.calendar.NCalendar
-        android:id="@+id/ncalendar"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+
+        <com.necer.ncalendar.calendar.NCalendar
+            android:id="@+id/ncalendar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-    </com.necer.ncalendar.calendar.NCalendar>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.necer.ncalendar.calendar.NCalendar>
 
 
-
-
-
+    </RelativeLayout>
 
 
 </LinearLayout>

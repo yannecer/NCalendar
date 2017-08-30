@@ -66,30 +66,6 @@ public abstract class NCalendarPager extends ViewPager {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
-
-        //  addOnPageChangeListener((OnPageChangeListener) this);
-       /* addOnPageChangeListener(new OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-             //   initCurrentCalendarView();
-
-
-                SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();
-
-                NCalendarView nCalendarView = ()calendarViews.get(position);
-
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });*/
     }
 
 
@@ -98,6 +74,8 @@ public abstract class NCalendarPager extends ViewPager {
 
     protected abstract void initCurrentCalendarView(int position);
 
+    protected abstract void setDateTime(DateTime dateTime);
+    protected abstract int jumpDate(DateTime dateTime,boolean smoothScroll);
 
 
 

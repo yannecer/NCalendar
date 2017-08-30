@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
 import com.necer.ncalendar.utils.Utils;
+
 import org.joda.time.DateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ public class NMonthView extends NCalendarView {
     private int mHeight;
 
     private List<DateTime> dateTimes;
-    private List<Rect> mRectList;
+
     private int mRowNum;
     private int mSelectRowIndex;
 
@@ -43,10 +45,7 @@ public class NMonthView extends NCalendarView {
     public NMonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
         this(context);
         this.mInitialDateTime = dateTime;
-
-        mRectList = new ArrayList<>();
         dateTimes = Utils.getMonthCalendar2(dateTime, 0);
-
         mRowNum = dateTimes.size() / 7;
 
         mOnClickMonthViewListener = onClickMonthViewListener;
@@ -59,7 +58,7 @@ public class NMonthView extends NCalendarView {
 
         mWidth = getWidth();
         mHeight = getHeight();
-
+        mRectList.clear();
         for (int i = 0; i < mRowNum; i++) {
             for (int j = 0; j < 7; j++) {
                 Rect rect = new Rect(j * mWidth / 7, i * mHeight / mRowNum, j * mWidth / 7 + mWidth / 7, i * mHeight / mRowNum + mHeight / mRowNum);
@@ -76,7 +75,8 @@ public class NMonthView extends NCalendarView {
                 if (mSelectDateTime != null && dateTime.toLocalDate().toString().equals(mSelectDateTime.toLocalDate().toString())) {
                     mSelectRowIndex = i;//选中的行
                     int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), 30);
-                    canvas.drawCircle(rect.centerX(), rect.centerY(), 30, mSorlarPaint);
+                    int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
+                    canvas.drawCircle(rect.centerX(),centerY , 30, mSorlarPaint);
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                 } else {
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);

@@ -45,7 +45,6 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void close(View view) {

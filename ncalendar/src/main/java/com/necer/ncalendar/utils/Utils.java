@@ -113,8 +113,6 @@ public class Utils {
         DateTime sunFirstDayOfWeek1 = getSunFirstDayOfWeek(dateTime1);
         DateTime sunFirstDayOfWeek2 = getSunFirstDayOfWeek(dateTime2);
         int days = Days.daysBetween(sunFirstDayOfWeek1, sunFirstDayOfWeek2).getDays();
-
-
         if (days > 0) {
             return (days + 1) / 7;
         } else if (days < 0) {

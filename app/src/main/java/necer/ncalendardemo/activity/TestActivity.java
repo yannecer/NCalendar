@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.necer.ncalendar.calendar.NMonthCalendar;
+import com.necer.ncalendar.utils.MyLog;
+
+import org.joda.time.DateTime;
 
 import necer.ncalendardemo.R;
 
@@ -21,6 +24,21 @@ public class TestActivity extends Activity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+
+        DateTime dateTime = new DateTime();
+
+        int dayOfWeek = dateTime.getDayOfWeek();
+
+
+        DateTime dateTime1 = dateTime.plusMonths(1);
+
+
+
+
+        MyLog.d("dayOfWeek:::" + dayOfWeek);
+
+
     }
 
 }
