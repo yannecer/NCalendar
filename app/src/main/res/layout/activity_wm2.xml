@@ -28,27 +28,6 @@
 
     <include layout="@layout/layout_week_num" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <com.necer.ncalendar.calendar.MWCalendar2
-            android:id="@+id/mWCalendar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:calendarHeight="300dp"
-            app:duration="500"
-            app:isMultiple="false"
-            app:selectCircleColor="#3388ff">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.necer.ncalendar.calendar.MWCalendar2>
-
-    </RelativeLayout>
 
 
 </LinearLayout>

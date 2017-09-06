@@ -53,7 +53,6 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
     int childViewTop;
 
 
-
     private int monthCalendarOffset;//月日历需要滑动的距离
 
     private ValueAnimator monthValueAnimator;
@@ -89,9 +88,9 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
         childViewTop = heigh;
 
         monthCalendar.setOnClickMonthCalendarListener(this);
-        //  monthCalendar.setOnMonthCalendarPageChangeListener(this);
+        monthCalendar.setOnMonthCalendarPageChangeListener(this);
         weekCalendar.setOnClickWeekCalendarListener(this);
-           weekCalendar.setOnWeekCalendarPageChangeListener(this);
+        weekCalendar.setOnWeekCalendarPageChangeListener(this);
 
         monthValueAnimator = new ValueAnimator();
         nestedScrollingChildValueAnimator = new ValueAnimator();
@@ -111,7 +110,6 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
 
                 if (top == heigh) {
                     STATE = MONTH;
-
                     requestLayout();
                 } else {
                     STATE = WEEK;
@@ -237,7 +235,7 @@ public class NCalendar extends LinearLayout implements NestedScrollingParent, Va
             weekCalendar.setVisibility(VISIBLE);
         }
 
-        if (STATE == WEEK &&  dy < 0 && !ViewCompat.canScrollVertically(target, -1)) {
+        if (STATE == WEEK && dy < 0 && !ViewCompat.canScrollVertically(target, -1)) {
             weekCalendar.setVisibility(INVISIBLE);
         }
 
