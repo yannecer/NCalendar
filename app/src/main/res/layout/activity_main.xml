@@ -31,7 +31,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2.0"
+        android:text="miui日历"
         android:onClick="ncanlendar"
 
         />

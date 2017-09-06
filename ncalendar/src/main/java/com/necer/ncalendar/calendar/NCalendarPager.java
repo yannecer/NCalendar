@@ -1,6 +1,7 @@
 package com.necer.ncalendar.calendar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
@@ -66,6 +67,8 @@ public abstract class NCalendarPager extends ViewPager {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
+
+        setBackgroundColor(Color.WHITE);
     }
 
 
