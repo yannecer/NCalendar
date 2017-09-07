@@ -2,10 +2,9 @@ package com.necer.ncalendar.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
@@ -23,32 +22,25 @@ import java.util.List;
 
 public class NMonthView extends NCalendarView {
 
-
-    private int mWidth;
-    private int mHeight;
-
-    private List<DateTime> dateTimes;
+    private List<String> lunarList;
+    private List<String> localDateList;
 
     private int mRowNum;
-    private int mSelectRowIndex;
-
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
-    public NMonthView(Context context) {
-        super(context, null);
-    }
-
-    public NMonthView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
 
     public NMonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
-        this(context);
+        super(context);
         this.mInitialDateTime = dateTime;
-        dateTimes = Utils.getMonthCalendar2(dateTime, 0);
-        mRowNum = dateTimes.size() / 7;
+        Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, 0);
 
         mOnClickMonthViewListener = onClickMonthViewListener;
+
+        lunarList = nCalendar2.lunarList;
+        localDateList = nCalendar2.localDateList;
+        dateTimes = nCalendar2.dateTimeList;
+
+        mRowNum = dateTimes.size() / 7;
     }
 
 
@@ -57,7 +49,8 @@ public class NMonthView extends NCalendarView {
         super.onDraw(canvas);
 
         mWidth = getWidth();
-        mHeight = getHeight();
+        //为了6行时，绘制农历不至于太靠下，绘制区域网上压缩一下
+        mHeight = (int) (getHeight() - Utils.dp2px(getContext(), 10));
         mRectList.clear();
         for (int i = 0; i < mRowNum; i++) {
             for (int j = 0; j < 7; j++) {
@@ -72,19 +65,59 @@ public class NMonthView extends NCalendarView {
                 } else {
                     baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 10 - mHeight / 12);
                 }
-                if (mSelectDateTime != null && dateTime.toLocalDate().toString().equals(mSelectDateTime.toLocalDate().toString())) {
-                    mSelectRowIndex = i;//选中的行
-                    int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), 30);
-                    int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
-                    canvas.drawCircle(rect.centerX(),centerY , 30, mSorlarPaint);
-                    canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+
+                //当月和上下月的颜色不同
+                if (Utils.isEqualsMonth(dateTime, mInitialDateTime)) {
+                    //当天和选中的日期不绘制农历
+                    if (Utils.isToday(dateTime)) {
+                        mSorlarPaint.setColor(mSelectCircleColor);
+                        int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
+                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
+                        canvas.drawCircle(rect.centerX(), centerY, radius, mSorlarPaint);
+                        mSorlarPaint.setColor(Color.WHITE);
+                        canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                    } else if (mSelectDateTime != null && dateTime.toLocalDate().equals(mSelectDateTime.toLocalDate())) {
+                        mSorlarPaint.setColor(mSelectCircleColor);
+                        int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
+                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
+                        canvas.drawCircle(rect.centerX(), centerY, radius, mSorlarPaint);
+                        mSorlarPaint.setColor(mHollowCircleColor);
+                        canvas.drawCircle(rect.centerX(), centerY, radius - mHollowCircleStroke, mSorlarPaint);
+                        mSorlarPaint.setColor(mSolarTextColor);
+                        canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                    } else {
+                        mSorlarPaint.setColor(mSolarTextColor);
+                        canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                        drawLunar(canvas, rect,baseline, mLunarTextColor, i, j);
+                    }
+
                 } else {
+                    mSorlarPaint.setColor(mHintColor);
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                    drawLunar(canvas, rect, baseline,mHintColor, i, j);
                 }
+
             }
         }
 
     }
+
+
+
+    public int getMonthHeight() {
+        return mHeight;
+    }
+
+
+    private void drawLunar(Canvas canvas, Rect rect, int baseline, int color, int i, int j) {
+        if (isShowLunar) {
+            mLunarPaint.setColor(color);
+            String lunar = lunarList.get(i * 7 + j);
+            canvas.drawText(lunar, rect.centerX(), baseline + Utils.dp2px(getContext(), 13), mLunarPaint);
+        }
+    }
+
+
 
     private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
         @Override
@@ -122,16 +155,15 @@ public class NMonthView extends NCalendarView {
     }
     public int getSelectRowIndex() {
 
-        int index =0;
+  /*      int index =0;
         for (int i = 0; i < dateTimes.size(); i++) {
             if (mSelectDateTime.toLocalDate().toString().equals(dateTimes.get(i).toLocalDate().toString())) {
                 index = i;
             }
-        }
+        }*/
+        int indexOf = localDateList.indexOf(mSelectDateTime.toLocalDate().toString());
+        return indexOf / 7;
 
-
-        return index/7;
-       // return mSelectRowIndex;
     }
 
 }

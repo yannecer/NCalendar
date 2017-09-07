@@ -173,7 +173,6 @@ public abstract class CalendarViewPager extends ViewPager {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return isScrollEnable ? super.onTouchEvent(ev) : false;
-
     }
 
 

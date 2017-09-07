@@ -8,6 +8,44 @@
     tools:context="necer.ncalendardemo.activity.MainActivity">
 
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="仿miui日历"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="ncanlendar"
+        />
+
+
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="20dp">
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#c1c1c1"
+          android:layout_centerVertical="true"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="请点上面的miui日历"
+          android:textColor="#333333"
+          android:textSize="16sp"
+          android:layout_centerInParent="true"
+          android:background="@color/white"
+          />
+  </RelativeLayout>
+
+
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,13 +66,7 @@
 
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="miui日历"
-        android:onClick="ncanlendar"
 
-        />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

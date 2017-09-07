@@ -146,7 +146,6 @@ public class Utils {
         List<String> lunarList = new ArrayList<>();
         List<String> localDateList = new ArrayList<>();
 
-
         int j = 1;
         for (int i = 0; i < 42; i++) {
             DateTime dateTime1 = null;
@@ -178,60 +177,97 @@ public class Utils {
      * @param type     0，周日，1周一
      * @return
      */
-    public static List<DateTime> getMonthCalendar2(DateTime dateTime, int type) {
+    public static NCalendar getMonthCalendar2(DateTime dateTime, int type) {
 
         DateTime lastMonthDateTime = dateTime.plusMonths(-1);//上个月
         DateTime nextMonthDateTime = dateTime.plusMonths(1);//下个月
 
         int days = dateTime.dayOfMonth().getMaximumValue();//当月天数
         int lastMonthDays = lastMonthDateTime.dayOfMonth().getMaximumValue();//上个月的天数
-        //    int nextMonthDays = nextMonthDateTime.dayOfMonth().getMaximumValue();//下个月个月的天数
-
 
         int firstDayOfWeek = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), 1, 0, 0, 0).getDayOfWeek();//当月第一天周几
 
         int endDayOfWeek = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), days, 0, 0, 0).getDayOfWeek();//当月最后一天周几
 
+        NCalendar nCalendar = new NCalendar();
         List<DateTime> dateTimes = new ArrayList<>();
+        List<String> lunarList = new ArrayList<>();
+        List<String> localDateList = new ArrayList<>();
 
         //周日开始的
         if (type == 0) {
             //上个月
             if (firstDayOfWeek != 7) {
                 for (int i = 0; i < firstDayOfWeek; i++) {
-                    // dadafa.add(lastMonthDays - (firstDayOfWeek - i - 1) + "");
-                    dateTimes.add(new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 1), 0, 0, 0));
+                    DateTime dateTime1 = new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 1), 0, 0, 0);
+
+                    dateTimes.add(dateTime1);
+                    localDateList.add(dateTime1.toLocalDate().toString());
+
+                    LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
+                    String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+                    lunarList.add(lunarDayString);
                 }
             }
             //当月
             for (int i = 0; i < days; i++) {
-                // dadafa.add((i + 1) + "");
-                dateTimes.add(new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+                DateTime dateTime1 = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0);
+                dateTimes.add(dateTime1);
+                localDateList.add(dateTime1.toLocalDate().toString());
+
+                LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
+                String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+                lunarList.add(lunarDayString);
             }
             //下个月
             if (endDayOfWeek == 7) {
                 endDayOfWeek = 0;
             }
             for (int i = 0; i < 6 - endDayOfWeek; i++) {
-                //dadafa.add((i + 1) + "");
-                dateTimes.add(new DateTime(nextMonthDateTime.getYear(), nextMonthDateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+                DateTime dateTime1 = new DateTime(nextMonthDateTime.getYear(), nextMonthDateTime.getMonthOfYear(), i + 1, 0, 0, 0);
+                dateTimes.add(dateTime1);
+                localDateList.add(dateTime1.toLocalDate().toString());
+
+                LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
+                String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+                lunarList.add(lunarDayString);
             }
         } else {
             //周一开始的
             for (int i = 0; i < firstDayOfWeek - 1; i++) {
-                // dadafa.add(lastMonthDays - (firstDayOfWeek - i -2) + "");
-                dateTimes.add(new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 2), 0, 0, 0));
+                DateTime dateTime1 = new DateTime(lastMonthDateTime.getYear(), lastMonthDateTime.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 2), 0, 0, 0);
+                dateTimes.add(dateTime1);
+                localDateList.add(dateTime1.toLocalDate().toString());
+
+                LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
+                String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+                lunarList.add(lunarDayString);
             }
             for (int i = 0; i < days; i++) {
-                //dadafa.add((i + 1) + "");
-                dateTimes.add(new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+                DateTime dateTime1 = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(), i + 1, 0, 0, 0);
+                dateTimes.add(dateTime1);
+                localDateList.add(dateTime1.toLocalDate().toString());
+
+                LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
+                String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+                lunarList.add(lunarDayString);
             }
             for (int i = 0; i < 7 - endDayOfWeek; i++) {
-                //dadafa.add((i + 1) + "");
-                dateTimes.add(new DateTime(nextMonthDateTime.getYear(), nextMonthDateTime.getMonthOfYear(), i + 1, 0, 0, 0));
+                DateTime dateTime1 = new DateTime(nextMonthDateTime.getYear(), nextMonthDateTime.getMonthOfYear(), i + 1, 0, 0, 0);
+                dateTimes.add(dateTime1);
+                localDateList.add(dateTime1.toLocalDate().toString());
+
+                LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
+                String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+                lunarList.add(lunarDayString);
             }
         }
-        return dateTimes;
+
+        nCalendar.dateTimeList = dateTimes;
+        nCalendar.localDateList = localDateList;
+        nCalendar.lunarList = lunarList;
+        return nCalendar;
+        //return dateTimes;
 
     }
 

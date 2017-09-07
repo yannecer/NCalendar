@@ -20,4 +20,6 @@ public class Attrs {
     public static int hollowCircleColor;
     public static int hollowCircleStroke;
 
+    public static int firstDay;
+
 }

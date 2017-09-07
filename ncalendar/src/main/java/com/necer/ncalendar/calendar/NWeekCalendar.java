@@ -24,8 +24,6 @@ import org.joda.time.Weeks;
 public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewListener {
 
 
-    private DateTime mInitialDateTime;//初始化datetime
-    private DateTime mSelectDateTime;//当前页面选中的datetime
 
 
     private OnClickWeekCalendarListener onClickWeekCalendarListener;
@@ -41,7 +39,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
     @Override
     protected NCalendarAdapter getCalendarAdapter() {
-        mInitialDateTime = new DateTime();
+      //  mInitialDateTime = new DateTime();
         DateTime startSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(startDateTime);
         DateTime endSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(endDateTime);
         DateTime todaySunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(DateTime.now());
