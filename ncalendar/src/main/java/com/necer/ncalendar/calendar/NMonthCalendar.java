@@ -9,6 +9,7 @@ import com.necer.ncalendar.adapter.NMonthAdapter;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
+import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NCalendarView;
 import com.necer.ncalendar.view.NMonthView;
@@ -53,6 +54,9 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
     @Override
     protected void initCurrentCalendarView(int position) {
         NMonthView currView = (NMonthView) calendarAdapter.getCalendarViews().get(position);
+
+        MyLog.d("currView::" + currView);
+
         NMonthView lastView = (NMonthView) calendarAdapter.getCalendarViews().get(position - 1);
         NMonthView nextView = (NMonthView) calendarAdapter.getCalendarViews().get(position + 1);
 

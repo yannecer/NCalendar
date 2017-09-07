@@ -60,7 +60,6 @@ public abstract class NCalendarPager extends ViewPager {
 
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
             @Override
             public void onGlobalLayout() {
                 initCurrentCalendarView(mCurrPage);
@@ -78,8 +77,8 @@ public abstract class NCalendarPager extends ViewPager {
     protected abstract void initCurrentCalendarView(int position);
 
     protected abstract void setDateTime(DateTime dateTime);
-    protected abstract int jumpDate(DateTime dateTime,boolean smoothScroll);
 
+    protected abstract int jumpDate(DateTime dateTime, boolean smoothScroll);
 
 
 }
