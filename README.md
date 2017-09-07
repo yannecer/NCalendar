@@ -1,8 +1,12 @@
 # NCalendar
-一款安卓日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
+一款仿miui日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
 
 ## 效果图
+
+![](https://github.com/yannecer/NCalendar/blob/master/app/nclendar2.gif)
+
+
 ![](https://github.com/yannecer/NCalendar/blob/master/app/ncalendar.gif)
 
 
