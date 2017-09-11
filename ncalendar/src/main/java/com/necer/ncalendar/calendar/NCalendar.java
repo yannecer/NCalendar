@@ -1,5 +1,4 @@
 package com.necer.ncalendar.calendar;
-
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,17 +13,14 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NMonthView;
-
 import org.joda.time.DateTime;
 
 /**
@@ -53,9 +49,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     private ValueAnimator monthValueAnimator;//月日历动画
     private ValueAnimator nestedScrollingChildValueAnimator;//nestedScrollingChild动画
 
-
-    private boolean isFirst = true;
-
     public NCalendar(Context context) {
         this(context, null);
     }
@@ -76,8 +69,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         duration = ta.getInt(R.styleable.NCalendar_duration, 240);
         ta.recycle();
 
-
-        STATE = MONTH;
+        STATE = WEEK;
+       // STATE = MONTH;
 
         weekHeigh = monthHeigh / 5;
         monthCalendar.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, monthHeigh));
@@ -85,15 +78,10 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
         addView(monthCalendar);
 
-        //初始的位置
-        monthCalendarTop = 0;
-        childViewTop = monthHeigh;
-
         monthCalendar.setOnClickMonthCalendarListener(this);
         monthCalendar.setOnMonthCalendarPageChangeListener(this);
         weekCalendar.setOnClickWeekCalendarListener(this);
         weekCalendar.setOnWeekCalendarPageChangeListener(this);
-
 
         post(new Runnable() {
             @Override
@@ -103,7 +91,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
                     throw new RuntimeException("MWCalendar的父view必须是RelativeLayout");
                 }
                 ((RelativeLayout) parent).addView(weekCalendar);
-                weekCalendar.setVisibility(INVISIBLE);
+
+                weekCalendar.setVisibility(STATE == MONTH ? INVISIBLE : VISIBLE);
             }
         });
 
@@ -139,10 +128,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
             }
         });
-
-
-        MyLog.d("构造方法");
-
 
     }
 
@@ -296,12 +281,14 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
         if (STATE == MONTH) {
             monthCalendarTop = monthCalendar.getTop();
+            childViewTop = nestedScrollingChild.getTop() == 0 ? monthHeigh : nestedScrollingChild.getTop();
 
         } else {
             monthCalendarTop = -getMonthCalendarOffset();
-           // childViewTop = nestedScrollingChild.getTop()==0?;
+            childViewTop = nestedScrollingChild.getTop() == 0 ? weekHeigh : nestedScrollingChild.getTop();
+
         }
-        childViewTop = nestedScrollingChild.getTop() == 0 ? monthHeigh : nestedScrollingChild.getTop();
+
         monthCalendar.layout(0, monthCalendarTop, r, monthHeigh + monthCalendarTop);
         ViewGroup.LayoutParams layoutParams = nestedScrollingChild.getLayoutParams();
         nestedScrollingChild.layout(0, childViewTop, r, layoutParams.height + childViewTop);

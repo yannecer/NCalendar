@@ -12,7 +12,6 @@ import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
-import com.necer.ncalendar.view.NCalendarView;
 
 import org.joda.time.DateTime;
 
@@ -24,7 +23,6 @@ import org.joda.time.DateTime;
 public abstract class NCalendarPager extends ViewPager {
 
     protected NCalendarAdapter calendarAdapter;
-    protected NCalendarView currentView;
     protected DateTime startDateTime;
     protected DateTime endDateTime;
     protected int mPageSize;
@@ -32,7 +30,6 @@ public abstract class NCalendarPager extends ViewPager {
 
     protected DateTime mInitialDateTime;//日历初始化datetime，即今天
     protected DateTime mSelectDateTime;//当前页面选中的datetime
-
 
 
     public NCalendarPager(Context context) {
@@ -102,7 +99,6 @@ public abstract class NCalendarPager extends ViewPager {
 
     protected abstract NCalendarAdapter getCalendarAdapter();
 
-
     protected abstract void initCurrentCalendarView(int position);
 
     protected abstract void setDateTime(DateTime dateTime);
@@ -116,18 +112,45 @@ public abstract class NCalendarPager extends ViewPager {
         this.isScrollEnable = isScrollEnable;
     }
 
+
+    private int downY;
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return isScrollEnable ? super.onTouchEvent(ev) : false;
 
-    }
+      /*  if (!isScrollEnable) {
+            return false;
+        } else {
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    downY = (int) ev.getY();
+                    break;
+                case MotionEvent.ACTION_HOVER_MOVE:
+                    MyLog.d("ACTION_HOVER_MOVE");
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    int y = (int) ev.getY();
+                    if (downY - y > 100) {
 
+                        MyLog.d("上");
+
+                    } else if (downY - y < -100) {
+                        MyLog.d("下");
+                    }
+                    break;
+            }
+
+            return true
+
+           // return super.onTouchEvent(ev);
+        }*/
+    }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return isScrollEnable ? super.onInterceptTouchEvent(ev) : false;
     }
-
-
 
 }
