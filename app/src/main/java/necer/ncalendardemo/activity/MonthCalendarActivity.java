@@ -61,9 +61,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements View.OnC
                 MyLog.d("dateTime::" + dateTime);
             }
         });
-
-
-
     }
 
     @Override

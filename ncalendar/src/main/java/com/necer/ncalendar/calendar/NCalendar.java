@@ -52,6 +52,9 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     private ValueAnimator monthValueAnimator;//月日历动画
     private ValueAnimator nestedScrollingChildValueAnimator;//nestedScrollingChild动画
 
+
+    private boolean isFirst = true;
+
     public NCalendar(Context context) {
         this(context, null);
     }
@@ -63,13 +66,15 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public NCalendar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+
+        monthCalendar = new NMonthCalendar(context, attrs);
+        weekCalendar = new NWeekCalendar(context, attrs);
+
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
         monthHeigh = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
         duration = ta.getInt(R.styleable.NCalendar_duration, 240);
         ta.recycle();
 
-        monthCalendar = new NMonthCalendar(context, attrs);
-        weekCalendar = new NWeekCalendar(context, attrs);
 
         weekHeigh = monthHeigh / 5;
         monthCalendar.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, monthHeigh));
@@ -85,6 +90,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         monthCalendar.setOnMonthCalendarPageChangeListener(this);
         weekCalendar.setOnClickWeekCalendarListener(this);
         weekCalendar.setOnWeekCalendarPageChangeListener(this);
+
 
         post(new Runnable() {
             @Override
@@ -130,6 +136,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
             }
         });
+
     }
 
 
@@ -140,10 +147,12 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int axes) {
+        // MyLog.d("onNestedScrollAccepted::");
     }
 
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+
     }
 
     @Override
@@ -191,7 +200,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         weekCalendar.setScrollEnable(false);
         monthCalendar.setScrollEnable(false);
 
-
         int monthTop = monthCalendar.getTop();
         int nestedScrollingChildTop = nestedScrollingChild.getTop();
 
@@ -221,7 +229,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             nestedScrollingChild.offsetTopAndBottom(offset);
             consumed[1] = dy;
         }
-
 
         //nestedScrollingChild滑动到周位置后，标记状态，同时周日显示
         if (nestedScrollingChildTop == weekHeigh) {
@@ -264,6 +271,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         layoutParams.height = getMeasuredHeight() - weekHeigh;
     }
 
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -280,8 +288,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         //  super.onLayout(changed, l, t, r, b);
 
         if (STATE == MONTH) {
-            monthCalendarTop = 0;
-            childViewTop = monthHeigh;
+            monthCalendarTop = monthCalendar.getTop();
+            childViewTop = nestedScrollingChild.getTop() == 0 ? monthHeigh : nestedScrollingChild.getTop();
         } else {
             monthCalendarTop = -getMonthCalendarOffset();
             childViewTop = nestedScrollingChild.getTop();
@@ -290,8 +298,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         monthCalendar.layout(0, monthCalendarTop, r, monthHeigh + monthCalendarTop);
         ViewGroup.LayoutParams layoutParams = nestedScrollingChild.getLayoutParams();
         nestedScrollingChild.layout(0, childViewTop, r, layoutParams.height + childViewTop);
-    }
 
+    }
 
 
     //月日历需要滑动的距离，
@@ -302,7 +310,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         //现在选中的是第几行
         int selectRowIndex = currectMonthView.getSelectRowIndex();
         //month需要移动selectRowIndex*h/rowNum ,计算时依每个行高的中点计算
-       // int monthCalendarOffset = selectRowIndex * monthHeigh / rowNum;
+        // int monthCalendarOffset = selectRowIndex * monthHeigh / rowNum;
         int monthCalendarOffset = selectRowIndex * currectMonthView.getMonthHeight() / rowNum;
         return monthCalendarOffset;
     }
@@ -411,5 +419,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             onClickCalendarListener.onCalendarPageChanged(dateTime);
         }
     }
+
 
 }

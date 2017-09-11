@@ -32,6 +32,7 @@ public class NMonthView extends NCalendarView {
     public NMonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
         super(context);
         this.mInitialDateTime = dateTime;
+        this.mSelectDateTime = dateTime;
         Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, 0);
 
         mOnClickMonthViewListener = onClickMonthViewListener;
@@ -96,13 +97,9 @@ public class NMonthView extends NCalendarView {
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     drawLunar(canvas, rect, baseline,mHintColor, i, j);
                 }
-
             }
         }
-
     }
-
-
 
     public int getMonthHeight() {
         return mHeight;
@@ -154,13 +151,6 @@ public class NMonthView extends NCalendarView {
         return mRowNum;
     }
     public int getSelectRowIndex() {
-
-  /*      int index =0;
-        for (int i = 0; i < dateTimes.size(); i++) {
-            if (mSelectDateTime.toLocalDate().toString().equals(dateTimes.get(i).toLocalDate().toString())) {
-                index = i;
-            }
-        }*/
         int indexOf = localDateList.indexOf(mSelectDateTime.toLocalDate().toString());
         return indexOf / 7;
 
