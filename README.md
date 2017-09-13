@@ -6,155 +6,80 @@
 
 ![](https://github.com/yannecer/NCalendar/blob/master/app/nclendar2.gif)
 
-
-![](https://github.com/yannecer/NCalendar/blob/master/app/ncalendar.gif)
-
-
-
 ## 使用方法
 
 
 ### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:1.0.8'
+compile 'com.necer.ncalendar:ncalendar:2.0.0'
 ```
+### 注意：ncalendar：1.0.x 的日历不能升级到 2.0.0，ncalendar:2.0.0是全新的日历
 
+### 仿miui日历交互
 
-### 月日历
 ```
-<com.necer.ncalendar.calendar.MonthCalendar
-        android:id="@+id/monthCalendar"
+   <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@color/white"
-        app:selectCircleColor= "@android:color/holo_red_light"
-        app:pointcolor="#00c8aa"
-        app:pointSize="1dp"
-        app:solarTextSize= "15sp"/>
-        
- //设置监听
- monthCalendar.setOnClickMonthCalendarListener(new OnClickMonthCalendarListener() {
-            @Override
-            public void onClickMonthCalendar(DateTime dateTime) {
-                Toast.makeText(MonthCalendarActivity.this, "选择了：：" + dateTime.toLocalDate(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        android:layout_height="match_parent">
 
- monthCalendar.setOnMonthCalendarPageChangeListener(new OnMonthCalendarPageChangeListener() {
-            @Override
-            public void onMonthCalendarPageSelected(DateTime dateTime) {
-                tv_title.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月");
-            }
-        });
-        
-        
-  //设置表示圆点
-  List<String> pointList = new ArrayList<>();
-  pointList.add("2017-06-15");
-  pointList.add("2017-06-20");
-  pointList.add("2017-06-07");
-  pointList.add("2017-07-07");
-  monthCalendar.setPointList(pointList);
-  
-  //跳转日期
-  monthCalendar.setDate(2017, 10, 1);
-```
-
-### 周日历
-
-```
-<com.necer.ncalendar.calendar.WeekCalendar
-        android:id="@+id/weekCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:selectCircleColor= "@android:color/holo_red_light"
-        app:pointcolor=  "#00ffff"
-        app:pointSize="1dp"
-        app:solarTextSize= "15sp"/>
- //设置监听
- weekCalendar.setOnClickWeekCalendarListener(new OnClickWeekCalendarListener() {
-            @Override
-            public void onClickWeekCalendar(DateTime dateTime) {
-                Toast.makeText(WeekCalendarActivity.this, "选择了：：" + dateTime.toLocalDate(), Toast.LENGTH_SHORT).show();
-            }
-        });
- weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeListener() {
-            @Override
-            public void onWeekCalendarPageSelected(DateTime dateTime) {
-                tv_title.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月");
-
-            }
-        });
-       
-  //设置表示圆点
-  List<String> pointList = new ArrayList<>();
-  pointList.add("2017-06-15");
-  pointList.add("2017-06-20");
-  pointList.add("2017-06-07");
-  pointList.add("2017-07-07");
-  weekCalendar.setPointList(pointList);
-  
-  
-  //跳转日期
-  weekCalendar.setDate(2017, 10, 1);
-  
-```
-
-### 周月视图切换
-
-```
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
-    <com.necer.ncalendar.calendar.MWCalendar
-        android:id="@+id/mWCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:calendarHeight="300dp"
-        app:selectCircleColor="#3388ff">
-        
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.necer.ncalendar.calendar.NCalendar
+            android:id="@+id/ncalendar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-            
-     </com.necer.ncalendar.calendar.MWCalendar>
- </RelativeLayout>
-   
- 日历切换类MWCalendar，需要父View为RelativeLayout，子View为NestedScrollingChild的实现类
+            android:layout_height="match_parent"
+            app:defaultCalendar="Month"
+            app:firstDayOfWeek="Sunday"
+            app:selectCircleColor="#3388ff">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.necer.ncalendar.calendar.NCalendar>
+    </RelativeLayout>
+
+
+ncalendar包含一个月日类NMonthCalendar，一个周日历NWeekCalendar和一个滑动切换不同视图的NCalendar，
+单一日历请使用NMonthCalendar或者NWeekCalendar。
+
+NCalendar日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
+
+NCalendar在布局文件中需要一个RelativeLayout作为父布局，内部需要一个实现了NestedScrollingChild的view，RecyclerView，NestedScrollView都可以。
  
- //设置监听
- mwCalendar.setOnClickCalendarListener(new OnCalendarChangeListener() {
+```
+### 主要Api
+
+```
+1、监听
+ncalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             @Override
             public void onClickCalendar(DateTime dateTime) {
-
+                //日历点击回调
             }
 
             @Override
             public void onCalendarPageChanged(DateTime dateTime) {
-
+                //日历翻页回调
             }
         });
-        
-        
-        
- //小圆点设置
- List<String> pointList = new ArrayList<>();
- pointList.add("2017-05-15");
- pointList.add("2017-06-20");
- pointList.add("2017-06-07"); 
- mwCalendar.setPointList(pointList);
- 
- 
- 
- //跳转日期    
- mwCalendar.setDate(2018, 1, 1);
- 
+
+2、跳转日期
+ncalendar.setDate(int year, int month, int day); 
+
+3、月-->周  周-->月
+ncalendar.toMonth();
+ncalendar.toWeek();
+
+4、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
+
+//NCalendar默认视图,Month 或者 Week，默认是 Month
+app:defaultCalendar="Month"
+app:defaultCalendar="Week"
+
+//设置一周开始是周一还是周日，Sunday 或者 Monday ，默认是周日Sunday
+app:firstDayOfWeek="Sunday"
+app:firstDayOfWeek="Monday" 
 ```
-
-
-
 ### 支持的属性：
 
 | 属性| 描述|
@@ -171,10 +96,9 @@ compile 'com.necer.ncalendar:ncalendar:1.0.8'
 | pointcolor| 圆点指示器颜色 |
 | hollowCircleColor| 选中空心圆中间的颜色|
 | hollowCircleStroke| 选中空心圆圆环粗细 |
-| startDateTime| 日历开始时间 "yyyy-MM-dd" |
-| endDateTime| 日历截止时间 "yyyy-MM-dd" |
-| calendarHeight|日历高度，在MWCalendar中使用 |
-| isMultiple|是否多选|
+| calendarHeight|日历高度，在NCalendar中使用 |
+| defaultCalendar|NCalendar日历默认视图|
+| firstDayOfWeek|每周第一天是周日还是周一|
 | duration|自动折叠时间|
 
 
