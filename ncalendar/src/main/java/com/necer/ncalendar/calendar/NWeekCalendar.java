@@ -3,7 +3,9 @@ package com.necer.ncalendar.calendar;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.widget.Toast;
 
+import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.adapter.NWeekAdapter;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
@@ -37,21 +39,11 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
     @Override
     protected NCalendarAdapter getCalendarAdapter() {
 
-
          DateTime startSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(startDateTime);
          DateTime endSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(endDateTime);
          DateTime todaySunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(DateTime.now());
          mPageSize = Weeks.weeksBetween(startSunFirstDayOfWeek, endSunFirstDayOfWeek).getWeeks() + 1;
          mCurrPage = Weeks.weeksBetween(startSunFirstDayOfWeek, todaySunFirstDayOfWeek).getWeeks();
-
-
-     /*   DateTime startFirstDayOfWeek = Utils.getMonFirstDayOfWeek(startDateTime);
-        DateTime endFirstDayOfWeek = Utils.getMonFirstDayOfWeek(endDateTime);
-        DateTime todayFirstDayOfWeek = Utils.getMonFirstDayOfWeek(DateTime.now());
-
-        mPageSize = Weeks.weeksBetween(startFirstDayOfWeek, endFirstDayOfWeek).getWeeks() + 1;
-        mCurrPage = Weeks.weeksBetween(startFirstDayOfWeek, todayFirstDayOfWeek).getWeeks();*/
-
         return new NWeekAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
     }
 
@@ -101,7 +93,12 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
     @Override
     public void setDateTime(DateTime dateTime) {
-        mSelectDateTime = dateTime;
+
+        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+            Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         this.setDateTime = dateTime;
 
         SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();

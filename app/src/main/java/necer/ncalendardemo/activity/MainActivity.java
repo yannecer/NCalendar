@@ -16,14 +16,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void month(View view) {
-        startActivity(new Intent(this, MonthCalendarActivity.class));
-    }
-
-    public void week(View view) {
-        startActivity(new Intent(this, WeekCalendarActivity.class));
-    }
-
     public void monthAndWeek(View view) {
         startActivity(new Intent(this, MonthAndWeekCalendarActivity.class));
     }
@@ -33,9 +25,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, NCalendarActivity.class));
     }
 
-
-    public void test(View view) {
-        startActivity(new Intent(this, TestActivity.class));
-    }
 
 }

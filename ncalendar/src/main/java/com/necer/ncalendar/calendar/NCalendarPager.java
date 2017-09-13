@@ -27,10 +27,7 @@ public abstract class NCalendarPager extends ViewPager {
     protected DateTime endDateTime;
     protected int mPageSize;
     protected int mCurrPage;
-
-
     protected DateTime setDateTime;//设置跳转的datetime
-
     protected DateTime mInitialDateTime;//日历初始化datetime，即今天
     protected DateTime mSelectDateTime;//当前页面选中的datetime
 
@@ -58,20 +55,20 @@ public abstract class NCalendarPager extends ViewPager {
         Attrs.hollowCircleStroke = ta.getInt(R.styleable.NCalendar_hollowCircleStroke, (int) Utils.dp2px(context, 1));
 
 
-
         Attrs.monthCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
         Attrs.duration = ta.getInt(R.styleable.NCalendar_duration, 240);
 
-        String startString = ta.getString(R.styleable.NCalendar_startDateTime);
-        String endString = ta.getString(R.styleable.NCalendar_endDateTime);
+        String firstDayOfWeek = ta.getString(R.styleable.NCalendar_firstDayOfWeek);
+        String defaultCalendar = ta.getString(R.styleable.NCalendar_defaultCalendar);
+
+        Attrs.firstDayOfWeek = "Monday".equals(firstDayOfWeek) ? 1 : 0;
+        Attrs.defaultCalendar = "Week".equals(defaultCalendar) ? NCalendar.WEEK : NCalendar.MONTH;
 
         ta.recycle();
 
-
         mInitialDateTime = new DateTime();
-
-        startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
-        endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
+        startDateTime = new DateTime("1901-01-01");
+        endDateTime = new DateTime("2099-12-31");
 
         calendarAdapter = getCalendarAdapter();
         setAdapter(calendarAdapter);
@@ -80,7 +77,6 @@ public abstract class NCalendarPager extends ViewPager {
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -112,7 +108,13 @@ public abstract class NCalendarPager extends ViewPager {
 
     public abstract void setDateTime(DateTime dateTime);
 
- //   protected abstract int jumpDate(DateTime dateTime, boolean smoothScroll);
+    public DateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public DateTime getEndDateTime() {
+        return endDateTime;
+    }
 
 
     private boolean isScrollEnable = true;

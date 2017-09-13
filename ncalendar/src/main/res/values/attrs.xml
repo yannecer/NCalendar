@@ -16,10 +16,15 @@
         <attr name="hollowCircleStroke" format="integer" />
         <attr name="startDateTime" format="string" />
         <attr name="endDateTime" format="string" />
-        
+
         <attr name="calendarHeight" format="dimension"/>
         <attr name="isMultiple" format="boolean"/>
         <attr name="duration" format="integer"/>
+
+        <attr name="firstDayOfWeek" format="string"/>
+        <attr name="defaultCalendar" format="string"/>
+
+
 
     </declare-styleable>
 </resources>

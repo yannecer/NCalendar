@@ -17,10 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MonthAndWeekCalendarActivity"/>
-        <activity android:name=".activity.MonthCalendarActivity"/>
-        <activity android:name=".activity.WeekCalendarActivity"/>
         <activity android:name=".activity.NCalendarActivity"/>
-        <activity android:name=".activity.TestActivity"/>
 
     </application>
 

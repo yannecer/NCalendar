@@ -68,7 +68,7 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
     }
 
-    public void aaa(View view) {
+    public void setDate(View view) {
         ncalendar.setDate(2018, 10, 11);
     }
 

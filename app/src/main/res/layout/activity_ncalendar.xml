@@ -104,46 +104,37 @@
         </LinearLayout>
     </RelativeLayout>
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="aaa"
-        android:text="跳转" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="toMonth"
-        android:text="toMonth" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="toWeek"
-        android:text="toWeek" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <com.necer.ncalendar.calendar.NCalendar
             android:id="@+id/ncalendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:selectCircleColor="#3388ff"
-            >
+            app:defaultCalendar="Month"
+            app:firstDayOfWeek="Sunday"
+            app:selectCircleColor="#3388ff">
 
-            <RelativeLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+          <!--  <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent">
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </RelativeLayout>
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="测试" />
+
+
+            </android.support.v4.widget.NestedScrollView>-->
+
 
         </com.necer.ncalendar.calendar.NCalendar>
     </RelativeLayout>

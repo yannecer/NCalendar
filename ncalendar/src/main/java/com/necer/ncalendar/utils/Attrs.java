@@ -20,8 +20,11 @@ public class Attrs {
     public static int hollowCircleColor;
     public static int hollowCircleStroke;
 
-    public static int firstDay;
+    public static int firstDayOfWeek;
+    public static int defaultCalendar;
+
     public static int monthCalendarHeight;
     public static int duration;
+
 
 }

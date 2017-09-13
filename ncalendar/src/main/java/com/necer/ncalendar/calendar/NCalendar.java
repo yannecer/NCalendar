@@ -19,7 +19,6 @@ import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
 import com.necer.ncalendar.utils.Attrs;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.view.NMonthView;
 
 import org.joda.time.DateTime;
@@ -66,9 +65,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
         duration = Attrs.duration;
         monthHeigh = Attrs.monthCalendarHeight;
-
-      //  STATE = WEEK;
-         STATE = MONTH;
+        STATE = Attrs.defaultCalendar;
 
         weekHeigh = monthHeigh / 5;
         monthCalendar.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, monthHeigh));
@@ -266,24 +263,17 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     protected void onFinishInflate() {
         super.onFinishInflate();
         nestedScrollingChild = getChildAt(1);
-
-       /* if (!(nestedScrollingChild instanceof NestedScrollingChild)) {
-            throw new RuntimeException("子view必须实现NestedScrollingChild");
-        }*/
     }
 
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         //  super.onLayout(changed, l, t, r, b);
-
         if (STATE == MONTH) {
             monthCalendarTop = monthCalendar.getTop();
             childViewTop = nestedScrollingChild.getTop() == 0 ? monthHeigh : nestedScrollingChild.getTop();
         } else {
             monthCalendarTop = -getMonthCalendarOffset();
-            MyLog.d("monthCalendarTop::" + monthCalendarTop);
-            MyLog.d("3333333333333333333333");
             childViewTop = nestedScrollingChild.getTop() == 0 ? weekHeigh : nestedScrollingChild.getTop();
 
         }
@@ -304,7 +294,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         int selectRowIndex = currectMonthView.getSelectRowIndex();
 
         //month需要移动selectRowIndex*h/rowNum ,计算时依每个行高的中点计算
-        // int monthCalendarOffset = selectRowIndex * monthHeigh / rowNum;
         int monthCalendarOffset = selectRowIndex * currectMonthView.getDrawHeight() / rowNum;
 
         return monthCalendarOffset;
@@ -389,7 +378,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public void onClickWeekCalendar(DateTime dateTime) {
         if (STATE == WEEK) {
             monthCalendar.setDateTime(dateTime);
-
             requestLayout();
         }
 
@@ -402,7 +390,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public void onWeekCalendarPageSelected(DateTime dateTime) {
         if (STATE == WEEK) {
             monthCalendar.setDateTime(dateTime);
-            MyLog.d("22222222222");
             requestLayout();
         }
 
@@ -433,13 +420,13 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
      */
     public void setDate(int year, int month, int day) {
         DateTime dateTime = new DateTime(year, month, day, 0, 0, 0);
+
+
         if (STATE == MONTH) {
             monthCalendar.setDateTime(dateTime);
         } else {
             weekCalendar.setDateTime(dateTime);
         }
-
-
     }
 
     /**

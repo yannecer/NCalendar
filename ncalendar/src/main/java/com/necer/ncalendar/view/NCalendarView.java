@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.view.View;
 
 import com.necer.ncalendar.utils.Attrs;
-import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
 
@@ -45,10 +44,6 @@ public abstract class NCalendarView extends View {
     protected int mHollowCircleColor;//空心圆颜色
     protected int mHollowCircleStroke;//空心圆粗细
 
-
-    protected int mFirstDay;//0 是周日开始，1是周一开始
-
-
     public NCalendarView(Context context) {
         super(context);
 
@@ -67,8 +62,6 @@ public abstract class NCalendarView extends View {
         mPointColor = Attrs.pointColor;
         mHollowCircleColor = Attrs.hollowCircleColor;
         mHollowCircleStroke = Attrs.hollowCircleStroke;
-
-        mFirstDay = Attrs.firstDay;
 
         mRectList = new ArrayList<>();
         mSorlarPaint = getPaint(mSolarTextColor, mSolarTextSize);
@@ -95,7 +88,6 @@ public abstract class NCalendarView extends View {
     }
     public void setSelectDateTime(DateTime dateTime) {
         this.mSelectDateTime = dateTime;
-        MyLog.d("111111111111111111111111111");
         invalidate();
     }
 

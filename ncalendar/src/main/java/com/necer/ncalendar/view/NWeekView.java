@@ -7,9 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+
 import com.necer.ncalendar.listener.OnClickWeekViewListener;
+import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
+
 import org.joda.time.DateTime;
+
 import java.util.List;
 
 /**
@@ -27,7 +31,7 @@ public class NWeekView extends NCalendarView{
         super(context);
 
         this.mInitialDateTime = dateTime;
-        Utils.NCalendar weekCalendar2 = Utils.getWeekCalendar2(dateTime, 1);
+        Utils.NCalendar weekCalendar2 = Utils.getWeekCalendar2(dateTime, Attrs.firstDayOfWeek);
 
         dateTimes = weekCalendar2.dateTimeList;
         lunarList = weekCalendar2.lunarList;

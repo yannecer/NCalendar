@@ -3,7 +3,9 @@ package com.necer.ncalendar.calendar;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.widget.Toast;
 
+import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.adapter.NMonthAdapter;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
@@ -81,6 +83,13 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
 
     @Override
     public void setDateTime(DateTime dateTime) {
+
+        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+            Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
         this.setDateTime = dateTime;
 
         SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();

@@ -128,7 +128,6 @@ public abstract class CalendarViewPager extends ViewPager {
     }
 
     public DateTime getInitialDateTime() {
-       // MyLog.d("getInitialDateTime:::::" + currentView);
         if (currentView == null) {
             return null;
         }
