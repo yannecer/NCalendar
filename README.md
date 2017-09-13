@@ -13,7 +13,7 @@
 ```
 compile 'com.necer.ncalendar:ncalendar:2.0.0'
 ```
-### 注意：ncalendar：1.0.x 的日历不能升级到 2.0.0，ncalendar:2.0.0是全新的日历
+##### 注意：ncalendar：1.0.x 的日历不能升级到 2.0.0，ncalendar:2.0.0是全新的日历
 
 ### 仿miui日历交互
 
@@ -72,13 +72,14 @@ ncalendar.toWeek();
 
 4、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
 
-//NCalendar默认视图,Month 或者 Week，默认是 Month
+NCalendar默认视图,Month 或者 Week，默认是 Month
 app:defaultCalendar="Month"
 app:defaultCalendar="Week"
 
-//设置一周开始是周一还是周日，Sunday 或者 Monday ，默认是周日Sunday
+设置一周开始是周一还是周日，Sunday 或者 Monday ，默认是周日Sunday
 app:firstDayOfWeek="Sunday"
 app:firstDayOfWeek="Monday" 
+
 ```
 ### 支持的属性：
 
