@@ -37,16 +37,19 @@ compile 'com.necer.ncalendar:ncalendar:2.0.0'
 
         </com.necer.ncalendar.calendar.NCalendar>
     </RelativeLayout>
-
-
-ncalendar包含一个月日类NMonthCalendar，一个周日历NWeekCalendar和一个滑动切换不同视图的NCalendar，
-单一日历请使用NMonthCalendar或者NWeekCalendar。
-
-NCalendar日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
-
-NCalendar在布局文件中需要一个RelativeLayout作为父布局，内部需要一个实现了NestedScrollingChild的view，RecyclerView，NestedScrollView都可以。
- 
 ```
+
+
+ncalendar包含一个月日历```NMonthCalendar```，一个周日历```NWeekCalendar```和一个滑动切换不同视图的```NCalendar```，
+单一日历请使用```NMonthCalendar```或者```NWeekCalendar```。
+
+```NCalendar```日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
+
+```NCalendar```在布局文件中需要一个```RelativeLayout```作为父布局，
+内部需要一个实现了```NestedScrollingChild```的子类，```RecyclerView```，```NestedScrollView```都可以。
+
+
+
 ### 主要Api
 
 ```
