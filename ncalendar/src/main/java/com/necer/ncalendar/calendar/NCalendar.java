@@ -4,7 +4,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
@@ -21,6 +21,7 @@ import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NMonthView;
+
 import org.joda.time.DateTime;
 
 /**
@@ -113,6 +114,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
                 int top = nestedScrollingChild.getTop();
                 if (top == monthHeigh) {
                     STATE = MONTH;
+                    weekCalendar.setVisibility(INVISIBLE);
                 } else {
                     STATE = WEEK;
                     weekCalendar.setVisibility(VISIBLE);
@@ -139,7 +141,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int axes) {
-        // MyLog.d("onNestedScrollAccepted::");
     }
 
     @Override
@@ -269,9 +270,9 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         super.onFinishInflate();
         nestedScrollingChild = getChildAt(1);
 
-        if (!(nestedScrollingChild instanceof NestedScrollingChild)) {
+       /* if (!(nestedScrollingChild instanceof NestedScrollingChild)) {
             throw new RuntimeException("子view必须实现NestedScrollingChild");
-        }
+        }*/
     }
 
 
@@ -282,7 +283,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         if (STATE == MONTH) {
             monthCalendarTop = monthCalendar.getTop();
             childViewTop = nestedScrollingChild.getTop() == 0 ? monthHeigh : nestedScrollingChild.getTop();
-
         } else {
             monthCalendarTop = -getMonthCalendarOffset();
             childViewTop = nestedScrollingChild.getTop() == 0 ? weekHeigh : nestedScrollingChild.getTop();
@@ -338,6 +338,12 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     }
 
 
+    /**
+     * 防止滑动过快越界
+     * @param offset
+     * @param maxOffset
+     * @return
+     */
     private int getOffset(int offset, int maxOffset) {
         if (offset > maxOffset) {
             return maxOffset;
@@ -368,8 +374,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     @Override
     public void onClickMonthCalendar(DateTime dateTime) {
         if (STATE == MONTH) {
-            requestLayout();
             weekCalendar.setDateTime(dateTime);
+            requestLayout();
         }
 
         if (onClickCalendarListener != null) {
@@ -381,8 +387,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     @Override
     public void onClickWeekCalendar(DateTime dateTime) {
         if (STATE == WEEK) {
-            requestLayout();
             monthCalendar.setDateTime(dateTime);
+            requestLayout();
         }
 
         if (onClickCalendarListener != null) {
@@ -393,8 +399,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     @Override
     public void onWeekCalendarPageSelected(DateTime dateTime) {
         if (STATE == WEEK) {
-            requestLayout();
             monthCalendar.setDateTime(dateTime);
+            requestLayout();
         }
 
         if (onClickCalendarListener != null) {
@@ -406,13 +412,47 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     @Override
     public void onMonthCalendarPageSelected(DateTime dateTime) {
         if (STATE == MONTH) {
-            requestLayout();
             weekCalendar.setDateTime(dateTime);
+            requestLayout();
         }
         if (onClickCalendarListener != null) {
             onClickCalendarListener.onCalendarPageChanged(dateTime);
         }
     }
 
+
+    /**
+     * 跳转制定日期
+     * @param year
+     * @param month
+     * @param day
+     */
+    public void setDate(int year, int month, int day) {
+        DateTime dateTime = new DateTime(year, month, day, 0, 0, 0);
+        monthCalendar.setDateTime(dateTime);
+        weekCalendar.setDateTime(dateTime);
+    }
+
+    /**
+     * 由周日历转换到月日历
+     */
+    public void toMonth() {
+        if (STATE == WEEK) {
+            int monthCalendarTop = monthCalendar.getTop();
+            int childTop = nestedScrollingChild.getTop();
+            weekCalendar.setVisibility(INVISIBLE);
+            autoOpen(monthCalendarTop, 0, childTop, monthHeigh);
+        }
+    }
+
+    /**
+     * 由月日历到周日历
+     */
+    public void toWeek() {
+        if (STATE == MONTH) {
+            int monthCalendarOffset = getMonthCalendarOffset();
+            autoClose(0, -monthCalendarOffset, monthHeigh, weekHeigh);
+        }
+    }
 
 }

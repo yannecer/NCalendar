@@ -104,7 +104,6 @@ public class Utils {
 
     /**
      * 获得两个日期距离几周
-     *
      * @param dateTime1
      * @param dateTime2
      * @return
@@ -120,6 +119,17 @@ public class Utils {
         } else {
             return days;
         }
+
+      /*  DateTime sunFirstDayOfWeek1 = getMonFirstDayOfWeek(dateTime1);
+        DateTime sunFirstDayOfWeek2 = getMonFirstDayOfWeek(dateTime2);
+        int days = Days.daysBetween(sunFirstDayOfWeek1, sunFirstDayOfWeek2).getDays();
+        if (days > 0) {
+            return (days + 1) / 7;
+        } else if (days < 0) {
+            return (days - 1) / 7;
+        } else {
+            return days;
+        }*/
     }
 
 

@@ -4,101 +4,123 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="#38AE80">
 
 
-
         <TextView
             android:id="@+id/tv_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
             android:text="9月"
             android:textColor="#ffffff"
-            android:textSize="30sp"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="20dp"/>
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_month"
-            android:textColor="#ffffff"
-            android:text="2017nian"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="50dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_toRightOf="@id/tv_month"
+            android:text="2017nian"
+            android:textColor="#ffffff" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="日"
                 android:textColor="#ffffff"
-                android:text="日"/>
+                android:textSize="13sp" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="一"
                 android:textColor="#ffffff"
-                android:text="一"/>
+                android:textSize="13sp" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="二"
                 android:textColor="#ffffff"
-                android:text="二"/>
+                android:textSize="13sp" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="三"
                 android:textColor="#ffffff"
-                android:text="三"/>
+                android:textSize="13sp" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="四"
                 android:textColor="#ffffff"
-                android:text="四"/>
+                android:textSize="13sp" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="五"
                 android:textColor="#ffffff"
-                android:text="五"/>
+                android:textSize="13sp" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="六"
                 android:textColor="#ffffff"
-                android:text="六"/>
+                android:textSize="13sp" />
         </LinearLayout>
     </RelativeLayout>
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="aaa"
+        android:text="跳转" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="toMonth"
+        android:text="toMonth" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="toWeek"
+        android:text="toWeek" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -110,14 +132,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
 
         </com.necer.ncalendar.calendar.NCalendar>
-
-
     </RelativeLayout>
 
 

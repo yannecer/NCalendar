@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -65,6 +66,18 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
     public void onCalendarPageChanged(DateTime dateTime) {
         tv_month.setText(dateTime.getMonthOfYear() + "月");
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
+    }
+
+    public void aaa(View view) {
+        ncalendar.setDate(2018, 10, 11);
+    }
+
+    public void toMonth(View view) {
+        ncalendar.toMonth();
+    }
+
+    public void toWeek(View view) {
+        ncalendar.toWeek();
     }
 
 }

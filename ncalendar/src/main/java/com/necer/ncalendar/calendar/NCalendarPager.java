@@ -28,6 +28,9 @@ public abstract class NCalendarPager extends ViewPager {
     protected int mPageSize;
     protected int mCurrPage;
 
+
+    protected DateTime setDateTime;//设置跳转的datetime
+
     protected DateTime mInitialDateTime;//日历初始化datetime，即今天
     protected DateTime mSelectDateTime;//当前页面选中的datetime
 
@@ -101,9 +104,9 @@ public abstract class NCalendarPager extends ViewPager {
 
     protected abstract void initCurrentCalendarView(int position);
 
-    protected abstract void setDateTime(DateTime dateTime);
+    public abstract void setDateTime(DateTime dateTime);
 
-    protected abstract int jumpDate(DateTime dateTime, boolean smoothScroll);
+ //   protected abstract int jumpDate(DateTime dateTime, boolean smoothScroll);
 
 
     private boolean isScrollEnable = true;
@@ -112,40 +115,9 @@ public abstract class NCalendarPager extends ViewPager {
         this.isScrollEnable = isScrollEnable;
     }
 
-
-    private int downY;
-
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return isScrollEnable ? super.onTouchEvent(ev) : false;
-
-      /*  if (!isScrollEnable) {
-            return false;
-        } else {
-            switch (ev.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    downY = (int) ev.getY();
-                    break;
-                case MotionEvent.ACTION_HOVER_MOVE:
-                    MyLog.d("ACTION_HOVER_MOVE");
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    int y = (int) ev.getY();
-                    if (downY - y > 100) {
-
-                        MyLog.d("上");
-
-                    } else if (downY - y < -100) {
-                        MyLog.d("下");
-                    }
-                    break;
-            }
-
-            return true
-
-           // return super.onTouchEvent(ev);
-        }*/
     }
 
     @Override

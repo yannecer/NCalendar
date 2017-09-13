@@ -33,6 +33,7 @@ public class NMonthView extends NCalendarView {
         super(context);
         this.mInitialDateTime = dateTime;
         this.mSelectDateTime = dateTime;
+        //0周日，
         Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, 0);
 
         mOnClickMonthViewListener = onClickMonthViewListener;

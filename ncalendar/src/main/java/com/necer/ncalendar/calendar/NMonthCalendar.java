@@ -26,8 +26,6 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
     private OnClickMonthCalendarListener onClickMonthCalendarListener;
     private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
 
-
-
     public NMonthCalendar(Context context) {
         this(context, null);
     }
@@ -43,10 +41,11 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         return new NMonthAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
     }
 
-    private int lastPosition;
+    private int lastPosition = -1;
 
     @Override
     protected void initCurrentCalendarView(int position) {
+
         NMonthView currView = (NMonthView) calendarAdapter.getCalendarViews().get(position);
         NMonthView lastView = (NMonthView) calendarAdapter.getCalendarViews().get(position - 1);
         NMonthView nextView = (NMonthView) calendarAdapter.getCalendarViews().get(position + 1);
@@ -57,35 +56,22 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         if (nextView != null)
             nextView.clear();
 
-
-        if (lastPosition == 0) {
+        if (lastPosition == -1) {
             lastPosition = position;
             currView.setSelectDateTime(mInitialDateTime);
             mSelectDateTime = mInitialDateTime;
-        }
-
-        DateTime dateTime = mSelectDateTime == null ? mInitialDateTime : mSelectDateTime;
-
-        if (lastPosition < position) {
-            //又滑
-            DateTime dateTime1 = dateTime.plusMonths(1);
-            currView.setSelectDateTime(dateTime1);
-            mSelectDateTime = dateTime1;
-
-        }
-
-        if (lastPosition > position) {
-            //左划
-            DateTime dateTime2 = dateTime.plusMonths(-1);
-            currView.setSelectDateTime(dateTime2);
-            mSelectDateTime = dateTime2;
+        } else if (setDateTime == null) {
+            int i = position - lastPosition;//相差几个月
+            DateTime dateTime = mSelectDateTime.plusMonths(i);
+            currView.setSelectDateTime(dateTime);
+            mSelectDateTime = dateTime;
         }
         lastPosition = position;
 
-        if (onMonthCalendarPageChangeListener != null ) {
+        //正常滑动处理
+        if (onMonthCalendarPageChangeListener != null && setDateTime == null) {
             onMonthCalendarPageChangeListener.onMonthCalendarPageSelected(mSelectDateTime);
         }
-
 
     }
 
@@ -98,28 +84,31 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
     }
 
     @Override
-    protected void setDateTime(DateTime dateTime) {
-        int i = jumpDate(dateTime, false);
+    public void setDateTime(DateTime dateTime) {
+        this.setDateTime = dateTime;
+
+        SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();
+        if (calendarViews.size() == 0) {
+            return;
+        }
+        DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
+        int months = Utils.getIntervalMonths(initialDateTime, dateTime);
+        int i = getCurrentItem() + months;
+        setCurrentItem(i, false);
+
         NMonthView monthView = (NMonthView) calendarAdapter.getCalendarViews().get(i);
         if (monthView == null) {
             return;
         }
-        mSelectDateTime = dateTime;
         monthView.setSelectDateTime(dateTime);
-    }
+        mSelectDateTime = dateTime;
 
-    @Override
-    protected int jumpDate(DateTime dateTime, boolean smoothScroll) {
-        SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();
-        if (calendarViews.size() == 0) {
-            return getCurrentItem();
+        //跳转处理
+        if (onMonthCalendarPageChangeListener != null && setDateTime != null) {
+            setDateTime = null;
+            onMonthCalendarPageChangeListener.onMonthCalendarPageSelected(mSelectDateTime);
         }
-        DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
-        int months = Utils.getIntervalMonths(initialDateTime, dateTime);
 
-        int i = getCurrentItem() + months;
-        setCurrentItem(i, smoothScroll);
-        return i;
     }
 
     @Override
