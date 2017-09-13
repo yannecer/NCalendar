@@ -27,7 +27,7 @@ public class NWeekView extends NCalendarView{
         super(context);
 
         this.mInitialDateTime = dateTime;
-        Utils.NCalendar weekCalendar2 = Utils.getWeekCalendar2(dateTime, 0);
+        Utils.NCalendar weekCalendar2 = Utils.getWeekCalendar2(dateTime, 1);
 
         dateTimes = weekCalendar2.dateTimeList;
         lunarList = weekCalendar2.lunarList;

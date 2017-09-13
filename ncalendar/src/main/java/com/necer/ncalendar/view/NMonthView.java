@@ -9,6 +9,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
+import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
@@ -34,7 +35,7 @@ public class NMonthView extends NCalendarView {
         this.mInitialDateTime = dateTime;
         this.mSelectDateTime = dateTime;
         //0周日，
-        Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, 0);
+        Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, 1);
 
         mOnClickMonthViewListener = onClickMonthViewListener;
 
@@ -47,12 +48,19 @@ public class NMonthView extends NCalendarView {
 
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         mWidth = getWidth();
-        //为了6行时，绘制农历不至于太靠下，绘制区域网上压缩一下
-        mHeight = (int) (getHeight() - Utils.dp2px(getContext(), 10));
+        //绘制高度
+        mHeight = getDrawHeight();
+
         mRectList.clear();
         for (int i = 0; i < mRowNum; i++) {
             for (int j = 0; j < 7; j++) {
@@ -90,20 +98,33 @@ public class NMonthView extends NCalendarView {
                     } else {
                         mSorlarPaint.setColor(mSolarTextColor);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                        drawLunar(canvas, rect,baseline, mLunarTextColor, i, j);
+                        drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
                     }
 
                 } else {
                     mSorlarPaint.setColor(mHintColor);
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                    drawLunar(canvas, rect, baseline,mHintColor, i, j);
+                    drawLunar(canvas, rect, baseline, mHintColor, i, j);
                 }
             }
         }
     }
 
+    /**
+     * 月日历高度
+     * @return
+     */
     public int getMonthHeight() {
-        return mHeight;
+        return Attrs.monthCalendarHeight;
+    }
+
+    /**
+     * 月日历的绘制高度，
+     * 为了月日历6行时，绘制农历不至于太靠下，绘制区域网上压缩一下
+     * @return
+     */
+    public int getDrawHeight() {
+        return (int) (getMonthHeight() - Utils.dp2px(getContext(), 10));
     }
 
 
@@ -114,7 +135,6 @@ public class NMonthView extends NCalendarView {
             canvas.drawText(lunar, rect.centerX(), baseline + Utils.dp2px(getContext(), 13), mLunarPaint);
         }
     }
-
 
 
     private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
@@ -151,6 +171,7 @@ public class NMonthView extends NCalendarView {
     public int getRowNum() {
         return mRowNum;
     }
+
     public int getSelectRowIndex() {
         int indexOf = localDateList.indexOf(mSelectDateTime.toLocalDate().toString());
         return indexOf / 7;

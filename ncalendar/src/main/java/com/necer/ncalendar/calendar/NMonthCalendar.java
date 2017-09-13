@@ -26,10 +26,6 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
     private OnClickMonthCalendarListener onClickMonthCalendarListener;
     private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
 
-    public NMonthCalendar(Context context) {
-        this(context, null);
-    }
-
     public NMonthCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -61,7 +57,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             currView.setSelectDateTime(mInitialDateTime);
             mSelectDateTime = mInitialDateTime;
         } else if (setDateTime == null) {
-            int i = position - lastPosition;//相差几个月
+            int i = position - lastPosition;
             DateTime dateTime = mSelectDateTime.plusMonths(i);
             currView.setSelectDateTime(dateTime);
             mSelectDateTime = dateTime;

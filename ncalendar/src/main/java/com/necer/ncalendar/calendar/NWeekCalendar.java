@@ -81,9 +81,9 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
             currView.setSelectDateTime(dateTime);
             mSelectDateTime = dateTime;
         }
-
         lastPosition = position;
-        if (onWeekCalendarPageChangeListener != null) {
+
+        if (onWeekCalendarPageChangeListener != null&& setDateTime == null) {
             onWeekCalendarPageChangeListener.onWeekCalendarPageSelected(mSelectDateTime);
         }
 
@@ -108,10 +108,8 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
         if (calendarViews.size() == 0) {
             return ;
         }
-
         DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
         int months = Utils.getIntervalWeek(initialDateTime, dateTime);
-
         int i = getCurrentItem() + months;
         setCurrentItem(i, false);
 

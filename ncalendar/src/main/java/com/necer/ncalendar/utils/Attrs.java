@@ -21,5 +21,7 @@ public class Attrs {
     public static int hollowCircleStroke;
 
     public static int firstDay;
+    public static int monthCalendarHeight;
+    public static int duration;
 
 }

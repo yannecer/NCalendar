@@ -1,8 +1,8 @@
 package com.necer.ncalendar.calendar;
+
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ViewCompat;
@@ -13,13 +13,13 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.necer.ncalendar.R;
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
-import com.necer.ncalendar.utils.Utils;
+import com.necer.ncalendar.utils.Attrs;
+import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.view.NMonthView;
 
 import org.joda.time.DateTime;
@@ -40,7 +40,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     private static int STATE = 100;//默认月
     private int weekHeigh;//周日历的高度
     private int monthHeigh;//月日历的高度,是日历整个的高度，并非是月日历绘制区域的高度
-    private int duration = 240;//动画时间
+    private int duration ;//动画时间
 
     private int monthCalendarTop;//月日历到顶部的距离，0到负monthHeigh的值
     private int childViewTop;//nestedScrollingChild到顶部的距离 ，这两个变量用于在动画结束后，重新确定月日历和childview的位置
@@ -61,17 +61,14 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public NCalendar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-
         monthCalendar = new NMonthCalendar(context, attrs);
         weekCalendar = new NWeekCalendar(context, attrs);
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NCalendar);
-        monthHeigh = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
-        duration = ta.getInt(R.styleable.NCalendar_duration, 240);
-        ta.recycle();
+        duration = Attrs.duration;
+        monthHeigh = Attrs.monthCalendarHeight;
 
-        STATE = WEEK;
-       // STATE = MONTH;
+      //  STATE = WEEK;
+         STATE = MONTH;
 
         weekHeigh = monthHeigh / 5;
         monthCalendar.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, monthHeigh));
@@ -285,6 +282,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             childViewTop = nestedScrollingChild.getTop() == 0 ? monthHeigh : nestedScrollingChild.getTop();
         } else {
             monthCalendarTop = -getMonthCalendarOffset();
+            MyLog.d("monthCalendarTop::" + monthCalendarTop);
+            MyLog.d("3333333333333333333333");
             childViewTop = nestedScrollingChild.getTop() == 0 ? weekHeigh : nestedScrollingChild.getTop();
 
         }
@@ -303,9 +302,11 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         int rowNum = currectMonthView.getRowNum();
         //现在选中的是第几行
         int selectRowIndex = currectMonthView.getSelectRowIndex();
+
         //month需要移动selectRowIndex*h/rowNum ,计算时依每个行高的中点计算
         // int monthCalendarOffset = selectRowIndex * monthHeigh / rowNum;
-        int monthCalendarOffset = selectRowIndex * currectMonthView.getMonthHeight() / rowNum;
+        int monthCalendarOffset = selectRowIndex * currectMonthView.getDrawHeight() / rowNum;
+
         return monthCalendarOffset;
     }
 
@@ -340,6 +341,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     /**
      * 防止滑动过快越界
+     *
      * @param offset
      * @param maxOffset
      * @return
@@ -369,8 +371,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     }
 
     //requestLayout();用于重新定位位置，不然当日历setdateTime()的时候，如果当前页面未初始化，
-    // 会出现月日历的位置重新返回原位置的问题，所以需要requestLayout()重新执行onLayout()确定位置，貌似是异步？
-    //  requestLayout()和setDateTime(dateTime)顺序不能调换，在测试过程中，requestLayout执行中，得到的月日历选中日期已经是setdate过的日期，
+    // 会出现月日历的位置重新返回原位置的问题，所以需要requestLayout()重新执行onLayout()确定位置
     @Override
     public void onClickMonthCalendar(DateTime dateTime) {
         if (STATE == MONTH) {
@@ -388,6 +389,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public void onClickWeekCalendar(DateTime dateTime) {
         if (STATE == WEEK) {
             monthCalendar.setDateTime(dateTime);
+
             requestLayout();
         }
 
@@ -400,6 +402,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public void onWeekCalendarPageSelected(DateTime dateTime) {
         if (STATE == WEEK) {
             monthCalendar.setDateTime(dateTime);
+            MyLog.d("22222222222");
             requestLayout();
         }
 
@@ -423,14 +426,20 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     /**
      * 跳转制定日期
+     *
      * @param year
      * @param month
      * @param day
      */
     public void setDate(int year, int month, int day) {
         DateTime dateTime = new DateTime(year, month, day, 0, 0, 0);
-        monthCalendar.setDateTime(dateTime);
-        weekCalendar.setDateTime(dateTime);
+        if (STATE == MONTH) {
+            monthCalendar.setDateTime(dateTime);
+        } else {
+            weekCalendar.setDateTime(dateTime);
+        }
+
+
     }
 
     /**

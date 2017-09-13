@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 import com.necer.ncalendar.utils.Attrs;
+import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
 
@@ -69,7 +70,6 @@ public abstract class NCalendarView extends View {
 
         mFirstDay = Attrs.firstDay;
 
-
         mRectList = new ArrayList<>();
         mSorlarPaint = getPaint(mSolarTextColor, mSolarTextSize);
         mLunarPaint = getPaint(mLunarTextColor, mLunarTextSize);
@@ -95,6 +95,7 @@ public abstract class NCalendarView extends View {
     }
     public void setSelectDateTime(DateTime dateTime) {
         this.mSelectDateTime = dateTime;
+        MyLog.d("111111111111111111111111111");
         invalidate();
     }
 
