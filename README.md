@@ -8,14 +8,13 @@
 
 ## 使用方法
 
-
-### Gradle
+#### Gradle
 ```
 compile 'com.necer.ncalendar:ncalendar:2.0.0'
 ```
 ##### 注意：ncalendar：1.0.x 的日历不能升级到 2.0.0，ncalendar:2.0.0是全新的日历
 
-### 仿miui日历交互
+#### 布局文件
 
 ```
    <RelativeLayout
@@ -53,7 +52,7 @@ compile 'com.necer.ncalendar:ncalendar:2.0.0'
 ### 主要Api
 
 
-1、监听
+##### 1、监听
 ```
 ncalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             @Override
@@ -67,18 +66,18 @@ ncalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             }
         });
 ```
-2、跳转日期
+##### 2、跳转日期
 ```
 ncalendar.setDate(int year, int month, int day); 
 ```
 
-3、月-->周  周-->月
+##### 3、月-->周  周-->月
 ```
 ncalendar.toWeek();
 ncalendar.toMonth();
 ```
 
-4、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
+##### 4、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
 ```
 NCalendar默认视图,Month 或者 Week，默认是 Month
 
@@ -117,7 +116,5 @@ app:firstDayOfWeek="Monday"
 
 ### 联系我加qq ：619008099
 
-### View的绘制过程参见：http://blog.csdn.net/y12345654321/article/details/73331253 
-### 滑动处理参见：http://blog.csdn.net/y12345654321/article/details/73801681
 
 
