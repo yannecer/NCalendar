@@ -16,6 +16,7 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
+
 /**
  * Created by 闫彬彬 on 2017/8/25.
  * QQ:619008099
@@ -81,18 +82,16 @@ public class NMonthView extends NCalendarView {
                     //当天和选中的日期不绘制农历
                     if (Utils.isToday(dateTime)) {
                         mSorlarPaint.setColor(mSelectCircleColor);
-                        int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
                         int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
-                        canvas.drawCircle(rect.centerX(), centerY, radius, mSorlarPaint);
+                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(Color.WHITE);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else if (mSelectDateTime != null && dateTime.toLocalDate().equals(mSelectDateTime.toLocalDate())) {
                         mSorlarPaint.setColor(mSelectCircleColor);
-                        int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
                         int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
-                        canvas.drawCircle(rect.centerX(), centerY, radius, mSorlarPaint);
+                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(mHollowCircleColor);
-                        canvas.drawCircle(rect.centerX(), centerY, radius - mHollowCircleStroke, mSorlarPaint);
+                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius - mHollowCircleStroke, mSorlarPaint);
                         mSorlarPaint.setColor(mSolarTextColor);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else {

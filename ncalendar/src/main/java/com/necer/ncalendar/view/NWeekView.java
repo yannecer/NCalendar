@@ -11,10 +11,9 @@ import android.view.MotionEvent;
 import com.necer.ncalendar.listener.OnClickWeekViewListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
-
 import org.joda.time.DateTime;
-
 import java.util.List;
+
 
 /**
  * Created by 闫彬彬 on 2017/8/25.
@@ -56,16 +55,14 @@ public class NWeekView extends NCalendarView{
 
             if (Utils.isToday(dateTime)) {
                 mSorlarPaint.setColor(mSelectCircleColor);
-                int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
-                canvas.drawCircle(rect.centerX(), rect.centerY(), radius, mSorlarPaint);
+                canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius, mSorlarPaint);
                 mSorlarPaint.setColor(Color.WHITE);
                 canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
             } else if (mSelectDateTime != null && dateTime.toLocalDate().equals(mSelectDateTime.toLocalDate())) {
                 mSorlarPaint.setColor(mSelectCircleColor);
-                int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
-                canvas.drawCircle(rect.centerX(), rect.centerY(), radius, mSorlarPaint);
+                canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius, mSorlarPaint);
                 mSorlarPaint.setColor(mHollowCircleColor);
-                canvas.drawCircle(rect.centerX(), rect.centerY(), radius - mHollowCircleStroke, mSorlarPaint);
+                canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius - mHollowCircleStroke, mSorlarPaint);
                 mSorlarPaint.setColor(mSolarTextColor);
                 canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
             } else {

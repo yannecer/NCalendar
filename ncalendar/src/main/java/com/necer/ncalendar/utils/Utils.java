@@ -119,17 +119,6 @@ public class Utils {
         } else {
             return days;
         }
-
-      /*  DateTime sunFirstDayOfWeek1 = getMonFirstDayOfWeek(dateTime1);
-        DateTime sunFirstDayOfWeek2 = getMonFirstDayOfWeek(dateTime2);
-        int days = Days.daysBetween(sunFirstDayOfWeek1, sunFirstDayOfWeek2).getDays();
-        if (days > 0) {
-            return (days + 1) / 7;
-        } else if (days < 0) {
-            return (days - 1) / 7;
-        } else {
-            return days;
-        }*/
     }
 
 
@@ -277,7 +266,6 @@ public class Utils {
         nCalendar.localDateList = localDateList;
         nCalendar.lunarList = lunarList;
         return nCalendar;
-        //return dateTimes;
 
     }
 
@@ -294,20 +282,7 @@ public class Utils {
         }
         return dayOfWeek;
     }
-/*    */
 
-    /**
-     * 某月第一天是周几
-     *
-     * @return
-     *//*
-    public static int getFirstDayOfWeekOfMonth2(int year, int month) {
-        int dayOfWeek = new DateTime(year, month, 1, 0, 0, 0).getDayOfWeek();
-        if (dayOfWeek == 7) {
-            return 0;
-        }
-        return dayOfWeek;
-    }*/
     public static NCalendar getWeekCalendar2(DateTime dateTime, int type) {
         List<DateTime> dateTimeList = new ArrayList<>();
         List<String> lunarStringList = new ArrayList<>();

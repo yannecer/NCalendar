@@ -20,7 +20,6 @@ import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.view.NMonthView;
-
 import org.joda.time.DateTime;
 
 /**
@@ -154,6 +153,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         weekCalendar.setScrollEnable(true);
         monthCalendar.setScrollEnable(true);
 
+        //停止滑动的时候，距顶部的距离
         int monthCalendarTop = monthCalendar.getTop();
         int nestedScrollingChildTop = nestedScrollingChild.getTop();
 
@@ -192,9 +192,10 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
         monthCalendarOffset = getMonthCalendarOffset();
 
+
         //4种情况
         if (dy > 0 && Math.abs(monthTop) < monthCalendarOffset) {
-            //月日历和nestedScrollingChild上滑上滑
+            //月日历和nestedScrollingChild同时上滑
             int offset = getOffset(dy, monthCalendarOffset - Math.abs(monthTop));
             monthCalendar.offsetTopAndBottom(-offset);
             nestedScrollingChild.offsetTopAndBottom(-offset);
@@ -345,7 +346,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             int animatedValue = (int) animation.getAnimatedValue();
             int top = nestedScrollingChild.getTop();
             int i = animatedValue - top;
-            nestedScrollingChild.offsetTopAndBottom(i);
+                nestedScrollingChild.offsetTopAndBottom(i);
         }
     }
 
