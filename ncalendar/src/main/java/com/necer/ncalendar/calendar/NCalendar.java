@@ -166,16 +166,16 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
         if (STATE == MONTH) {
             if (monthHeigh - nestedScrollingChildTop < weekHeigh) {
-                autoOpen(monthCalendarTop, 0, nestedScrollingChildTop, monthHeigh);
+                autoScroll(monthCalendarTop, 0, nestedScrollingChildTop, monthHeigh);
             } else {
-                autoClose(monthCalendarTop, -monthCalendarOffset, nestedScrollingChildTop, weekHeigh);
+                autoScroll(monthCalendarTop, -monthCalendarOffset, nestedScrollingChildTop, weekHeigh);
             }
 
         } else {
             if (nestedScrollingChildTop < weekHeigh * 2) {
-                autoClose(monthCalendarTop, -monthCalendarOffset, nestedScrollingChildTop, weekHeigh);
+                autoScroll(monthCalendarTop, -monthCalendarOffset, nestedScrollingChildTop, weekHeigh);
             } else {
-                autoOpen(monthCalendarTop, 0, nestedScrollingChildTop, monthHeigh);
+                autoScroll(monthCalendarTop, 0, nestedScrollingChildTop, monthHeigh);
             }
         }
     }
@@ -299,8 +299,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         return monthCalendarOffset;
     }
 
-    //自动开
-    private void autoOpen(int startMonth, int endMonth, int startChild, int endChild) {
+    //自动滑动
+    private void autoScroll(int startMonth, int endMonth, int startChild, int endChild) {
         monthValueAnimator.setIntValues(startMonth, endMonth);
         monthValueAnimator.setDuration(duration);
         monthValueAnimator.start();
@@ -310,16 +310,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         nestedScrollingChildValueAnimator.start();
     }
 
-    //自动闭
-    private void autoClose(int startMonth, int endMonth, int startChild, int endChild) {
-        monthValueAnimator.setIntValues(startMonth, endMonth);
-        monthValueAnimator.setDuration(duration);
-        monthValueAnimator.start();
-
-        nestedScrollingChildValueAnimator.setIntValues(startChild, endChild);
-        nestedScrollingChildValueAnimator.setDuration(duration);
-        nestedScrollingChildValueAnimator.start();
-    }
 
     private OnCalendarChangeListener onClickCalendarListener;
 
@@ -437,7 +427,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             int monthCalendarTop = monthCalendar.getTop();
             int childTop = nestedScrollingChild.getTop();
             weekCalendar.setVisibility(INVISIBLE);
-            autoOpen(monthCalendarTop, 0, childTop, monthHeigh);
+            autoScroll(monthCalendarTop, 0, childTop, monthHeigh);
         }
     }
 
@@ -447,7 +437,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public void toWeek() {
         if (STATE == MONTH) {
             int monthCalendarOffset = getMonthCalendarOffset();
-            autoClose(0, -monthCalendarOffset, monthHeigh, weekHeigh);
+            autoScroll(0, -monthCalendarOffset, monthHeigh, weekHeigh);
         }
     }
 
