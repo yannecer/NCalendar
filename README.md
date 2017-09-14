@@ -117,5 +117,6 @@ app:firstDayOfWeek="Monday"
 
 ### 联系我加qq ：619008099
 
-
+#### View绘制：http://blog.csdn.net/y12345654321/article/details/73331253
+#### 滑动处理：http://blog.csdn.net/y12345654321/article/details/77978148
 
