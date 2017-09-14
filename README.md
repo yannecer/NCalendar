@@ -6,6 +6,9 @@
 
 ![](https://github.com/yannecer/NCalendar/blob/master/app/nclendar2.gif)
 
+## 下载demo：
+http://fir.im/7lv4
+
 ## 使用方法
 
 #### Gradle
