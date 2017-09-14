@@ -53,6 +53,8 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         recyclerView.setAdapter(new AAAdapter(this));
         ncalendar.setOnCalendarChangeListener(this);
 
+
+
     }
 
     @Override

@@ -8,19 +8,17 @@
     tools:context="necer.ncalendardemo.activity.MainActivity">
 
 
-
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="仿miui日历"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:onClick="ncanlendar"
-        />
+        android:text="仿miui日历" />
 
 
-
-  <RelativeLayout
+    <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginBottom="20dp">
@@ -49,9 +47,6 @@
         android:layout_height="wrap_content"
         android:text="老版日历"
         android:onClick="monthAndWeek"
-
         />
-
-
 
 </LinearLayout>
