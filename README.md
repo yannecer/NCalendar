@@ -13,7 +13,7 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.1.0'
+compile 'com.necer.ncalendar:ncalendar:2.1.1'
 ```
 ##### 注意：ncalendar：1.0.x 的日历不能升级到 2.x.x，ncalendar:2.x.x是全新的日历
 
