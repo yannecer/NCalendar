@@ -174,9 +174,11 @@ public class NMonthView extends NCalendarView {
     }
 
     public int getSelectRowIndex() {
+        if (mSelectDateTime == null) {
+            return 0;
+        }
         int indexOf = localDateList.indexOf(mSelectDateTime.toLocalDate().toString());
         return indexOf / 7;
-
     }
 
 }

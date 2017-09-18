@@ -50,16 +50,13 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new AAAdapter(this));
+        AAAdapter aaAdapter = new AAAdapter(this);
+        recyclerView.setAdapter(aaAdapter);
         ncalendar.setOnCalendarChangeListener(this);
-
-
-
     }
 
     @Override
     public void onClickCalendar(DateTime dateTime) {
-
         tv_month.setText(dateTime.getMonthOfYear() + "月");
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
     }
@@ -80,6 +77,10 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
     public void toWeek(View view) {
         ncalendar.toWeek();
+    }
+
+    public void toToday(View view) {
+        ncalendar.toToday();
     }
 
 }
