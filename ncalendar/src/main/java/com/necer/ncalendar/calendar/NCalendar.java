@@ -337,7 +337,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         } else {
             monthCalendarTop = -getMonthCalendarOffset();
             childViewTop = nestedScrollingChild.getTop() == 0 ? weekHeigh : nestedScrollingChild.getTop();
-
         }
 
         monthCalendar.layout(0, monthCalendarTop, r, monthHeigh + monthCalendarTop);
@@ -471,6 +470,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     private int lastY;
     private int verticalY = 50;//竖直方向上滑动的临界值，大于这个值认为是竖直滑动
 
+    private boolean isFirstScroll = true; //第一次手势滑动，因为第一次滑动的偏移量大于verticalY，会造成猛的一划，这里只对第一次滑动做处理
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -506,20 +506,25 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
                 int y = (int) event.getY();
                 int dy = lastY - y;
-                //防止出现过大的移动
-                if (dy > verticalY) {
-                    dy = dy - verticalY;
-                }
-                if (dy < -verticalY) {
-                    dy = dy + verticalY;
-                }
-                move(dy, false, null);
 
+                if (isFirstScroll) {
+                    //防止出现过大的移动
+                    if (dy > verticalY) {
+                        dy = dy - verticalY;
+                    }
+                    if (dy < -verticalY) {
+                        dy = dy + verticalY;
+                    }
+                    isFirstScroll = false;
+                }
+
+                move(dy, false, null);
                 lastY = y;
 
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                isFirstScroll = true;
                 scroll();
                 break;
         }
