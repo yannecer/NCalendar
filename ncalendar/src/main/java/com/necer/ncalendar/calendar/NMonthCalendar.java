@@ -89,9 +89,6 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             return;
         }
 
-
-        this.setDateTime = dateTime;
-
         SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();
         if (calendarViews.size() == 0) {
             return;
@@ -105,6 +102,10 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         if (monthView == null) {
             return;
         }
+
+
+        this.setDateTime = dateTime;
+
         monthView.setSelectDateTime(dateTime);
         mSelectDateTime = dateTime;
 

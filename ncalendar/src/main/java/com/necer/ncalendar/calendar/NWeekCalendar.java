@@ -73,6 +73,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
             currView.setSelectDateTime(dateTime);
             mSelectDateTime = dateTime;
         }
+
         lastPosition = position;
 
         if (onWeekCalendarPageChangeListener != null&& setDateTime == null) {
@@ -99,12 +100,12 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
             return;
         }
 
-        this.setDateTime = dateTime;
-
         SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();
         if (calendarViews.size() == 0) {
             return ;
         }
+
+
         DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
         int months = Utils.getIntervalWeek(initialDateTime, dateTime);
         int i = getCurrentItem() + months;
@@ -114,6 +115,8 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
         if (weekView == null) {
             return;
         }
+        this.setDateTime = dateTime;
+
         weekView.setSelectDateTime(dateTime);
         mSelectDateTime = dateTime;
 

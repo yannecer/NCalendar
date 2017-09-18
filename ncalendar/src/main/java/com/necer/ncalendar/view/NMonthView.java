@@ -34,10 +34,9 @@ public class NMonthView extends NCalendarView {
     public NMonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
         super(context);
         this.mInitialDateTime = dateTime;
-        this.mSelectDateTime = dateTime;
+
         //0周日，1周一
         Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, Attrs.firstDayOfWeek);
-
         mOnClickMonthViewListener = onClickMonthViewListener;
 
         lunarList = nCalendar2.lunarList;
@@ -76,6 +75,9 @@ public class NMonthView extends NCalendarView {
                 } else {
                     baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 10 - mHeight / 12);
                 }
+
+               // MyLog.d("mSelectDateTime:::" + mSelectDateTime);
+
 
                 //当月和上下月的颜色不同
                 if (Utils.isEqualsMonth(dateTime, mInitialDateTime)) {
