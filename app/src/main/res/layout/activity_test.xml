@@ -10,17 +10,11 @@
         android:onClick="aaa"/>
 
     <include layout="@layout/layout_week_num"/>
-    
-<!--    <com.necer.ncalendar.calendar.NMonthCalendar
-        android:layout_width="  match_parent"
-        android:layout_height="300dp"/>-->
 
 
 
-  <!--  <com.necer.ncalendar.calendar.MonthCalendar
-        android:id="@+id/monthCalendar"
+    <com.necer.ncalendar.calendar.WeekCalendar
         android:layout_width="match_parent"
-        android:layout_height="300dp"></com.necer.ncalendar.calendar.MonthCalendar>
--->
-    
+        android:layout_height="50dp"></com.necer.ncalendar.calendar.WeekCalendar>
+
 </LinearLayout>

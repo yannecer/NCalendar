@@ -15,15 +15,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
-    public void monthAndWeek(View view) {
-        startActivity(new Intent(this, MonthAndWeekCalendarActivity.class));
-    }
-
-
     public void ncanlendar(View view) {
         startActivity(new Intent(this, NCalendarActivity.class));
     }
 
-
+    public void monthAndWeek(View view) {
+        startActivity(new Intent(this, MonthAndWeekCalendarActivity.class));
+    }
 }
