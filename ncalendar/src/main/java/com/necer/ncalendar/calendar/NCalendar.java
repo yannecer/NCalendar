@@ -1,5 +1,4 @@
 package com.necer.ncalendar.calendar;
-
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -13,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import com.necer.ncalendar.listener.OnCalendarChangeListener;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
@@ -21,7 +19,6 @@ import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
 import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.view.NMonthView;
-
 import org.joda.time.DateTime;
 
 /**
