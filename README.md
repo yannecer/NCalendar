@@ -13,7 +13,7 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.2.1'
+compile 'com.necer.ncalendar:ncalendar:2.3.0'
 ```
 ##### 注意：ncalendar：1.0.x 的日历不能升级到 2.x.x，ncalendar:2.x.x是全新的日历
 
@@ -75,7 +75,19 @@ ncalendar.toToday();
 ncalendar.toWeek();
 ncalendar.toMonth();
 ```
+##### 5、添加指示圆点
+```
+List<String> list = new ArrayList<>();
+list.add("2017-09-21");
+list.add("2017-10-21");
+list.add("2017-10-1");
+list.add("2017-10-15");
+list.add("2017-10-18");
+list.add("2017-10-26");
+list.add("2017-11-21");
+ncalendar.setPoint(list);
 
+```
 ##### 5、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
 ```
 NCalendar默认视图,Month 或者 Week，默认是 Month
