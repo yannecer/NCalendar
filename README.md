@@ -13,7 +13,7 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.1.2'
+compile 'com.necer.ncalendar:ncalendar:2.2.0'
 ```
 ##### 注意：ncalendar：1.0.x 的日历不能升级到 2.x.x，ncalendar:2.x.x是全新的日历
 
@@ -39,7 +39,7 @@ compile 'com.necer.ncalendar:ncalendar:2.1.2'
 ```
 
 
-```ncalendar:2.1.0```包含一个月日历```NMonthCalendar```，一个周日历```NWeekCalendar```和一个滑动切换不同视图的```NCalendar```，
+```ncalendar:2.2.0```包含一个月日历```NMonthCalendar```，一个周日历```NWeekCalendar```和一个滑动切换不同视图的```NCalendar```，
 单一日历请使用```NMonthCalendar```或者```NWeekCalendar```。
 
 ```NCalendar```日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
@@ -53,15 +53,10 @@ compile 'com.necer.ncalendar:ncalendar:2.1.2'
 
 ##### 1、监听
 ```
-ncalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
+ncalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onClickCalendar(DateTime dateTime) {
-                //日历点击回调
-            }
-
-            @Override
-            public void onCalendarPageChanged(DateTime dateTime) {
-                //日历翻页回调
+            public void onCalendarChanged(DateTime dateTime) {
+                //日历变化回调
             }
         });
 ```
