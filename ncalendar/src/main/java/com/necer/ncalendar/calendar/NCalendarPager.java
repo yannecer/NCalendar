@@ -27,7 +27,8 @@ public abstract class NCalendarPager extends ViewPager {
     protected DateTime endDateTime;
     protected int mPageSize;
     protected int mCurrPage;
-    protected DateTime setDateTime;//设置跳转的datetime
+    protected boolean isSetDateTime;
+   // protected DateTime setDateTime;//设置跳转的datetime
     protected DateTime mInitialDateTime;//日历初始化datetime，即今天
     protected DateTime mSelectDateTime;//当前页面选中的datetime
 

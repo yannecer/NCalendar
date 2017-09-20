@@ -8,9 +8,8 @@ import android.widget.Toast;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.adapter.NWeekAdapter;
-import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekViewListener;
-import com.necer.ncalendar.listener.OnWeekCalendarPageChangeListener;
+import com.necer.ncalendar.listener.OnWeekCalendarChangedListener;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NCalendarView;
 import com.necer.ncalendar.view.NWeekView;
@@ -25,8 +24,7 @@ import org.joda.time.Weeks;
 
 public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewListener {
 
-    private OnClickWeekCalendarListener onClickWeekCalendarListener;
-    private OnWeekCalendarPageChangeListener onWeekCalendarPageChangeListener;
+    private OnWeekCalendarChangedListener onWeekCalendarChangedListener;
 
     public NWeekCalendar(Context context) {
         super(context);
@@ -67,7 +65,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
             lastPosition = position;
             currView.setSelectDateTime(mInitialDateTime);
             mSelectDateTime = mInitialDateTime;
-        } else if (setDateTime == null) {
+        } else if (!isSetDateTime) {
             int i = position - lastPosition;
             DateTime dateTime = mSelectDateTime.plusWeeks(i);
             currView.setSelectDateTime(dateTime);
@@ -76,19 +74,13 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
         lastPosition = position;
 
-        if (onWeekCalendarPageChangeListener != null&& setDateTime == null) {
-            onWeekCalendarPageChangeListener.onWeekCalendarPageSelected(mSelectDateTime);
+        if (onWeekCalendarChangedListener != null&& !isSetDateTime) {
+            onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
         }
-
-
     }
 
-    public void setOnClickWeekCalendarListener(OnClickWeekCalendarListener onClickWeekCalendarListener) {
-        this.onClickWeekCalendarListener = onClickWeekCalendarListener;
-    }
-
-    public void setOnWeekCalendarPageChangeListener(OnWeekCalendarPageChangeListener onWeekCalendarPageChangeListener) {
-        this.onWeekCalendarPageChangeListener = onWeekCalendarPageChangeListener;
+    public void setOnWeekCalendarChangedListener(OnWeekCalendarChangedListener onWeekCalendarChangedListener) {
+        this.onWeekCalendarChangedListener = onWeekCalendarChangedListener;
     }
 
 
@@ -105,7 +97,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
             return ;
         }
 
-
+        isSetDateTime = true;
         DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
         int months = Utils.getIntervalWeek(initialDateTime, dateTime);
         int i = getCurrentItem() + months;
@@ -115,15 +107,15 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
         if (weekView == null) {
             return;
         }
-        this.setDateTime = dateTime;
 
         weekView.setSelectDateTime(dateTime);
         mSelectDateTime = dateTime;
 
+        isSetDateTime = false;
+
         //跳转处理
-        if (onWeekCalendarPageChangeListener != null && setDateTime != null) {
-            setDateTime = null;
-            onWeekCalendarPageChangeListener.onWeekCalendarPageSelected(mSelectDateTime);
+        if (onWeekCalendarChangedListener != null ) {
+            onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
         }
     }
 
@@ -133,11 +125,10 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
         NWeekView weekView = (NWeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
         weekView.setSelectDateTime(dateTime);
-
         mSelectDateTime = dateTime;
 
-        if (onClickWeekCalendarListener != null) {
-            onClickWeekCalendarListener.onClickWeekCalendar(dateTime);
+        if (onWeekCalendarChangedListener != null) {
+            onWeekCalendarChangedListener.onWeekCalendarChanged(dateTime);
         }
 
     }

@@ -8,9 +8,8 @@ import android.widget.Toast;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.adapter.NMonthAdapter;
-import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
-import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
+import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NCalendarView;
 import com.necer.ncalendar.view.NMonthView;
@@ -25,8 +24,10 @@ import org.joda.time.Months;
 
 public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewListener {
 
-    private OnClickMonthCalendarListener onClickMonthCalendarListener;
-    private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
+   // private OnClickMonthCalendarListener onClickMonthCalendarListener;
+   // private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
+
+    private OnMonthCalendarChangedListener onMonthCalendarChangedListener;
 
     public NMonthCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -58,7 +59,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             lastPosition = position;
             currView.setSelectDateTime(mInitialDateTime);
             mSelectDateTime = mInitialDateTime;
-        } else if (setDateTime == null) {
+        } else if (!isSetDateTime) {
             int i = position - lastPosition;
             DateTime dateTime = mSelectDateTime.plusMonths(i);
             currView.setSelectDateTime(dateTime);
@@ -67,19 +68,16 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         lastPosition = position;
 
         //正常滑动处理
-        if (onMonthCalendarPageChangeListener != null && setDateTime == null) {
-            onMonthCalendarPageChangeListener.onMonthCalendarPageSelected(mSelectDateTime);
+        if (onMonthCalendarChangedListener != null && !isSetDateTime) {
+            onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDateTime);
         }
 
     }
 
-    public void setOnClickMonthCalendarListener(OnClickMonthCalendarListener onClickMonthCalendarListener) {
-        this.onClickMonthCalendarListener = onClickMonthCalendarListener;
+    public void setOnMonthCalendarChangedListener(OnMonthCalendarChangedListener onMonthCalendarChangedListener) {
+        this.onMonthCalendarChangedListener = onMonthCalendarChangedListener;
     }
 
-    public void setOnMonthCalendarPageChangeListener(OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener) {
-        this.onMonthCalendarPageChangeListener = onMonthCalendarPageChangeListener;
-    }
 
     @Override
     public void setDateTime(DateTime dateTime) {
@@ -93,6 +91,9 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         if (calendarViews.size() == 0) {
             return;
         }
+
+        isSetDateTime = true;
+
         DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
         int months = Utils.getIntervalMonths(initialDateTime, dateTime);
         int i = getCurrentItem() + months;
@@ -103,38 +104,36 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             return;
         }
 
-
-        this.setDateTime = dateTime;
-
         monthView.setSelectDateTime(dateTime);
         mSelectDateTime = dateTime;
 
+        isSetDateTime = false;
+
         //跳转处理
-        if (onMonthCalendarPageChangeListener != null && setDateTime != null) {
-            setDateTime = null;
-            onMonthCalendarPageChangeListener.onMonthCalendarPageSelected(mSelectDateTime);
+        if (onMonthCalendarChangedListener != null ) {
+            onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDateTime);
         }
 
     }
 
     @Override
     public void onClickCurrentMonth(DateTime dateTime) {
-        doClickEvent(dateTime, getCurrentItem());
+        dealClickEvent(dateTime, getCurrentItem());
     }
 
     @Override
     public void onClickLastMonth(DateTime dateTime) {
         int currentItem = getCurrentItem() - 1;
-        doClickEvent(dateTime, currentItem);
+        dealClickEvent(dateTime, currentItem);
     }
 
     @Override
     public void onClickNextMonth(DateTime dateTime) {
         int currentItem = getCurrentItem() + 1;
-        doClickEvent(dateTime, currentItem);
+        dealClickEvent(dateTime, currentItem);
     }
 
-    private void doClickEvent(DateTime dateTime, int currentItem) {
+    private void dealClickEvent(DateTime dateTime, int currentItem) {
         NMonthCalendar.this.setCurrentItem(currentItem);
         NMonthView nMonthView = (NMonthView) calendarAdapter.getCalendarViews().get(currentItem);
         if (nMonthView == null) {
@@ -143,8 +142,8 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         nMonthView.setSelectDateTime(dateTime);
         mSelectDateTime = dateTime;
 
-        if (onClickMonthCalendarListener != null) {
-            onClickMonthCalendarListener.onClickMonthCalendar(dateTime);
+        if (onMonthCalendarChangedListener != null) {
+            onMonthCalendarChangedListener.onMonthCalendarChanged(dateTime);
         }
 
 

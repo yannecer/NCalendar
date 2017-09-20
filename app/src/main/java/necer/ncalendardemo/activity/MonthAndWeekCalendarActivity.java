@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.necer.ncalendar.calendar.MWCalendar;
-import com.necer.ncalendar.listener.OnCalendarChangeListener;
+import com.necer.ncalendar.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
@@ -34,16 +34,12 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new AAAdapter(this));
 
-        mwCalendar.setOnClickCalendarListener(new OnCalendarChangeListener() {
+        mwCalendar.setOnClickCalendarListener(new OnCalendarChangedListener()  {
             @Override
-            public void onClickCalendar(DateTime dateTime) {
+            public void onCalendarChanged(DateTime dateTime) {
                 MyLog.d("dateTime::" + dateTime.toLocalDate());
             }
 
-            @Override
-            public void onCalendarPageChanged(DateTime dateTime) {
-
-            }
         });
     }
 

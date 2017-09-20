@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.necer.ncalendar.calendar.NCalendar;
-import com.necer.ncalendar.listener.OnCalendarChangeListener;
+import com.necer.ncalendar.listener.OnCalendarChangedListener;
 
 import org.joda.time.DateTime;
 
@@ -23,7 +23,7 @@ import necer.ncalendardemo.adapter.AAAdapter;
  * QQ:619008099
  */
 
-public class NCalendarActivity extends AppCompatActivity implements OnCalendarChangeListener {
+public class NCalendarActivity extends AppCompatActivity implements OnCalendarChangedListener {
 
     private NCalendar ncalendar;
     private RecyclerView recyclerView;
@@ -52,20 +52,9 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         AAAdapter aaAdapter = new AAAdapter(this);
         recyclerView.setAdapter(aaAdapter);
-        ncalendar.setOnCalendarChangeListener(this);
+        ncalendar.setOnCalendarChangedListener(this);
     }
 
-    @Override
-    public void onClickCalendar(DateTime dateTime) {
-        tv_month.setText(dateTime.getMonthOfYear() + "月");
-        tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
-    }
-
-    @Override
-    public void onCalendarPageChanged(DateTime dateTime) {
-        tv_month.setText(dateTime.getMonthOfYear() + "月");
-        tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
-    }
 
     public void setDate(View view) {
         ncalendar.setDate(2018, 10, 11);
@@ -83,4 +72,10 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         ncalendar.toToday();
     }
 
+    @Override
+    public void onCalendarChanged(DateTime dateTime) {
+
+        tv_month.setText(dateTime.getMonthOfYear() + "月");
+        tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
+    }
 }

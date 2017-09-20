@@ -13,8 +13,9 @@
 
 
 
-    <com.necer.ncalendar.calendar.WeekCalendar
+    <com.necer.ncalendar.calendar.NMonthCalendar
+        android:id="@+id/ncalendar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"></com.necer.ncalendar.calendar.WeekCalendar>
+        android:layout_height="300dp"></com.necer.ncalendar.calendar.NMonthCalendar>
 
 </LinearLayout>
