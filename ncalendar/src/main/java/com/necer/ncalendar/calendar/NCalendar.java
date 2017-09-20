@@ -22,6 +22,8 @@ import com.necer.ncalendar.view.NMonthView;
 
 import org.joda.time.DateTime;
 
+import java.util.List;
+
 /**
  * Created by 闫彬彬 on 2017/8/25.
  * QQ:619008099
@@ -89,6 +91,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
                 monthRect = new Rect(0, monthCalendar.getTop(), monthCalendar.getWidth(), monthCalendar.getHeight());
                 weekRect = new Rect(0, weekCalendar.getTop(), weekCalendar.getWidth(), weekCalendar.getHeight());
+
+
             }
         });
 
@@ -549,6 +553,18 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         } else {
             weekCalendar.setDateTime(new DateTime());
         }
+    }
+
+    /**
+     * 设置指示圆点
+     * @param pointList
+     */
+    public void setPoint(List<String> pointList) {
+
+
+
+        monthCalendar.setPointList(pointList);
+        weekCalendar.setPointList(pointList);
     }
 
 }

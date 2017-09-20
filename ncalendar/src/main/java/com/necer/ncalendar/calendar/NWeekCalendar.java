@@ -63,7 +63,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
         if (lastPosition == -1) {
             lastPosition = position;
-            currView.setSelectDateTime(mInitialDateTime);
+            currView.setDateTimeAndPoint(mInitialDateTime,pointList);
             mSelectDateTime = mInitialDateTime;
         } else if (!isSetDateTime) {
             int i = position - lastPosition;
@@ -76,7 +76,8 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
                 dateTime = startDateTime;
             }
 
-            currView.setSelectDateTime(dateTime);
+           // currView.setSelectDateTime(dateTime);
+            currView.setDateTimeAndPoint(dateTime, pointList);
             mSelectDateTime = dateTime;
         }
 
@@ -116,7 +117,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
             return;
         }
 
-        weekView.setSelectDateTime(dateTime);
+        weekView.setDateTimeAndPoint(dateTime,pointList);
         mSelectDateTime = dateTime;
 
         isSetDateTime = false;
@@ -137,7 +138,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
         }
 
         NWeekView weekView = (NWeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
-        weekView.setSelectDateTime(dateTime);
+        weekView.setDateTimeAndPoint(dateTime,pointList);
         mSelectDateTime = dateTime;
 
         if (onWeekCalendarChangedListener != null) {

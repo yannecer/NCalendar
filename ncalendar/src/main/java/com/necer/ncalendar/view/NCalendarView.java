@@ -6,6 +6,8 @@ import android.graphics.Rect;
 import android.view.View;
 
 import com.necer.ncalendar.utils.Attrs;
+import com.necer.ncalendar.utils.MyLog;
+import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
 
@@ -37,6 +39,9 @@ public abstract class NCalendarView extends View {
     protected int mSelectCircleColor;//选中圆的颜色
     protected boolean isShowLunar;//是否显示农历
 
+    protected int mHolidayColor;
+    protected int mWorkdayColor;
+
     protected List<Rect> mRectList;//点击用的矩形集合
     protected int mPointColor ;//圆点颜色
     protected float mPointSize;//圆点大小
@@ -44,11 +49,15 @@ public abstract class NCalendarView extends View {
     protected int mHollowCircleColor;//空心圆颜色
     protected int mHollowCircleStroke;//空心圆粗细
 
+    protected boolean isShowHoliday;//是否显示节假日
+    protected List<String> holidayList;
+    protected List<String> workdayList;
+
+    protected List<String> pointList;
+
+
     public NCalendarView(Context context) {
         super(context);
-
-
-
         mSolarTextColor = Attrs.solarTextColor;
         mLunarTextColor = Attrs.lunarTextColor;
         mHintColor = Attrs.hintColor;
@@ -63,9 +72,19 @@ public abstract class NCalendarView extends View {
         mHollowCircleColor = Attrs.hollowCircleColor;
         mHollowCircleStroke = Attrs.hollowCircleStroke;
 
+        isShowHoliday = Attrs.isShowHoliday;
+        mHolidayColor = Attrs.holidayColor;
+        mWorkdayColor = Attrs.workdayColor;
+
         mRectList = new ArrayList<>();
         mSorlarPaint = getPaint(mSolarTextColor, mSolarTextSize);
         mLunarPaint = getPaint(mLunarTextColor, mLunarTextSize);
+
+
+
+
+        holidayList = Utils.getHolidayList(getContext());
+        workdayList = Utils.getWorkdayList(getContext());
     }
 
 
@@ -91,8 +110,20 @@ public abstract class NCalendarView extends View {
         invalidate();
     }
 
+    public void setDateTimeAndPoint(DateTime dateTime, List<String> pointList) {
+        this.mSelectDateTime = dateTime;
+        this.pointList = pointList;
+        invalidate();
+    }
+
     public void clear() {
         this.mSelectDateTime = null;
+        invalidate();
+    }
+
+    public void setPointList(List<String> pointList) {
+        this.pointList = pointList;
+        MyLog.d("pointList::" + pointList.size());
         invalidate();
     }
 }

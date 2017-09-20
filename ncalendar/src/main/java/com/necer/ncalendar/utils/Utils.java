@@ -1,11 +1,18 @@
 package com.necer.ncalendar.utils;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.TypedValue;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +111,7 @@ public class Utils {
 
     /**
      * 获得两个日期距离几周
+     *
      * @param dateTime1
      * @param dateTime2
      * @return
@@ -355,6 +363,81 @@ public class Utils {
         public List<DateTime> dateTimeList;
         public List<String> lunarList;
         public List<String> localDateList;//2004-12-12
+    }
+
+
+    private static List<String> holidayList;
+    private static List<String> workdayList;
+
+
+    public static void initHoliday(Context context) {
+        String holidayJson = getHolidayJson(context);
+
+        try {
+            JSONObject jsonObject = new JSONObject(holidayJson);
+
+            JSONObject data = jsonObject.getJSONObject("data");
+            JSONArray dataArray = data.getJSONArray("data");
+
+            holidayList = new ArrayList<>();
+            workdayList = new ArrayList<>();
+
+            for (int i = 0; i < dataArray.length(); i++) {
+
+                JSONObject jsonObject1 = dataArray.getJSONObject(i);
+                String date = jsonObject1.getString("date");
+                int val = jsonObject1.getInt("val");
+                if (val == 2 || val == 3) {
+                    holidayList.add(date);
+                } else {
+                    workdayList.add(date);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public static List<String> getHolidayList(Context context) {
+
+        if (holidayList == null) {
+            initHoliday(context);
+        }
+        return holidayList;
+    }
+
+    public static List<String> getWorkdayList(Context context) {
+
+        if (workdayList == null) {
+            initHoliday(context);
+        }
+        return workdayList;
+    }
+
+
+
+    public static String getHolidayJson(Context context) {
+        String json = null;
+        try {
+            AssetManager asset = context.getAssets();
+            InputStream in = asset.open("holiday.txt");
+            InputStreamReader inputStreamReader = new InputStreamReader(in, "utf-8");
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            StringBuffer sb = new StringBuffer("");
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+                sb.append("\n");
+
+            }
+            inputStreamReader.close();
+            json = sb.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
 

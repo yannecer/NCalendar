@@ -27,4 +27,8 @@ public class Attrs {
     public static int duration;
 
 
+    public static boolean isShowHoliday;
+    public static int holidayColor;
+    public static int workdayColor;
+
 }

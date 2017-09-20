@@ -54,7 +54,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
 
         if (lastPosition == -1) {
             lastPosition = position;
-            currView.setSelectDateTime(mInitialDateTime);
+            currView.setDateTimeAndPoint(mInitialDateTime,pointList);
             mSelectDateTime = mInitialDateTime;
         } else if (!isSetDateTime) {
             int i = position - lastPosition;
@@ -67,7 +67,9 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
                 dateTime = startDateTime;
             }
 
-            currView.setSelectDateTime(dateTime);
+            //currView.setSelectDateTime(dateTime);
+            currView.setDateTimeAndPoint(dateTime, pointList);
+
             mSelectDateTime = dateTime;
         }
         lastPosition = position;
@@ -108,7 +110,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             return;
         }
 
-        monthView.setSelectDateTime(dateTime);
+        monthView.setDateTimeAndPoint(dateTime,pointList);
         mSelectDateTime = dateTime;
 
         isSetDateTime = false;
@@ -149,7 +151,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         if (nMonthView == null) {
             return;
         }
-        nMonthView.setSelectDateTime(dateTime);
+        nMonthView.setDateTimeAndPoint(dateTime,pointList);
         mSelectDateTime = dateTime;
 
         if (onMonthCalendarChangedListener != null) {

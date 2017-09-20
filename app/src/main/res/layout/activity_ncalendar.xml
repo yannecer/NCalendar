@@ -32,6 +32,7 @@
             android:text="2017nian"
             android:textColor="#ffffff" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -109,7 +110,7 @@
         android:layout_height="match_parent"
         app:defaultCalendar="Month"
         app:firstDayOfWeek="Sunday"
-        app:selectCircleColor="#3388ff">
+        >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

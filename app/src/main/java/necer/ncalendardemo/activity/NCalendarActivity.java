@@ -15,6 +15,9 @@ import com.necer.ncalendar.listener.OnCalendarChangedListener;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
 
@@ -53,6 +56,24 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         AAAdapter aaAdapter = new AAAdapter(this);
         recyclerView.setAdapter(aaAdapter);
         ncalendar.setOnCalendarChangedListener(this);
+
+        ncalendar.post(new Runnable() {
+            @Override
+            public void run() {
+
+                List<String> list = new ArrayList<>();
+                list.add("2017-09-21");
+                list.add("2017-10-21");
+                list.add("2017-10-1");
+                list.add("2017-10-15");
+                list.add("2017-11-21");
+
+
+                ncalendar.setPoint(list);
+            }
+        });
+
+
     }
 
 
@@ -78,4 +99,6 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         tv_month.setText(dateTime.getMonthOfYear() + "月");
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
     }
+
+
 }
