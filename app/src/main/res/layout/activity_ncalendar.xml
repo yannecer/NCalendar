@@ -32,7 +32,6 @@
             android:text="2017nian"
             android:textColor="#ffffff" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"

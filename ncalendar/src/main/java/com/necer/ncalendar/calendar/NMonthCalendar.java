@@ -24,9 +24,6 @@ import org.joda.time.Months;
 
 public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewListener {
 
-   // private OnClickMonthCalendarListener onClickMonthCalendarListener;
-   // private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
-
     private OnMonthCalendarChangedListener onMonthCalendarChangedListener;
 
     public NMonthCalendar(Context context, AttributeSet attrs) {
@@ -62,6 +59,14 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         } else if (!isSetDateTime) {
             int i = position - lastPosition;
             DateTime dateTime = mSelectDateTime.plusMonths(i);
+
+            //日期越界
+            if (dateTime.getYear() > endDateTime.getYear()) {
+                dateTime = endDateTime;
+            }  else if (dateTime.getYear() < startDateTime.getYear()) {
+                dateTime = startDateTime;
+            }
+
             currView.setSelectDateTime(dateTime);
             mSelectDateTime = dateTime;
         }
@@ -78,11 +83,10 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         this.onMonthCalendarChangedListener = onMonthCalendarChangedListener;
     }
 
-
     @Override
     public void setDateTime(DateTime dateTime) {
 
-        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+        if (dateTime.getYear() > endDateTime.getYear() || dateTime.getYear() < startDateTime.getYear()) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -134,6 +138,12 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
     }
 
     private void dealClickEvent(DateTime dateTime, int currentItem) {
+
+        if (dateTime.getYear() > endDateTime.getYear() || dateTime.getYear() < startDateTime.getYear()) {
+            Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         NMonthCalendar.this.setCurrentItem(currentItem);
         NMonthView nMonthView = (NMonthView) calendarAdapter.getCalendarViews().get(currentItem);
         if (nMonthView == null) {

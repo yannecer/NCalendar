@@ -57,7 +57,7 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
 
     public void setDate(View view) {
-        ncalendar.setDate(2018, 10, 11);
+        ncalendar.setDate(2100, 12, 31);
     }
 
     public void toMonth(View view) {

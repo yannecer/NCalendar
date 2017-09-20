@@ -68,6 +68,14 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
         } else if (!isSetDateTime) {
             int i = position - lastPosition;
             DateTime dateTime = mSelectDateTime.plusWeeks(i);
+
+            //日期越界
+            if (dateTime.getYear() > endDateTime.getYear()) {
+                dateTime = endDateTime;
+            }  else if (dateTime.getYear() < startDateTime.getYear()) {
+                dateTime = startDateTime;
+            }
+
             currView.setSelectDateTime(dateTime);
             mSelectDateTime = dateTime;
         }
@@ -87,7 +95,7 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
     @Override
     public void setDateTime(DateTime dateTime) {
 
-        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+        if (dateTime.getYear() > endDateTime.getYear() || dateTime.getYear() < startDateTime.getYear()) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -122,6 +130,11 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
     @Override
     public void onClickCurrentWeek(DateTime dateTime) {
+
+        if (dateTime.getYear() > endDateTime.getYear() || dateTime.getYear() < startDateTime.getYear()) {
+            Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         NWeekView weekView = (NWeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
         weekView.setSelectDateTime(dateTime);
