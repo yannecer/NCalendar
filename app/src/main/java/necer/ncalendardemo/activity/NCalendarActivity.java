@@ -66,15 +66,23 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
                 list.add("2017-10-21");
                 list.add("2017-10-1");
                 list.add("2017-10-15");
+                list.add("2017-10-18");
+                list.add("2017-10-26");
                 list.add("2017-11-21");
-
 
                 ncalendar.setPoint(list);
             }
         });
-
-
     }
+
+
+    @Override
+    public void onCalendarChanged(DateTime dateTime) {
+
+        tv_month.setText(dateTime.getMonthOfYear() + "月");
+        tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
+    }
+
 
 
     public void setDate(View view) {
@@ -93,12 +101,20 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         ncalendar.toToday();
     }
 
-    @Override
-    public void onCalendarChanged(DateTime dateTime) {
+    public void setPoint() {
+        List<String> list = new ArrayList<>();
+        list.add("2017-09-21");
+        list.add("2017-10-21");
+        list.add("2017-10-1");
+        list.add("2017-10-15");
+        list.add("2017-10-18");
+        list.add("2017-10-26");
+        list.add("2017-11-21");
 
-        tv_month.setText(dateTime.getMonthOfYear() + "月");
-        tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
+        ncalendar.setPoint(list);
     }
+
+
 
 
 }

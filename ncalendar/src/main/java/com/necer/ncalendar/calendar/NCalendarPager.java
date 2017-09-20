@@ -17,6 +17,7 @@ import com.necer.ncalendar.view.NCalendarView;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -135,11 +136,16 @@ public abstract class NCalendarPager extends ViewPager {
     }
 
     public void setPointList(List<String> pointList) {
-        this.pointList = pointList;
+
+        List<String> formatList = new ArrayList<>();
+        for (int i = 0; i < pointList.size(); i++) {
+            String format = new DateTime(pointList.get(i)).toString("yyyy-MM-dd");
+            formatList.add(format);
+        }
+
+
+        this.pointList = formatList;
         NCalendarView nCalendarView = calendarAdapter.getCalendarViews().get(getCurrentItem());
-
-        MyLog.d("nCalendarView::"+nCalendarView);
-
         if (nCalendarView == null) {
             return;
         }

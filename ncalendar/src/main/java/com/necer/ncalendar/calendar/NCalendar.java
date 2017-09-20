@@ -560,9 +560,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
      * @param pointList
      */
     public void setPoint(List<String> pointList) {
-
-
-
         monthCalendar.setPointList(pointList);
         weekCalendar.setPointList(pointList);
     }
