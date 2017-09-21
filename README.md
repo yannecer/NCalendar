@@ -1,7 +1,7 @@
 # NCalendar
 一款仿miui日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
-支持农历，节假日，指示圆点，默认视图，周的第一天等
+支持农历，节假日，指示圆点，默认视图，周的第一天设置等
 
 
 ## 效果图
@@ -15,7 +15,7 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.3.0'
+compile 'com.necer.ncalendar:ncalendar:2.3.1'
 ```
 ##### 注意：ncalendar：1.0.x 的日历不能升级到 2.x.x，ncalendar:2.x.x是全新的日历
 
@@ -65,7 +65,9 @@ ncalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
 
 ##### 2、跳转日期
 ```
-ncalendar.setDate(int year, int month, int day); 
+参数为 yyyy-MM-dd 格式的日期
+
+ncalendar.setDate("2017-12-31"); 
 ```
 ##### 3、回到今天
 ```
@@ -124,6 +126,12 @@ app:firstDayOfWeek="Monday"
 | defaultCalendar|NCalendar日历默认视图|
 | firstDayOfWeek|每周第一天是周日还是周一|
 | duration|自动折叠时间|
+| isShowHoliday|是否显示节假日|
+| holidayColor|节假日“休”字颜色|
+| workdayColor|工作日日“班”字颜色|
+| pointSize|指示圆点大小|
+| pointColor|指示圆点颜色|
+
 
 
 ### 联系我加qq ：619008099
