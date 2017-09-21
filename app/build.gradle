@@ -28,8 +28,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':ncalendar')
 
-
-
     compile 'com.android.support:recyclerview-v7:25.3.1'
 
 }
