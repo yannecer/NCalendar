@@ -1,10 +1,11 @@
 # NCalendar
 一款仿miui日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
+支持农历，节假日，指示圆点，默认视图，周的第一天等
 
 
 ## 效果图
 
-![](https://github.com/yannecer/NCalendar/blob/master/app/nclendar2.gif)
+![](https://github.com/yannecer/NCalendar/blob/master/app/ncalendar3.gif)
 
 ## 下载demo：
 http://fir.im/7lv4
@@ -39,7 +40,7 @@ compile 'com.necer.ncalendar:ncalendar:2.3.0'
 ```
 
 
-```ncalendar:2.2.0```包含一个月日历```NMonthCalendar```，一个周日历```NWeekCalendar```和一个滑动切换不同视图的```NCalendar```，
+```ncalendar:2.x.x```包含一个月日历```NMonthCalendar```，一个周日历```NWeekCalendar```和一个滑动切换不同视图的```NCalendar```，
 单一日历请使用```NMonthCalendar```或者```NWeekCalendar```。
 
 ```NCalendar```日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
@@ -88,7 +89,7 @@ list.add("2017-11-21");
 ncalendar.setPoint(list);
 
 ```
-##### 5、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
+##### 6、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
 ```
 NCalendar默认视图,Month 或者 Week，默认是 Month
 
