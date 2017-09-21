@@ -508,13 +508,10 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     /**
      * 跳转制定日期
      *
-     * @param year
-     * @param month
-     * @param day
+     * @param formatDate  yyyy-MM-dd
      */
-    public void setDate(int year, int month, int day) {
-        DateTime dateTime = new DateTime(year, month, day, 0, 0, 0);
-
+    public void setDate(String formatDate) {
+        DateTime dateTime = new DateTime(formatDate);
         if (STATE == MONTH) {
             monthCalendar.setDateTime(dateTime);
         } else {

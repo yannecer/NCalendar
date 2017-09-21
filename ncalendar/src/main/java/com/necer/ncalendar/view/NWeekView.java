@@ -22,7 +22,7 @@ import java.util.List;
  * QQ:619008099
  */
 
-public class NWeekView extends NCalendarView{
+public class NWeekView extends NCalendarView {
 
 
     private OnClickWeekViewListener mOnClickWeekViewListener;
@@ -70,12 +70,8 @@ public class NWeekView extends NCalendarView{
             } else {
                 mSorlarPaint.setColor(mSolarTextColor);
                 canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                if (isShowLunar) {
-                    mLunarPaint.setColor(mLunarTextColor);
-                    String lunar = lunarList.get(i);
-                    canvas.drawText(lunar, rect.centerX(), baseline + Utils.dp2px(getContext(), 13), mLunarPaint);
-                }
-
+                //绘制农历
+                drawLunar(canvas, rect, baseline,i);
                 //绘制节假日
                 drawHolidays(canvas, rect, dateTime, baseline);
                 //绘制圆点
@@ -85,27 +81,34 @@ public class NWeekView extends NCalendarView{
         }
     }
 
+    private void drawLunar(Canvas canvas, Rect rect, int baseline, int i) {
+        if (isShowLunar) {
+            mLunarPaint.setColor(mLunarTextColor);
+            String lunar = lunarList.get(i);
+            canvas.drawText(lunar, rect.centerX(), baseline + rect.width() / 4, mLunarPaint);
+        }
+    }
+
 
     private void drawHolidays(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
-        if (isShowHoliday ) {
+        if (isShowHoliday) {
             if (holidayList.contains(dateTime.toLocalDate().toString())) {
                 mLunarPaint.setColor(mHolidayColor);
-                canvas.drawText("休", rect.centerX()+ Utils.dp2px(getContext(), 15), baseline -  Utils.dp2px(getContext(), 10), mLunarPaint);
+                canvas.drawText("休", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
 
             } else if (workdayList.contains(dateTime.toLocalDate().toString())) {
                 mLunarPaint.setColor(mWorkdayColor);
-                canvas.drawText("班", rect.centerX()+ Utils.dp2px(getContext(), 15), baseline -  Utils.dp2px(getContext(), 10), mLunarPaint);
+                canvas.drawText("班", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
             }
         }
     }
 
-    public void drawPoint(Canvas canvas,Rect rect, DateTime dateTime,int baseline) {
+    public void drawPoint(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
         if (pointList != null && pointList.contains(dateTime.toLocalDate().toString())) {
             mLunarPaint.setColor(mPointColor);
-            canvas.drawCircle(rect.centerX(), baseline - Utils.dp2px(getContext(), 20), mPointSize, mLunarPaint);
+            canvas.drawCircle(rect.centerX(), baseline - rect.width() / 3, mPointSize, mLunarPaint);
         }
     }
-
 
 
     @Override

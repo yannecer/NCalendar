@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.view.View;
 
 import com.necer.ncalendar.utils.Attrs;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
@@ -26,7 +25,6 @@ public abstract class NCalendarView extends View {
     protected int mWidth;
     protected int mHeight;
     protected List<DateTime> dateTimes;
-
 
     protected int mSolarTextColor;//公历字体颜色
     protected int mLunarTextColor;//农历字体颜色
@@ -52,7 +50,6 @@ public abstract class NCalendarView extends View {
     protected boolean isShowHoliday;//是否显示节假日
     protected List<String> holidayList;
     protected List<String> workdayList;
-
     protected List<String> pointList;
 
 
@@ -80,9 +77,6 @@ public abstract class NCalendarView extends View {
         mSorlarPaint = getPaint(mSolarTextColor, mSolarTextSize);
         mLunarPaint = getPaint(mLunarTextColor, mLunarTextSize);
 
-
-
-
         holidayList = Utils.getHolidayList(getContext());
         workdayList = Utils.getWorkdayList(getContext());
     }
@@ -105,6 +99,7 @@ public abstract class NCalendarView extends View {
     public DateTime getSelectDateTime() {
         return mSelectDateTime;
     }
+
     public void setSelectDateTime(DateTime dateTime) {
         this.mSelectDateTime = dateTime;
         invalidate();
@@ -123,7 +118,6 @@ public abstract class NCalendarView extends View {
 
     public void setPointList(List<String> pointList) {
         this.pointList = pointList;
-        MyLog.d("pointList::" + pointList.size());
         invalidate();
     }
 }

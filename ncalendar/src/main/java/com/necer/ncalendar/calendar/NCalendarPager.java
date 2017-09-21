@@ -11,7 +11,6 @@ import android.view.ViewTreeObserver;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.utils.Attrs;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NCalendarView;
 
@@ -125,7 +124,12 @@ public abstract class NCalendarPager extends ViewPager {
 
     protected abstract void initCurrentCalendarView(int position);
 
-    public abstract void setDateTime(DateTime dateTime);
+    protected abstract void setDateTime(DateTime dateTime);
+
+    //设置日期
+    public void setDate(String formatDate) {
+        setDateTime(new DateTime(formatDate));
+    }
 
     public DateTime getStartDateTime() {
         return startDateTime;
@@ -142,7 +146,6 @@ public abstract class NCalendarPager extends ViewPager {
             String format = new DateTime(pointList.get(i)).toString("yyyy-MM-dd");
             formatList.add(format);
         }
-
 
         this.pointList = formatList;
         NCalendarView nCalendarView = calendarAdapter.getCalendarViews().get(getCurrentItem());

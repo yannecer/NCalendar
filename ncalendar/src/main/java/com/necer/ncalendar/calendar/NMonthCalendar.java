@@ -86,7 +86,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
     }
 
     @Override
-    public void setDateTime(DateTime dateTime) {
+    protected void setDateTime(DateTime dateTime) {
 
         if (dateTime.getYear() > endDateTime.getYear() || dateTime.getYear() < startDateTime.getYear()) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
