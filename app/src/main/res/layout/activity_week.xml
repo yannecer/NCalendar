@@ -32,7 +32,7 @@
         android:layout_height="50dp"
         android:background="@color/white"
         app:selectCircleColor= "@android:color/holo_red_light"
-        app:pointcolor="#00ffff"
+        app:pointColor="#00ffff"
         app:pointSize="1dp"
         app:solarTextSize="15sp" />
 

@@ -125,7 +125,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
             @Override
             public void onAnimationRepeat(Animator animation) {
-
             }
         });
 
