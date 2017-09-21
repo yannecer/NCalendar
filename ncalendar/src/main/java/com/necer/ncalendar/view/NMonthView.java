@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
 import com.necer.ncalendar.utils.Attrs;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
@@ -161,11 +160,6 @@ public class NMonthView extends NCalendarView {
     //绘制圆点
     public void drawPoint(Canvas canvas,Rect rect, DateTime dateTime ,int baseline) {
         if (pointList != null && pointList.contains(dateTime.toLocalDate().toString())) {
-
-
-            MyLog.d("dateTime.toLocalDate().toString()::" + dateTime.toLocalDate().toString());
-
-
             mLunarPaint.setColor(mPointColor);
             canvas.drawCircle(rect.centerX(), baseline - Utils.dp2px(getContext(), 20), mPointSize, mLunarPaint);
         }
