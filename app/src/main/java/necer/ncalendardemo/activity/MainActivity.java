@@ -22,4 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public void monthAndWeek(View view) {
         startActivity(new Intent(this, MonthAndWeekCalendarActivity.class));
     }
+
+    public void test(View view) {
+        startActivity(new Intent(this, TestActivity.class));
+    }
 }

@@ -1,10 +1,8 @@
 package com.necer.ncalendar.calendar;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.widget.Toast;
-
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.adapter.NMonthAdapter;
@@ -13,7 +11,6 @@ import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NCalendarView;
 import com.necer.ncalendar.view.NMonthView;
-
 import org.joda.time.DateTime;
 import org.joda.time.Months;
 
@@ -56,6 +53,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             lastPosition = position;
             currView.setDateTimeAndPoint(mInitialDateTime,pointList);
             mSelectDateTime = mInitialDateTime;
+
         } else if (!isSetDateTime) {
             int i = position - lastPosition;
             DateTime dateTime = mSelectDateTime.plusMonths(i);
@@ -66,10 +64,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             }  else if (dateTime.getYear() < startDateTime.getYear()) {
                 dateTime = startDateTime;
             }
-
-            //currView.setSelectDateTime(dateTime);
             currView.setDateTimeAndPoint(dateTime, pointList);
-
             mSelectDateTime = dateTime;
         }
         lastPosition = position;

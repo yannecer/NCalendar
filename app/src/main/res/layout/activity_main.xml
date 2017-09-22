@@ -19,34 +19,38 @@
 
 
     <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="20dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
 
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="#c1c1c1"
-          android:layout_centerVertical="true"
-          />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:background="#c1c1c1" />
 
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="请点上面的仿miui日历"
-          android:textColor="#333333"
-          android:textSize="16sp"
-          android:layout_centerInParent="true"
-          android:background="@color/white"
-          />
-  </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:text="请点上面的仿miui日历"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="老版日历"
         android:onClick="monthAndWeek"
-        />
+        android:text="老版日历" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="test"
+        android:text="test" />
 
 </LinearLayout>

@@ -152,7 +152,7 @@ public abstract class NCalendarPager extends ViewPager {
         if (nCalendarView == null) {
             return;
         }
-        nCalendarView.setPointList(pointList);
+        nCalendarView.setPointList(formatList);
     }
 
 
