@@ -11,9 +11,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.necer.ncalendar.calendar.NCalendar;
-import com.necer.ncalendar.listener.OnCalendarChangeListener;
+import com.necer.ncalendar.listener.OnCalendarChangedListener;
 
 import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
@@ -23,7 +26,7 @@ import necer.ncalendardemo.adapter.AAAdapter;
  * QQ:619008099
  */
 
-public class NCalendarActivity extends AppCompatActivity implements OnCalendarChangeListener {
+public class NCalendarActivity extends AppCompatActivity implements OnCalendarChangedListener {
 
     private NCalendar ncalendar;
     private RecyclerView recyclerView;
@@ -50,28 +53,40 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new AAAdapter(this));
-        ncalendar.setOnCalendarChangeListener(this);
+        AAAdapter aaAdapter = new AAAdapter(this);
+        recyclerView.setAdapter(aaAdapter);
+        ncalendar.setOnCalendarChangedListener(this);
 
+        ncalendar.post(new Runnable() {
+            @Override
+            public void run() {
 
+                List<String> list = new ArrayList<>();
+                list.add("2017-09-21");
+                list.add("2017-10-21");
+                list.add("2017-10-1");
+                list.add("2017-10-15");
+                list.add("2017-10-18");
+                list.add("2017-10-26");
+                list.add("2017-11-21");
 
+                ncalendar.setPoint(list);
+            }
+        });
     }
 
+
     @Override
-    public void onClickCalendar(DateTime dateTime) {
+    public void onCalendarChanged(DateTime dateTime) {
 
         tv_month.setText(dateTime.getMonthOfYear() + "月");
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
     }
 
-    @Override
-    public void onCalendarPageChanged(DateTime dateTime) {
-        tv_month.setText(dateTime.getMonthOfYear() + "月");
-        tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
-    }
+
 
     public void setDate(View view) {
-        ncalendar.setDate(2018, 10, 11);
+        ncalendar.setDate("2100-12-31");
     }
 
     public void toMonth(View view) {
@@ -81,5 +96,25 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
     public void toWeek(View view) {
         ncalendar.toWeek();
     }
+
+    public void toToday(View view) {
+        ncalendar.toToday();
+    }
+
+    public void setPoint() {
+        List<String> list = new ArrayList<>();
+        list.add("2017-09-21");
+        list.add("2017-10-21");
+        list.add("2017-10-1");
+        list.add("2017-10-15");
+        list.add("2017-10-18");
+        list.add("2017-10-26");
+        list.add("2017-11-21");
+
+        ncalendar.setPoint(list);
+    }
+
+
+
 
 }

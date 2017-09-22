@@ -15,7 +15,7 @@ import android.widget.OverScroller;
 import android.widget.RelativeLayout;
 
 import com.necer.ncalendar.R;
-import com.necer.ncalendar.listener.OnCalendarChangeListener;
+import com.necer.ncalendar.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.listener.OnClickMonthCalendarListener;
 import com.necer.ncalendar.listener.OnClickWeekCalendarListener;
 import com.necer.ncalendar.listener.OnMonthCalendarPageChangeListener;
@@ -243,7 +243,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
             }
 
             if (onClickCalendarListener != null) {
-                onClickCalendarListener.onCalendarPageChanged(dateTime);
+                onClickCalendarListener.onCalendarChanged(dateTime);
             }
         }
     }
@@ -252,7 +252,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
     public void onClickMonthCalendar(DateTime dateTime) {
         weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
         if (onClickCalendarListener != null) {
-            onClickCalendarListener.onClickCalendar(dateTime);
+            onClickCalendarListener.onCalendarChanged(dateTime);
         }
     }
 
@@ -260,7 +260,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
     public void onClickWeekCalendar(DateTime dateTime) {
         monthCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
         if (onClickCalendarListener != null) {
-            onClickCalendarListener.onClickCalendar(dateTime);
+            onClickCalendarListener.onCalendarChanged(dateTime);
         }
     }
 
@@ -276,7 +276,7 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
             }
 
             if (onClickCalendarListener != null) {
-                onClickCalendarListener.onCalendarPageChanged(dateTime);
+                onClickCalendarListener.onCalendarChanged(dateTime);
             }
         }
     }
@@ -293,9 +293,9 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent, O
     }
 
 
-    private OnCalendarChangeListener onClickCalendarListener;
+    private OnCalendarChangedListener onClickCalendarListener;
 
-    public void setOnClickCalendarListener(OnCalendarChangeListener onClickCalendarListener) {
+    public void setOnClickCalendarListener(OnCalendarChangedListener onClickCalendarListener) {
         this.onClickCalendarListener = onClickCalendarListener;
     }
 

@@ -11,7 +11,7 @@
         <attr name="isShowLunar" format="boolean" />
 
         <attr name="pointSize" format="dimension" />
-        <attr name="pointcolor" format="color" />
+        <attr name="pointColor" format="color" />
         <attr name="hollowCircleColor" format="color" />
         <attr name="hollowCircleStroke" format="integer" />
         <attr name="startDateTime" format="string" />
@@ -24,7 +24,9 @@
         <attr name="firstDayOfWeek" format="string"/>
         <attr name="defaultCalendar" format="string"/>
 
-
+        <attr name="isShowHoliday" format="boolean" />
+        <attr name="holidayColor" format="color" />
+        <attr name="workdayColor" format="color" />
 
     </declare-styleable>
 </resources>

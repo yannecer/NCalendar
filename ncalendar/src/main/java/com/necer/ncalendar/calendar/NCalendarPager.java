@@ -12,8 +12,12 @@ import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.NCalendarAdapter;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
+import com.necer.ncalendar.view.NCalendarView;
 
 import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 闫彬彬 on 2017/8/25.
@@ -27,9 +31,13 @@ public abstract class NCalendarPager extends ViewPager {
     protected DateTime endDateTime;
     protected int mPageSize;
     protected int mCurrPage;
-    protected DateTime setDateTime;//设置跳转的datetime
+    protected boolean isSetDateTime;
     protected DateTime mInitialDateTime;//日历初始化datetime，即今天
     protected DateTime mSelectDateTime;//当前页面选中的datetime
+
+    protected List<String> pointList;//圆点
+
+
 
 
     public NCalendarPager(Context context) {
@@ -50,13 +58,19 @@ public abstract class NCalendarPager extends ViewPager {
         Attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
 
         Attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, (int) Utils.dp2px(context, 2));
-        Attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointcolor, getResources().getColor(R.color.selectCircleColor));
+        Attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, getResources().getColor(R.color.pointColor));
         Attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, Color.WHITE);
         Attrs.hollowCircleStroke = ta.getInt(R.styleable.NCalendar_hollowCircleStroke, (int) Utils.dp2px(context, 1));
 
 
         Attrs.monthCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
         Attrs.duration = ta.getInt(R.styleable.NCalendar_duration, 240);
+
+        Attrs.isShowHoliday = ta.getBoolean(R.styleable.NCalendar_isShowHoliday, true);
+        Attrs.holidayColor = ta.getColor(R.styleable.NCalendar_holidayColor, getResources().getColor(R.color.holidayColor));
+        Attrs.workdayColor = ta.getColor(R.styleable.NCalendar_holidayColor, getResources().getColor(R.color.workdayColor));
+
+
 
         String firstDayOfWeek = ta.getString(R.styleable.NCalendar_firstDayOfWeek);
         String defaultCalendar = ta.getString(R.styleable.NCalendar_defaultCalendar);
@@ -69,6 +83,10 @@ public abstract class NCalendarPager extends ViewPager {
         mInitialDateTime = new DateTime();
         startDateTime = new DateTime("1901-01-01");
         endDateTime = new DateTime("2099-12-31");
+
+
+
+
 
         calendarAdapter = getCalendarAdapter();
         setAdapter(calendarAdapter);
@@ -106,7 +124,12 @@ public abstract class NCalendarPager extends ViewPager {
 
     protected abstract void initCurrentCalendarView(int position);
 
-    public abstract void setDateTime(DateTime dateTime);
+    protected abstract void setDateTime(DateTime dateTime);
+
+    //设置日期
+    public void setDate(String formatDate) {
+        setDateTime(new DateTime(formatDate));
+    }
 
     public DateTime getStartDateTime() {
         return startDateTime;
@@ -114,6 +137,22 @@ public abstract class NCalendarPager extends ViewPager {
 
     public DateTime getEndDateTime() {
         return endDateTime;
+    }
+
+    public void setPointList(List<String> pointList) {
+
+        List<String> formatList = new ArrayList<>();
+        for (int i = 0; i < pointList.size(); i++) {
+            String format = new DateTime(pointList.get(i)).toString("yyyy-MM-dd");
+            formatList.add(format);
+        }
+
+        this.pointList = formatList;
+        NCalendarView nCalendarView = calendarAdapter.getCalendarViews().get(getCurrentItem());
+        if (nCalendarView == null) {
+            return;
+        }
+        nCalendarView.setPointList(pointList);
     }
 
 

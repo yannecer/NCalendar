@@ -34,7 +34,7 @@
         android:layout_height="240dp"
         android:background="@color/white"
         app:selectCircleColor= "@android:color/holo_red_light"
-        app:pointcolor="#00c8aa"
+        app:pointColor="#00c8aa"
         app:pointSize="1dp"
         app:solarTextSize= "15sp"
         app:endDateTime="2020-06-23"

@@ -104,40 +104,20 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <RelativeLayout
+    <com.necer.ncalendar.calendar.NCalendar
+        android:id="@+id/ncalendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:defaultCalendar="Month"
+        app:firstDayOfWeek="Sunday"
+        >
 
-        <com.necer.ncalendar.calendar.NCalendar
-            android:id="@+id/ncalendar"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultCalendar="Month"
-            app:firstDayOfWeek="Sunday"
-            app:selectCircleColor="#3388ff">
+            android:layout_height="match_parent" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-          <!--  <android.support.v4.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorAccent">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="测试" />
-
-
-            </android.support.v4.widget.NestedScrollView>-->
-
-
-        </com.necer.ncalendar.calendar.NCalendar>
-    </RelativeLayout>
+    </com.necer.ncalendar.calendar.NCalendar>
 
 
 </LinearLayout>

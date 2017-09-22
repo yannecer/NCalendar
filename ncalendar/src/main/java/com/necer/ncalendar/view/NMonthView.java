@@ -34,10 +34,9 @@ public class NMonthView extends NCalendarView {
     public NMonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
         super(context);
         this.mInitialDateTime = dateTime;
-        this.mSelectDateTime = dateTime;
+
         //0周日，1周一
         Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, Attrs.firstDayOfWeek);
-
         mOnClickMonthViewListener = onClickMonthViewListener;
 
         lunarList = nCalendar2.lunarList;
@@ -45,14 +44,6 @@ public class NMonthView extends NCalendarView {
         dateTimes = nCalendar2.dateTimeList;
 
         mRowNum = dateTimes.size() / 7;
-    }
-
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-
     }
 
     @Override
@@ -74,7 +65,7 @@ public class NMonthView extends NCalendarView {
                 if (mRowNum == 5) {
                     baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
                 } else {
-                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 10 - mHeight / 12);
+                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 5- mHeight / 6)/2;
                 }
 
                 //当月和上下月的颜色不同
@@ -82,13 +73,13 @@ public class NMonthView extends NCalendarView {
                     //当天和选中的日期不绘制农历
                     if (Utils.isToday(dateTime)) {
                         mSorlarPaint.setColor(mSelectCircleColor);
-                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
+                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
                         canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(Color.WHITE);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else if (mSelectDateTime != null && dateTime.toLocalDate().equals(mSelectDateTime.toLocalDate())) {
                         mSorlarPaint.setColor(mSelectCircleColor);
-                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 10 - mHeight / 12));
+                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
                         canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(mHollowCircleColor);
                         canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius - mHollowCircleStroke, mSorlarPaint);
@@ -98,12 +89,20 @@ public class NMonthView extends NCalendarView {
                         mSorlarPaint.setColor(mSolarTextColor);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                         drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
+                        //绘制节假日
+                        drawHolidays(canvas, rect, dateTime, baseline);
+                        //绘制圆点
+                        drawPoint(canvas, rect, dateTime,baseline);
                     }
 
                 } else {
                     mSorlarPaint.setColor(mHintColor);
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     drawLunar(canvas, rect, baseline, mHintColor, i, j);
+                    //绘制节假日
+                    drawHolidays(canvas, rect, dateTime, baseline);
+                    //绘制圆点
+                    drawPoint(canvas, rect, dateTime,baseline);
                 }
             }
         }
@@ -111,6 +110,7 @@ public class NMonthView extends NCalendarView {
 
     /**
      * 月日历高度
+     *
      * @return
      */
     public int getMonthHeight() {
@@ -120,6 +120,7 @@ public class NMonthView extends NCalendarView {
     /**
      * 月日历的绘制高度，
      * 为了月日历6行时，绘制农历不至于太靠下，绘制区域网上压缩一下
+     *
      * @return
      */
     public int getDrawHeight() {
@@ -131,7 +132,29 @@ public class NMonthView extends NCalendarView {
         if (isShowLunar) {
             mLunarPaint.setColor(color);
             String lunar = lunarList.get(i * 7 + j);
-            canvas.drawText(lunar, rect.centerX(), baseline + Utils.dp2px(getContext(), 13), mLunarPaint);
+            //矩形的高可能不同，但宽一定相同
+            canvas.drawText(lunar, rect.centerX(), baseline + rect.width() / 4, mLunarPaint);
+        }
+    }
+
+    private void drawHolidays(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
+        if (isShowHoliday) {
+            if (holidayList.contains(dateTime.toLocalDate().toString())) {
+                mLunarPaint.setColor(mHolidayColor);
+                canvas.drawText("休", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
+
+            } else if (workdayList.contains(dateTime.toLocalDate().toString())) {
+                mLunarPaint.setColor(mWorkdayColor);
+                canvas.drawText("班", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
+            }
+        }
+    }
+
+    //绘制圆点
+    public void drawPoint(Canvas canvas,Rect rect, DateTime dateTime ,int baseline) {
+        if (pointList != null && pointList.contains(dateTime.toLocalDate().toString())) {
+            mLunarPaint.setColor(mPointColor);
+            canvas.drawCircle(rect.centerX(), baseline - rect.width() / 3, mPointSize, mLunarPaint);
         }
     }
 
@@ -172,9 +195,11 @@ public class NMonthView extends NCalendarView {
     }
 
     public int getSelectRowIndex() {
+        if (mSelectDateTime == null) {
+            return 0;
+        }
         int indexOf = localDateList.indexOf(mSelectDateTime.toLocalDate().toString());
         return indexOf / 7;
-
     }
 
 }

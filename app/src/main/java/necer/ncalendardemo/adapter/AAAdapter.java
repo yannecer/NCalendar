@@ -54,6 +54,7 @@ public class AAAdapter extends RecyclerView.Adapter<AAAdapter.MyViewHolder> {
             textView = (TextView) itemView.findViewById(R.id.tv_);
         }
     }
+
 }
 
 
