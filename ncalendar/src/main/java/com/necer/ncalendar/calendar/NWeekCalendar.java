@@ -17,6 +17,8 @@ import com.necer.ncalendar.view.NWeekView;
 import org.joda.time.DateTime;
 import org.joda.time.Weeks;
 
+import java.util.List;
+
 /**
  * Created by 闫彬彬 on 2017/8/30.
  * QQ:619008099
@@ -37,16 +39,16 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
     @Override
     protected NCalendarAdapter getCalendarAdapter() {
 
-         DateTime startSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(startDateTime);
-         DateTime endSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(endDateTime);
-         DateTime todaySunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(DateTime.now());
-         mPageSize = Weeks.weeksBetween(startSunFirstDayOfWeek, endSunFirstDayOfWeek).getWeeks() + 1;
-         mCurrPage = Weeks.weeksBetween(startSunFirstDayOfWeek, todaySunFirstDayOfWeek).getWeeks();
+        DateTime startSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(startDateTime);
+        DateTime endSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(endDateTime);
+        DateTime todaySunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(DateTime.now());
+        mPageSize = Weeks.weeksBetween(startSunFirstDayOfWeek, endSunFirstDayOfWeek).getWeeks() + 1;
+        mCurrPage = Weeks.weeksBetween(startSunFirstDayOfWeek, todaySunFirstDayOfWeek).getWeeks();
         return new NWeekAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
     }
 
 
-    private int lastPosition=-1;
+    private int lastPosition = -1;
 
     @Override
     protected void initCurrentCalendarView(int position) {
@@ -63,27 +65,32 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
         if (lastPosition == -1) {
             lastPosition = position;
-            currView.setDateTimeAndPoint(mInitialDateTime,pointList);
+            currView.setDateTimeAndPoint(mInitialDateTime, pointList);
             mSelectDateTime = mInitialDateTime;
-        } else if (!isSetDateTime) {
-            int i = position - lastPosition;
-            DateTime dateTime = mSelectDateTime.plusWeeks(i);
+        } else {
+            DateTime dateTime;
+            if (setDateTime == null) {
+                int i = position - lastPosition;
+                dateTime = mSelectDateTime.plusWeeks(i);
+            } else {
+                dateTime = setDateTime;
+            }
 
             //日期越界
             if (dateTime.getYear() > endDateTime.getYear()) {
                 dateTime = endDateTime;
-            }  else if (dateTime.getYear() < startDateTime.getYear()) {
+            } else if (dateTime.getYear() < startDateTime.getYear()) {
                 dateTime = startDateTime;
             }
 
-           // currView.setSelectDateTime(dateTime);
+
             currView.setDateTimeAndPoint(dateTime, pointList);
             mSelectDateTime = dateTime;
         }
 
         lastPosition = position;
 
-        if (onWeekCalendarChangedListener != null&& !isSetDateTime) {
+        if (onWeekCalendarChangedListener != null) {
             onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
         }
     }
@@ -103,29 +110,25 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
 
         SparseArray<NCalendarView> calendarViews = calendarAdapter.getCalendarViews();
         if (calendarViews.size() == 0) {
-            return ;
-        }
-
-        isSetDateTime = true;
-        DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
-        int months = Utils.getIntervalWeek(initialDateTime, dateTime);
-        int i = getCurrentItem() + months;
-        setCurrentItem(i, false);
-
-        NWeekView weekView = (NWeekView) calendarAdapter.getCalendarViews().get(i);
-        if (weekView == null) {
             return;
         }
 
-        weekView.setDateTimeAndPoint(dateTime,pointList);
-        mSelectDateTime = dateTime;
 
-        isSetDateTime = false;
+        setDateTime = dateTime;
+        NWeekView currectMonthView = (NWeekView) calendarViews.get(getCurrentItem());
+        List<String> localDateList = currectMonthView.getLocalDateList();
 
-        //跳转处理
-        if (onWeekCalendarChangedListener != null ) {
-            onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
+        //同一周
+        if (localDateList.contains(dateTime.toLocalDate().toString())) {
+            initCurrentCalendarView(getCurrentItem());
+        } else {
+            DateTime initialDateTime = currectMonthView.getInitialDateTime();
+            int months = Utils.getIntervalWeek(initialDateTime, dateTime);
+            int i = getCurrentItem() + months;
+            setCurrentItem(i, false);
         }
+        //置为空，不影响下次判断
+        setDateTime = null;
     }
 
 
@@ -138,9 +141,8 @@ public class NWeekCalendar extends NCalendarPager implements OnClickWeekViewList
         }
 
         NWeekView weekView = (NWeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
-        weekView.setDateTimeAndPoint(dateTime,pointList);
+        weekView.setDateTimeAndPoint(dateTime, pointList);
         mSelectDateTime = dateTime;
-
         if (onWeekCalendarChangedListener != null) {
             onWeekCalendarChangedListener.onWeekCalendarChanged(dateTime);
         }

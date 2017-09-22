@@ -70,7 +70,7 @@ public class Utils {
 
     //是否同月
     public static boolean isEqualsMonth(DateTime dateTime1, DateTime dateTime2) {
-        return dateTime1.getMonthOfYear() == dateTime2.getMonthOfYear();
+        return dateTime1.getYear() == dateTime2.getYear() && dateTime1.getMonthOfYear() == dateTime2.getMonthOfYear();
     }
 
 
@@ -294,6 +294,7 @@ public class Utils {
     public static NCalendar getWeekCalendar2(DateTime dateTime, int type) {
         List<DateTime> dateTimeList = new ArrayList<>();
         List<String> lunarStringList = new ArrayList<>();
+        List<String> localDateList = new ArrayList<>();
 
         if (type == 0) {
             dateTime = getSunFirstDayOfWeek(dateTime);
@@ -309,10 +310,12 @@ public class Utils {
             String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
 
             dateTimeList.add(dateTime1);
+            localDateList.add(dateTime1.toLocalDate().toString());
             lunarStringList.add(lunarDayString);
         }
         calendar.dateTimeList = dateTimeList;
         calendar.lunarList = lunarStringList;
+        calendar.localDateList = localDateList;
         return calendar;
     }
 

@@ -52,7 +52,6 @@ public abstract class NCalendarView extends View {
     protected List<String> workdayList;
     protected List<String> pointList;
 
-
     public NCalendarView(Context context) {
         super(context);
         mSolarTextColor = Attrs.solarTextColor;

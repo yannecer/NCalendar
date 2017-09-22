@@ -6,13 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.necer.ncalendar.calendar.NMonthCalendar;
-import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
+import com.necer.ncalendar.calendar.NWeekCalendar;
+import com.necer.ncalendar.listener.OnWeekCalendarChangedListener;
 import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import necer.ncalendardemo.R;
 
@@ -26,12 +24,25 @@ public class TestActivity extends Activity {
 
     private NMonthCalendar nmonthcalendar;
 
+    private NWeekCalendar nweekcalendar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        nmonthcalendar = (NMonthCalendar) findViewById(R.id.nmonthcalendar);
+        nweekcalendar = (NWeekCalendar) findViewById(R.id.nweekcalendar);
+
+        nweekcalendar.setOnWeekCalendarChangedListener(new OnWeekCalendarChangedListener() {
+            @Override
+            public void onWeekCalendarChanged(DateTime dateTime) {
+                MyLog.d("onWeekCalendarChanged::" + dateTime);
+            }
+        });
+
+
+
+       /* nmonthcalendar = (NMonthCalendar) findViewById(R.id.nmonthcalendar);
         nmonthcalendar.post(new Runnable() {
             @Override
             public void run() {
@@ -49,11 +60,12 @@ public class TestActivity extends Activity {
                 MyLog.d("onMonthCalendarChanged::" + dateTime.toLocalDate());
             }
         });
-
+*/
     }
 
     public void aaa(View view) {
-        nmonthcalendar.setDate("2017-10-01");
+       // nmonthcalendar.setDate("2018-09-01");
+        nweekcalendar.setDate("2018-09-01");
 
     }
 }

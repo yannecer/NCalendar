@@ -55,6 +55,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     private OnCalendarChangedListener onCalendarChangedListener;
 
 
+
     public NCalendar(Context context) {
         this(context, null);
     }
@@ -65,6 +66,9 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     public NCalendar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        //禁止多点触摸
+        setMotionEventSplittingEnabled(false);
 
         monthCalendar = new NMonthCalendar(context, attrs);
         weekCalendar = new NWeekCalendar(context, attrs);
@@ -127,7 +131,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             public void onAnimationRepeat(Animator animation) {
             }
         });
-
     }
 
 
@@ -152,20 +155,12 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
 
-        //嵌套滑动时，禁止日历的滑动
-        weekCalendar.setScrollEnable(false);
-        monthCalendar.setScrollEnable(false);
-
         //跟随手势滑动
         move(dy, true, consumed);
     }
 
     @Override
     public void onStopNestedScroll(View target) {
-
-        //嵌套滑动结束，恢复日历的滑动
-        weekCalendar.setScrollEnable(true);
-        monthCalendar.setScrollEnable(true);
 
         //嵌套滑动结束，自动滑动
         scroll();

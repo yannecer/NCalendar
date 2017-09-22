@@ -27,6 +27,7 @@ public class NWeekView extends NCalendarView {
 
     private OnClickWeekViewListener mOnClickWeekViewListener;
     private List<String> lunarList;
+    private List<String> localDateList;
 
     public NWeekView(Context context, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
         super(context);
@@ -36,6 +37,7 @@ public class NWeekView extends NCalendarView {
 
         dateTimes = weekCalendar2.dateTimeList;
         lunarList = weekCalendar2.lunarList;
+        localDateList = weekCalendar2.localDateList;
         mOnClickWeekViewListener = onClickWeekViewListener;
     }
 
@@ -135,4 +137,8 @@ public class NWeekView extends NCalendarView {
             return true;
         }
     });
+
+    public List<String> getLocalDateList() {
+        return localDateList;
+    }
 }
