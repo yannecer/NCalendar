@@ -13,15 +13,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import com.necer.ncalendar.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import com.necer.ncalendar.listener.OnWeekCalendarChangedListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.view.NMonthView;
-
 import org.joda.time.DateTime;
-
 import java.util.List;
 
 /**

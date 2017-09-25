@@ -44,6 +44,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         NMonthView lastView = (NMonthView) calendarAdapter.getCalendarViews().get(position - 1);
         NMonthView nextView = (NMonthView) calendarAdapter.getCalendarViews().get(position + 1);
 
+
         if (currView == null) {
             return;
         }

@@ -100,10 +100,6 @@ public abstract class CalendarViewPager extends ViewPager {
             }
         });
 
-
-
-
-
         setBackgroundColor(getResources().getColor(android.R.color.white));
     }
 
