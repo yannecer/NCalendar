@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.necer.ncalendar.listener.OnClickWeekViewListener;
-import com.necer.ncalendar.view.NWeekView;
+import com.necer.ncalendar.view.WeekView;
 
 import org.joda.time.DateTime;
 
@@ -13,11 +13,11 @@ import org.joda.time.DateTime;
  * QQ:619008099
  */
 
-public class NWeekAdapter extends NCalendarAdapter{
+public class WeekAdapter extends CalendarAdapter {
 
     private OnClickWeekViewListener mOnClickWeekViewListener;
 
-    public NWeekAdapter(Context mContext, int count, int curr, DateTime dateTime,OnClickWeekViewListener onClickWeekViewListener) {
+    public WeekAdapter(Context mContext, int count, int curr, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
         super(mContext, count, curr, dateTime);
         this.mOnClickWeekViewListener = onClickWeekViewListener;
     }
@@ -26,9 +26,9 @@ public class NWeekAdapter extends NCalendarAdapter{
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        NWeekView nWeekView = (NWeekView) mCalendarViews.get(position);
+        WeekView nWeekView = (WeekView) mCalendarViews.get(position);
         if (nWeekView == null) {
-            nWeekView = new NWeekView(mContext, mDateTime.plusDays((position - mCurr) * 7),mOnClickWeekViewListener);
+            nWeekView = new WeekView(mContext, mDateTime.plusDays((position - mCurr) * 7),mOnClickWeekViewListener);
             mCalendarViews.put(position, nWeekView);
         }
         container.addView(mCalendarViews.get(position));

@@ -35,7 +35,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="setDate"/>
+            android:onClick="toLastMonth"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,10 +112,8 @@
         android:id="@+id/ncalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultCalendar="Month"
+        app:defaultCalendar="Week"
         app:firstDayOfWeek="Sunday"
-        app:startDate="2017-8-27"
-        app:endDate="2017-10-26"
         >
 
         <android.support.v7.widget.RecyclerView

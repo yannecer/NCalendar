@@ -9,105 +9,155 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
+import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
 
 import org.joda.time.DateTime;
 
 import java.util.List;
 
+
 /**
- * Created by necer on 2017/6/9.
+ * Created by 闫彬彬 on 2017/8/25.
+ * QQ:619008099
  */
 
 public class MonthView extends CalendarView {
 
-    private List<DateTime> monthDateTimeList;
     private List<String> lunarList;
     private List<String> localDateList;
-    private OnClickMonthViewListener onClickMonthViewListener;
+
+    private int mRowNum;
+    private OnClickMonthViewListener mOnClickMonthViewListener;
 
 
-    public MonthView(Context mContext, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener,List<String> pointList) {
-        super(mContext,pointList);
+    public MonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
+        super(context);
         this.mInitialDateTime = dateTime;
-        this.onClickMonthViewListener = onClickMonthViewListener;
 
-        Utils.NCalendar monthCalendar = Utils.getMonthCalendar(dateTime);
-        lunarList = monthCalendar.lunarList;
-        localDateList = monthCalendar.localDateList;
-        monthDateTimeList = monthCalendar.dateTimeList;
+        //0周日，1周一
+        Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, Attrs.firstDayOfWeek);
+        mOnClickMonthViewListener = onClickMonthViewListener;
+
+        lunarList = nCalendar2.lunarList;
+        localDateList = nCalendar2.localDateList;
+        dateTimes = nCalendar2.dateTimeList;
+
+        mRowNum = dateTimes.size() / 7;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         mWidth = getWidth();
-        mHeight = getHeight();
+        //绘制高度
+        mHeight = getDrawHeight();
+
         mRectList.clear();
-        //6行7列
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < mRowNum; i++) {
             for (int j = 0; j < 7; j++) {
-                Rect rect = new Rect(j * mWidth / 7, i * mHeight / 6, j * mWidth / 7 + mWidth / 7, i * mHeight / 6 + mHeight / 6);
+                Rect rect = new Rect(j * mWidth / 7, i * mHeight / mRowNum, j * mWidth / 7 + mWidth / 7, i * mHeight / mRowNum + mHeight / mRowNum);
                 mRectList.add(rect);
-                DateTime dateTime = monthDateTimeList.get(i * 7 + j);
+                DateTime dateTime = dateTimes.get(i * 7 + j);
                 Paint.FontMetricsInt fontMetrics = mSorlarPaint.getFontMetricsInt();
-                int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
+
+                int baseline;//让6行的第一行和5行的第一行在同一直线上，处理选中第一行的滑动
+                if (mRowNum == 5) {
+                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
+                } else {
+                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 5 - mHeight / 6) / 2;
+                }
+
                 //当月和上下月的颜色不同
                 if (Utils.isEqualsMonth(dateTime, mInitialDateTime)) {
                     //当天和选中的日期不绘制农历
                     if (Utils.isToday(dateTime)) {
                         mSorlarPaint.setColor(mSelectCircleColor);
-                        int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
-                        canvas.drawCircle(rect.centerX(), rect.centerY(), radius, mSorlarPaint);
+                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
+                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(Color.WHITE);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else if (mSelectDateTime != null && dateTime.toLocalDate().equals(mSelectDateTime.toLocalDate())) {
+
                         mSorlarPaint.setColor(mSelectCircleColor);
-                        int radius = Math.min(Math.min(rect.width() / 2, rect.height() / 2), mSelectCircleRadius);
-                        canvas.drawCircle(rect.centerX(), rect.centerY(), radius, mSorlarPaint);
+                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
+                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(mHollowCircleColor);
-                        canvas.drawCircle(rect.centerX(), rect.centerY(), radius - mHollowCircleStroke, mSorlarPaint);
+                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius - mHollowCircleStroke, mSorlarPaint);
+
                         mSorlarPaint.setColor(mSolarTextColor);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else {
                         mSorlarPaint.setColor(mSolarTextColor);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                        drawLunar(canvas, rect, mLunarTextColor, i, j);
+                        drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
+                        //绘制节假日
+                        drawHolidays(canvas, rect, dateTime, baseline);
+                        //绘制圆点
+                        drawPoint(canvas, rect, dateTime, baseline);
                     }
 
                 } else {
                     mSorlarPaint.setColor(mHintColor);
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                    drawLunar(canvas, rect, mHintColor, i, j);
-                }
-
-                if (mPointList.contains(dateTime.toLocalDate().toString())) {
-                    mSorlarPaint.setColor(mPointColor);
-                    canvas.drawCircle(rect.centerX(), rect.bottom - mPointSize, mPointSize, mSorlarPaint);
+                    drawLunar(canvas, rect, baseline, mHintColor, i, j);
+                    //绘制节假日
+                    drawHolidays(canvas, rect, dateTime, baseline);
+                    //绘制圆点
+                    drawPoint(canvas, rect, dateTime, baseline);
                 }
             }
         }
     }
 
     /**
-     * 绘制农历
-     * @param canvas
-     * @param rect
-     * @param i
-     * @param j
+     * 月日历高度
+     *
+     * @return
      */
-    private void drawLunar(Canvas canvas, Rect rect, int color, int i, int j) {
+    public int getMonthHeight() {
+        return Attrs.monthCalendarHeight;
+    }
+
+    /**
+     * 月日历的绘制高度，
+     * 为了月日历6行时，绘制农历不至于太靠下，绘制区域网上压缩一下
+     *
+     * @return
+     */
+    public int getDrawHeight() {
+        return (int) (getMonthHeight() - Utils.dp2px(getContext(), 10));
+    }
+
+
+    private void drawLunar(Canvas canvas, Rect rect, int baseline, int color, int i, int j) {
         if (isShowLunar) {
             mLunarPaint.setColor(color);
             String lunar = lunarList.get(i * 7 + j);
-            canvas.drawText(lunar, rect.centerX(), rect.bottom - Utils.dp2px(getContext(), 5), mLunarPaint);
+            //矩形的高可能不同，但宽一定相同
+            canvas.drawText(lunar, rect.centerX(), baseline + rect.width() / 4, mLunarPaint);
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return mGestureDetector.onTouchEvent(event);
+    private void drawHolidays(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
+        if (isShowHoliday) {
+            if (holidayList.contains(dateTime.toLocalDate().toString())) {
+                mLunarPaint.setColor(mHolidayColor);
+                canvas.drawText("休", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
+
+            } else if (workdayList.contains(dateTime.toLocalDate().toString())) {
+                mLunarPaint.setColor(mWorkdayColor);
+                canvas.drawText("班", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
+            }
+        }
+    }
+
+    //绘制圆点
+    public void drawPoint(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
+        if (pointList != null && pointList.contains(dateTime.toLocalDate().toString())) {
+            mLunarPaint.setColor(mPointColor);
+            canvas.drawCircle(rect.centerX(), baseline - rect.width() / 3, mPointSize, mLunarPaint);
+        }
     }
 
 
@@ -122,13 +172,13 @@ public class MonthView extends CalendarView {
             for (int i = 0; i < mRectList.size(); i++) {
                 Rect rect = mRectList.get(i);
                 if (rect.contains((int) e.getX(), (int) e.getY())) {
-                    DateTime selectDateTime = monthDateTimeList.get(i);
+                    DateTime selectDateTime = dateTimes.get(i);
                     if (Utils.isLastMonth(selectDateTime, mInitialDateTime)) {
-                        onClickMonthViewListener.onClickLastMonth(selectDateTime);
+                        mOnClickMonthViewListener.onClickLastMonth(selectDateTime);
                     } else if (Utils.isNextMonth(selectDateTime, mInitialDateTime)) {
-                        onClickMonthViewListener.onClickNextMonth(selectDateTime);
+                        mOnClickMonthViewListener.onClickNextMonth(selectDateTime);
                     } else {
-                        onClickMonthViewListener.onClickCurrentMonth(selectDateTime);
+                        mOnClickMonthViewListener.onClickCurrentMonth(selectDateTime);
                     }
                     break;
                 }
@@ -137,10 +187,22 @@ public class MonthView extends CalendarView {
         }
     });
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mGestureDetector.onTouchEvent(event);
+    }
 
-    //选中的是一月中的第几周
-    public int getWeekRow(DateTime dateTime) {
-        int indexOf = localDateList.indexOf(dateTime.toLocalDate().toString());
+    public int getRowNum() {
+        return mRowNum;
+    }
+
+    public int getSelectRowIndex() {
+        if (mSelectDateTime == null) {
+            return 0;
+        }
+        int indexOf = localDateList.indexOf(mSelectDateTime.toLocalDate().toString());
         return indexOf / 7;
     }
+
+
 }

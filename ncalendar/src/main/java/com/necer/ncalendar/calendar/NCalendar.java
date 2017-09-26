@@ -17,7 +17,7 @@ import com.necer.ncalendar.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import com.necer.ncalendar.listener.OnWeekCalendarChangedListener;
 import com.necer.ncalendar.utils.Attrs;
-import com.necer.ncalendar.view.NMonthView;
+import com.necer.ncalendar.view.MonthView;
 import org.joda.time.DateTime;
 import java.util.List;
 
@@ -28,8 +28,8 @@ import java.util.List;
 
 public class NCalendar extends FrameLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener, OnWeekCalendarChangedListener, OnMonthCalendarChangedListener {
 
-    private NWeekCalendar weekCalendar;
-    private NMonthCalendar monthCalendar;
+    private WeekCalendar weekCalendar;
+    private MonthCalendar monthCalendar;
     private View childView;//NCalendar内部包含的直接子view，直接子view并不一定是NestScrillChild
     private View targetView;//嵌套滑动的目标view，即RecyclerView等
     public static final int MONTH = 100;
@@ -51,9 +51,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     private OnCalendarChangedListener onCalendarChangedListener;
 
-    private boolean isNestScrlling;//嵌套滑动是否正在滑动
-
-
 
     public NCalendar(Context context) {
         this(context, null);
@@ -69,8 +66,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         //禁止多点触摸
         setMotionEventSplittingEnabled(false);
 
-        monthCalendar = new NMonthCalendar(context, attrs);
-        weekCalendar = new NWeekCalendar(context, attrs);
+        monthCalendar = new MonthCalendar(context, attrs);
+        weekCalendar = new WeekCalendar(context, attrs);
 
         duration = Attrs.duration;
         monthHeigh = Attrs.monthCalendarHeight;
@@ -85,10 +82,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
         monthCalendar.setOnMonthCalendarChangedListener(this);
         weekCalendar.setOnWeekCalendarChangedListener(this);
-
-
-
-
 
         post(new Runnable() {
             @Override
@@ -156,14 +149,12 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
-        isNestScrlling = true;
         //跟随手势滑动
         move(dy, true, consumed);
     }
 
     @Override
     public void onStopNestedScroll(View target) {
-        isNestScrlling = false;
         //嵌套滑动结束，自动滑动
         scroll();
     }
@@ -337,7 +328,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     //月日历需要滑动的距离，
     private int getMonthCalendarOffset() {
-        NMonthView currectMonthView = monthCalendar.getCurrectMonthView();
+        MonthView currectMonthView = monthCalendar.getCurrectMonthView();
         //该月有几行
         int rowNum = currectMonthView.getRowNum();
         //现在选中的是第几行
@@ -424,16 +415,10 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     private int downX;
     private int lastY;//上次的y
     private int verticalY = 50;//竖直方向上滑动的临界值，大于这个值认为是竖直滑动
-
     private boolean isFirstScroll = true; //第一次手势滑动，因为第一次滑动的偏移量大于verticalY，会出现猛的一划，这里只对第一次滑动做处理
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (isNestScrlling) {
-           // return super.onInterceptTouchEvent(ev);
-            return false;
-        }
-
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 dowmY = (int) ev.getY();
@@ -550,6 +535,24 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             weekCalendar.setDateTime(new DateTime());
         }
     }
+
+    public void toNextMonth() {
+        if (STATE == MONTH) {
+            monthCalendar.toNextMonth();
+        } else {
+            weekCalendar.toNextMonth();
+        }
+    }
+
+    public void toLastMonth() {
+        if (STATE == MONTH) {
+            monthCalendar.toLastMonth();
+        } else {
+            weekCalendar.toLastMonth();
+        }
+    }
+
+
 
     /**
      * 设置指示圆点
