@@ -8,14 +8,7 @@
         android:orientation="horizontal"
         android:background="@color/white">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textColor="#666666"
-            android:text="日"/>
+
 
         <TextView
             android:layout_width="0dp"
@@ -66,7 +59,14 @@
             android:textColor="#666666"
             android:text="六"/>
 
-
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="#666666"
+            android:text="日"/>
 
     </LinearLayout>
 </LinearLayout>

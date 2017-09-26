@@ -81,7 +81,7 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
         }
 
         DateTime initialDateTime = calendarViews.get(getCurrentItem()).getInitialDateTime();
-        int weeks = Utils.getIntervalWeek(initialDateTime, dateTime);
+        int weeks = Utils.getIntervalWeek(initialDateTime, dateTime,0);
         int i = getCurrentItem() + weeks;
 
         setCurrentItem(i, smoothScroll);

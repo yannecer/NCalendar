@@ -33,10 +33,7 @@ public abstract class NCalendarPager extends ViewPager {
     protected DateTime setDateTime; //setdatetime的DateTime
     protected DateTime mInitialDateTime;//日历初始化datetime，即今天
     protected DateTime mSelectDateTime;//当前页面选中的datetime
-
     protected List<String> pointList;//圆点
-
-
 
     public NCalendarPager(Context context) {
         this(context, null);
@@ -72,17 +69,24 @@ public abstract class NCalendarPager extends ViewPager {
         String firstDayOfWeek = ta.getString(R.styleable.NCalendar_firstDayOfWeek);
         String defaultCalendar = ta.getString(R.styleable.NCalendar_defaultCalendar);
 
+        String startString = ta.getString(R.styleable.NCalendar_startDate);
+        String endString = ta.getString(R.styleable.NCalendar_endDate);
+
         Attrs.firstDayOfWeek = "Monday".equals(firstDayOfWeek) ? 1 : 0;
         Attrs.defaultCalendar = "Week".equals(defaultCalendar) ? NCalendar.WEEK : NCalendar.MONTH;
 
         ta.recycle();
 
-        mInitialDateTime = new DateTime();
-        startDateTime = new DateTime("1901-01-01");
-        endDateTime = new DateTime("2099-12-31");
+        mInitialDateTime = new DateTime(new DateTime().toLocalDate().toString());
 
 
+        startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
+        endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
 
+
+        if (mInitialDateTime.getMillis() < startDateTime.getMillis() || mInitialDateTime.getMillis() > endDateTime.getMillis()) {
+            throw new RuntimeException(getResources().getString(R.string.range_date));
+        }
 
 
         calendarAdapter = getCalendarAdapter();
@@ -152,5 +156,4 @@ public abstract class NCalendarPager extends ViewPager {
         }
         nCalendarView.setPointList(formatList);
     }
-
 }

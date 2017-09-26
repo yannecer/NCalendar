@@ -51,6 +51,8 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     private OnCalendarChangedListener onCalendarChangedListener;
 
+    private boolean isNestScrlling;//嵌套滑动是否正在滑动
+
 
 
     public NCalendar(Context context) {
@@ -83,6 +85,9 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
         monthCalendar.setOnMonthCalendarChangedListener(this);
         weekCalendar.setOnWeekCalendarChangedListener(this);
+
+
+
 
 
         post(new Runnable() {
@@ -151,17 +156,16 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
-
+        isNestScrlling = true;
         //跟随手势滑动
         move(dy, true, consumed);
     }
 
     @Override
     public void onStopNestedScroll(View target) {
-
+        isNestScrlling = false;
         //嵌套滑动结束，自动滑动
         scroll();
-
     }
 
     /**
@@ -425,6 +429,10 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (isNestScrlling) {
+           // return super.onInterceptTouchEvent(ev);
+            return false;
+        }
 
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:

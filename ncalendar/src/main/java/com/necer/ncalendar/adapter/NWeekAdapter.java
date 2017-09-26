@@ -34,8 +34,4 @@ public class NWeekAdapter extends NCalendarAdapter{
         container.addView(mCalendarViews.get(position));
         return mCalendarViews.get(position);
     }
-
-
-
-
 }

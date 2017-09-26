@@ -5,7 +5,8 @@ import android.content.res.AssetManager;
 import android.util.TypedValue;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
+import org.joda.time.Months;
+import org.joda.time.Weeks;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,7 +107,10 @@ public class Utils {
      * @return
      */
     public static int getIntervalMonths(DateTime dateTime1, DateTime dateTime2) {
-        return (dateTime2.getYear() - dateTime1.getYear()) * 12 + (dateTime2.getMonthOfYear() - dateTime1.getMonthOfYear());
+        //return (dateTime2.getYear() - dateTime1.getYear()) * 12 + (dateTime2.getMonthOfYear() - dateTime1.getMonthOfYear());
+        dateTime1 = new DateTime(dateTime1.getYear(), dateTime1.getMonthOfYear(), 1, 0, 0, 0);
+        dateTime2 = new DateTime(dateTime2.getYear(), dateTime2.getMonthOfYear(), 1, 0, 0, 0);
+        return Months.monthsBetween(dateTime1, dateTime2).getMonths();
     }
 
     /**
@@ -114,19 +118,35 @@ public class Utils {
      *
      * @param dateTime1
      * @param dateTime2
+     * @param type      一周
      * @return
      */
-    public static int getIntervalWeek(DateTime dateTime1, DateTime dateTime2) {
-        DateTime sunFirstDayOfWeek1 = getSunFirstDayOfWeek(dateTime1);
+    public static int getIntervalWeek(DateTime dateTime1, DateTime dateTime2, int type) {
+
+
+        if (type == 0) {
+            dateTime1 = getSunFirstDayOfWeek(dateTime1);
+            dateTime2 = getSunFirstDayOfWeek(dateTime2);
+        } else {
+            dateTime1 = getMonFirstDayOfWeek(dateTime1);
+            dateTime2 = getMonFirstDayOfWeek(dateTime2);
+        }
+        return Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
+
+
+
+
+       /* DateTime sunFirstDayOfWeek1 = getSunFirstDayOfWeek(dateTime1);
         DateTime sunFirstDayOfWeek2 = getSunFirstDayOfWeek(dateTime2);
         int days = Days.daysBetween(sunFirstDayOfWeek1, sunFirstDayOfWeek2).getDays();
+
         if (days > 0) {
             return (days + 1) / 7;
         } else if (days < 0) {
             return (days - 1) / 7;
         } else {
             return days;
-        }
+        }*/
     }
 
 
@@ -418,7 +438,6 @@ public class Utils {
         }
         return workdayList;
     }
-
 
 
     public static String getHolidayJson(Context context) {

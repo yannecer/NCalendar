@@ -37,7 +37,7 @@
         app:pointColor="#00c8aa"
         app:pointSize="1dp"
         app:solarTextSize= "15sp"
-        app:endDateTime="2020-06-23"
+        app:endDate="2020-06-23"
         app:isMultiple="false"
         />
 

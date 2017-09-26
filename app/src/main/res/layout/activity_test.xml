@@ -15,7 +15,9 @@
     <com.necer.ncalendar.calendar.NWeekCalendar
         android:id="@+id/nweekcalendar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"></com.necer.ncalendar.calendar.NWeekCalendar>
+        android:layout_height="50dp"
+        app:firstDayOfWeek="Sunday"
+        app:endDate="2017-10-10"></com.necer.ncalendar.calendar.NWeekCalendar>
 
 
  <!--   <com.necer.ncalendar.calendar.NMonthCalendar

@@ -30,7 +30,6 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
     private NCalendar ncalendar;
     private RecyclerView recyclerView;
-
     private TextView tv_month;
     private TextView tv_date;
 

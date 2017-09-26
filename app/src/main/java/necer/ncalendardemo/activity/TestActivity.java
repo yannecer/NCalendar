@@ -21,9 +21,7 @@ import necer.ncalendardemo.R;
 
 public class TestActivity extends Activity {
 
-
     private NMonthCalendar nmonthcalendar;
-
     private NWeekCalendar nweekcalendar;
 
     @Override
@@ -65,7 +63,6 @@ public class TestActivity extends Activity {
 
     public void aaa(View view) {
        // nmonthcalendar.setDate("2018-09-01");
-        nweekcalendar.setDate("2018-09-01");
-
+        //nweekcalendar.setDate("2018-09-01");
     }
 }

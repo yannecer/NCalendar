@@ -14,8 +14,8 @@
         <attr name="pointColor" format="color" />
         <attr name="hollowCircleColor" format="color" />
         <attr name="hollowCircleStroke" format="integer" />
-        <attr name="startDateTime" format="string" />
-        <attr name="endDateTime" format="string" />
+        <attr name="startDate" format="string" />
+        <attr name="endDate" format="string" />
 
         <attr name="calendarHeight" format="dimension"/>
         <attr name="isMultiple" format="boolean"/>

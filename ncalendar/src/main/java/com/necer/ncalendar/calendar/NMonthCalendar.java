@@ -12,8 +12,8 @@ import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.NCalendarView;
 import com.necer.ncalendar.view.NMonthView;
+
 import org.joda.time.DateTime;
-import org.joda.time.Months;
 
 /**
  * Created by 闫彬彬 on 2017/8/28.
@@ -30,8 +30,10 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
 
     @Override
     protected NCalendarAdapter getCalendarAdapter() {
-        mPageSize = Months.monthsBetween(startDateTime, endDateTime).getMonths() + 1;
-        mCurrPage = Months.monthsBetween(startDateTime, DateTime.now()).getMonths();
+
+        mPageSize = Utils.getIntervalMonths(startDateTime, endDateTime) + 1;
+        mCurrPage = Utils.getIntervalMonths(startDateTime, mInitialDateTime);
+
         return new NMonthAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
     }
 
@@ -43,7 +45,6 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
         NMonthView currView = (NMonthView) calendarAdapter.getCalendarViews().get(position);
         NMonthView lastView = (NMonthView) calendarAdapter.getCalendarViews().get(position - 1);
         NMonthView nextView = (NMonthView) calendarAdapter.getCalendarViews().get(position + 1);
-
 
         if (currView == null) {
             return;
@@ -65,12 +66,14 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
                 dateTime = mSelectDateTime.plusMonths(i);
             } else {
                 dateTime = setDateTime;
+                //置为空，不影响下次判断
+                setDateTime = null;
             }
 
             //日期越界
-            if (dateTime.getYear() > endDateTime.getYear()) {
+            if (dateTime.getMillis() > endDateTime.getMillis()) {
                 dateTime = endDateTime;
-            } else if (dateTime.getYear() < startDateTime.getYear()) {
+            } else if (dateTime.getMillis() < startDateTime.getMillis()) {
                 dateTime = startDateTime;
             }
 
@@ -91,7 +94,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
     @Override
     protected void setDateTime(DateTime dateTime) {
 
-        if (dateTime.getYear() > endDateTime.getYear() || dateTime.getYear() < startDateTime.getYear()) {
+        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -115,8 +118,8 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
             int i = getCurrentItem() + months;
             setCurrentItem(i, false);
         }
-        //置为空，不影响下次判断
-        setDateTime = null;
+
+
     }
 
     @Override
@@ -138,7 +141,7 @@ public class NMonthCalendar extends NCalendarPager implements OnClickMonthViewLi
 
     private void dealClickEvent(DateTime dateTime, int currentItem) {
 
-        if (dateTime.getYear() > endDateTime.getYear() || dateTime.getYear() < startDateTime.getYear()) {
+        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }

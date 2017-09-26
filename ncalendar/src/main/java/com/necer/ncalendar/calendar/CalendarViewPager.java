@@ -62,8 +62,8 @@ public abstract class CalendarViewPager extends ViewPager {
 
         isMultiple = ta.getBoolean(R.styleable.NCalendar_isMultiple, true);
 
-        String startString = ta.getString(R.styleable.NCalendar_startDateTime);
-        String endString = ta.getString(R.styleable.NCalendar_endDateTime);
+        String startString = ta.getString(R.styleable.NCalendar_startDate);
+        String endString = ta.getString(R.styleable.NCalendar_endDate);
         ta.recycle();
 
 
