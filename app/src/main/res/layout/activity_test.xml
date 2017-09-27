@@ -42,8 +42,7 @@
         android:id="@+id/monthcalendar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:startDate="2010-10-01"
-        app:endDate="2018-10-01"/>
+        />
 
     <Button
         android:layout_width="match_parent"
