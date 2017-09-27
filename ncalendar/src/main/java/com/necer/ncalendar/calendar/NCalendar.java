@@ -552,6 +552,21 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         }
     }
 
+    public void toLastWeek() {
+        if (STATE == MONTH) {
+            monthCalendar.toLastWeek();
+        } else {
+            weekCalendar.toLastWeek();
+        }
+    }
+
+    public void toNextWeek() {
+        if (STATE == MONTH) {
+            monthCalendar.toNextWeek();
+        } else {
+            weekCalendar.toNextWeek();
+        }
+    }
 
 
     /**

@@ -30,10 +30,13 @@ public abstract class CalendarPager extends ViewPager {
     protected DateTime endDateTime;
     protected int mPageSize;
     protected int mCurrPage;
-    protected DateTime setDateTime; //setdatetime的DateTime
     protected DateTime mInitialDateTime;//日历初始化datetime，即今天
     protected DateTime mSelectDateTime;//当前页面选中的datetime
     protected List<String> pointList;//圆点
+
+    protected boolean isPagerChanged = true;//是否是手动翻页
+    protected DateTime lastSelectDateTime;//上次选中的datetime
+    protected boolean isDefaultSelect = true;//是否默认选中
 
     public CalendarPager(Context context) {
         this(context, null);
@@ -126,12 +129,23 @@ public abstract class CalendarPager extends ViewPager {
 
     protected abstract void setDateTime(DateTime dateTime);
 
-    protected void toNextMonth(){
+    public void toNextMonth(){
         setDateTime(mSelectDateTime.plusMonths(1));
     }
 
-    protected void toLastMonth() {
+    public void toLastMonth() {
         setDateTime(mSelectDateTime.plusMonths(-1));
+    }
+
+    public void toToday() {
+        setDateTime(new DateTime(new DateTime().toLocalDate().toString()));
+    }
+
+    public void toNextWeek() {
+        setDateTime(mSelectDateTime.plusWeeks(1));
+    }
+    public void toLastWeek() {
+        setDateTime(mSelectDateTime.plusWeeks(-1));
     }
 
     //设置日期
@@ -155,6 +169,7 @@ public abstract class CalendarPager extends ViewPager {
         calendarView.setPointList(formatList);
     }
 
-
-
+    public void setDefaultSelect(boolean defaultSelect) {
+        isDefaultSelect = defaultSelect;
+    }
 }

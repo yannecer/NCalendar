@@ -14,9 +14,7 @@ import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.WeekView;
-
 import org.joda.time.DateTime;
-
 import java.util.List;
 
 /**
@@ -39,7 +37,7 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
     @Override
     protected CalendarAdapter getCalendarAdapter() {
 
-        mPageSize = Utils.getIntervalWeek(startDateTime, endDateTime, Attrs.firstDayOfWeek)+1;
+        mPageSize = Utils.getIntervalWeek(startDateTime, endDateTime, Attrs.firstDayOfWeek) + 1;
         mCurrPage = Utils.getIntervalWeek(startDateTime, mInitialDateTime, Attrs.firstDayOfWeek);
 
         return new WeekAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
@@ -63,37 +61,43 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
         if (nextView != null)
             nextView.clear();
 
+        //只处理翻页
         if (lastPosition == -1) {
-            lastPosition = position;
             currView.setDateTimeAndPoint(mInitialDateTime, pointList);
             mSelectDateTime = mInitialDateTime;
-        } else {
-            DateTime dateTime;
-            if (setDateTime == null) {
-                int i = position - lastPosition;
-                dateTime = mSelectDateTime.plusWeeks(i);
+            lastSelectDateTime = mInitialDateTime;
+            if (onWeekCalendarChangedListener != null) {
+                onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
+            }
+        } else if (isPagerChanged) {
+            int i = position - lastPosition;
+            mSelectDateTime = mSelectDateTime.plusWeeks(i);
+
+            if (mSelectDateTime.getMillis() > endDateTime.getMillis() || mSelectDateTime.getMillis() < startDateTime.getMillis()) {
+                Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (isDefaultSelect) {
+                //日期越界
+                if (mSelectDateTime.getMillis() > endDateTime.getMillis()) {
+                    mSelectDateTime = endDateTime;
+                } else if (mSelectDateTime.getMillis() < startDateTime.getMillis()) {
+                    mSelectDateTime = startDateTime;
+                }
+
+                currView.setDateTimeAndPoint(mSelectDateTime, pointList);
+                if (onWeekCalendarChangedListener != null) {
+                    onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
+                }
             } else {
-                dateTime = setDateTime;
-                //置为空，不影响下次判断
-                setDateTime = null;
+                if (Utils.isEqualsMonth(lastSelectDateTime, mSelectDateTime)) {
+                    currView.setDateTimeAndPoint(lastSelectDateTime, pointList);
+                }
             }
 
-            //日期越界
-            if (dateTime.getMillis() > endDateTime.getMillis()) {
-                dateTime = endDateTime;
-            } else if (dateTime.getMillis() < startDateTime.getMillis()) {
-                dateTime = startDateTime;
-            }
-
-            currView.setDateTimeAndPoint(dateTime, pointList);
-            mSelectDateTime = dateTime;
         }
-
         lastPosition = position;
-
-        if (onWeekCalendarChangedListener != null) {
-            onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
-        }
     }
 
     public void setOnWeekCalendarChangedListener(OnWeekCalendarChangedListener onWeekCalendarChangedListener) {
@@ -114,21 +118,30 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
             return;
         }
 
-        setDateTime = dateTime;
-        WeekView currectMonthView = (WeekView) calendarViews.get(getCurrentItem());
-        List<String> localDateList = currectMonthView.getLocalDateList();
+        isPagerChanged = false;
 
-        //同一周
-        if (localDateList.contains(dateTime.toLocalDate().toString())) {
-            initCurrentCalendarView(getCurrentItem());
-        } else {
-            DateTime initialDateTime = currectMonthView.getInitialDateTime();
-            int months = Utils.getIntervalWeek(initialDateTime, dateTime, Attrs.firstDayOfWeek);
+        WeekView currectWeekView = (WeekView) calendarViews.get(getCurrentItem());
+        List<String> localDateList = currectWeekView.getLocalDateList();
 
-            int i = getCurrentItem() + months;
-            setCurrentItem(i, false);
+
+        //不是当周
+        if (!localDateList.contains(dateTime.toLocalDate().toString())) {
+            DateTime initialDateTime = currectWeekView.getInitialDateTime();
+            int weeks = Utils.getIntervalWeek(initialDateTime, dateTime, Attrs.firstDayOfWeek);
+            int i = getCurrentItem() + weeks;
+            setCurrentItem(i, Math.abs(weeks) < 2);
+            currectWeekView = (WeekView) calendarViews.get(getCurrentItem());
         }
 
+        currectWeekView.setDateTimeAndPoint(dateTime, pointList);
+        mSelectDateTime = dateTime;
+        lastSelectDateTime = dateTime;
+
+        isPagerChanged = true;
+
+        if (onWeekCalendarChangedListener != null) {
+            onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
+        }
     }
 
 
@@ -143,6 +156,7 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
         weekView.setDateTimeAndPoint(dateTime, pointList);
         mSelectDateTime = dateTime;
+        lastSelectDateTime = dateTime;
         if (onWeekCalendarChangedListener != null) {
             onWeekCalendarChangedListener.onWeekCalendarChanged(dateTime);
         }

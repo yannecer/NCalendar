@@ -80,9 +80,6 @@ public abstract class CalendarView extends View {
         workdayList = Utils.getWorkdayList(getContext());
     }
 
-
-
-
     private Paint getPaint(int paintColor, float paintSize) {
         Paint paint = new Paint();
         paint.setColor(paintColor);

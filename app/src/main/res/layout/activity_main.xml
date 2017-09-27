@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="仿miui日历"
+        android:layout_marginTop="20dp"
+        android:onClick="toMiui"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="默认不选中的月日历"
+        android:layout_marginTop="20dp"
+        android:onClick="notDefaultSelect"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="默认选中的月日历"
+        android:onClick="defaultSelect"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="5dp"
+        android:text="单纯的周日历和月日历使用方法完全相同"/>
+
+</LinearLayout>
