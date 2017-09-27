@@ -67,11 +67,6 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
             int i = position - lastPosition;
             mSelectDateTime = mSelectDateTime.plusMonths(i);
 
-            if (mSelectDateTime.getMillis() > endDateTime.getMillis() || mSelectDateTime.getMillis() < startDateTime.getMillis()) {
-                Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             if (isDefaultSelect) {
                 //日期越界
                 if (mSelectDateTime.getMillis() > endDateTime.getMillis()) {
