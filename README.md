@@ -1,7 +1,11 @@
 # NCalendar
 一款仿miui日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
+支持自定义时间区间
+
 支持农历，节假日，指示圆点，默认视图，周的第一天设置等
+
+支持单一月日历、周日历设置默认选中和默认不选中
 
 
 ## 效果图
@@ -15,9 +19,9 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.3.2'
+compile 'com.necer.ncalendar:ncalendar:2.4.0'
 ```
-##### 注意：ncalendar：1.0.x 的日历不能升级到 2.x.x，ncalendar:2.x.x是全新的日历
+
 
 #### 布局文件
 
@@ -41,8 +45,8 @@ compile 'com.necer.ncalendar:ncalendar:2.3.2'
 ```
 
 
-```ncalendar:2.x.x```包含一个月日历```NMonthCalendar```，一个周日历```NWeekCalendar```和一个滑动切换不同视图的```NCalendar```，
-单一日历请使用```NMonthCalendar```或者```NWeekCalendar```。
+```ncalendar:2.x.x```包含一个月日历```MonthCalendar```，一个周日历```WeekCalendar```和一个滑动切换不同视图的```NCalendar```，
+单一日历请使用```MonthCalendar```或者```WeekCalendar```。
 
 ```NCalendar```日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
 
@@ -79,7 +83,15 @@ ncalendar.toToday();
 ncalendar.toWeek();
 ncalendar.toMonth();
 ```
-##### 5、添加指示圆点
+###### 5、上一月、下一月、上一周、下一周
+```
+ncalendar.toNextMonth();
+ncalendar.toLastMonth();
+ncalendar.toLastWeek();
+ncalendar.toNextWeek();
+```
+
+##### 6、添加指示圆点
 ```
 List<String> list = new ArrayList<>();
 list.add("2017-09-21");
@@ -92,7 +104,7 @@ list.add("2017-11-21");
 ncalendar.setPoint(list);
 
 ```
-##### 6、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
+##### 7、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
 ```
 NCalendar默认视图,Month 或者 Week，默认是 Month
 
@@ -106,6 +118,22 @@ app:firstDayOfWeek="Sunday"
 app:firstDayOfWeek="Monday" 
 
 ```
+
+##### 8、支持自定义时间区间
+```
+app:startDate="2010-10-01"
+app:endDate="2018-10-01"
+```
+
+
+##### 9、单一月日历、周日历设置默认不选中
+```
+false为不选中，只有点击或者跳转日期才会选中，默认为true
+
+monthcalendar.setDefaultSelect(false);
+```
+
+
 
 ### 支持的属性：
 
@@ -131,6 +159,8 @@ app:firstDayOfWeek="Monday"
 | workdayColor|工作日日“班”字颜色|
 | pointSize|指示圆点大小|
 | pointColor|指示圆点颜色|
+| startDate|日期开始时间|
+| endDate|日期结束时间|
 
 
 
