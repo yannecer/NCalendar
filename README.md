@@ -122,7 +122,7 @@ app:firstDayOfWeek="Monday"
 ##### 8、支持自定义时间区间
 ```
 app:startDate="2010-10-01"
-app:endDate="2018-10-01"
+app:endDate="2018-10-31"
 ```
 
 
