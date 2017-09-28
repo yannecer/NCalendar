@@ -1,7 +1,7 @@
 # NCalendar
 一款仿miui日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
-支持自定义时间区间
+支持自定义日期区间
 
 支持农历，节假日，指示圆点，默认视图，周的第一天设置等
 
@@ -118,7 +118,7 @@ app:firstDayOfWeek="Monday"
 
 ```
 
-##### 8、支持自定义时间区间
+##### 8、支持自定义日期区间
 ```
 app:startDate="2010-10-01"
 app:endDate="2018-10-31"
@@ -149,7 +149,7 @@ monthcalendar.setDefaultSelect(false);
 | isShowLunar| 是否显示农历 |
 | hollowCircleColor| 选中空心圆中间的颜色|
 | hollowCircleStroke| 选中空心圆圆环粗细 |
-| calendarHeight|日历高度，在NCalendar中使用 |
+| calendarHeight|月日历高度 |
 | defaultCalendar|NCalendar日历默认视图|
 | firstDayOfWeek|每周第一天是周日还是周一|
 | duration|自动折叠时间|
