@@ -41,7 +41,7 @@ public abstract class CalendarView extends View {
     protected int mWorkdayColor;
 
     protected List<Rect> mRectList;//点击用的矩形集合
-    protected int mPointColor ;//圆点颜色
+    protected int mPointColor;//圆点颜色
     protected float mPointSize;//圆点大小
 
     protected int mHollowCircleColor;//空心圆颜色
@@ -88,6 +88,7 @@ public abstract class CalendarView extends View {
         paint.setTextAlign(Paint.Align.CENTER);
         return paint;
     }
+
     public DateTime getInitialDateTime() {
         return mInitialDateTime;
     }
@@ -116,4 +117,7 @@ public abstract class CalendarView extends View {
         this.pointList = pointList;
         invalidate();
     }
+
+
+
 }

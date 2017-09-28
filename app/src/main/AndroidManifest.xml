@@ -16,8 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NCalendarActivity"/>
-        <activity android:name=".activity.MonthNotSelectActivity"/>
-        <activity android:name=".activity.MonthSelectActivity"/>
+        <activity android:name=".activity.NCalendarActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity android:name=".activity.MonthNotSelectActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity android:name=".activity.MonthSelectActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
     </application>
 </manifest>

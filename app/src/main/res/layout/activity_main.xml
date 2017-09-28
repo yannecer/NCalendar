@@ -12,6 +12,7 @@
         android:onClick="toMiui"/>
 
     <Button
+        android:id="@+id/bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="默认不选中的月日历"
@@ -32,5 +33,16 @@
         android:layout_marginTop="20dp"
         android:paddingLeft="5dp"
         android:text="单纯的周日历和月日历使用方法完全相同"/>
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="5dp"
+        android:text="版本"/>
+
+
 
 </LinearLayout>

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -41,7 +40,8 @@
         android:id="@+id/monthcalendar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        />
+        app:calendarHeight="300dp" />
+
 
     <Button
         android:layout_width="match_parent"
@@ -56,5 +56,4 @@
         android:layout_marginTop="10dp"
         android:onClick="setDate"
         android:text="跳转到 2018-10-11" />
-
 </LinearLayout>

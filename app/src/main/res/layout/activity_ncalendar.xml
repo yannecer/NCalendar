@@ -104,7 +104,7 @@
     </RelativeLayout>
 
     <com.necer.ncalendar.calendar.NCalendar
-        android:id="@+id/ncalendar"
+        android:id="@+id/ncalendarrrr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:firstDayOfWeek="Sunday"

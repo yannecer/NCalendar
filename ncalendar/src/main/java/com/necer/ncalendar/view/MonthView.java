@@ -52,7 +52,6 @@ public class MonthView extends CalendarView {
         mWidth = getWidth();
         //绘制高度
         mHeight = getDrawHeight();
-
         mRectList.clear();
         for (int i = 0; i < mRowNum; i++) {
             for (int j = 0; j < 7; j++) {
@@ -134,8 +133,7 @@ public class MonthView extends CalendarView {
         if (isShowLunar) {
             mLunarPaint.setColor(color);
             String lunar = lunarList.get(i * 7 + j);
-            //矩形的高可能不同，但宽一定相同
-            canvas.drawText(lunar, rect.centerX(), baseline + rect.width() / 4, mLunarPaint);
+            canvas.drawText(lunar, rect.centerX(), baseline + getMonthHeight() / 20, mLunarPaint);
         }
     }
 
@@ -143,11 +141,11 @@ public class MonthView extends CalendarView {
         if (isShowHoliday) {
             if (holidayList.contains(dateTime.toLocalDate().toString())) {
                 mLunarPaint.setColor(mHolidayColor);
-                canvas.drawText("休", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
+                canvas.drawText("休", rect.centerX() + rect.width() / 4, baseline - getMonthHeight() / 20, mLunarPaint);
 
             } else if (workdayList.contains(dateTime.toLocalDate().toString())) {
                 mLunarPaint.setColor(mWorkdayColor);
-                canvas.drawText("班", rect.centerX() + rect.width() / 4, baseline - rect.width() / 5, mLunarPaint);
+                canvas.drawText("班", rect.centerX() + rect.width() / 4, baseline - getMonthHeight() / 20, mLunarPaint);
             }
         }
     }
@@ -156,7 +154,7 @@ public class MonthView extends CalendarView {
     public void drawPoint(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
         if (pointList != null && pointList.contains(dateTime.toLocalDate().toString())) {
             mLunarPaint.setColor(mPointColor);
-            canvas.drawCircle(rect.centerX(), baseline - rect.width() / 3, mPointSize, mLunarPaint);
+            canvas.drawCircle(rect.centerX(), baseline - getMonthHeight() / 15, mPointSize, mLunarPaint);
         }
     }
 

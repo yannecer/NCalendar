@@ -42,12 +42,15 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         getSupportActionBar().hide();
         setContentView(R.layout.activity_ncalendar);
 
+
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         }
 
-        ncalendar = (NCalendar) findViewById(R.id.ncalendar);
+        ncalendar = (NCalendar) findViewById(R.id.ncalendarrrr);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         tv_month = (TextView) findViewById(R.id.tv_month);
         tv_date = (TextView) findViewById(R.id.tv_date);
@@ -79,8 +82,6 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
     @Override
     public void onCalendarChanged(DateTime dateTime) {
-        MyLog.d("dateTime::" + dateTime);
-
         tv_month.setText(dateTime.getMonthOfYear() + "月");
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
     }
@@ -101,9 +102,11 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
     public void toToday(View view) {
         ncalendar.toToday();
     }
+
     public void toNextPager(View view) {
         ncalendar.toNextPager();
     }
+
     public void toLastPager(View view) {
         ncalendar.toLastPager();
     }
@@ -121,5 +124,4 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
         ncalendar.setPoint(list);
     }
-
 }

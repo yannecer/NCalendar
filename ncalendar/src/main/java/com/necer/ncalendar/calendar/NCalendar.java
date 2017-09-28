@@ -13,12 +13,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import com.necer.ncalendar.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import com.necer.ncalendar.listener.OnWeekCalendarChangedListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.view.MonthView;
+
 import org.joda.time.DateTime;
+
 import java.util.List;
 
 /**
@@ -489,14 +492,10 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     }
 
 
-
-
-
-
     /**
      * 跳转制定日期
      *
-     * @param formatDate  yyyy-MM-dd
+     * @param formatDate yyyy-MM-dd
      */
     public void setDate(String formatDate) {
         DateTime dateTime = new DateTime(formatDate);
@@ -542,6 +541,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
 
     /**
      * 设置指示圆点
+     *
      * @param pointList
      */
     public void setPoint(List<String> pointList) {
@@ -555,7 +555,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         } else {
             weekCalendar.toNextPager();
         }
-
     }
 
     public void toLastPager() {
@@ -565,5 +564,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             weekCalendar.toLastPager();
         }
     }
+
 
 }

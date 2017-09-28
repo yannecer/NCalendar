@@ -48,6 +48,10 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
         MonthView nextView = (MonthView) calendarAdapter.getCalendarViews().get(position + 1);
 
 
+        if (currView == null) {
+            return;
+        }
+
         if (lastView != null)
             lastView.clear();
 
