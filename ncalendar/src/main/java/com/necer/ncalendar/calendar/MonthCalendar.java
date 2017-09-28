@@ -169,8 +169,6 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
         if (onMonthCalendarChangedListener != null) {
             onMonthCalendarChangedListener.onMonthCalendarChanged(dateTime);
         }
-
-
     }
 
 

@@ -42,12 +42,12 @@ public class MonthSelectActivity extends Activity {
 
 
     public void toLastMonth(View view) {
-        monthcalendar.toLastMonth();
+        monthcalendar.toLastPager();
 
     }
 
     public void toNextMonth(View view) {
-        monthcalendar.toNextMonth();
+        monthcalendar.toNextPager();
     }
 
     public void toToday(View view) {

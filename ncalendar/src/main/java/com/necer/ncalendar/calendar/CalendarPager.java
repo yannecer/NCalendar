@@ -129,23 +129,23 @@ public abstract class CalendarPager extends ViewPager {
 
     protected abstract void setDateTime(DateTime dateTime);
 
-    public void toNextMonth(){
-        setDateTime(mSelectDateTime.plusMonths(1));
-    }
-
-    public void toLastMonth() {
-        setDateTime(mSelectDateTime.plusMonths(-1));
-    }
-
     public void toToday() {
         setDateTime(new DateTime(new DateTime().toLocalDate().toString()));
     }
 
-    public void toNextWeek() {
-        setDateTime(mSelectDateTime.plusWeeks(1));
+
+    /**
+     * 下一页，月日历即是下一月，周日历即是下一周
+     */
+    public void toNextPager() {
+        setCurrentItem(getCurrentItem() + 1, true);
     }
-    public void toLastWeek() {
-        setDateTime(mSelectDateTime.plusWeeks(-1));
+
+    /**
+     * 上一页
+     */
+    public void toLastPager() {
+        setCurrentItem(getCurrentItem() - 1, true);
     }
 
     //设置日期

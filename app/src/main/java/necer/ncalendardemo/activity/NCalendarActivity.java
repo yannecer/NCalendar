@@ -101,11 +101,11 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
     public void toToday(View view) {
         ncalendar.toToday();
     }
-    public void toNextMonth(View view) {
-        ncalendar.toNextMonth();
+    public void toNextPager(View view) {
+        ncalendar.toNextPager();
     }
-    public void toLastMonth(View view) {
-        ncalendar.toLastMonth();
+    public void toLastPager(View view) {
+        ncalendar.toLastPager();
     }
 
 

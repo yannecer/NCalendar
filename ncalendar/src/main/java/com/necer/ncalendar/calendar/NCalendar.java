@@ -489,6 +489,10 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     }
 
 
+
+
+
+
     /**
      * 跳转制定日期
      *
@@ -536,39 +540,6 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         }
     }
 
-    public void toNextMonth() {
-        if (STATE == MONTH) {
-            monthCalendar.toNextMonth();
-        } else {
-            weekCalendar.toNextMonth();
-        }
-    }
-
-    public void toLastMonth() {
-        if (STATE == MONTH) {
-            monthCalendar.toLastMonth();
-        } else {
-            weekCalendar.toLastMonth();
-        }
-    }
-
-    public void toLastWeek() {
-        if (STATE == MONTH) {
-            monthCalendar.toLastWeek();
-        } else {
-            weekCalendar.toLastWeek();
-        }
-    }
-
-    public void toNextWeek() {
-        if (STATE == MONTH) {
-            monthCalendar.toNextWeek();
-        } else {
-            weekCalendar.toNextWeek();
-        }
-    }
-
-
     /**
      * 设置指示圆点
      * @param pointList
@@ -576,6 +547,23 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public void setPoint(List<String> pointList) {
         monthCalendar.setPointList(pointList);
         weekCalendar.setPointList(pointList);
+    }
+
+    public void toNextPager() {
+        if (STATE == MONTH) {
+            monthCalendar.toNextPager();
+        } else {
+            weekCalendar.toNextPager();
+        }
+
+    }
+
+    public void toLastPager() {
+        if (STATE == MONTH) {
+            monthCalendar.toLastPager();
+        } else {
+            weekCalendar.toLastPager();
+        }
     }
 
 }
