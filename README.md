@@ -19,7 +19,7 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.4.0'
+compile 'com.necer.ncalendar:ncalendar:2.4.1'
 ```
 
 
@@ -78,17 +78,16 @@ ncalendar.setDate("2017-12-31");
 ncalendar.toToday(); 
 ```
 
-##### 4、月-->周  周-->月
+##### 4、日历切换，月-->周  周-->月
 ```
 ncalendar.toWeek();
 ncalendar.toMonth();
 ```
 ###### 5、上一月、下一月、上一周、下一周
 ```
-ncalendar.toNextMonth();
-ncalendar.toLastMonth();
-ncalendar.toLastWeek();
-ncalendar.toNextWeek();
+ncalendar.toNextPager();
+ncalendar.toLastPager();
+
 ```
 
 ##### 6、添加指示圆点
@@ -162,9 +161,6 @@ monthcalendar.setDefaultSelect(false);
 | startDate|日期开始时间|
 | endDate|日期结束时间|
 
-
-
-### 联系我加qq ：619008099
 
 #### View绘制：http://blog.csdn.net/y12345654321/article/details/73331253
 #### 滑动处理：http://blog.csdn.net/y12345654321/article/details/77978148
