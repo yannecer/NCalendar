@@ -83,7 +83,7 @@ ncalendar.toToday();
 ncalendar.toWeek();
 ncalendar.toMonth();
 ```
-###### 5、上一月、下一月、上一周、下一周
+##### 5、上一月、下一月、上一周、下一周
 ```
 ncalendar.toNextPager();
 ncalendar.toLastPager();
