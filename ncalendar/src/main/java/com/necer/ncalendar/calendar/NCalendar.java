@@ -379,9 +379,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             int top = monthCalendar.getTop();
             int i = animatedValue - top;
             monthCalendar.offsetTopAndBottom(i);
-        }
-
-        if (animation == childViewValueAnimator) {
+        } else {
             int animatedValue = (int) animation.getAnimatedValue();
             int top = childView.getTop();
             int i = animatedValue - top;
@@ -564,6 +562,4 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
             weekCalendar.toLastPager();
         }
     }
-
-
 }
