@@ -22,5 +22,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity android:name=".activity.MonthSelectActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
+
+
     </application>
 </manifest>

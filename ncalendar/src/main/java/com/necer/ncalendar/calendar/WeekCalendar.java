@@ -14,7 +14,9 @@ import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.WeekView;
+
 import org.joda.time.DateTime;
+
 import java.util.List;
 
 /**
@@ -118,9 +120,9 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
         WeekView currectWeekView = (WeekView) calendarViews.get(getCurrentItem());
         List<String> localDateList = currectWeekView.getLocalDateList();
 
-
         //不是当周
         if (!localDateList.contains(dateTime.toLocalDate().toString())) {
+
             DateTime initialDateTime = currectWeekView.getInitialDateTime();
             int weeks = Utils.getIntervalWeek(initialDateTime, dateTime, Attrs.firstDayOfWeek);
             int i = getCurrentItem() + weeks;

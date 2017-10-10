@@ -131,6 +131,10 @@ public class Utils {
             dateTime1 = getMonFirstDayOfWeek(dateTime1);
             dateTime2 = getMonFirstDayOfWeek(dateTime2);
         }
+
+        MyLog.d("dateTime1::" + dateTime1);
+        MyLog.d("dateTime2::" + dateTime2);
+
         return Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
 
 
@@ -157,7 +161,7 @@ public class Utils {
      * @return
      */
     public static boolean isToday(DateTime dateTime) {
-        return new DateTime().toLocalDate().equals(dateTime.toLocalDate());
+        return new DateTime().toLocalDate().toString().equals(dateTime.toLocalDate().toString());
     }
 
     public static NCalendar getMonthCalendar(DateTime dateTime) {

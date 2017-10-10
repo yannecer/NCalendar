@@ -3,8 +3,6 @@ package com.necer.ncalendar.calendar;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;

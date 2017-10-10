@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.necer.ncalendar.calendar.NCalendar;
 import com.necer.ncalendar.listener.OnCalendarChangedListener;
-import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
 
@@ -41,9 +40,6 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_ncalendar);
-
-
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
@@ -112,7 +108,7 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
     }
 
 
-    public void setPoint() {
+    public void setPoint(View view) {
         List<String> list = new ArrayList<>();
         list.add("2017-09-21");
         list.add("2017-10-21");
