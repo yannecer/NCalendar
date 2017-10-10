@@ -80,7 +80,7 @@ public abstract class CalendarPager extends ViewPager {
 
         ta.recycle();
 
-        mInitialDateTime = new DateTime(new DateTime().toLocalDate().toString());
+        mInitialDateTime = new DateTime().withTimeAtStartOfDay();
 
         startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
         endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
@@ -130,7 +130,7 @@ public abstract class CalendarPager extends ViewPager {
     protected abstract void setDateTime(DateTime dateTime);
 
     public void toToday() {
-        setDateTime(new DateTime(new DateTime().toLocalDate().toString()));
+        setDateTime(new DateTime().withTimeAtStartOfDay());
     }
 
 

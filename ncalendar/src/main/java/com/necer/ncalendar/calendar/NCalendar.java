@@ -531,9 +531,9 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
      */
     public void toToday() {
         if (STATE == MONTH) {
-            monthCalendar.setDateTime(new DateTime(new DateTime().toLocalDate().toString()));
+            monthCalendar.toToday();
         } else {
-            weekCalendar.setDateTime(new DateTime(new DateTime().toLocalDate().toString()));
+            weekCalendar.toToday();
         }
     }
 

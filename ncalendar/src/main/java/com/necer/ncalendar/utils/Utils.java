@@ -107,9 +107,8 @@ public class Utils {
      * @return
      */
     public static int getIntervalMonths(DateTime dateTime1, DateTime dateTime2) {
-        //return (dateTime2.getYear() - dateTime1.getYear()) * 12 + (dateTime2.getMonthOfYear() - dateTime1.getMonthOfYear());
-        dateTime1 = new DateTime(dateTime1.getYear(), dateTime1.getMonthOfYear(), 1, 0, 0, 0);
-        dateTime2 = new DateTime(dateTime2.getYear(), dateTime2.getMonthOfYear(), 1, 0, 0, 0);
+        dateTime1 = dateTime1.withTimeAtStartOfDay();
+        dateTime2 = dateTime2.withTimeAtStartOfDay();
         return Months.monthsBetween(dateTime1, dateTime2).getMonths();
     }
 
@@ -143,7 +142,7 @@ public class Utils {
      * @return
      */
     public static boolean isToday(DateTime dateTime) {
-        return new DateTime(new DateTime().toLocalDate().toString()).equals(dateTime);
+        return new DateTime().withTimeAtStartOfDay().equals(dateTime);
 
     }
 
