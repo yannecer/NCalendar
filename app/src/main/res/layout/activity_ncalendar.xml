@@ -101,6 +101,7 @@
                 android:textColor="#ffffff"
                 android:textSize="13sp" />
         </LinearLayout>
+
     </RelativeLayout>
 
     <com.necer.ncalendar.calendar.NCalendar

@@ -17,8 +17,6 @@ import com.necer.ncalendar.view.WeekView;
 
 import org.joda.time.DateTime;
 
-import java.util.List;
-
 /**
  * Created by 闫彬彬 on 2017/8/30.
  * QQ:619008099
@@ -118,10 +116,9 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
         isPagerChanged = false;
 
         WeekView currectWeekView = (WeekView) calendarViews.get(getCurrentItem());
-        List<String> localDateList = currectWeekView.getLocalDateList();
 
         //不是当周
-        if (!localDateList.contains(dateTime.toLocalDate().toString())) {
+        if (!currectWeekView.contains(dateTime)) {
 
             DateTime initialDateTime = currectWeekView.getInitialDateTime();
             int weeks = Utils.getIntervalWeek(initialDateTime, dateTime, Attrs.firstDayOfWeek);

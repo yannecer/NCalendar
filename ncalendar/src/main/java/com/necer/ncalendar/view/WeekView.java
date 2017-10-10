@@ -27,7 +27,6 @@ public class WeekView extends CalendarView {
 
     private OnClickWeekViewListener mOnClickWeekViewListener;
     private List<String> lunarList;
-    private List<String> localDateList;
 
     public WeekView(Context context, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
         super(context);
@@ -37,7 +36,6 @@ public class WeekView extends CalendarView {
 
         dateTimes = weekCalendar2.dateTimeList;
         lunarList = weekCalendar2.lunarList;
-        localDateList = weekCalendar2.localDateList;
         mOnClickWeekViewListener = onClickWeekViewListener;
     }
 
@@ -62,7 +60,7 @@ public class WeekView extends CalendarView {
                 canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius, mSorlarPaint);
                 mSorlarPaint.setColor(Color.WHITE);
                 canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-            } else if (mSelectDateTime != null && dateTime.toLocalDate().equals(mSelectDateTime.toLocalDate())) {
+            } else if (mSelectDateTime != null && dateTime.equals(mSelectDateTime)) {
                 mSorlarPaint.setColor(mSelectCircleColor);
                 canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius, mSorlarPaint);
                 mSorlarPaint.setColor(mHollowCircleColor);
@@ -138,7 +136,8 @@ public class WeekView extends CalendarView {
         }
     });
 
-    public List<String> getLocalDateList() {
-        return localDateList;
+
+    public boolean contains(DateTime dateTime) {
+        return dateTimes.contains(dateTime);
     }
 }

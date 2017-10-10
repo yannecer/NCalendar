@@ -25,8 +25,6 @@ import java.util.List;
 public class MonthView extends CalendarView {
 
     private List<String> lunarList;
-    private List<String> localDateList;
-
     private int mRowNum;
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
@@ -40,7 +38,6 @@ public class MonthView extends CalendarView {
         mOnClickMonthViewListener = onClickMonthViewListener;
 
         lunarList = nCalendar2.lunarList;
-        localDateList = nCalendar2.localDateList;
         dateTimes = nCalendar2.dateTimeList;
 
         mRowNum = dateTimes.size() / 7;
@@ -76,7 +73,7 @@ public class MonthView extends CalendarView {
                         canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(Color.WHITE);
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                    } else if (mSelectDateTime != null && dateTime.toLocalDate().equals(mSelectDateTime.toLocalDate())) {
+                    } else if (mSelectDateTime != null && dateTime.equals(mSelectDateTime)) {
 
                         mSorlarPaint.setColor(mSelectCircleColor);
                         int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
@@ -198,7 +195,7 @@ public class MonthView extends CalendarView {
         if (mSelectDateTime == null) {
             return 0;
         }
-        int indexOf = localDateList.indexOf(mSelectDateTime.toLocalDate().toString());
+        int indexOf = dateTimes.indexOf(mSelectDateTime);
         return indexOf / 7;
     }
 
