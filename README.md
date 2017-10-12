@@ -37,7 +37,8 @@ compile 'com.necer.ncalendar:ncalendar:2.4.2'
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
 
  </com.necer.ncalendar.calendar.NCalendar>
        
@@ -52,7 +53,9 @@ compile 'com.necer.ncalendar:ncalendar:2.4.2'
 
 ```NCalendar```内部需要一个实现了```NestedScrollingChild```的子类，```RecyclerView```，```NestedScrollView```都可以。
 
+#### 注意
 
+```NCalendar```内部的布局需要加上背景颜色，只要是不透明的颜色都可以
 
 ### 主要Api
 
