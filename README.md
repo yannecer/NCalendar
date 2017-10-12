@@ -44,7 +44,9 @@ compile 'com.necer.ncalendar:ncalendar:2.4.2'
        
 
 ```
+#### 注意
 
+```NCalendar```内部的布局需要加上背景颜色，只要是不透明的颜色都可以
 
 ```ncalendar:2.x.x```包含一个月日历```MonthCalendar```，一个周日历```WeekCalendar```和一个滑动切换不同视图的```NCalendar```，
 单一日历请使用```MonthCalendar```或者```WeekCalendar```。
@@ -53,9 +55,7 @@ compile 'com.necer.ncalendar:ncalendar:2.4.2'
 
 ```NCalendar```内部需要一个实现了```NestedScrollingChild```的子类，```RecyclerView```，```NestedScrollView```都可以。
 
-#### 注意
 
-```NCalendar```内部的布局需要加上背景颜色，只要是不透明的颜色都可以
 
 ### 主要Api
 
