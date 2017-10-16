@@ -107,8 +107,9 @@ public class Utils {
      * @return
      */
     public static int getIntervalMonths(DateTime dateTime1, DateTime dateTime2) {
-        dateTime1 = dateTime1.withTimeAtStartOfDay();
-        dateTime2 = dateTime2.withTimeAtStartOfDay();
+        dateTime1 = dateTime1.withDayOfMonth(1).withTimeAtStartOfDay();
+        dateTime2 = dateTime2.withDayOfMonth(1).withTimeAtStartOfDay();
+
         return Months.monthsBetween(dateTime1, dateTime2).getMonths();
     }
 

@@ -55,6 +55,7 @@ public class MonthSelectActivity extends Activity {
     }
 
     public void setDate(View view) {
-        monthcalendar.setDate("2018-10-11");
+        monthcalendar.setDate("2017-11-11");
+      //  monthcalendar.setDate("2017-12-31");
     }
 }

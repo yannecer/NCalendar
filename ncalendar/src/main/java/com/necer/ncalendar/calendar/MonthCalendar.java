@@ -99,7 +99,6 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
 
     @Override
     protected void setDateTime(DateTime dateTime) {
-
         if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
@@ -118,7 +117,6 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
         //不是当月
         if (!Utils.isEqualsMonth(initialDateTime, dateTime)) {
             int months = Utils.getIntervalMonths(initialDateTime, dateTime);
-
             int i = getCurrentItem() + months;
             setCurrentItem(i, Math.abs(months) < 2);
             currectMonthView = getCurrectMonthView();
