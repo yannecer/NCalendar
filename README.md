@@ -19,7 +19,7 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.4.2'
+compile 'com.necer.ncalendar:ncalendar:2.4.3'
 ```
 
 
