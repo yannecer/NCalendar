@@ -59,7 +59,7 @@ compile 'com.necer.ncalendar:ncalendar:2.4.3'
 
 ### 交流群
 
-技术交流QQ群：127278900<br/>请添加备注：github、Ncalendar、安卓....
+技术交流QQ群：127278900<br/>请添加备注：github、NCalendar、安卓....
 
 
 
