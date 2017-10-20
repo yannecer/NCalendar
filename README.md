@@ -57,9 +57,8 @@ compile 'com.necer.ncalendar:ncalendar:2.4.3'
 
 
 
-
-
-#### 技术交流QQ群：127278900
+### 交流
+技术交流QQ群：127278900
 
 
 
