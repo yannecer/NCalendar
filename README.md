@@ -134,6 +134,10 @@ app:firstDayOfWeek="Monday"
 app:startDate="2010-10-01"
 app:endDate="2018-10-31"
 ```
+或者代码设置
+```
+ncalendar.setDateInterval("2017-04-02","2018-01-01");
+```
 
 
 ##### 9、单一月日历、周日历设置默认不选中
@@ -171,6 +175,7 @@ monthcalendar.setDefaultSelect(false);
 | pointColor|指示圆点颜色|
 | startDate|日期开始时间|
 | endDate|日期结束时间|
+| backgroundColor|日历背景颜色|
 
 
 #### View绘制：http://blog.csdn.net/y12345654321/article/details/73331253
