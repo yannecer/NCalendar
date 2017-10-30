@@ -27,6 +27,7 @@
         <attr name="isShowHoliday" format="boolean" />
         <attr name="holidayColor" format="color" />
         <attr name="workdayColor" format="color" />
+        <attr name="backgroundColor" format="color" />
 
     </declare-styleable>
 </resources>

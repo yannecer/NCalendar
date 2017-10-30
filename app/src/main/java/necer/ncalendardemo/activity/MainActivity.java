@@ -28,4 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public void notDefaultSelect(View v) {
         startActivity(new Intent(this, MonthNotSelectActivity.class));
     }
+    public void week(View v) {
+        startActivity(new Intent(this, WeekActivity.class));
+    }
 }

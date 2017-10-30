@@ -26,6 +26,12 @@
         android:text="默认选中的月日历"
         android:onClick="defaultSelect"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="周日历"
+        android:onClick="week"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

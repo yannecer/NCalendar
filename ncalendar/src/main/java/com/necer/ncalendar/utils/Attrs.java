@@ -31,4 +31,6 @@ public class Attrs {
     public static int holidayColor;
     public static int workdayColor;
 
+    public static int backgroundColor;
+
 }

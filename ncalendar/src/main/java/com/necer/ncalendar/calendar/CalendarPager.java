@@ -38,6 +38,9 @@ public abstract class CalendarPager extends ViewPager {
     protected DateTime lastSelectDateTime;//上次选中的datetime
     protected boolean isDefaultSelect = true;//是否默认选中
 
+
+    private OnPageChangeListener onPageChangeListener;
+
     public CalendarPager(Context context) {
         this(context, null);
     }
@@ -68,6 +71,7 @@ public abstract class CalendarPager extends ViewPager {
         Attrs.holidayColor = ta.getColor(R.styleable.NCalendar_holidayColor, getResources().getColor(R.color.holidayColor));
         Attrs.workdayColor = ta.getColor(R.styleable.NCalendar_workdayColor, getResources().getColor(R.color.workdayColor));
 
+        Attrs.backgroundColor = ta.getColor(R.styleable.NCalendar_backgroundColor, getResources().getColor(R.color.white));
 
         String firstDayOfWeek = ta.getString(R.styleable.NCalendar_firstDayOfWeek);
         String defaultCalendar = ta.getString(R.styleable.NCalendar_defaultCalendar);
@@ -85,6 +89,17 @@ public abstract class CalendarPager extends ViewPager {
         startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
         endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
 
+        setDateInterval(null, null);
+    }
+
+    public void setDateInterval(String startString,String endString) {
+        if (startString != null && !"".equals(startString)) {
+            startDateTime = new DateTime(startString);
+        }
+        if (endString != null && !"".equals(endString)) {
+            endDateTime = new DateTime(endString);
+        }
+
 
         if (mInitialDateTime.getMillis() < startDateTime.getMillis() || mInitialDateTime.getMillis() > endDateTime.getMillis()) {
             throw new RuntimeException(getResources().getString(R.string.range_date));
@@ -94,9 +109,15 @@ public abstract class CalendarPager extends ViewPager {
         setAdapter(calendarAdapter);
         setCurrentItem(mCurrPage);
 
-        addOnPageChangeListener(new OnPageChangeListener() {
+
+        if (onPageChangeListener != null) {
+            removeOnPageChangeListener(onPageChangeListener);
+        }
+
+        onPageChangeListener = new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
@@ -106,10 +127,11 @@ public abstract class CalendarPager extends ViewPager {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+
             }
-        });
+        };
 
-
+        addOnPageChangeListener(onPageChangeListener);
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -119,8 +141,10 @@ public abstract class CalendarPager extends ViewPager {
             }
         });
 
-        setBackgroundColor(Color.WHITE);
+        setBackgroundColor(Attrs.backgroundColor);
     }
+
+
 
 
     protected abstract CalendarAdapter getCalendarAdapter();
