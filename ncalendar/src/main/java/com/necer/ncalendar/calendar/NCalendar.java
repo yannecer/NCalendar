@@ -131,10 +131,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         });
     }
 
-    public void setDateInterval(String startString,String endString) {
-        monthCalendar.setDateInterval(startString,endString);
-        weekCalendar.setDateInterval(startString,endString);
-    }
+
 
 
     @Override
@@ -566,5 +563,15 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
         } else {
             weekCalendar.toLastPager();
         }
+    }
+
+    /**
+     * 设置日期区间
+     * @param startString
+     * @param endString
+     */
+    public void setDateInterval(String startString,String endString) {
+        monthCalendar.setDateInterval(startString,endString);
+        weekCalendar.setDateInterval(startString,endString);
     }
 }

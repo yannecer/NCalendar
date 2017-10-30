@@ -90,6 +90,16 @@ public abstract class CalendarPager extends ViewPager {
         endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
 
         setDateInterval(null, null);
+
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                initCurrentCalendarView(mCurrPage);
+                getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            }
+        });
+
+        setBackgroundColor(Attrs.backgroundColor);
     }
 
     public void setDateInterval(String startString,String endString) {
@@ -133,15 +143,6 @@ public abstract class CalendarPager extends ViewPager {
 
         addOnPageChangeListener(onPageChangeListener);
 
-        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                initCurrentCalendarView(mCurrPage);
-                getViewTreeObserver().removeGlobalOnLayoutListener(this);
-            }
-        });
-
-        setBackgroundColor(Attrs.backgroundColor);
     }
 
 

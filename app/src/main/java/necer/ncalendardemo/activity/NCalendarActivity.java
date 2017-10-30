@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.necer.ncalendar.calendar.NCalendar;
 import com.necer.ncalendar.listener.OnCalendarChangedListener;
+import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
 
@@ -52,7 +53,7 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         tv_date = (TextView) findViewById(R.id.tv_date);
 
 
-     //   ncalendar.setDateInterval("2017-04-02","2018-01-01");
+        ncalendar.setDateInterval("2017-04-02","2018-01-01");
 
 
 
@@ -84,6 +85,8 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
     public void onCalendarChanged(DateTime dateTime) {
         tv_month.setText(dateTime.getMonthOfYear() + "月");
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
+
+        MyLog.d("dateTime::" + dateTime);
     }
 
 
