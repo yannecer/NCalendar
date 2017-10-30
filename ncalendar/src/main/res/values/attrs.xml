@@ -18,7 +18,6 @@
         <attr name="endDate" format="string" />
 
         <attr name="calendarHeight" format="dimension"/>
-        <attr name="isMultiple" format="boolean"/>
         <attr name="duration" format="integer"/>
 
         <attr name="firstDayOfWeek" format="string"/>
