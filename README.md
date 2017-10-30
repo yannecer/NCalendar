@@ -133,9 +133,9 @@ app:firstDayOfWeek="Monday"
 ```
 app:startDate="2010-10-01"
 app:endDate="2018-10-31"
-```
+
 或者代码设置
-```
+
 ncalendar.setDateInterval("2017-04-02","2018-01-01");
 ```
 
