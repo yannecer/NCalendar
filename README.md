@@ -19,7 +19,7 @@ http://fir.im/7lv4
 
 #### Gradle
 ```
-compile 'com.necer.ncalendar:ncalendar:2.4.2'
+compile 'com.necer.ncalendar:ncalendar:2.4.3'
 ```
 
 
@@ -54,6 +54,14 @@ compile 'com.necer.ncalendar:ncalendar:2.4.2'
 ```NCalendar```日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
 
 ```NCalendar```内部需要一个实现了```NestedScrollingChild```的子类，```RecyclerView```，```NestedScrollView```都可以。
+
+
+
+### 交流群
+
+技术交流QQ群：127278900<br/>请添加备注：github、NCalendar、安卓....
+
+
 
 
 
