@@ -55,6 +55,9 @@ compile 'com.necer.ncalendar:ncalendar:2.4.4'
 
 ```NCalendar```内部需要一个实现了```NestedScrollingChild```的子类，```RecyclerView```，```NestedScrollView```都可以。
 
+单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中，这样才能体现出月周日期无缝切换的特点，
+该日历不支持月周切换的不选中设置
+
 
 
 ### 交流群
