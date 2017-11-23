@@ -1,8 +1,10 @@
 apply plugin: 'com.android.library'
 
+/*
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 version = "2.4.5" //版本号
+*/
 
 android {
     compileSdkVersion 25
@@ -36,6 +38,7 @@ dependencies {
 
 
 
+/*
 
 
 def siteUrl = 'https://github.com/yannecer/NCalendar'      // 项目的主页
@@ -115,3 +118,4 @@ bintray {
         publish = true
     }
 }
+*/
