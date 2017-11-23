@@ -15,8 +15,8 @@ import necer.ncalendardemo.R;
 
 
 /**
- * Created by 闫彬彬 on 2017/9/27.
- * QQ:619008099
+ * Created by necer on 2017/9/27.
+ * QQ群:127278900
  */
 
 public class MonthNotSelectActivity extends Activity {

@@ -5,8 +5,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 /**
- * Created by 闫彬彬 on 2017/9/28.
- * QQ:619008099
+ * Created by necer on 2017/9/28.
+ * QQ群:127278900
  */
 
 public class Utils {

@@ -32,21 +32,21 @@
         android:text="周日历"
         android:onClick="week"/>
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="5dp"
-        android:text="单纯的周日历和月日历使用方法完全相同"/>
+        android:layout_margin="15dp"
+        android:text="注意：1单纯的周日历和月日历使用方法完全相同
+2：单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都有选中日期，这样才能体现出月周切换日期无缝切换的特点， 该日历不支持月周切换的不选中设置"/>
 
     <TextView
         android:id="@+id/tv_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="5dp"
+        android:layout_margin="15dp"
         android:text="版本"/>
 
 

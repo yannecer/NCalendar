@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import necer.ncalendardemo.R;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,4 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public void week(View v) {
         startActivity(new Intent(this, WeekActivity.class));
     }
+
+
+
 }

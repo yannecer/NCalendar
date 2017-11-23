@@ -23,8 +23,8 @@ import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
 
 /**
- * Created by 闫彬彬 on 2017/9/27.
- * QQ:619008099
+ * Created by necer on 2017/9/27.
+ * QQ群:127278900
  */
 
 public class NCalendarActivity extends AppCompatActivity implements OnCalendarChangedListener {
@@ -53,7 +53,7 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         tv_date = (TextView) findViewById(R.id.tv_date);
 
 
-        ncalendar.setDateInterval("2017-04-02","2018-01-01");
+     //   ncalendar.setDateInterval("2017-04-02","2018-01-01");
 
 
 

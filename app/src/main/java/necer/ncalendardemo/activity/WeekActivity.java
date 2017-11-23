@@ -9,8 +9,8 @@ import com.necer.ncalendar.calendar.WeekCalendar;
 import necer.ncalendardemo.R;
 
 /**
- * Created by 闫彬彬 on 2017/10/30.
- * QQ:619008099
+ * Created by necer on 2017/10/30.
+ * QQ群:127278900
  */
 
 public class WeekActivity extends Activity {

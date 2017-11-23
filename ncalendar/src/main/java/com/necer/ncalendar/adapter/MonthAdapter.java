@@ -9,8 +9,8 @@ import com.necer.ncalendar.view.MonthView;
 import org.joda.time.DateTime;
 
 /**
- * Created by 闫彬彬 on 2017/8/28.
- * QQ:619008099
+ * Created by necer on 2017/8/28.
+ * QQ群:127278900
  */
 
 public class MonthAdapter extends CalendarAdapter {

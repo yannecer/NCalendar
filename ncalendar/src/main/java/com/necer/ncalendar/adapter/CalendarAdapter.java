@@ -11,8 +11,8 @@ import com.necer.ncalendar.view.CalendarView;
 import org.joda.time.DateTime;
 
 /**
- * Created by 闫彬彬 on 2017/8/25.
- * QQ:619008099
+ * Created by necer on 2017/8/25.
+ * QQ群:127278900
  */
 
 public abstract class CalendarAdapter extends PagerAdapter {

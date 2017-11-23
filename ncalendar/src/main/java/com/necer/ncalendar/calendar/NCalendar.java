@@ -25,8 +25,8 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 /**
- * Created by 闫彬彬 on 2017/8/25.
- * QQ:619008099
+ * Created by necer on 2017/8/25.
+ * QQ群:127278900
  */
 
 public class NCalendar extends FrameLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener, OnWeekCalendarChangedListener, OnMonthCalendarChangedListener {
@@ -573,5 +573,14 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     public void setDateInterval(String startString,String endString) {
         monthCalendar.setDateInterval(startString,endString);
         weekCalendar.setDateInterval(startString,endString);
+    }
+
+
+    /**
+     * 返回100是月，返回200是周
+     * @return
+     */
+    public int getState() {
+        return STATE;
     }
 }
