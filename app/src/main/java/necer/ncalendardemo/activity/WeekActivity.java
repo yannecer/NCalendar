@@ -25,7 +25,6 @@ public class WeekActivity extends Activity {
 
         weekCalendar = (WeekCalendar) findViewById(R.id.weekCalendar);
 
-        weekCalendar.setDateInterval("2017-10-10","2017-11-20");
        /* weekCalendar.post(new Runnable() {
             @Override
             public void run() {
