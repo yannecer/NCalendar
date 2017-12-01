@@ -33,6 +33,8 @@ compile 'com.necer.ncalendar:ncalendar:2.4.5'
         app:defaultCalendar="Month"
         app:firstDayOfWeek="Sunday"
         app:selectCircleColor="#3388ff">
+        
+        <!-- 内部需要 RecyclerView 、NestedScrollView 等实现了 NestedScrollingChild 的子类-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
