@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingParent;
@@ -582,5 +583,15 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
      */
     public int getState() {
         return STATE;
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        try{
+            super.onRestoreInstanceState(state);
+        } catch (Exception e){
+            state = null;
+        }
     }
 }
