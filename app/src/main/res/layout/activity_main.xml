@@ -1,54 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
-    
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="仿miui日历"
         android:layout_marginTop="20dp"
-        android:onClick="toMiui"/>
+        android:onClick="toMiui"
+        android:text="仿miui日历" />
 
     <Button
         android:id="@+id/bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="默认不选中的月日历"
         android:layout_marginTop="20dp"
-        android:onClick="notDefaultSelect"/>
+        android:onClick="notDefaultSelect"
+        android:text="默认不选中的月日历" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="默认选中的月日历"
-        android:onClick="defaultSelect"/>
+        android:onClick="defaultSelect"
+        android:text="默认选中的月日历" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="周日历"
-        android:onClick="week"/>
+        android:onClick="week"
+        android:text="周日历" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="fragment"
+        android:text="Fragment" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
         android:layout_margin="15dp"
         android:text="注意：1单纯的周日历和月日历使用方法完全相同
-2：单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都有选中日期，这样才能体现出月周切换日期无缝切换的特点， 该日历不支持月周切换的不选中设置"/>
+2：单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都有选中日期，这样才能体现出月周切换日期无缝切换的特点， 该日历不支持月周切换的不选中设置"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tv_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
         android:layout_margin="15dp"
-        android:text="版本"/>
-
+        android:text="版本"
+        android:textSize="12sp" />
 
 
 </LinearLayout>

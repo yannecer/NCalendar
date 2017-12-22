@@ -1,10 +1,12 @@
 package necer.ncalendardemo.activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
 import necer.ncalendardemo.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,10 +31,14 @@ public class MainActivity extends AppCompatActivity {
     public void notDefaultSelect(View v) {
         startActivity(new Intent(this, MonthNotSelectActivity.class));
     }
+
     public void week(View v) {
         startActivity(new Intent(this, WeekActivity.class));
     }
 
+    public void fragment(View v) {
+        startActivity(new Intent(this, TestFragmentActivity.class));
+    }
 
 
 }

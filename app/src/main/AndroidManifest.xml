@@ -28,6 +28,9 @@
         <activity
             android:name=".activity.WeekActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".activity.TestFragmentActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
 
 
     </application>
