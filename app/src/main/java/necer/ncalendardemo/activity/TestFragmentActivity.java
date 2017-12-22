@@ -18,9 +18,10 @@ public class TestFragmentActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fragment);
+        getSupportActionBar().hide();
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_, new TestFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_, TestFragment.newInstance("","")).commit();
 
 
     }
