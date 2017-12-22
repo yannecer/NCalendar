@@ -22,6 +22,7 @@ import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
 
 /**
+ * Fragment测试
  * Created by necer on 2017/12/22.
  */
 
@@ -39,8 +40,6 @@ public class TestFragment extends Fragment implements OnCalendarChangedListener 
 
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_ncalendar, null);
-
-
 
         ncalendar = (NCalendar) view.findViewById(R.id.ncalendarrrr);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
