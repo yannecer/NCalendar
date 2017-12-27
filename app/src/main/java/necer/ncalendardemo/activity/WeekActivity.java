@@ -28,12 +28,17 @@ public class WeekActivity extends Activity {
 
 
 
-
     }
 
     public void setDate(View view) {
+        weekCalendar.setVisibility(View.VISIBLE);
+        weekCalendar.post(new Runnable() {
+            @Override
+            public void run() {
+                weekCalendar.setDate("2018-01-01");
+            }
+        });
 
-        weekCalendar.setDate("2018-01-01");
 
     }
 }
