@@ -3,6 +3,7 @@ package necer.ncalendardemo.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.necer.ncalendar.calendar.WeekCalendar;
 
@@ -25,21 +26,14 @@ public class WeekActivity extends Activity {
 
         weekCalendar = (WeekCalendar) findViewById(R.id.weekCalendar);
 
-       /* weekCalendar.post(new Runnable() {
-            @Override
-            public void run() {
-
-                weekCalendar.setOnWeekCalendarChangedListener(new OnWeekCalendarChangedListener() {
-                    @Override
-                    public void onWeekCalendarChanged(DateTime dateTime) {
-                        MyLog.d("dateTime::" + dateTime);
-                    }
-                });
-                weekCalendar.setDate("2017-11-5");
-            }
-        });*/
 
 
+
+    }
+
+    public void setDate(View view) {
+
+        weekCalendar.setDate("2018-01-01");
 
     }
 }
