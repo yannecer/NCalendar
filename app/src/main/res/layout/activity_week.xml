@@ -15,6 +15,6 @@
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:visibility="gone"></com.necer.ncalendar.calendar.WeekCalendar>
+        android:visibility="visible"></com.necer.ncalendar.calendar.WeekCalendar>
 
 </LinearLayout>

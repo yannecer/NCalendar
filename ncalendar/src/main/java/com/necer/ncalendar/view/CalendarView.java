@@ -33,7 +33,7 @@ public abstract class CalendarView extends View {
     protected float mLunarTextSize;
     protected Paint mSorlarPaint;
     protected Paint mLunarPaint;
-    protected int mSelectCircleRadius;//选中圆的半径
+    protected float mSelectCircleRadius;//选中圆的半径
     protected int mSelectCircleColor;//选中圆的颜色
     protected boolean isShowLunar;//是否显示农历
 
@@ -45,7 +45,7 @@ public abstract class CalendarView extends View {
     protected float mPointSize;//圆点大小
 
     protected int mHollowCircleColor;//空心圆颜色
-    protected int mHollowCircleStroke;//空心圆粗细
+    protected float mHollowCircleStroke;//空心圆粗细
 
     protected boolean isShowHoliday;//是否显示节假日
     protected List<String> holidayList;

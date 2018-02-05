@@ -11,14 +11,14 @@ public class Attrs {
     public static int selectCircleColor;
     public static float solarTextSize ;
     public static float lunarTextSize;
-    public static int selectCircleRadius ;
+    public static float selectCircleRadius ;
     public static boolean isShowLunar ;
 
 
     public static float pointSize;
     public static int pointColor;
     public static int hollowCircleColor;
-    public static int hollowCircleStroke;
+    public static float hollowCircleStroke;
 
     public static int firstDayOfWeek;
     public static int defaultCalendar;

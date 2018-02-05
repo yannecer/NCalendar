@@ -7,13 +7,13 @@
         <attr name="selectCircleColor" format="color" />
         <attr name="solarTextSize" format="dimension" />
         <attr name="lunarTextSize" format="dimension" />
-        <attr name="selectCircleRadius" format="integer" />
+        <attr name="selectCircleRadius" format="dimension" />
         <attr name="isShowLunar" format="boolean" />
 
         <attr name="pointSize" format="dimension" />
         <attr name="pointColor" format="color" />
         <attr name="hollowCircleColor" format="color" />
-        <attr name="hollowCircleStroke" format="integer" />
+        <attr name="hollowCircleStroke" format="dimension" />
         <attr name="startDate" format="string" />
         <attr name="endDate" format="string" />
 

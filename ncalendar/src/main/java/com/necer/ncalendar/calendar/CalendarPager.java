@@ -10,6 +10,7 @@ import android.view.ViewTreeObserver;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.CalendarAdapter;
 import com.necer.ncalendar.utils.Attrs;
+import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.CalendarView;
 
@@ -55,13 +56,18 @@ public abstract class CalendarPager extends ViewPager {
         Attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, getResources().getColor(R.color.hintColor));
         Attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Utils.sp2px(context, 18));
         Attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Utils.sp2px(context, 10));
-        Attrs.selectCircleRadius = ta.getInt(R.styleable.NCalendar_selectCircleRadius, (int) Utils.dp2px(context, 20));
+        Attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Utils.dp2px(context, 20));
+
+
+        MyLog.d("selectCircleRadius::" + Attrs.selectCircleRadius);
+
+
         Attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
 
         Attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, (int) Utils.dp2px(context, 2));
         Attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, getResources().getColor(R.color.pointColor));
         Attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, Color.WHITE);
-        Attrs.hollowCircleStroke = ta.getInt(R.styleable.NCalendar_hollowCircleStroke, (int) Utils.dp2px(context, 1));
+        Attrs.hollowCircleStroke = ta.getDimension(R.styleable.NCalendar_hollowCircleStroke, Utils.dp2px(context, 1));
 
 
         Attrs.monthCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Utils.dp2px(context, 300));
