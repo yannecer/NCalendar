@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="111111"
+        android:background="#aa88cc"
+        android:gravity="center"/>
+
+    <com.necer.ncalendar.calendar.MonthCalendar
+        android:id="@+id/monthcalendar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
+
+
+</LinearLayout>

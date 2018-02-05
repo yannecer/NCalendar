@@ -26,8 +26,6 @@ public class WeekActivity extends Activity {
 
         weekCalendar = (WeekCalendar) findViewById(R.id.weekCalendar);
 
-
-
     }
 
     public void setDate(View view) {
@@ -35,7 +33,7 @@ public class WeekActivity extends Activity {
         weekCalendar.post(new Runnable() {
             @Override
             public void run() {
-                weekCalendar.setDate("2018-01-01");
+                weekCalendar.setDate("2017-12-29");
             }
         });
 
