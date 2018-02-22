@@ -67,7 +67,7 @@ public class MonthView extends CalendarView {
                 //当月和上下月的颜色不同
                 if (Utils.isEqualsMonth(dateTime, mInitialDateTime)) {
                     //当天和选中的日期不绘制农历
-                    if (Utils.isToday(dateTime)) {
+                    if (Utils.isToday(dateTime) && dateTime.isEqual(mSelectDateTime)) {
                         mSorlarPaint.setColor(mSelectCircleColor);
                         int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
                         canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);

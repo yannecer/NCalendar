@@ -55,7 +55,7 @@ public class WeekView extends CalendarView {
             Paint.FontMetricsInt fontMetrics = mSorlarPaint.getFontMetricsInt();
             int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
 
-            if (Utils.isToday(dateTime)) {
+            if (Utils.isToday(dateTime) && dateTime.isEqual(mSelectDateTime)) {
                 mSorlarPaint.setColor(mSelectCircleColor);
                 canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius, mSorlarPaint);
                 mSorlarPaint.setColor(Color.WHITE);
