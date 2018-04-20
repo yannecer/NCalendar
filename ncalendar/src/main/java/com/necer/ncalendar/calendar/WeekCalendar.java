@@ -15,7 +15,7 @@ import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.WeekView;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by necer on 2017/8/30.
@@ -37,10 +37,10 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
     @Override
     protected CalendarAdapter getCalendarAdapter() {
 
-        mPageSize = Utils.getIntervalWeek(startDateTime, endDateTime, Attrs.firstDayOfWeek) + 1;
-        mCurrPage = Utils.getIntervalWeek(startDateTime, mInitialDateTime, Attrs.firstDayOfWeek);
+        mPageSize = Utils.getIntervalWeek(startDate, endDate, Attrs.firstDayOfWeek) + 1;
+        mCurrPage = Utils.getIntervalWeek(startDate, mInitialDate, Attrs.firstDayOfWeek);
 
-        return new WeekAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
+        return new WeekAdapter(getContext(), mPageSize, mCurrPage, mInitialDate, this);
     }
 
 
@@ -63,31 +63,31 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
 
         //只处理翻页
         if (lastPosition == -1) {
-            currView.setDateTimeAndPoint(mInitialDateTime, pointList);
-            mSelectDateTime = mInitialDateTime;
-            lastSelectDateTime = mInitialDateTime;
+            currView.setDateAndPoint(mInitialDate, pointList);
+            mSelectDate = mInitialDate;
+            lastSelectDate = mInitialDate;
             if (onWeekCalendarChangedListener != null) {
-                onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
+                onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDate);
             }
         } else if (isPagerChanged) {
             int i = position - lastPosition;
-            mSelectDateTime = mSelectDateTime.plusWeeks(i);
+            mSelectDate = mSelectDate.plusWeeks(i);
 
             if (isDefaultSelect) {
                 //日期越界
-                if (mSelectDateTime.getMillis() > endDateTime.getMillis()) {
-                    mSelectDateTime = endDateTime;
-                } else if (mSelectDateTime.getMillis() < startDateTime.getMillis()) {
-                    mSelectDateTime = startDateTime;
+                if (mSelectDate.isAfter(endDate)) {
+                    mSelectDate = endDate;
+                } else if (mSelectDate.isBefore(startDate)) {
+                    mSelectDate = startDate;
                 }
 
-                currView.setDateTimeAndPoint(mSelectDateTime, pointList);
+                currView.setDateAndPoint(mSelectDate, pointList);
                 if (onWeekCalendarChangedListener != null) {
-                    onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
+                    onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDate);
                 }
             } else {
-                if (Utils.isEqualsMonth(lastSelectDateTime, mSelectDateTime)) {
-                    currView.setDateTimeAndPoint(lastSelectDateTime, pointList);
+                if (Utils.isEqualsMonth(lastSelectDate, mSelectDate)) {
+                    currView.setDateAndPoint(lastSelectDate, pointList);
                 }
             }
 
@@ -101,9 +101,9 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
 
 
     @Override
-    protected void setDateTime(DateTime dateTime) {
+    protected void setDate(LocalDate date) {
 
-        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+        if (date.isAfter(endDate) || date.isBefore(startDate)) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -118,41 +118,41 @@ public class WeekCalendar extends CalendarPager implements OnClickWeekViewListen
         WeekView currectWeekView = (WeekView) calendarViews.get(getCurrentItem());
 
         //不是当周
-        if (!currectWeekView.contains(dateTime)) {
+        if (!currectWeekView.contains(date)) {
 
-            DateTime initialDateTime = currectWeekView.getInitialDateTime();
-            int weeks = Utils.getIntervalWeek(initialDateTime, dateTime, Attrs.firstDayOfWeek);
+            LocalDate initialDate = currectWeekView.getInitialDate();
+            int weeks = Utils.getIntervalWeek(initialDate, date, Attrs.firstDayOfWeek);
             int i = getCurrentItem() + weeks;
             setCurrentItem(i, Math.abs(weeks) < 2);
             currectWeekView = (WeekView) calendarViews.get(getCurrentItem());
         }
 
-        currectWeekView.setDateTimeAndPoint(dateTime, pointList);
-        mSelectDateTime = dateTime;
-        lastSelectDateTime = dateTime;
+        currectWeekView.setDateAndPoint(date, pointList);
+        mSelectDate = date;
+        lastSelectDate = date;
 
         isPagerChanged = true;
 
         if (onWeekCalendarChangedListener != null) {
-            onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDateTime);
+            onWeekCalendarChangedListener.onWeekCalendarChanged(mSelectDate);
         }
     }
 
 
     @Override
-    public void onClickCurrentWeek(DateTime dateTime) {
+    public void onClickCurrentWeek(LocalDate date) {
 
-        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+        if (date.isAfter(endDate) || date.isBefore(startDate)) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }
 
         WeekView weekView = (WeekView) calendarAdapter.getCalendarViews().get(getCurrentItem());
-        weekView.setDateTimeAndPoint(dateTime, pointList);
-        mSelectDateTime = dateTime;
-        lastSelectDateTime = dateTime;
+        weekView.setDateAndPoint(date, pointList);
+        mSelectDate = date;
+        lastSelectDate = date;
         if (onWeekCalendarChangedListener != null) {
-            onWeekCalendarChangedListener.onWeekCalendarChanged(dateTime);
+            onWeekCalendarChangedListener.onWeekCalendarChanged(date);
         }
 
     }

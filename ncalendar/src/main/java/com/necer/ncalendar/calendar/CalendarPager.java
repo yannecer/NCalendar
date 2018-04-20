@@ -15,6 +15,7 @@ import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.CalendarView;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +28,16 @@ import java.util.List;
 public abstract class CalendarPager extends ViewPager {
 
     protected CalendarAdapter calendarAdapter;
-    protected DateTime startDateTime;
-    protected DateTime endDateTime;
+    protected LocalDate startDate;
+    protected LocalDate endDate;
     protected int mPageSize;
     protected int mCurrPage;
-    protected DateTime mInitialDateTime;//日历初始化datetime，即今天
-    protected DateTime mSelectDateTime;//当前页面选中的datetime
+    protected LocalDate mInitialDate;//日历初始化date，即今天
+    protected LocalDate mSelectDate;//当前页面选中的date
     protected List<String> pointList;//圆点
 
     protected boolean isPagerChanged = true;//是否是手动翻页
-    protected DateTime lastSelectDateTime;//上次选中的datetime
+    protected LocalDate lastSelectDate;//上次选中的date
     protected boolean isDefaultSelect = true;//是否默认选中
 
 
@@ -57,10 +58,6 @@ public abstract class CalendarPager extends ViewPager {
         Attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Utils.sp2px(context, 18));
         Attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Utils.sp2px(context, 10));
         Attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Utils.dp2px(context, 20));
-
-
-        MyLog.d("selectCircleRadius::" + Attrs.selectCircleRadius);
-
 
         Attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
 
@@ -90,10 +87,10 @@ public abstract class CalendarPager extends ViewPager {
 
         ta.recycle();
 
-        mInitialDateTime = new DateTime().withTimeAtStartOfDay();
+        mInitialDate = new LocalDate();
 
-        startDateTime = new DateTime(startString == null ? "1901-01-01" : startString);
-        endDateTime = new DateTime(endString == null ? "2099-12-31" : endString);
+        startDate = new LocalDate(startString == null ? "1901-01-01" : startString);
+        endDate = new LocalDate(endString == null ? "2099-12-31" : endString);
 
         setDateInterval(null, null);
 
@@ -110,14 +107,13 @@ public abstract class CalendarPager extends ViewPager {
 
     public void setDateInterval(String startString,String endString) {
         if (startString != null && !"".equals(startString)) {
-            startDateTime = new DateTime(startString);
+            startDate = new LocalDate(startString);
         }
         if (endString != null && !"".equals(endString)) {
-            endDateTime = new DateTime(endString);
+            endDate = new LocalDate(endString);
         }
 
-
-        if (mInitialDateTime.getMillis() < startDateTime.getMillis() || mInitialDateTime.getMillis() > endDateTime.getMillis()) {
+        if (mInitialDate.isBefore(startDate) || mInitialDate.isAfter(endDate)) {
             throw new RuntimeException(getResources().getString(R.string.range_date));
         }
 
@@ -158,10 +154,10 @@ public abstract class CalendarPager extends ViewPager {
 
     protected abstract void initCurrentCalendarView(int position);
 
-    protected abstract void setDateTime(DateTime dateTime);
+    protected abstract void setDate(LocalDate date);
 
     public void toToday() {
-        setDateTime(new DateTime().withTimeAtStartOfDay());
+        setDate(new LocalDate());
     }
 
 
@@ -181,14 +177,14 @@ public abstract class CalendarPager extends ViewPager {
 
     //设置日期
     public void setDate(String formatDate) {
-        setDateTime(new DateTime(formatDate));
+        setDate(new LocalDate(formatDate));
     }
 
     public void setPointList(List<String> pointList) {
 
         List<String> formatList = new ArrayList<>();
         for (int i = 0; i < pointList.size(); i++) {
-            String format = new DateTime(pointList.get(i)).toString("yyyy-MM-dd");
+            String format = new LocalDate(pointList.get(i)).toString("yyyy-MM-dd");
             formatList.add(format);
         }
 

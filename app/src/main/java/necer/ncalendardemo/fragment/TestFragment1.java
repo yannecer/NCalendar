@@ -12,6 +12,7 @@ import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import necer.ncalendardemo.R;
 
@@ -32,7 +33,7 @@ public class TestFragment1 extends Fragment {
 
         monthCalendar.setOnMonthCalendarChangedListener(new OnMonthCalendarChangedListener() {
             @Override
-            public void onMonthCalendarChanged(DateTime dateTime) {
+            public void onMonthCalendarChanged(LocalDate dateTime) {
                 MyLog.d("TestFragment1::;"+dateTime.toString());
             }
         });

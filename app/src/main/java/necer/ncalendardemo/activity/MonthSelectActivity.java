@@ -10,6 +10,7 @@ import com.necer.ncalendar.calendar.MonthCalendar;
 import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import necer.ncalendardemo.R;
 
@@ -33,8 +34,8 @@ public class MonthSelectActivity extends Activity {
         monthcalendar = (MonthCalendar) findViewById(R.id.monthcalendar);
         monthcalendar.setOnMonthCalendarChangedListener(new OnMonthCalendarChangedListener() {
             @Override
-            public void onMonthCalendarChanged(DateTime dateTime) {
-                dateText.setText(dateTime.toLocalDate().toString());
+            public void onMonthCalendarChanged(LocalDate dateTime) {
+                dateText.setText(dateTime.toString());
             }
         });
 
@@ -56,6 +57,6 @@ public class MonthSelectActivity extends Activity {
 
     public void setDate(View view) {
         monthcalendar.setDate("2018-10-11");
-      //  monthcalendar.setDate("2017-12-31");
+      //  monthcalendar.setDate("1991-04-14");
     }
 }

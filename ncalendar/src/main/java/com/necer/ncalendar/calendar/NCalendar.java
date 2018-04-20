@@ -21,7 +21,7 @@ import com.necer.ncalendar.listener.OnWeekCalendarChangedListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.view.MonthView;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -391,25 +391,25 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     }
 
     @Override
-    public void onWeekCalendarChanged(DateTime dateTime) {
+    public void onWeekCalendarChanged(LocalDate date) {
         if (STATE == WEEK) {
-            monthCalendar.setDateTime(dateTime);
+            monthCalendar.setDate(date);
             requestLayout();
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarChanged(dateTime);
+                onCalendarChangedListener.onCalendarChanged(date);
             }
         }
     }
 
     @Override
-    public void onMonthCalendarChanged(DateTime dateTime) {
+    public void onMonthCalendarChanged(LocalDate date) {
         //monthCalendarOffset在这里赋值，月日历改变的时候
         monthCalendarOffset = getMonthCalendarOffset();
 
         if (STATE == MONTH) {
-            weekCalendar.setDateTime(dateTime);
+            weekCalendar.setDate(date);
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarChanged(dateTime);
+                onCalendarChangedListener.onCalendarChanged(date);
             }
         }
     }
@@ -499,11 +499,11 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
      * @param formatDate yyyy-MM-dd
      */
     public void setDate(String formatDate) {
-        DateTime dateTime = new DateTime(formatDate);
+        LocalDate date = new LocalDate(formatDate);
         if (STATE == MONTH) {
-            monthCalendar.setDateTime(dateTime);
+            monthCalendar.setDate(date);
         } else {
-            weekCalendar.setDateTime(dateTime);
+            weekCalendar.setDate(date);
         }
     }
 

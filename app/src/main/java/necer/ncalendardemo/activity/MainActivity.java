@@ -7,6 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.necer.ncalendar.utils.MyLog;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.Months;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import necer.ncalendardemo.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tvVersion = (TextView) findViewById(R.id.tv_version);
         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
+
     }
 
     public void toMiui(View v) {

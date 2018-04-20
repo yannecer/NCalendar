@@ -15,6 +15,7 @@ import com.necer.ncalendar.view.CalendarView;
 import com.necer.ncalendar.view.MonthView;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by necer on 2017/8/28.
@@ -33,10 +34,10 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
     @Override
     protected CalendarAdapter getCalendarAdapter() {
 
-        mPageSize = Utils.getIntervalMonths(startDateTime, endDateTime) + 1;
-        mCurrPage = Utils.getIntervalMonths(startDateTime, mInitialDateTime);
+        mPageSize = Utils.getIntervalMonths(startDate, endDate) + 1;
+        mCurrPage = Utils.getIntervalMonths(startDate, mInitialDate);
 
-        return new MonthAdapter(getContext(), mPageSize, mCurrPage, mInitialDateTime, this);
+        return new MonthAdapter(getContext(), mPageSize, mCurrPage, mInitialDate, this);
     }
 
 
@@ -61,31 +62,31 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
 
         //只处理翻页
         if (lastPosition == -1) {
-            currView.setDateTimeAndPoint(mInitialDateTime, pointList);
-            mSelectDateTime = mInitialDateTime;
-            lastSelectDateTime = mInitialDateTime;
+            currView.setDateAndPoint(mInitialDate, pointList);
+            mSelectDate = mInitialDate;
+            lastSelectDate = mInitialDate;
             if (onMonthCalendarChangedListener != null) {
-                onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDateTime);
+                onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDate);
             }
         } else if (isPagerChanged) {
             int i = position - lastPosition;
-            mSelectDateTime = mSelectDateTime.plusMonths(i);
+            mSelectDate = mSelectDate.plusMonths(i);
 
             if (isDefaultSelect) {
                 //日期越界
-                if (mSelectDateTime.getMillis() > endDateTime.getMillis()) {
-                    mSelectDateTime = endDateTime;
-                } else if (mSelectDateTime.getMillis() < startDateTime.getMillis()) {
-                    mSelectDateTime = startDateTime;
+                if (mSelectDate.isAfter(endDate)) {
+                    mSelectDate = endDate;
+                } else if (mSelectDate.isBefore(startDate)) {
+                    mSelectDate = startDate;
                 }
 
-                currView.setDateTimeAndPoint(mSelectDateTime, pointList);
+                currView.setDateAndPoint(mSelectDate, pointList);
                 if (onMonthCalendarChangedListener != null) {
-                    onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDateTime);
+                    onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDate);
                 }
             } else {
-                if (Utils.isEqualsMonth(lastSelectDateTime, mSelectDateTime)) {
-                    currView.setDateTimeAndPoint(lastSelectDateTime, pointList);
+                if (Utils.isEqualsMonth(lastSelectDate, mSelectDate)) {
+                    currView.setDateAndPoint(lastSelectDate, pointList);
                 }
             }
 
@@ -98,8 +99,8 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
     }
 
     @Override
-    protected void setDateTime(DateTime dateTime) {
-        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+    protected void setDate(LocalDate date) {
+        if (date.isAfter(endDate)  || date.isBefore(startDate)) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -112,49 +113,49 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
         isPagerChanged = false;
 
         MonthView currectMonthView = getCurrectMonthView();
-        DateTime initialDateTime = currectMonthView.getInitialDateTime();
+        LocalDate initialDate = currectMonthView.getInitialDate();
 
         //不是当月
-        if (!Utils.isEqualsMonth(initialDateTime, dateTime)) {
-            int months = Utils.getIntervalMonths(initialDateTime, dateTime);
+        if (!Utils.isEqualsMonth(initialDate, date)) {
+            int months = Utils.getIntervalMonths(initialDate, date);
             int i = getCurrentItem() + months;
             setCurrentItem(i, Math.abs(months) < 2);
             currectMonthView = getCurrectMonthView();
         }
 
-        currectMonthView.setDateTimeAndPoint(dateTime, pointList);
-        mSelectDateTime = dateTime;
-        lastSelectDateTime = dateTime;
+        currectMonthView.setDateAndPoint(date, pointList);
+        mSelectDate = date;
+        lastSelectDate = date;
 
         isPagerChanged = true;
 
         if (onMonthCalendarChangedListener != null) {
-            onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDateTime);
+            onMonthCalendarChangedListener.onMonthCalendarChanged(mSelectDate);
         }
 
 
     }
 
     @Override
-    public void onClickCurrentMonth(DateTime dateTime) {
-        dealClickEvent(dateTime, getCurrentItem());
+    public void onClickCurrentMonth(LocalDate date) {
+        dealClickEvent(date, getCurrentItem());
     }
 
     @Override
-    public void onClickLastMonth(DateTime dateTime) {
+    public void onClickLastMonth(LocalDate date) {
         int currentItem = getCurrentItem() - 1;
-        dealClickEvent(dateTime, currentItem);
+        dealClickEvent(date, currentItem);
     }
 
     @Override
-    public void onClickNextMonth(DateTime dateTime) {
+    public void onClickNextMonth(LocalDate date) {
         int currentItem = getCurrentItem() + 1;
-        dealClickEvent(dateTime, currentItem);
+        dealClickEvent(date, currentItem);
     }
 
-    private void dealClickEvent(DateTime dateTime, int currentItem) {
+    private void dealClickEvent(LocalDate date, int currentItem) {
 
-        if (dateTime.getMillis() > endDateTime.getMillis() || dateTime.getMillis() < startDateTime.getMillis()) {
+        if (date.isAfter(endDate)  || date.isBefore(startDate)) {
             Toast.makeText(getContext(), R.string.illegal_date, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -162,14 +163,14 @@ public class MonthCalendar extends CalendarPager implements OnClickMonthViewList
         isPagerChanged = false;
         setCurrentItem(currentItem, true);
         MonthView nMonthView = getCurrectMonthView();
-        nMonthView.setDateTimeAndPoint(dateTime, pointList);
-        mSelectDateTime = dateTime;
-        lastSelectDateTime = dateTime;
+        nMonthView.setDateAndPoint(date, pointList);
+        mSelectDate = date;
+        lastSelectDate = date;
 
         isPagerChanged = true;
 
         if (onMonthCalendarChangedListener != null) {
-            onMonthCalendarChangedListener.onMonthCalendarChanged(dateTime);
+            onMonthCalendarChangedListener.onMonthCalendarChanged(date);
         }
     }
 

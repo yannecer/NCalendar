@@ -10,6 +10,7 @@ import com.necer.ncalendar.calendar.MonthCalendar;
 import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import necer.ncalendardemo.R;
 
@@ -36,8 +37,8 @@ public class MonthNotSelectActivity extends Activity {
         monthcalendar.setDefaultSelect(false);
         monthcalendar.setOnMonthCalendarChangedListener(new OnMonthCalendarChangedListener() {
             @Override
-            public void onMonthCalendarChanged(DateTime dateTime) {
-                dateText.setText(dateTime.toLocalDate().toString());
+            public void onMonthCalendarChanged(LocalDate dateTime) {
+                dateText.setText(dateTime.toString());
             }
         });
 

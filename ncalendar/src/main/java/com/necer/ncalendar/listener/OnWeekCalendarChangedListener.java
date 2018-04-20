@@ -1,6 +1,7 @@
 package com.necer.ncalendar.listener;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by necer on 2017/9/20.
@@ -8,5 +9,5 @@ import org.joda.time.DateTime;
  */
 
 public interface OnWeekCalendarChangedListener {
-    void onWeekCalendarChanged(DateTime dateTime);
+    void onWeekCalendarChanged(LocalDate date);
 }

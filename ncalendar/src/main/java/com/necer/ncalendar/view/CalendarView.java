@@ -8,7 +8,7 @@ import android.view.View;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +20,12 @@ import java.util.List;
 
 public abstract class CalendarView extends View {
 
-    protected DateTime mSelectDateTime;//被选中的datetime
-    protected DateTime mInitialDateTime;//初始传入的datetime，
+    protected LocalDate mSelectDate;//被选中的date
+    protected LocalDate mInitialDate;//初始传入的date
     protected int mWidth;
     protected int mHeight;
-    protected List<DateTime> dateTimes;
+    protected List<LocalDate> dates;
+
 
     protected int mSolarTextColor;//公历字体颜色
     protected int mLunarTextColor;//农历字体颜色
@@ -89,27 +90,27 @@ public abstract class CalendarView extends View {
         return paint;
     }
 
-    public DateTime getInitialDateTime() {
-        return mInitialDateTime;
+    public LocalDate getInitialDate() {
+        return mInitialDate;
     }
 
-    public DateTime getSelectDateTime() {
-        return mSelectDateTime;
+    public LocalDate getSelectDate() {
+        return mSelectDate;
     }
 
-    public void setSelectDateTime(DateTime dateTime) {
-        this.mSelectDateTime = dateTime;
+    public void setSelectDate(LocalDate date) {
+        this.mSelectDate = date;
         invalidate();
     }
 
-    public void setDateTimeAndPoint(DateTime dateTime, List<String> pointList) {
-        this.mSelectDateTime = dateTime;
+    public void setDateAndPoint(LocalDate date, List<String> pointList) {
+        this.mSelectDate = date;
         this.pointList = pointList;
         invalidate();
     }
 
     public void clear() {
-        this.mSelectDateTime = null;
+        this.mSelectDate = null;
         invalidate();
     }
 

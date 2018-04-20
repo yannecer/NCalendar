@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.necer.ncalendar.view.CalendarView;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by necer on 2017/8/25.
@@ -22,11 +23,11 @@ public abstract class CalendarAdapter extends PagerAdapter {
     protected int mCount;//总页数
     protected int mCurr;//当前位置
     protected SparseArray<CalendarView> mCalendarViews;
-    protected DateTime mDateTime;
+    protected LocalDate mDate;
 
-    public CalendarAdapter(Context mContext, int count, int curr, DateTime dateTime) {
+    public CalendarAdapter(Context mContext, int count, int curr, LocalDate date) {
         this.mContext = mContext;
-        this.mDateTime = dateTime;
+        this.mDate = date;
         this.mCurr = curr;
         this.mCount = count;
         mCalendarViews = new SparseArray<>();

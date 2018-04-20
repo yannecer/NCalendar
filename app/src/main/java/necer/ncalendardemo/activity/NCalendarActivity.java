@@ -15,6 +15,7 @@ import com.necer.ncalendar.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,11 +83,11 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
 
 
     @Override
-    public void onCalendarChanged(DateTime dateTime) {
-        tv_month.setText(dateTime.getMonthOfYear() + "月");
-        tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
+    public void onCalendarChanged(LocalDate date) {
+        tv_month.setText(date.getMonthOfYear() + "月");
+        tv_date.setText(date.getYear() + "年" + date.getMonthOfYear() + "月" + date.getDayOfMonth() + "日");
 
-        MyLog.d("dateTime::" + dateTime);
+        MyLog.d("dateTime::" + date);
     }
 
 

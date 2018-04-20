@@ -12,7 +12,7 @@ import com.necer.ncalendar.listener.OnClickWeekViewListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -28,13 +28,13 @@ public class WeekView extends CalendarView {
     private OnClickWeekViewListener mOnClickWeekViewListener;
     private List<String> lunarList;
 
-    public WeekView(Context context, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
+    public WeekView(Context context, LocalDate date, OnClickWeekViewListener onClickWeekViewListener) {
         super(context);
 
-        this.mInitialDateTime = dateTime;
-        Utils.NCalendar weekCalendar2 = Utils.getWeekCalendar2(dateTime, Attrs.firstDayOfWeek);
+        this.mInitialDate = date;
+        Utils.NCalendar weekCalendar2 = Utils.getWeekCalendar2(date, Attrs.firstDayOfWeek);
 
-        dateTimes = weekCalendar2.dateTimeList;
+        dates = weekCalendar2.dateList;
         lunarList = weekCalendar2.lunarList;
         mOnClickWeekViewListener = onClickWeekViewListener;
     }
@@ -51,31 +51,31 @@ public class WeekView extends CalendarView {
         for (int i = 0; i < 7; i++) {
             Rect rect = new Rect(i * mWidth / 7, 0, i * mWidth / 7 + mWidth / 7, mHeight);
             mRectList.add(rect);
-            DateTime dateTime = dateTimes.get(i);
+            LocalDate date = dates.get(i);
             Paint.FontMetricsInt fontMetrics = mSorlarPaint.getFontMetricsInt();
             int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
 
-            if (Utils.isToday(dateTime)) {
+            if (Utils.isToday(date)) {
                 mSorlarPaint.setColor(mSelectCircleColor);
                 canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius, mSorlarPaint);
                 mSorlarPaint.setColor(Color.WHITE);
-                canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-            } else if (mSelectDateTime != null && dateTime.equals(mSelectDateTime)) {
+                canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+            } else if (mSelectDate != null && date.equals(mSelectDate)) {
                 mSorlarPaint.setColor(mSelectCircleColor);
                 canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius, mSorlarPaint);
                 mSorlarPaint.setColor(mHollowCircleColor);
                 canvas.drawCircle(rect.centerX(), rect.centerY(), mSelectCircleRadius - mHollowCircleStroke, mSorlarPaint);
                 mSorlarPaint.setColor(mSolarTextColor);
-                canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
             } else {
                 mSorlarPaint.setColor(mSolarTextColor);
-                canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                 //绘制农历
                 drawLunar(canvas, rect, baseline,i);
                 //绘制节假日
-                drawHolidays(canvas, rect, dateTime, baseline);
+                drawHolidays(canvas, rect, date, baseline);
                 //绘制圆点
-                drawPoint(canvas, rect, dateTime, baseline);
+                drawPoint(canvas, rect, date, baseline);
 
             }
         }
@@ -90,21 +90,21 @@ public class WeekView extends CalendarView {
     }
 
 
-    private void drawHolidays(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
+    private void drawHolidays(Canvas canvas, Rect rect, LocalDate date, int baseline) {
         if (isShowHoliday) {
-            if (holidayList.contains(dateTime.toLocalDate().toString())) {
+            if (holidayList.contains(date.toString())) {
                 mLunarPaint.setColor(mHolidayColor);
                 canvas.drawText("休", rect.centerX() + rect.width() / 4, baseline - getHeight() / 4, mLunarPaint);
 
-            } else if (workdayList.contains(dateTime.toLocalDate().toString())) {
+            } else if (workdayList.contains(date.toString())) {
                 mLunarPaint.setColor(mWorkdayColor);
                 canvas.drawText("班", rect.centerX() + rect.width() / 4, baseline - getHeight() / 4, mLunarPaint);
             }
         }
     }
 
-    public void drawPoint(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
-        if (pointList != null && pointList.contains(dateTime.toLocalDate().toString())) {
+    public void drawPoint(Canvas canvas, Rect rect, LocalDate date, int baseline) {
+        if (pointList != null && pointList.contains(date.toString())) {
             mLunarPaint.setColor(mPointColor);
             canvas.drawCircle(rect.centerX(), baseline - getHeight() / 3, mPointSize, mLunarPaint);
         }
@@ -127,8 +127,8 @@ public class WeekView extends CalendarView {
             for (int i = 0; i < mRectList.size(); i++) {
                 Rect rect = mRectList.get(i);
                 if (rect.contains((int) e.getX(), (int) e.getY())) {
-                    DateTime selectDateTime = dateTimes.get(i);
-                    mOnClickWeekViewListener.onClickCurrentWeek(selectDateTime);
+                    LocalDate selectDate = dates.get(i);
+                    mOnClickWeekViewListener.onClickCurrentWeek(selectDate);
                     break;
                 }
             }
@@ -137,7 +137,7 @@ public class WeekView extends CalendarView {
     });
 
 
-    public boolean contains(DateTime dateTime) {
-        return dateTimes.contains(dateTime);
+    public boolean contains(LocalDate date) {
+        return dates.contains(date);
     }
 }

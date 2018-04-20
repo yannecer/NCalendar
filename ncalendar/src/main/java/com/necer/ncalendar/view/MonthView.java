@@ -11,9 +11,7 @@ import android.view.MotionEvent;
 import com.necer.ncalendar.listener.OnClickMonthViewListener;
 import com.necer.ncalendar.utils.Attrs;
 import com.necer.ncalendar.utils.Utils;
-
-import org.joda.time.DateTime;
-
+import org.joda.time.LocalDate;
 import java.util.List;
 
 
@@ -29,18 +27,18 @@ public class MonthView extends CalendarView {
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
 
-    public MonthView(Context context, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener) {
+    public MonthView(Context context, LocalDate date, OnClickMonthViewListener onClickMonthViewListener) {
         super(context);
-        this.mInitialDateTime = dateTime;
+        this.mInitialDate = date;
 
         //0周日，1周一
-        Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(dateTime, Attrs.firstDayOfWeek);
+        Utils.NCalendar nCalendar2 = Utils.getMonthCalendar2(date, Attrs.firstDayOfWeek);
         mOnClickMonthViewListener = onClickMonthViewListener;
 
         lunarList = nCalendar2.lunarList;
-        dateTimes = nCalendar2.dateTimeList;
+        dates = nCalendar2.dateList;
 
-        mRowNum = dateTimes.size() / 7;
+        mRowNum = dates.size() / 7;
     }
 
     @Override
@@ -54,7 +52,7 @@ public class MonthView extends CalendarView {
             for (int j = 0; j < 7; j++) {
                 Rect rect = new Rect(j * mWidth / 7, i * mHeight / mRowNum, j * mWidth / 7 + mWidth / 7, i * mHeight / mRowNum + mHeight / mRowNum);
                 mRectList.add(rect);
-                DateTime dateTime = dateTimes.get(i * 7 + j);
+                LocalDate date = dates.get(i * 7 + j);
                 Paint.FontMetricsInt fontMetrics = mSorlarPaint.getFontMetricsInt();
 
                 int baseline;//让6行的第一行和5行的第一行在同一直线上，处理选中第一行的滑动
@@ -65,15 +63,15 @@ public class MonthView extends CalendarView {
                 }
 
                 //当月和上下月的颜色不同
-                if (Utils.isEqualsMonth(dateTime, mInitialDateTime)) {
+                if (Utils.isEqualsMonth(date, mInitialDate)) {
                     //当天和选中的日期不绘制农历
-                    if (Utils.isToday(dateTime)) {
+                    if (Utils.isToday(date)) {
                         mSorlarPaint.setColor(mSelectCircleColor);
                         int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
                         canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(Color.WHITE);
-                        canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                    } else if (mSelectDateTime != null && dateTime.equals(mSelectDateTime)) {
+                        canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                    } else if (mSelectDate != null && date.equals(mSelectDate)) {
 
                         mSorlarPaint.setColor(mSelectCircleColor);
                         int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
@@ -82,25 +80,25 @@ public class MonthView extends CalendarView {
                         canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius - mHollowCircleStroke, mSorlarPaint);
 
                         mSorlarPaint.setColor(mSolarTextColor);
-                        canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                        canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else {
                         mSorlarPaint.setColor(mSolarTextColor);
-                        canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                        canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                         drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
                         //绘制节假日
-                        drawHolidays(canvas, rect, dateTime, baseline);
+                        drawHolidays(canvas, rect, date, baseline);
                         //绘制圆点
-                        drawPoint(canvas, rect, dateTime, baseline);
+                        drawPoint(canvas, rect, date, baseline);
                     }
 
                 } else {
                     mSorlarPaint.setColor(mHintColor);
-                    canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+                    canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     drawLunar(canvas, rect, baseline, mHintColor, i, j);
                     //绘制节假日
-                    drawHolidays(canvas, rect, dateTime, baseline);
+                    drawHolidays(canvas, rect, date, baseline);
                     //绘制圆点
-                    drawPoint(canvas, rect, dateTime, baseline);
+                    drawPoint(canvas, rect, date, baseline);
                 }
             }
         }
@@ -134,13 +132,13 @@ public class MonthView extends CalendarView {
         }
     }
 
-    private void drawHolidays(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
+    private void drawHolidays(Canvas canvas, Rect rect, LocalDate date, int baseline) {
         if (isShowHoliday) {
-            if (holidayList.contains(dateTime.toLocalDate().toString())) {
+            if (holidayList.contains(date.toString())) {
                 mLunarPaint.setColor(mHolidayColor);
                 canvas.drawText("休", rect.centerX() + rect.width() / 4, baseline - getMonthHeight() / 20, mLunarPaint);
 
-            } else if (workdayList.contains(dateTime.toLocalDate().toString())) {
+            } else if (workdayList.contains(date.toString())) {
                 mLunarPaint.setColor(mWorkdayColor);
                 canvas.drawText("班", rect.centerX() + rect.width() / 4, baseline - getMonthHeight() / 20, mLunarPaint);
             }
@@ -148,8 +146,8 @@ public class MonthView extends CalendarView {
     }
 
     //绘制圆点
-    public void drawPoint(Canvas canvas, Rect rect, DateTime dateTime, int baseline) {
-        if (pointList != null && pointList.contains(dateTime.toLocalDate().toString())) {
+    public void drawPoint(Canvas canvas, Rect rect, LocalDate date, int baseline) {
+        if (pointList != null && pointList.contains(date.toString())) {
             mLunarPaint.setColor(mPointColor);
             canvas.drawCircle(rect.centerX(), baseline - getMonthHeight() / 15, mPointSize, mLunarPaint);
         }
@@ -167,13 +165,13 @@ public class MonthView extends CalendarView {
             for (int i = 0; i < mRectList.size(); i++) {
                 Rect rect = mRectList.get(i);
                 if (rect.contains((int) e.getX(), (int) e.getY())) {
-                    DateTime selectDateTime = dateTimes.get(i);
-                    if (Utils.isLastMonth(selectDateTime, mInitialDateTime)) {
-                        mOnClickMonthViewListener.onClickLastMonth(selectDateTime);
-                    } else if (Utils.isNextMonth(selectDateTime, mInitialDateTime)) {
-                        mOnClickMonthViewListener.onClickNextMonth(selectDateTime);
+                    LocalDate selectDate = dates.get(i);
+                    if (Utils.isLastMonth(selectDate, mInitialDate)) {
+                        mOnClickMonthViewListener.onClickLastMonth(selectDate);
+                    } else if (Utils.isNextMonth(selectDate, mInitialDate)) {
+                        mOnClickMonthViewListener.onClickNextMonth(selectDate);
                     } else {
-                        mOnClickMonthViewListener.onClickCurrentMonth(selectDateTime);
+                        mOnClickMonthViewListener.onClickCurrentMonth(selectDate);
                     }
                     break;
                 }
@@ -192,10 +190,10 @@ public class MonthView extends CalendarView {
     }
 
     public int getSelectRowIndex() {
-        if (mSelectDateTime == null) {
+        if (mSelectDate == null) {
             return 0;
         }
-        int indexOf = dateTimes.indexOf(mSelectDateTime);
+        int indexOf = dates.indexOf(mSelectDate);
         return indexOf / 7;
     }
 

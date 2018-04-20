@@ -7,6 +7,7 @@ import com.necer.ncalendar.listener.OnClickWeekViewListener;
 import com.necer.ncalendar.view.WeekView;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by necer on 2017/8/30.
@@ -17,8 +18,8 @@ public class WeekAdapter extends CalendarAdapter {
 
     private OnClickWeekViewListener mOnClickWeekViewListener;
 
-    public WeekAdapter(Context mContext, int count, int curr, DateTime dateTime, OnClickWeekViewListener onClickWeekViewListener) {
-        super(mContext, count, curr, dateTime);
+    public WeekAdapter(Context mContext, int count, int curr, LocalDate date, OnClickWeekViewListener onClickWeekViewListener) {
+        super(mContext, count, curr, date);
         this.mOnClickWeekViewListener = onClickWeekViewListener;
     }
 
@@ -28,7 +29,7 @@ public class WeekAdapter extends CalendarAdapter {
 
         WeekView nWeekView = (WeekView) mCalendarViews.get(position);
         if (nWeekView == null) {
-            nWeekView = new WeekView(mContext, mDateTime.plusDays((position - mCurr) * 7),mOnClickWeekViewListener);
+            nWeekView = new WeekView(mContext, mDate.plusDays((position - mCurr) * 7),mOnClickWeekViewListener);
             mCalendarViews.put(position, nWeekView);
         }
         container.addView(mCalendarViews.get(position));

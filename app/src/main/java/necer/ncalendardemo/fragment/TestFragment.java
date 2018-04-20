@@ -18,6 +18,7 @@ import com.necer.ncalendar.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.utils.MyLog;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +88,7 @@ public class TestFragment extends Fragment implements OnCalendarChangedListener 
     }
 
     @Override
-    public void onCalendarChanged(DateTime dateTime) {
+    public void onCalendarChanged(LocalDate dateTime) {
         tv_month.setText(dateTime.getMonthOfYear() + "月");
         tv_date.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月" + dateTime.getDayOfMonth() + "日");
         MyLog.d("dateTime::" + dateTime);
