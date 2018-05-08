@@ -22,13 +22,13 @@ import necer.ncalendardemo.R;
 
 public class TestFragment2 extends Fragment {
 
-
+    MonthCalendar monthCalendar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View inflate = inflater.inflate(R.layout.fragment_2, null);
-        MonthCalendar monthCalendar = (MonthCalendar) inflate.findViewById(R.id.monthcalendar);
+        monthCalendar = (MonthCalendar) inflate.findViewById(R.id.monthcalendar);
 
         monthCalendar.setOnMonthCalendarChangedListener(new OnMonthCalendarChangedListener() {
             @Override
@@ -41,5 +41,15 @@ public class TestFragment2 extends Fragment {
 
         return inflate;
 
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (!hidden) {
+            monthCalendar.toToday();
+        }
     }
 }
