@@ -38,7 +38,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     private View targetView;//嵌套滑动的目标view，即RecyclerView等
     public static final int MONTH = 100;
     public static final int WEEK = 200;
-    private static int STATE = 100;//默认月
+    private int STATE = 100;//默认月
     private int weekHeigh;//周日历的高度
     private int monthHeigh;//月日历的高度,是日历整个的高度，并非是月日历绘制区域的高度
 
