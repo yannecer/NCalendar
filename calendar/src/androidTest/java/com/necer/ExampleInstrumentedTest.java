@@ -1,4 +1,4 @@
-package com.necer.calendar;
+package com.necer;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.necer.calendar.test", appContext.getPackageName());
+        assertEquals("com.necer.test", appContext.getPackageName());
     }
 }

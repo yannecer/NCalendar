@@ -1,4 +1,4 @@
-package com.necer.calendar;
+package com.necer;
 
 import org.junit.Test;
 
