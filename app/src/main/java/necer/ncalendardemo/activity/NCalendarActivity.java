@@ -68,13 +68,13 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
             public void run() {
 
                 List<String> list = new ArrayList<>();
-                list.add("2017-09-21");
-                list.add("2017-10-21");
-                list.add("2017-10-1");
-                list.add("2017-10-15");
-                list.add("2017-10-18");
-                list.add("2017-10-26");
-                list.add("2017-11-21");
+                list.add("2018-09-21");
+                list.add("2018-10-21");
+                list.add("2018-10-1");
+                list.add("2018-10-15");
+                list.add("2018-10-18");
+                list.add("2018-10-26");
+                list.add("2018-11-21");
 
                 ncalendar.setPoint(list);
             }
@@ -87,7 +87,9 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         tv_month.setText(date.getMonthOfYear() + "月");
         tv_date.setText(date.getYear() + "年" + date.getMonthOfYear() + "月" + date.getDayOfMonth() + "日");
 
-        MyLog.d("dateTime::" + date);
+        MyLog.d("dateTime::" + date.toString("yyyy-MM-dd"));
+
+
     }
 
 

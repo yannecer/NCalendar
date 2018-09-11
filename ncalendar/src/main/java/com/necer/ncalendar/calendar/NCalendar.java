@@ -32,28 +32,29 @@ import java.util.List;
 
 public class NCalendar extends FrameLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener, OnWeekCalendarChangedListener, OnMonthCalendarChangedListener {
 
-    private WeekCalendar weekCalendar;
-    private MonthCalendar monthCalendar;
-    private View childView;//NCalendar内部包含的直接子view，直接子view并不一定是NestScrillChild
-    private View targetView;//嵌套滑动的目标view，即RecyclerView等
+    protected WeekCalendar weekCalendar;
+    protected MonthCalendar monthCalendar;
+    protected View childView;//NCalendar内部包含的直接子view，直接子view并不一定是NestScrillChild
+    protected View targetView;//嵌套滑动的目标view，即RecyclerView等
     public static final int MONTH = 100;
     public static final int WEEK = 200;
-    private int STATE = 100;//默认月
-    private int weekHeigh;//周日历的高度
-    private int monthHeigh;//月日历的高度,是日历整个的高度，并非是月日历绘制区域的高度
+    protected int STATE = 100;//默认月
+    protected int weekHeigh;//周日历的高度
+    protected int monthHeigh;//月日历的高度,是日历整个的高度，并非是月日历绘制区域的高度
 
-    private int monthCalendarTop; //月日历的getTop
-    private int childViewTop; // childView的getTop
+    protected int monthCalendarTop; //月日历的getTop
+    protected int childViewTop; // childView的getTop
 
-    private int duration;//动画时间
-    private int monthCalendarOffset;//月日历需要滑动的距离
-    private ValueAnimator monthValueAnimator;//月日历动画
-    private ValueAnimator childViewValueAnimator;//childView动画
+    protected int duration;//动画时间
+    protected int monthCalendarOffset;//月日历需要滑动的距离
+    protected ValueAnimator monthValueAnimator;//月日历动画
+    protected ValueAnimator childViewValueAnimator;//childView动画
 
-    private Rect monthRect;//月日历大小的矩形
-    private Rect weekRect;//周日历大小的矩形 ，用于判断点击事件是否在日历的范围内
+    protected Rect monthRect;//月日历大小的矩形
+    protected Rect weekRect;//周日历大小的矩形 ，用于判断点击事件是否在日历的范围内
 
-    private OnCalendarChangedListener onCalendarChangedListener;
+    protected OnCalendarChangedListener onCalendarChangedListener;
+
 
 
     public NCalendar(Context context) {
@@ -346,7 +347,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
     }
 
     //自动滑动
-    private void autoScroll(int startMonth, int endMonth, int startChild, int endChild) {
+    protected void autoScroll(int startMonth, int endMonth, int startChild, int endChild) {
         monthValueAnimator.setIntValues(startMonth, endMonth);
         monthValueAnimator.setDuration(duration);
         monthValueAnimator.start();
@@ -368,7 +369,7 @@ public class NCalendar extends FrameLayout implements NestedScrollingParent, Val
      * @param maxOffset
      * @return
      */
-    private int getOffset(int offset, int maxOffset) {
+    protected int getOffset(int offset, int maxOffset) {
         if (offset > maxOffset) {
             return maxOffset;
         }

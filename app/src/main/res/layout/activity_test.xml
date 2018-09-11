@@ -40,6 +40,7 @@
         android:id="@+id/monthcalendar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        app:pointColor="#000000"
         app:calendarHeight="300dp" />
 
 

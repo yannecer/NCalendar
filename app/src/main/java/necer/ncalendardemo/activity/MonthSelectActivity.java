@@ -12,6 +12,9 @@ import com.necer.ncalendar.listener.OnMonthCalendarChangedListener;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import necer.ncalendardemo.R;
 
 /**
@@ -36,6 +39,24 @@ public class MonthSelectActivity extends Activity {
             @Override
             public void onMonthCalendarChanged(LocalDate dateTime) {
                 dateText.setText(dateTime.toString());
+            }
+        });
+
+
+        monthcalendar.post(new Runnable() {
+            @Override
+            public void run() {
+
+                List<String> list = new ArrayList<>();
+                list.add("2018-09-21");
+                list.add("2018-10-21");
+                list.add("2018-10-1");
+                list.add("2018-10-15");
+                list.add("2018-10-18");
+                list.add("2018-10-26");
+                list.add("2018-11-21");
+
+                monthcalendar.setPointList(list);
             }
         });
 
