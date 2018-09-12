@@ -33,4 +33,9 @@ public class WeekView extends BaseCalendarView {
     protected void onClick(LocalDate clickData, LocalDate initialDate) {
         mOnClickWeekViewListener.onClickCurrentWeek(clickData);
     }
+
+    @Override
+    protected boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
+        return true;
+    }
 }

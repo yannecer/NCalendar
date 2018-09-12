@@ -46,4 +46,9 @@ public class MonthView extends BaseCalendarView {
             mOnClickMonthViewListener.onClickCurrentMonth(clickData);
         }
     }
+
+    @Override
+    protected boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
+        return Util.isEqualsMonth(date, initialDate);
+    }
 }

@@ -4,11 +4,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.widget.Toast;
+
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
 import com.necer.listener.OnClickMonthViewListener;
+import com.necer.listener.OnRedrawCurrentViewListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+import com.necer.view.BaseCalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -24,8 +28,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum) {
-        return new MonthCalendarAdapter(context,attrs,calendarSize,currNum,this);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum, OnRedrawCurrentViewListener onRedrawCurrentViewListener) {
+        return new MonthCalendarAdapter(context,attrs,calendarSize,currNum,onRedrawCurrentViewListener,this);
     }
 
     @Override
@@ -34,13 +38,23 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected int getCurrNum(LocalDate startDate,int type) {
-        return Util.getIntervalMonths(startDate, new LocalDate());
+    protected int getCurrNum(LocalDate startDate,LocalDate endDate, int type) {
+        return Util.getIntervalMonths(startDate, endDate);
+    }
+
+    @Override
+    protected LocalDate getDate(LocalDate localDate, int count) {
+        LocalDate date = localDate.plusMonths(count);
+        return date;
     }
 
     @Override
     public void onClickCurrentMonth(LocalDate date) {
 
+        Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
+
+        mSelectDate = date;
+        notifyView();
     }
 
     @Override
@@ -52,4 +66,5 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     public void onClickNextMonth(LocalDate date) {
 
     }
+
 }

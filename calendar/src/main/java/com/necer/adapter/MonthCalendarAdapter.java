@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.necer.MyLog;
 import com.necer.listener.OnClickMonthViewListener;
+import com.necer.listener.OnRedrawCurrentViewListener;
 import com.necer.utils.Attrs;
 import com.necer.view.MonthView;
 
@@ -20,8 +21,8 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
 
 
     private OnClickMonthViewListener mOnClickMonthViewListener;
-    public MonthCalendarAdapter(Context context, Attrs attrs, int count, int curr, OnClickMonthViewListener onClickMonthViewListener) {
-        super(context, attrs, count, curr);
+    public MonthCalendarAdapter(Context context, Attrs attrs, int count, int curr, OnRedrawCurrentViewListener onRedrawCurrentViewListener, OnClickMonthViewListener onClickMonthViewListener) {
+        super(context, attrs, count, curr,onRedrawCurrentViewListener);
         this.mOnClickMonthViewListener = onClickMonthViewListener;
     }
 

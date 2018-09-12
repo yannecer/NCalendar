@@ -38,6 +38,10 @@ public abstract class BaseCalendarView extends View {
     protected Paint mSorlarPaint;
     protected List<Rect> mRectList;//点击用的矩形集合
 
+   // private List
+
+    private LocalDate mSelectDate;//点击选中的日期
+
     public BaseCalendarView(Context context, Attrs attrs, LocalDate localDate) {
         super(context);
 
@@ -52,11 +56,13 @@ public abstract class BaseCalendarView extends View {
         mLineNum = mLocalDateList.size() / 7;//天数/7
 
         mSorlarPaint = getPaint(attrs.solarTextColor, attrs.solarTextSize);
+
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
+       // MyLog.d("当前绘制canvas::::::" + this);
 
         mWidth = getWidth();
         //绘制高度
@@ -70,52 +76,51 @@ public abstract class BaseCalendarView extends View {
                 Paint.FontMetricsInt fontMetrics = mSorlarPaint.getFontMetricsInt();
 
                 int baseline;//让6行的第一行和5行的第一行在同一直线上，处理选中第一行的滑动
-                if (mLineNum == 5) {
-                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
-                } else {
+
+                if (mLineNum == 6) {//月的情况，跨6周
                     baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2 + (mHeight / 5 - mHeight / 6) / 2;
+                }else{//月5行和周1行同样处理
+                    baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
                 }
 
-                canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
+              //  LocalDate selectDate = getSelectDate();//默认选中的日期
 
-                /*//当月和上下月的颜色不同
-                if (Utils.isEqualsMonth(date, mInitialDate)) {
+                //当月和上下月的颜色不同
+                if (isEqualsMonthOrWeek(date,mInitialDate)) {
                     //当天和选中的日期不绘制农历
-                    if (Utils.isToday(date)) {
-                        mSorlarPaint.setColor(mSelectCircleColor);
-                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
-                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
+                    if (Util.isToday(date)) {
+                        mSorlarPaint.setColor(mAttrs.selectCircleColor);
+                        int centerY = mLineNum == 6 ? (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2) : rect.centerY();
+                        canvas.drawCircle(rect.centerX(), centerY, mAttrs.selectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(Color.WHITE);
                         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else if (mSelectDate != null && date.equals(mSelectDate)) {
-
-                        mSorlarPaint.setColor(mSelectCircleColor);
-                        int centerY = mRowNum == 5 ? rect.centerY() : (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2);
-                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius, mSorlarPaint);
-                        mSorlarPaint.setColor(mHollowCircleColor);
-                        canvas.drawCircle(rect.centerX(), centerY, mSelectCircleRadius - mHollowCircleStroke, mSorlarPaint);
-
-                        mSorlarPaint.setColor(mSolarTextColor);
+                        mSorlarPaint.setColor(mAttrs.selectCircleColor);
+                        int centerY = mLineNum == 6 ? (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2) : rect.centerY();
+                        canvas.drawCircle(rect.centerX(), centerY, mAttrs.selectCircleRadius, mSorlarPaint);
+                        mSorlarPaint.setColor(mAttrs.hollowCircleColor);
+                        canvas.drawCircle(rect.centerX(), centerY, mAttrs.selectCircleRadius - mAttrs.hollowCircleStroke, mSorlarPaint);
+                        mSorlarPaint.setColor(mAttrs.solarTextColor);
                         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     } else {
-                        mSorlarPaint.setColor(mSolarTextColor);
+                        mSorlarPaint.setColor(mAttrs.solarTextColor);
                         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                        drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
+                      //  drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
                         //绘制节假日
-                        drawHolidays(canvas, rect, date, baseline);
+                     //   drawHolidays(canvas, rect, date, baseline);
                         //绘制圆点
-                        drawPoint(canvas, rect, date, baseline);
+                     //   drawPoint(canvas, rect, date, baseline);
                     }
 
                 } else {
-                    mSorlarPaint.setColor(mHintColor);
+                    mSorlarPaint.setColor(mAttrs.hintColor);
                     canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                    drawLunar(canvas, rect, baseline, mHintColor, i, j);
+                   // drawLunar(canvas, rect, baseline, mHintColor, i, j);
                     //绘制节假日
-                    drawHolidays(canvas, rect, date, baseline);
+                  //  drawHolidays(canvas, rect, date, baseline);
                     //绘制圆点
-                    drawPoint(canvas, rect, date, baseline);
-                }*/
+                  //  drawPoint(canvas, rect, date, baseline);
+                }
             }
         }
 
@@ -149,6 +154,22 @@ public abstract class BaseCalendarView extends View {
     protected abstract void onClick(LocalDate clickData,LocalDate initialDate);
 
 
+    /**
+     * 初始化的日期和绘制的日期是否是同月，周都相同
+     * @param date
+     * @param initialDate
+     * @return
+     */
+    protected abstract boolean isEqualsMonthOrWeek(LocalDate date,LocalDate initialDate);
+
+
+    /**
+     * 当前页面的初始值
+     * @return
+     */
+    public LocalDate getInitialDate() {
+        return mInitialDate;
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -175,4 +196,15 @@ public abstract class BaseCalendarView extends View {
             return true;
         }
     });
+
+
+    public void setSelectDate(LocalDate localDate) {
+        this.mSelectDate = localDate;
+        invalidate();
+    }
+
+    public void clear() {
+        this.mSelectDate = null;
+        invalidate();
+    }
 }
