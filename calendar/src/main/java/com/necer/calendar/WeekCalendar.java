@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.WeekCalendarAdapter;
 import com.necer.listener.OnClickWeekViewListener;
-import com.necer.listener.OnRedrawCurrentViewListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 
@@ -25,8 +24,8 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum, OnRedrawCurrentViewListener onRedrawCurrentViewListener) {
-        return new WeekCalendarAdapter(context, attrs, calendarSize, currNum, onRedrawCurrentViewListener, this);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum) {
+        return new WeekCalendarAdapter(context, attrs, calendarSize, currNum, this);
     }
 
     @Override

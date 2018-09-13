@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 
 import com.necer.MyLog;
-import com.necer.listener.OnRedrawCurrentViewListener;
 import com.necer.utils.Attrs;
 import com.necer.view.BaseCalendarView;
 import com.necer.view.MonthView;
@@ -30,7 +29,6 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     protected Attrs mAttrs;//属性参数
     protected LocalDate mInitializeDate;//日期初始化，默认是当天
 
-    private OnRedrawCurrentViewListener onRedrawCurrentViewListener;
 
     private BaseCalendarView lastView;//上一个页面
 
@@ -39,12 +37,11 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     //private ViewGroup container;
 
 
-    public BaseCalendarAdapter(Context context, Attrs attrs, int count, int curr, OnRedrawCurrentViewListener onRedrawCurrentViewListener) {
+    public BaseCalendarAdapter(Context context, Attrs attrs, int count, int curr) {
         this.mContext = context;
         this.mAttrs = attrs;
         this.mCount = count;
         this.mCurr = curr;
-        this.onRedrawCurrentViewListener = onRedrawCurrentViewListener;
         mCalendarViews = new SparseArray<>();
         mInitializeDate = new LocalDate();
     }

@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
 import com.necer.listener.OnClickMonthViewListener;
-import com.necer.listener.OnRedrawCurrentViewListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
@@ -28,8 +27,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum, OnRedrawCurrentViewListener onRedrawCurrentViewListener) {
-        return new MonthCalendarAdapter(context,attrs,calendarSize,currNum,onRedrawCurrentViewListener,this);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum) {
+        return new MonthCalendarAdapter(context,attrs,calendarSize,currNum,this);
     }
 
     @Override

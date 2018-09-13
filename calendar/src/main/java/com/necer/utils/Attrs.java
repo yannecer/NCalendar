@@ -33,4 +33,6 @@ public class Attrs {
 
     public int backgroundColor;
 
+    public boolean isDefaultSelect;//是否默认选中
+
 }

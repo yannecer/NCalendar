@@ -12,7 +12,6 @@ import android.view.View;
 import com.necer.MyLog;
 import com.necer.R;
 import com.necer.adapter.BaseCalendarAdapter;
-import com.necer.listener.OnRedrawCurrentViewListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
@@ -23,7 +22,7 @@ import org.joda.time.LocalDate;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public abstract class BaseCalendar extends ViewPager implements OnRedrawCurrentViewListener {
+public abstract class BaseCalendar extends ViewPager  {
 
     protected int mCalendarSize;
     protected int mCurrNum;
@@ -48,6 +47,7 @@ public abstract class BaseCalendar extends ViewPager implements OnRedrawCurrentV
         attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 20));
 
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
+        attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
 
         attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, (int) Util.dp2px(context, 2));
         attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, getResources().getColor(R.color.pointColor));
@@ -81,15 +81,11 @@ public abstract class BaseCalendar extends ViewPager implements OnRedrawCurrentV
         mCalendarSize = getCalendarSize(startDate, endDate, attrs.firstDayOfWeek);
         mCurrNum = getCurrNum(startDate, new LocalDate(), attrs.firstDayOfWeek);
 
-        calendarAdapter = getCalendarAdapter(context, attrs, mCalendarSize, mCurrNum, this);
+        calendarAdapter = getCalendarAdapter(context, attrs, mCalendarSize, mCurrNum);
 
         setAdapter(calendarAdapter);
 
         setBackgroundColor(attrs.backgroundColor);
-
-
-
-
 
 
         OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
@@ -107,7 +103,7 @@ public abstract class BaseCalendar extends ViewPager implements OnRedrawCurrentV
                         BaseCalendarView lastView = calendarAdapter.getBaseCalendarView(position - 1);
                         BaseCalendarView nextView = calendarAdapter.getBaseCalendarView(position + 1);
 
-                        reDraw(lastView,currectView,nextView);
+                        reDraw(lastView, currectView, nextView);
                     }
                 });
             }
@@ -125,20 +121,28 @@ public abstract class BaseCalendar extends ViewPager implements OnRedrawCurrentV
     }
 
     private void reDraw(BaseCalendarView lastView, BaseCalendarView currectView, BaseCalendarView nextView) {
+        this.mCurrView = currectView;
 
-
-       /* LocalDate initialDate = currectView.getInitialDate();
+        LocalDate initialDate = currectView.getInitialDate();
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
         if (mSelectDate != null) {
             int currNum = getCurrNum(mSelectDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
             mSelectDate = getDate(mSelectDate, currNum);
         }
         currectView.setSelectDate(mSelectDate == null ? initialDate : mSelectDate);
-*/
+
+        if (lastView != null) {
+            lastView.clear();
+        }
+
+        if (nextView != null) {
+            nextView.clear();
+        }
+
     }
 
 
-    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum, OnRedrawCurrentViewListener onRedrawCurrentViewListener);
+    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum);
 
     /**
      * 日历的页数
@@ -163,9 +167,9 @@ public abstract class BaseCalendar extends ViewPager implements OnRedrawCurrentV
      */
     protected abstract LocalDate getDate(LocalDate localDate, int count);
 
-    @Override
+    /*  @Override
     public void onRedrawCurrentView(BaseCalendarView currView, BaseCalendarView lastView, int position) {
-        this.mCurrView = currView;
+      this.mCurrView = currView;
 
         MyLog.d("当前view：：：" + mCurrView);
 
@@ -183,7 +187,7 @@ public abstract class BaseCalendar extends ViewPager implements OnRedrawCurrentV
             lastView.clear();
         }
     }
-
+*/
 
     protected void notifyView() {
         mCurrView.setSelectDate(mSelectDate);

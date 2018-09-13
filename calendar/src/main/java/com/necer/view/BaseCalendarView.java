@@ -38,7 +38,6 @@ public abstract class BaseCalendarView extends View {
     protected Paint mSorlarPaint;
     protected List<Rect> mRectList;//点击用的矩形集合
 
-   // private List
 
     private LocalDate mSelectDate;//点击选中的日期
 
@@ -83,8 +82,6 @@ public abstract class BaseCalendarView extends View {
                     baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
                 }
 
-              //  LocalDate selectDate = getSelectDate();//默认选中的日期
-
                 //当月和上下月的颜色不同
                 if (isEqualsMonthOrWeek(date,mInitialDate)) {
                     //当天和选中的日期不绘制农历
@@ -94,7 +91,7 @@ public abstract class BaseCalendarView extends View {
                         canvas.drawCircle(rect.centerX(), centerY, mAttrs.selectCircleRadius, mSorlarPaint);
                         mSorlarPaint.setColor(Color.WHITE);
                         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                    } else if (mSelectDate != null && date.equals(mSelectDate)) {
+                    } else if (mAttrs.isDefaultSelect && mSelectDate != null && date.equals(mSelectDate)) {
                         mSorlarPaint.setColor(mAttrs.selectCircleColor);
                         int centerY = mLineNum == 6 ? (rect.centerY() + (mHeight / 5 - mHeight / 6) / 2) : rect.centerY();
                         canvas.drawCircle(rect.centerX(), centerY, mAttrs.selectCircleRadius, mSorlarPaint);
@@ -105,11 +102,11 @@ public abstract class BaseCalendarView extends View {
                     } else {
                         mSorlarPaint.setColor(mAttrs.solarTextColor);
                         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
-                      //  drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
+                        //  drawLunar(canvas, rect, baseline, mLunarTextColor, i, j);
                         //绘制节假日
-                     //   drawHolidays(canvas, rect, date, baseline);
+                        //   drawHolidays(canvas, rect, date, baseline);
                         //绘制圆点
-                     //   drawPoint(canvas, rect, date, baseline);
+                        //   drawPoint(canvas, rect, date, baseline);
                     }
 
                 } else {
