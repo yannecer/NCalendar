@@ -44,6 +44,16 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
+    protected LocalDate getLastSelectDate(LocalDate currectSelectDate) {
+        return currectSelectDate.plusWeeks(-1);
+    }
+
+    @Override
+    protected LocalDate getNextSelectDate(LocalDate currectSelectDate) {
+        return currectSelectDate.plusWeeks(1);
+    }
+
+    @Override
     public void onClickCurrentWeek(LocalDate date) {
 
         Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();

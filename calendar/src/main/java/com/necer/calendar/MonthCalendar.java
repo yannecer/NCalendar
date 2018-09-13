@@ -48,12 +48,19 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
+    protected LocalDate getLastSelectDate(LocalDate currectSelectDate) {
+        return currectSelectDate.plusMonths(-1);
+    }
+
+    @Override
+    protected LocalDate getNextSelectDate(LocalDate currectSelectDate) {
+        return currectSelectDate.plusMonths(1);
+    }
+
+    @Override
     public void onClickCurrentMonth(LocalDate date) {
-
         Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
-
-        mSelectDate = date;
-        notifyView();
+        notifyView(date);
     }
 
     @Override

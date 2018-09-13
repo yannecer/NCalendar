@@ -18,19 +18,26 @@ import com.necer.view.BaseCalendarView;
 
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public abstract class BaseCalendar extends ViewPager  {
+public abstract class BaseCalendar extends ViewPager {
 
     protected int mCalendarSize;
     protected int mCurrNum;
     private BaseCalendarAdapter calendarAdapter;
     private Attrs attrs;
     private BaseCalendarView mCurrView;//当前显示的页面
+    private BaseCalendarView mLastView;//当前显示的页面的上一个页面
+    private BaseCalendarView mNextView;//当前显示的页面的下一个页面
 
     protected LocalDate mSelectDate;//日历上面点击选中的日期
+
+    private List<LocalDate> mPointList;
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -75,6 +82,8 @@ public abstract class BaseCalendar extends ViewPager  {
         ta.recycle();
 
 
+        mPointList = new ArrayList<>();
+
         LocalDate startDate = new LocalDate(startString == null ? "1901-01-01" : startString);
         LocalDate endDate = new LocalDate(endString == null ? "2099-12-31" : endString);
 
@@ -82,17 +91,16 @@ public abstract class BaseCalendar extends ViewPager  {
         mCurrNum = getCurrNum(startDate, new LocalDate(), attrs.firstDayOfWeek);
 
         calendarAdapter = getCalendarAdapter(context, attrs, mCalendarSize, mCurrNum);
-
         setAdapter(calendarAdapter);
 
         setBackgroundColor(attrs.backgroundColor);
 
-
-        OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
+        addOnPageChangeListener(new OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
-            }
+            @Override
+            public void onPageScrollStateChanged(int state) {}
 
             @Override
             public void onPageSelected(final int position) {
@@ -102,43 +110,60 @@ public abstract class BaseCalendar extends ViewPager  {
                         BaseCalendarView currectView = calendarAdapter.getBaseCalendarView(position);
                         BaseCalendarView lastView = calendarAdapter.getBaseCalendarView(position - 1);
                         BaseCalendarView nextView = calendarAdapter.getBaseCalendarView(position + 1);
-
                         reDraw(lastView, currectView, nextView);
                     }
                 });
             }
+        });
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        };
-
-        addOnPageChangeListener(onPageChangeListener);
         setCurrentItem(mCurrNum);
-
 
     }
 
     private void reDraw(BaseCalendarView lastView, BaseCalendarView currectView, BaseCalendarView nextView) {
         this.mCurrView = currectView;
+        this.mLastView = lastView;
+        this.mNextView = nextView;
 
         LocalDate initialDate = currectView.getInitialDate();
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
         if (mSelectDate != null) {
             int currNum = getCurrNum(mSelectDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
             mSelectDate = getDate(mSelectDate, currNum);
+        } else {
+            mSelectDate = initialDate;
         }
-        currectView.setSelectDate(mSelectDate == null ? initialDate : mSelectDate);
+        notifyView(mSelectDate);
 
-        if (lastView != null) {
-            lastView.clear();
+    }
+
+    public void setPointList(List<String> list) {
+        mPointList.clear();
+        for (int i = 0; i < list.size(); i++) {
+            mPointList.add(new LocalDate(list.get(i)));
         }
-
-        if (nextView != null) {
-            nextView.clear();
+        if (mCurrView != null) {
+            mCurrView.invalidate();
         }
+        if (mLastView != null) {
+            mLastView.invalidate();
+        }
+        if (mNextView != null) {
+            mNextView.invalidate();
+        }
+    }
 
+    //刷新页面
+    protected void notifyView(LocalDate currectSelectDate) {
+        this.mSelectDate = currectSelectDate;
+        mCurrView.setSelectDate(currectSelectDate, mPointList);
+
+        if (mLastView != null) {
+            mLastView.setSelectDate(getLastSelectDate(currectSelectDate), mPointList);
+        }
+        if (mNextView != null) {
+            mNextView.setSelectDate(getNextSelectDate(currectSelectDate), mPointList);
+        }
     }
 
 
@@ -167,29 +192,19 @@ public abstract class BaseCalendar extends ViewPager  {
      */
     protected abstract LocalDate getDate(LocalDate localDate, int count);
 
-    /*  @Override
-    public void onRedrawCurrentView(BaseCalendarView currView, BaseCalendarView lastView, int position) {
-      this.mCurrView = currView;
+    /**
+     * 重绘当前页面时，获取上个月选中的日期
+     *
+     * @return
+     */
+    protected abstract LocalDate getLastSelectDate(LocalDate currectSelectDate);
 
-        MyLog.d("当前view：：：" + mCurrView);
 
-        //获取当前页面的initialDate
-        LocalDate initialDate = currView.getInitialDate();
-        //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
-        if (mSelectDate != null) {
-            int currNum = getCurrNum(mSelectDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
-            mSelectDate = getDate(mSelectDate, currNum);
-        }
-        currView.setSelectDate(mSelectDate == null ? initialDate : mSelectDate);
+    /**
+     * 重绘当前页面时，获取下个月选中的日期
+     *
+     * @return
+     */
+    protected abstract LocalDate getNextSelectDate(LocalDate currectSelectDate);
 
-        //上个页面选中的先清除
-        if (lastView != null) {
-            lastView.clear();
-        }
-    }
-*/
-
-    protected void notifyView() {
-        mCurrView.setSelectDate(mSelectDate);
-    }
 }

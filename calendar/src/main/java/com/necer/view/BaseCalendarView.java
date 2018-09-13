@@ -38,6 +38,7 @@ public abstract class BaseCalendarView extends View {
     protected Paint mSorlarPaint;
     protected List<Rect> mRectList;//点击用的矩形集合
 
+    private List<LocalDate> mPointList;
 
     private LocalDate mSelectDate;//点击选中的日期
 
@@ -106,7 +107,7 @@ public abstract class BaseCalendarView extends View {
                         //绘制节假日
                         //   drawHolidays(canvas, rect, date, baseline);
                         //绘制圆点
-                        //   drawPoint(canvas, rect, date, baseline);
+                        drawPoint(canvas, rect, date, baseline);
                     }
 
                 } else {
@@ -123,6 +124,14 @@ public abstract class BaseCalendarView extends View {
 
     }
 
+
+    //绘制圆点
+    public void drawPoint(Canvas canvas, Rect rect, LocalDate date, int baseline) {
+        if (mPointList != null && mPointList.contains(date)) {
+            mSorlarPaint.setColor(mAttrs.pointColor);
+            canvas.drawCircle(rect.centerX(), baseline - getMeasuredHeight() / 15, mAttrs.pointSize, mSorlarPaint);
+        }
+    }
 
 
     private Paint getPaint(int paintColor, float paintSize) {
@@ -195,13 +204,14 @@ public abstract class BaseCalendarView extends View {
     });
 
 
-    public void setSelectDate(LocalDate localDate) {
+    public void setSelectDate(LocalDate localDate,List<LocalDate> pointList) {
         this.mSelectDate = localDate;
+        this.mPointList = pointList;
         invalidate();
     }
 
-    public void clear() {
+    /*public void clear() {
         this.mSelectDate = null;
         invalidate();
-    }
+    }*/
 }
