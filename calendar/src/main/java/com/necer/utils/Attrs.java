@@ -6,6 +6,7 @@ package com.necer.utils;
 
 public class Attrs {
     public int solarTextColor;
+    public int todaySolarTextColor;
     public int lunarTextColor;
     public int hintColor;
     public int selectCircleColor;

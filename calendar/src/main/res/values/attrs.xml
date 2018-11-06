@@ -5,6 +5,7 @@
         <attr name="lunarTextColor" format="color" />
         <attr name="hintColor" format="color" />
         <attr name="selectCircleColor" format="color" />
+        <attr name="todaySolarTextColor" format="color" />
         <attr name="solarTextSize" format="dimension" />
         <attr name="lunarTextSize" format="dimension" />
         <attr name="selectCircleRadius" format="dimension" />

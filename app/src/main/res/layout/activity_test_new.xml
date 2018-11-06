@@ -9,7 +9,7 @@
         android:id="@+id/monthcalendar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:pointLocation="Down"
+        app:pointLocation="Up"
         app:isShowLunar="true"
         app:solarTextColor="#333333">
     </com.necer.calendar.MonthCalendar>
