@@ -34,6 +34,8 @@ public class TestActivity extends AppCompatActivity {
         list.add("2018-10-10");
         list.add("2018-10-12");
         list.add("2018-10-16");
+        list.add("2018-11-6");
+        list.add("2018-11-7");
 
 
         monthcalendar.setPointList(list);

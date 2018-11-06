@@ -12,6 +12,7 @@
 
         <attr name="pointSize" format="dimension" />
         <attr name="pointColor" format="color" />
+        <attr name="pointLocation" format="string" />
         <attr name="hollowCircleColor" format="color" />
         <attr name="hollowCircleStroke" format="dimension" />
         <attr name="startDate" format="string" />

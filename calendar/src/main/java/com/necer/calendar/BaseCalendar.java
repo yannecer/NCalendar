@@ -51,14 +51,15 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, getResources().getColor(R.color.hintColor));
         attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Util.sp2px(context, 18));
         attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Util.sp2px(context, 10));
-        attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 20));
+        attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 24));
 
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
         attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
 
         attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, (int) Util.dp2px(context, 2));
         attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, getResources().getColor(R.color.pointColor));
-        attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, Color.WHITE);
+        attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, getResources().getColor(R.color.hollowCircleColor));
+
         attrs.hollowCircleStroke = ta.getDimension(R.styleable.NCalendar_hollowCircleStroke, Util.dp2px(context, 1));
 
         attrs.monthCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Util.dp2px(context, 300));
@@ -71,11 +72,13 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.backgroundColor = ta.getColor(R.styleable.NCalendar_backgroundColor, getResources().getColor(R.color.white));
 
         String firstDayOfWeek = ta.getString(R.styleable.NCalendar_firstDayOfWeek);
+        String pointLocation = ta.getString(R.styleable.NCalendar_pointLocation);
         String defaultCalendar = ta.getString(R.styleable.NCalendar_defaultCalendar);
 
         String startString = ta.getString(R.styleable.NCalendar_startDate);
         String endString = ta.getString(R.styleable.NCalendar_endDate);
 
+        attrs.pointLocation = "Up".equals(pointLocation) ? 0 : 1;
         attrs.firstDayOfWeek = "Monday".equals(firstDayOfWeek) ? 1 : 0;
         //  attr.defaultCalendar = "Week".equals(defaultCalendar) ? NCalendar.WEEK : NCalendar.MONTH;
 
