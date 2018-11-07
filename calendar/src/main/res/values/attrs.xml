@@ -8,28 +8,50 @@
         <attr name="todaySolarTextColor" format="color" />
         <attr name="solarTextSize" format="dimension" />
         <attr name="lunarTextSize" format="dimension" />
+        <attr name="holidayTextSize" format="dimension" />
         <attr name="selectCircleRadius" format="dimension" />
         <attr name="isShowLunar" format="boolean" />
 
         <attr name="pointSize" format="dimension" />
         <attr name="pointColor" format="color" />
-        <attr name="pointLocation" format="string" />
+
         <attr name="hollowCircleColor" format="color" />
         <attr name="hollowCircleStroke" format="dimension" />
         <attr name="startDate" format="string" />
         <attr name="endDate" format="string" />
 
-        <attr name="calendarHeight" format="dimension"/>
-        <attr name="duration" format="integer"/>
+        <attr name="calendarHeight" format="dimension" />
+        <attr name="duration" format="integer" />
 
-        <attr name="firstDayOfWeek" format="string"/>
-        <attr name="defaultCalendar" format="string"/>
 
         <attr name="isShowHoliday" format="boolean" />
         <attr name="isDefaultSelect" format="boolean" />
         <attr name="holidayColor" format="color" />
         <attr name="workdayColor" format="color" />
         <attr name="backgroundColor" format="color" />
+
+
+        <attr name="defaultCalendar">
+            <enum name="week" value="100" />
+            <enum name="month" value="101" />
+        </attr>
+
+        <attr name="pointLocation">
+            <enum name="up" value="200" />
+            <enum name="down" value="201" />
+        </attr>
+
+        <attr name="firstDayOfWeek">
+            <enum name="sunday" value="300" />
+            <enum name="monday" value="301" />
+        </attr>
+
+        <attr name="holidayLocation">
+            <enum name="top_right" value="400" />
+            <enum name="top_left" value="401" />
+            <enum name="bottom_right" value="402" />
+            <enum name="bottom_left" value="403" />
+        </attr>
 
     </declare-styleable>
 </resources>

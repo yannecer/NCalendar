@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
 import com.necer.listener.OnClickMonthViewListener;
+import com.necer.listener.OnMonthSelectListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
@@ -21,6 +22,8 @@ import org.joda.time.LocalDate;
  */
 public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListener {
 
+
+    private OnMonthSelectListener onMonthSelectListener;
 
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -37,7 +40,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected int getCurrNum(LocalDate startDate,LocalDate endDate, int type) {
+    protected int getTwoDateNum(LocalDate startDate,LocalDate endDate, int type) {
         return Util.getIntervalMonths(startDate, endDate);
     }
 
@@ -58,19 +61,40 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
+    protected void onSelcetDate(LocalDate localDate) {
+        //选中，即理解为点击，因为点击了肯定会选中
+        mOnClickDate = localDate;
+        if (onMonthSelectListener != null) {
+            onMonthSelectListener.onMonthSelect(localDate);
+        }
+    }
+
+    @Override
     public void onClickCurrentMonth(LocalDate date) {
+        onSelcetDate(date);
         Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
-        notifyView(date);
+        notifyView(date, true);
     }
 
     @Override
     public void onClickLastMonth(LocalDate date) {
-
+        onSelcetDate(date);
+        setCurrentItem(getCurrentItem() - 1, true);
+        notifyView(date,true);
     }
 
     @Override
     public void onClickNextMonth(LocalDate date) {
+        onSelcetDate(date);
+        setCurrentItem(getCurrentItem() + 1, true);
+        notifyView(date,true);
+    }
 
+
+
+
+    public void setOnMonthSelectListener(OnMonthSelectListener onMonthSelectListener) {
+        this.onMonthSelectListener = onMonthSelectListener;
     }
 
 }

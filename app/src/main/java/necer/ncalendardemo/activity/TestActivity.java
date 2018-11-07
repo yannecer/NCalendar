@@ -3,8 +3,16 @@ package necer.ncalendardemo.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
 
+import com.necer.MyLog;
 import com.necer.calendar.MonthCalendar;
+import com.necer.calendar.WeekCalendar;
+import com.necer.listener.OnMonthSelectListener;
+import com.necer.listener.OnWeekSelectListener;
+
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +24,8 @@ import necer.ncalendardemo.R;
  * qq群：127278900
  */
 public class TestActivity extends AppCompatActivity {
-
+    MonthCalendar monthcalendar;
+    WeekCalendar weekcalendar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +33,8 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_new);
 
 
-        MonthCalendar monthcalendar = findViewById(R.id.monthcalendar);
+        monthcalendar = findViewById(R.id.monthcalendar);
+        weekcalendar = findViewById(R.id.weekcalendar);
 
 
         List<String> list = new ArrayList<>();
@@ -37,9 +47,33 @@ public class TestActivity extends AppCompatActivity {
         list.add("2018-11-6");
         list.add("2018-11-7");
 
-
         monthcalendar.setPointList(list);
+        weekcalendar.setPointList(list);
 
+
+        monthcalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
+            @Override
+            public void onMonthSelect(LocalDate date) {
+                MyLog.d("datedatedatedate:  月:" + date);
+
+            }
+        });
+
+
+        findViewById(R.id.bt)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        monthcalendar.jumpDate("2019-05-01");
+                    }
+                });
+
+        weekcalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
+            @Override
+            public void onWeekSelect(LocalDate date) {
+                MyLog.d("datedatedatedate  周   ：：" + date);
+            }
+        });
 
     }
 }

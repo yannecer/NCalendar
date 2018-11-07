@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.WeekCalendarAdapter;
 import com.necer.listener.OnClickWeekViewListener;
+import com.necer.listener.OnWeekSelectListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 
@@ -19,6 +20,10 @@ import org.joda.time.LocalDate;
  * qq群：127278900
  */
 public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListener {
+
+
+    private OnWeekSelectListener onWeekSelectListener;
+
     public WeekCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
     }
@@ -34,7 +39,7 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
-    protected int getCurrNum(LocalDate startDate, LocalDate endDate, int type) {
+    protected int getTwoDateNum(LocalDate startDate, LocalDate endDate, int type) {
         return Util.getIntervalWeek(startDate, endDate, type);
     }
 
@@ -54,9 +59,22 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
+    protected void onSelcetDate(LocalDate localDate) {
+        mOnClickDate = localDate;
+        if (onWeekSelectListener != null) {
+            onWeekSelectListener.onWeekSelect(localDate);
+        }
+    }
+
+    @Override
     public void onClickCurrentWeek(LocalDate date) {
-
+        onSelcetDate(date);
+        notifyView(date,true);
         Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
+    }
 
+
+    public void setOnWeekSelectListener(OnWeekSelectListener onWeekSelectListener) {
+        this.onWeekSelectListener = onWeekSelectListener;
     }
 }

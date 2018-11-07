@@ -5,14 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="跳转"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="月"/>
+
     <com.necer.calendar.MonthCalendar
         android:id="@+id/monthcalendar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:pointLocation="Up"
+        app:pointLocation="up"
         app:isShowLunar="true"
+        app:holidayLocation="top_left"
+        app:firstDayOfWeek="monday"
+        app:isDefaultSelect="true"
+        app:defaultCalendar="month"
         app:solarTextColor="#333333">
     </com.necer.calendar.MonthCalendar>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="周"/>
+
+    <com.necer.calendar.WeekCalendar
+        android:id="@+id/weekcalendar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:pointLocation="up"
+        app:isShowLunar="true"
+        app:holidayLocation="top_left"
+        app:firstDayOfWeek="monday"
+        app:defaultCalendar="month"
+        app:solarTextColor="#333333">
+    </com.necer.calendar.WeekCalendar>
 
 </LinearLayout>
