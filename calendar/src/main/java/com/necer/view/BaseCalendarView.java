@@ -100,7 +100,7 @@ public abstract class BaseCalendarView extends View {
                         drawPoint(canvas, centerX, centerY, mAttrs.todaySolarTextColor, date);
                         drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
 
-                    } else if ((mAttrs.isDefaultSelect|| isDraw )&& date.equals(mSelectDate)) {
+                    } else if (isDraw && date.equals(mSelectDate)) {
                         //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
                         drawHollowCircle(canvas, centerX, centerY);
                         drawSolar(canvas, centerX, centerY, mAttrs.solarTextColor, date.getDayOfMonth() + "");
@@ -135,8 +135,8 @@ public abstract class BaseCalendarView extends View {
     //获取每个元素矩形
     private Rect getRect(int width, int height, int i, int j) {
         Rect rect;
-        //5行的月份，5行矩形平分view的高度
-        if (mLineNum == 5) {
+        //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
+        if (mLineNum == 5 || mLineNum == 1) {
             int rectHeight = height / mLineNum;
             rect = new Rect(j * width / 7, i * rectHeight, j * width / 7 + width / 7, i * rectHeight + rectHeight);
         } else {
@@ -180,7 +180,7 @@ public abstract class BaseCalendarView extends View {
             mCirclePaint.setStyle(Paint.Style.FILL);
             mCirclePaint.setColor(color);
             int solarTexyCenterY = getSolarTexyCenterY(centerY);
-            canvas.drawCircle(centerX, mAttrs.pointLocation == Attrs.DOWN ? (solarTexyCenterY + getMeasuredHeight() / 24) : (solarTexyCenterY - getMeasuredHeight() / 24), mAttrs.pointSize, mCirclePaint);
+            canvas.drawCircle(centerX, mAttrs.pointLocation == Attrs.DOWN ? (solarTexyCenterY + mAttrs.pointDistance) : (solarTexyCenterY -mAttrs.pointDistance), mAttrs.pointSize, mCirclePaint);
         }
     }
 
@@ -189,7 +189,7 @@ public abstract class BaseCalendarView extends View {
         if (mAttrs.isShowLunar) {
             mTextPaint.setColor(color);
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
-            canvas.drawText(lunar, centerX, centerY + getMeasuredHeight() / 20, mTextPaint);
+            canvas.drawText(lunar, centerX, centerY + mAttrs.lunarDistance, mTextPaint);
         }
     }
 
@@ -222,20 +222,20 @@ public abstract class BaseCalendarView extends View {
 
 
             case Attrs.TOP_LEFT:
-                location[0] = centerX - getMeasuredWidth() / 25;
+                location[0] = (int) (centerX - mAttrs.holidayDistance);
                 location[1] = solarTexyCenterY;
                 break;
             case Attrs.BOTTOM_RIGHT:
-                location[0] = centerX + getMeasuredWidth() / 25;
+                location[0] = (int) (centerX + mAttrs.holidayDistance);
                 location[1] = centerY;
                 break;
             case Attrs.BOTTOM_LEFT:
-                location[0] = centerX - getMeasuredWidth() / 25;
+                location[0] = (int) (centerX - mAttrs.holidayDistance);
                 location[1] = centerY;
                 break;
             case Attrs.TOP_RIGHT:
             default:
-                location[0] = centerX + getMeasuredWidth() / 25;
+                location[0] = (int) (centerX + mAttrs.holidayDistance);
                 location[1] = solarTexyCenterY;
                 break;
         }
@@ -329,9 +329,22 @@ public abstract class BaseCalendarView extends View {
 
 
     public void setSelectDate(LocalDate localDate, List<LocalDate> pointList, boolean isDraw) {
-        this.isDraw = isDraw;
+        //默认选中和isDraw满足其一就绘制
+        this.isDraw = mAttrs.isDefaultSelect || isDraw;
         this.mSelectDate = localDate;
         this.mPointList = pointList;
         invalidate();
     }
+
+
+/*
+
+    //原点日期，规则：如果默认选中就返回选中的日期，如默认不选中，就选择当月1号
+    public LocalDate getOriginDate() {
+        if (isDraw) {
+            return mSelectDate;
+        }
+    }
+*/
+
 }

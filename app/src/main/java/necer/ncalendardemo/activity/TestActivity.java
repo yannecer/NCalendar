@@ -7,10 +7,13 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.necer.MyLog;
+import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
+import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnWeekSelectListener;
+import com.necer.listener.OnYearMonthChangedListener;
 
 import org.joda.time.LocalDate;
 
@@ -74,6 +77,45 @@ public class TestActivity extends AppCompatActivity {
                 MyLog.d("datedatedatedate  周   ：：" + date);
             }
         });
+
+
+        monthcalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
+            @Override
+            public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month) {
+                MyLog.d("OnYearMonthChangeListener:月::" + year + "-----" + month);
+            }
+
+
+        });
+        weekcalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
+            @Override
+            public void onYearMonthChanged(BaseCalendar baseCalendar,int year, int month) {
+                MyLog.d("OnYearMonthChangeListener:周::" + year + "-----" + month);
+            }
+        });
+
+
+        monthcalendar.setOnDateChangedListener(new OnDateChangedListener() {
+            @Override
+            public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate) {
+                MyLog.d("OnDateChangedListener:月:" + localDate);
+            }
+
+
+        });
+
+         weekcalendar.setOnDateChangedListener(new OnDateChangedListener() {
+            @Override
+            public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate) {
+                MyLog.d("OnDateChangedListener:周:" + localDate);
+            }
+
+
+        });
+
+
+
+
 
     }
 }

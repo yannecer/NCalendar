@@ -2,22 +2,18 @@ package com.necer.calendar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.View;
-
-import com.necer.MyLog;
 import com.necer.R;
 import com.necer.adapter.BaseCalendarAdapter;
+import com.necer.listener.OnDateChangedListener;
+import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
-
 import org.joda.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +24,6 @@ import java.util.List;
 public abstract class BaseCalendar extends ViewPager {
 
     protected int mCalendarSize;
-   // protected int mCurrNum;
     private BaseCalendarAdapter calendarAdapter;
     private Attrs attrs;
     private BaseCalendarView mCurrView;//当前显示的页面
@@ -39,6 +34,14 @@ public abstract class BaseCalendar extends ViewPager {
     protected LocalDate mOnClickDate;//专值点击选中的日期
 
     private List<LocalDate> mPointList;
+
+    protected OnYearMonthChangedListener onYearMonthChangedListener;
+    //上次回调的年，月
+    protected int mLaseYear;
+    protected int mLastMonth;
+
+
+    protected OnDateChangedListener onDateChangedListener;
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -53,11 +56,14 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, getResources().getColor(R.color.hintColor));
         attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Util.sp2px(context, 18));
         attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Util.sp2px(context, 10));
+        attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, Util.sp2px(context, 15));
+        attrs.holidayDistance = ta.getDimension(R.styleable.NCalendar_holidayDistance, Util.sp2px(context, 15));
         attrs.holidayTextSize = ta.getDimension(R.styleable.NCalendar_holidayTextSize, Util.sp2px(context, 10));
         attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 25));
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
         attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
-        attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, (int) Util.dp2px(context, 2));
+        attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, Util.dp2px(context, 2));
+        attrs.pointDistance = ta.getDimension(R.styleable.NCalendar_pointDistance, Util.dp2px(context, 12));
         attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, getResources().getColor(R.color.pointColor));
         attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, getResources().getColor(R.color.hollowCircleColor));
         attrs.hollowCircleStroke = ta.getDimension(R.styleable.NCalendar_hollowCircleStroke, Util.dp2px(context, 1));
@@ -137,6 +143,11 @@ public abstract class BaseCalendar extends ViewPager {
         if (isDraw) {
             onSelcetDate(mSelectDate);
         }
+
+        //年月回调
+        onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
+        //日期回调
+        onDateChanged(mSelectDate);
     }
 
     public void setPointList(List<String> list) {
@@ -179,14 +190,14 @@ public abstract class BaseCalendar extends ViewPager {
     protected abstract int getCalendarSize(LocalDate startDate, LocalDate endDate, int type);
 
     /**
-     * 日历当前的页码 开始时间和比较
+     * 日历开始日期和结束日期的相差数量
      *
      * @return
      */
     protected abstract int getTwoDateNum(LocalDate startDate, LocalDate endDate, int type);
 
     /**
-     * 相差count的日期
+     * 相差count之后的的日期
      *
      * @param localDate
      * @param count
@@ -196,7 +207,6 @@ public abstract class BaseCalendar extends ViewPager {
 
     /**
      * 重绘当前页面时，获取上个月选中的日期
-     *
      * @return
      */
     protected abstract LocalDate getLastSelectDate(LocalDate currectSelectDate);
@@ -216,9 +226,39 @@ public abstract class BaseCalendar extends ViewPager {
      */
     protected abstract void onSelcetDate(LocalDate localDate);
 
+    /**
+     * 年份和月份变化回调,点击和翻页都会回调，不管有没有日期选中
+     * @param year
+     * @param month
+     */
+    public void onYearMonthChanged(int year, int month){
+        if (onYearMonthChangedListener != null && (year != mLaseYear || month != mLastMonth)) {
+            mLaseYear = year;
+            mLastMonth = month;
+            onYearMonthChangedListener.onYearMonthChanged(this,year, month);
+        }
+    }
 
     /**
-     *
+     * 任何操作都会回调
+     * @param localDate
+     */
+    public void onDateChanged(LocalDate localDate) {
+        if (onDateChangedListener != null) {
+            onDateChangedListener.onDateChanged(this,localDate);
+        }
+    }
+
+    public void setOnYearMonthChangeListener(OnYearMonthChangedListener onYearMonthChangedListener) {
+        this.onYearMonthChangedListener = onYearMonthChangedListener;
+    }
+    public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
+        this.onDateChangedListener = onDateChangedListener;
+    }
+
+
+    /**
+     * 跳转日期
      * @param formatDate
      */
     public void jumpDate(String formatDate) {
@@ -227,6 +267,12 @@ public abstract class BaseCalendar extends ViewPager {
         int num = getTwoDateNum(mSelectDate,jumpDate , attrs.firstDayOfWeek);
         setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
         notifyView(jumpDate,true);
+    }
+
+
+
+    protected Attrs getAttrs() {
+        return attrs;
     }
 
 }

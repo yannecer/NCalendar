@@ -33,11 +33,13 @@ public class Attrs {
     public int selectCircleColor;
     public float solarTextSize;
     public float lunarTextSize;
+    public float lunarDistance;//农历到文字中心的距离
     public float selectCircleRadius;
     public boolean isShowLunar;
 
 
     public float pointSize;
+    public float pointDistance;//圆点到文字中心的距离
     public int pointColor;
     public int pointLocation; //0 在上面 1在下面
     public int hollowCircleColor;
@@ -53,6 +55,7 @@ public class Attrs {
     public boolean isShowHoliday;
     public int holidayColor;
     public float holidayTextSize;
+    public float holidayDistance;
     public int holidayLocation;
     public int workdayColor;
 

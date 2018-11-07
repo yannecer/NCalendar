@@ -8,11 +8,14 @@
         <attr name="todaySolarTextColor" format="color" />
         <attr name="solarTextSize" format="dimension" />
         <attr name="lunarTextSize" format="dimension" />
+        <attr name="lunarDistance" format="dimension" />
         <attr name="holidayTextSize" format="dimension" />
+        <attr name="holidayDistance" format="dimension" />
         <attr name="selectCircleRadius" format="dimension" />
         <attr name="isShowLunar" format="boolean" />
 
         <attr name="pointSize" format="dimension" />
+        <attr name="pointDistance" format="dimension" />
         <attr name="pointColor" format="color" />
 
         <attr name="hollowCircleColor" format="color" />

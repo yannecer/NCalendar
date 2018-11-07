@@ -69,9 +69,12 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         }
     }
 
+
     @Override
     public void onClickCurrentMonth(LocalDate date) {
         onSelcetDate(date);
+        onDateChanged(date);
+        onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
         notifyView(date, true);
     }
@@ -79,6 +82,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickLastMonth(LocalDate date) {
         onSelcetDate(date);
+        onDateChanged(date);
+        onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         setCurrentItem(getCurrentItem() - 1, true);
         notifyView(date,true);
     }
@@ -86,6 +91,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickNextMonth(LocalDate date) {
         onSelcetDate(date);
+        onDateChanged(date);
+        onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         setCurrentItem(getCurrentItem() + 1, true);
         notifyView(date,true);
     }

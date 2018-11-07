@@ -24,9 +24,9 @@
         android:layout_height="300dp"
         app:pointLocation="up"
         app:isShowLunar="true"
-        app:holidayLocation="top_left"
+        app:holidayLocation="top_right"
         app:firstDayOfWeek="monday"
-        app:isDefaultSelect="true"
+        app:isDefaultSelect="false"
         app:defaultCalendar="month"
         app:solarTextColor="#333333">
     </com.necer.calendar.MonthCalendar>
@@ -40,13 +40,15 @@
     <com.necer.calendar.WeekCalendar
         android:id="@+id/weekcalendar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:pointLocation="up"
+        android:layout_height="60dp"
+        app:pointLocation="down"
         app:isShowLunar="true"
         app:holidayLocation="top_left"
         app:firstDayOfWeek="monday"
         app:defaultCalendar="month"
         app:solarTextColor="#333333">
     </com.necer.calendar.WeekCalendar>
+
+
 
 </LinearLayout>
