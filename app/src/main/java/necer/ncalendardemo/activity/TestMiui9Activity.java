@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+
+import org.joda.time.DateTime;
+
 import necer.ncalendardemo.R;
 
 /**
@@ -23,6 +26,9 @@ public class TestMiui9Activity extends AppCompatActivity {
         if (supportActionBar != null) {
             supportActionBar.hide();
         }
+
+
+
 
     }
 }

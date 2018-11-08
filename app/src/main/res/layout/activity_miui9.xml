@@ -6,10 +6,16 @@
     android:layout_height="match_parent">
 
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     <com.necer.calendar.Miui9Calendar
         android:layout_width="match_parent"
         app:calendarHeight="300dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_height="match_parent"/>
 
 

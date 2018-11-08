@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.necer.MyLog;
 import com.necer.utils.Attrs;
 
 /**
@@ -32,20 +31,13 @@ public class Miui9Calendar extends FrameLayout {
         monthCalendar = new MonthCalendar(context, attrs);
         weekCalendar = new WeekCalendar(context, attrs);
 
-
         Attrs attrss = monthCalendar.getAttrs();
 
         duration = attrss.duration;
         monthHeigh = attrss.monthCalendarHeight;
         STATE = attrss.defaultCalendar;
 
-
         weekHeigh = monthHeigh / 5;
-
-
-        MyLog.d("monthHeigh::" + monthHeigh);
-        MyLog.d("monthHeigh:22:" + weekHeigh);
-
 
         addView(monthCalendar);
         addView(weekCalendar);
@@ -59,9 +51,9 @@ public class Miui9Calendar extends FrameLayout {
         monthCalendar.setLayoutParams(monthLayoutParams);
         weekCalendar.setLayoutParams(weekLayoutParams);
 
+        weekCalendar.setVisibility(STATE == Attrs.MONTH ? INVISIBLE : VISIBLE);
 
-        MyLog.d("LayoutParams::" + monthLayoutParams);
-        MyLog.d("LayoutParams::" + weekLayoutParams);
+
 
     }
 }
