@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+
 import com.necer.R;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.listener.OnDateChangedListener;
@@ -13,7 +14,9 @@ import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
+
 import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +29,9 @@ public abstract class BaseCalendar extends ViewPager {
     protected int mCalendarSize;
     private BaseCalendarAdapter calendarAdapter;
     private Attrs attrs;
-    private BaseCalendarView mCurrView;//当前显示的页面
-    private BaseCalendarView mLastView;//当前显示的页面的上一个页面
-    private BaseCalendarView mNextView;//当前显示的页面的下一个页面
+    protected BaseCalendarView mCurrView;//当前显示的页面
+    protected BaseCalendarView mLastView;//当前显示的页面的上一个页面
+    protected BaseCalendarView mNextView;//当前显示的页面的下一个页面
 
     protected LocalDate mSelectDate;//日历上面点击选中的日期,包含点击选中和翻页选中
     protected LocalDate mOnClickDate;//专值点击选中的日期
@@ -73,8 +76,8 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.holidayColor = ta.getColor(R.styleable.NCalendar_holidayColor, getResources().getColor(R.color.holidayColor));
         attrs.workdayColor = ta.getColor(R.styleable.NCalendar_workdayColor, getResources().getColor(R.color.workdayColor));
         attrs.backgroundColor = ta.getColor(R.styleable.NCalendar_backgroundColor, getResources().getColor(R.color.white));
-        attrs.firstDayOfWeek = ta.getInt(R.styleable.NCalendar_firstDayOfWeek,Attrs.SUNDAY);
-        attrs.pointLocation = ta.getInt(R.styleable.NCalendar_pointLocation,Attrs.UP);
+        attrs.firstDayOfWeek = ta.getInt(R.styleable.NCalendar_firstDayOfWeek, Attrs.SUNDAY);
+        attrs.pointLocation = ta.getInt(R.styleable.NCalendar_pointLocation, Attrs.UP);
         attrs.defaultCalendar = ta.getInt(R.styleable.NCalendar_defaultCalendar, Attrs.MONTH);
         attrs.holidayLocation = ta.getInt(R.styleable.NCalendar_holidayLocation, Attrs.TOP_RIGHT);
 
@@ -99,10 +102,12 @@ public abstract class BaseCalendar extends ViewPager {
 
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
 
             @Override
             public void onPageSelected(final int position) {
@@ -147,7 +152,7 @@ public abstract class BaseCalendar extends ViewPager {
         //年月回调
         onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
         //日期回调
-        onDateChanged(mSelectDate);
+        onDateChanged(mSelectDate, isDraw);
     }
 
     public void setPointList(List<String> list) {
@@ -167,15 +172,17 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     //刷新页面
-    protected void notifyView(LocalDate currectSelectDate,boolean isDraw) {
+    protected void notifyView(LocalDate currectSelectDate, boolean isDraw) {
         this.mSelectDate = currectSelectDate;
-        mCurrView.setSelectDate(currectSelectDate, mPointList,isDraw);
+        if (mCurrView != null) {
+            mCurrView.setSelectDate(currectSelectDate, mPointList, isDraw);
+        }
 
         if (mLastView != null) {
-            mLastView.setSelectDate(getLastSelectDate(currectSelectDate), mPointList,isDraw);
+            mLastView.setSelectDate(getLastSelectDate(currectSelectDate), mPointList, isDraw);
         }
         if (mNextView != null) {
-            mNextView.setSelectDate(getNextSelectDate(currectSelectDate), mPointList,isDraw);
+            mNextView.setSelectDate(getNextSelectDate(currectSelectDate), mPointList, isDraw);
         }
     }
 
@@ -207,6 +214,7 @@ public abstract class BaseCalendar extends ViewPager {
 
     /**
      * 重绘当前页面时，获取上个月选中的日期
+     *
      * @return
      */
     protected abstract LocalDate getLastSelectDate(LocalDate currectSelectDate);
@@ -222,36 +230,41 @@ public abstract class BaseCalendar extends ViewPager {
 
     /**
      * 日历上面选中的日期，有选中圈的才会回调
+     *
      * @param localDate
      */
     protected abstract void onSelcetDate(LocalDate localDate);
 
     /**
      * 年份和月份变化回调,点击和翻页都会回调，不管有没有日期选中
+     *
      * @param year
      * @param month
      */
-    public void onYearMonthChanged(int year, int month){
+    public void onYearMonthChanged(int year, int month) {
         if (onYearMonthChangedListener != null && (year != mLaseYear || month != mLastMonth)) {
             mLaseYear = year;
             mLastMonth = month;
-            onYearMonthChangedListener.onYearMonthChanged(this,year, month);
+            onYearMonthChangedListener.onYearMonthChanged(this, year, month);
         }
     }
 
     /**
      * 任何操作都会回调
+     *
      * @param localDate
+     * @param isDraw    页面是否选中
      */
-    public void onDateChanged(LocalDate localDate) {
+    public void onDateChanged(LocalDate localDate, boolean isDraw) {
         if (onDateChangedListener != null) {
-            onDateChangedListener.onDateChanged(this,localDate);
+            onDateChangedListener.onDateChanged(this, localDate, isDraw);
         }
     }
 
     public void setOnYearMonthChangeListener(OnYearMonthChangedListener onYearMonthChangedListener) {
         this.onYearMonthChangedListener = onYearMonthChangedListener;
     }
+
     public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
         this.onDateChangedListener = onDateChangedListener;
     }
@@ -259,16 +272,26 @@ public abstract class BaseCalendar extends ViewPager {
 
     /**
      * 跳转日期
+     *
      * @param formatDate
      */
     public void jumpDate(String formatDate) {
         LocalDate jumpDate = new LocalDate(formatDate);
         mOnClickDate = jumpDate;
-        int num = getTwoDateNum(mSelectDate,jumpDate , attrs.firstDayOfWeek);
+        int num = getTwoDateNum(mSelectDate, jumpDate, attrs.firstDayOfWeek);
         setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
-        notifyView(jumpDate,true);
+        notifyView(jumpDate, true);
     }
 
+
+    //
+    protected void jumpDate(LocalDate localDate, boolean isDraw) {
+        if (mSelectDate != null) {
+            int num = getTwoDateNum(mSelectDate, localDate, attrs.firstDayOfWeek);
+            setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
+            notifyView(localDate, isDraw);
+        }
+    }
 
 
     protected Attrs getAttrs() {

@@ -65,14 +65,11 @@ public abstract class BaseCalendarView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        int width = getWidth();
-        int height = getHeight();
         mRectList.clear();
 
         for (int i = 0; i < mLineNum; i++) {
             for (int j = 0; j < 7; j++) {
-
-                Rect rect = getRect(width, height, i, j);
+                Rect rect = getRect(i, j);
                 mRectList.add(rect);
                 LocalDate date = mLocalDateList.get(i * 7 + j);
 
@@ -133,7 +130,9 @@ public abstract class BaseCalendarView extends View {
     }
 
     //获取每个元素矩形
-    private Rect getRect(int width, int height, int i, int j) {
+    private Rect getRect(int i, int j) {
+        int width = getMeasuredWidth();
+        int height = getMeasuredHeight();
         Rect rect;
         //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
         if (mLineNum == 5 || mLineNum == 1) {
@@ -337,14 +336,23 @@ public abstract class BaseCalendarView extends View {
     }
 
 
-/*
 
-    //原点日期，规则：如果默认选中就返回选中的日期，如默认不选中，就选择当月1号
-    public LocalDate getOriginDate() {
-        if (isDraw) {
-            return mSelectDate;
+    //选中的日期到顶部的距离
+    public int getMonthCalendarOffset() {
+        int monthCalendarOffset;
+        //选中的是第几行
+        int selectIndex = mLocalDateList.indexOf(mSelectDate) / 7;
+        if (mLineNum == 5) {
+            //5行的月份
+            monthCalendarOffset = getMeasuredHeight() / 5 * selectIndex;
+        } else{
+           // int rectHeight5 = getMeasuredHeight() / 5;
+            int rectHeight6 = (getMeasuredHeight() / 5) * 4 / 5;
+            monthCalendarOffset = rectHeight6 * selectIndex;
         }
+        return monthCalendarOffset;
     }
-*/
+
+
 
 }

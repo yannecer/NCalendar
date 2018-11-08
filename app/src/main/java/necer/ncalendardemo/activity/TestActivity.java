@@ -94,6 +94,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
+/*
 
         monthcalendar.setOnDateChangedListener(new OnDateChangedListener() {
             @Override
@@ -112,6 +113,7 @@ public class TestActivity extends AppCompatActivity {
 
 
         });
+*/
 
 
 

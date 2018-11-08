@@ -13,6 +13,7 @@ import com.necer.listener.OnMonthSelectListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
+import com.necer.view.MonthView;
 
 import org.joda.time.LocalDate;
 
@@ -31,16 +32,16 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
 
     @Override
     protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum) {
-        return new MonthCalendarAdapter(context,attrs,calendarSize,currNum,this);
+        return new MonthCalendarAdapter(context, attrs, calendarSize, currNum, this);
     }
 
     @Override
-    protected int getCalendarSize(LocalDate startDate, LocalDate endDate,int type) {
+    protected int getCalendarSize(LocalDate startDate, LocalDate endDate, int type) {
         return Util.getIntervalMonths(startDate, endDate) + 1;
     }
 
     @Override
-    protected int getTwoDateNum(LocalDate startDate,LocalDate endDate, int type) {
+    protected int getTwoDateNum(LocalDate startDate, LocalDate endDate, int type) {
         return Util.getIntervalMonths(startDate, endDate);
     }
 
@@ -73,7 +74,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickCurrentMonth(LocalDate date) {
         onSelcetDate(date);
-        onDateChanged(date);
+        onDateChanged(date,true);
         onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
         notifyView(date, true);
@@ -82,26 +83,29 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickLastMonth(LocalDate date) {
         onSelcetDate(date);
-        onDateChanged(date);
+        onDateChanged(date,true);
         onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         setCurrentItem(getCurrentItem() - 1, true);
-        notifyView(date,true);
+        notifyView(date, true);
     }
 
     @Override
     public void onClickNextMonth(LocalDate date) {
         onSelcetDate(date);
-        onDateChanged(date);
+        onDateChanged(date,true);
         onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         setCurrentItem(getCurrentItem() + 1, true);
-        notifyView(date,true);
+        notifyView(date, true);
     }
-
-
-
 
     public void setOnMonthSelectListener(OnMonthSelectListener onMonthSelectListener) {
         this.onMonthSelectListener = onMonthSelectListener;
     }
+
+
+    public int getMonthCalendarOffset() {
+        return mCurrView.getMonthCalendarOffset();
+    }
+
 
 }
