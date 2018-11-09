@@ -10,19 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+<!--
+    <com.necer.calendar.MonthCalendar
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"></com.necer.calendar.MonthCalendar>
+-->
+
+
 
     <com.necer.calendar.Miui9Calendar
         android:layout_width="match_parent"
         app:calendarHeight="300dp"
         android:layout_marginTop="50dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
         android:layout_height="match_parent">
-
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"/>
 
     </com.necer.calendar.Miui9Calendar>
 

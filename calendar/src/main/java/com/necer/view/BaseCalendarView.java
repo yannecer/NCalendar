@@ -9,6 +9,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.necer.MyLog;
 import com.necer.entity.NCalendar;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
@@ -78,6 +79,10 @@ public abstract class BaseCalendarView extends View {
                 //每个日期水平方向的中点 centerX
                 int centerX = rect.centerX();
 
+
+                MyLog.d("centerX::::" + centerX);
+
+
                 //当月和上下月的颜色不同
                 if (isEqualsMonthOrWeek(date, mInitialDate)) {
 
@@ -133,6 +138,8 @@ public abstract class BaseCalendarView extends View {
     private Rect getRect(int i, int j) {
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
+
+
         Rect rect;
         //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
         if (mLineNum == 5 || mLineNum == 1) {

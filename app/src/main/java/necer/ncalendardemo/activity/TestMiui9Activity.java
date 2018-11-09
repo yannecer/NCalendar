@@ -37,6 +37,5 @@ public class TestMiui9Activity extends AppCompatActivity {
         recyclerView.setAdapter(aaAdapter);
 
 
-
     }
 }
