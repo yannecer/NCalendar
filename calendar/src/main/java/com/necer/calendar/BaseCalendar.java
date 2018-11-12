@@ -62,7 +62,7 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, Util.sp2px(context, 15));
         attrs.holidayDistance = ta.getDimension(R.styleable.NCalendar_holidayDistance, Util.sp2px(context, 15));
         attrs.holidayTextSize = ta.getDimension(R.styleable.NCalendar_holidayTextSize, Util.sp2px(context, 10));
-        attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 25));
+        attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 22));
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
         attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
         attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, Util.dp2px(context, 2));

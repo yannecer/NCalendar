@@ -35,11 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void defaultSelect(View v) {
-        startActivity(new Intent(this, MonthSelectActivity.class));
+        startActivity(new Intent(this, TestMiui10Activity.class));
     }
 
     public void notDefaultSelect(View v) {
-        startActivity(new Intent(this, MonthNotSelectActivity.class));
+        startActivity(new Intent(this, TestMiui9Activity.class));
+       // startActivity(new Intent(this, MonthNotSelectActivity.class));
+
     }
 
     public void week(View v) {

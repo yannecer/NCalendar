@@ -30,7 +30,6 @@ public class TestMiui9Activity extends AppCompatActivity {
 
         setContentView(R.layout.activity_miui9);
 
-
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.hide();

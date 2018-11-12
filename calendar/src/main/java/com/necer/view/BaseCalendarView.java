@@ -79,10 +79,6 @@ public abstract class BaseCalendarView extends View {
                 //每个日期水平方向的中点 centerX
                 int centerX = rect.centerX();
 
-
-                MyLog.d("centerX::::" + centerX);
-
-
                 //当月和上下月的颜色不同
                 if (isEqualsMonthOrWeek(date, mInitialDate)) {
 
@@ -123,7 +119,6 @@ public abstract class BaseCalendarView extends View {
                     drawSolar(canvas, centerX, centerY, mAttrs.hintColor, date.getDayOfMonth() + "");
                     //农历
                     drawLunar(canvas, centerX, centerY, mAttrs.lunarTextColor, mLunarList.get(i * 7 + j));
-
                     //绘制圆点
                     drawPoint(canvas, centerX, centerY, mAttrs.pointColor, date);
                     //绘制节假日

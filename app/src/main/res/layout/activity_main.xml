@@ -18,14 +18,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="notDefaultSelect"
-        android:text="默认不选中的月日历" />
+        android:text="miui9" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="defaultSelect"
-        android:text="默认选中的月日历" />
+        android:text="miui10" />
 
     <Button
         android:layout_width="wrap_content"
