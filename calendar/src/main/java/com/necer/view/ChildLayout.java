@@ -124,7 +124,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     }
 
 
-    public int getGestureOffsetUp(int dy) {
+    public int getGestureUpOffset(int dy) {
         int maxOffset = getTop() - weekHeight;
         if (dy > maxOffset) {
             return maxOffset;
@@ -133,7 +133,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         }
     }
 
-    public int getGestureOffsetDown(int dy) {
+    public int getGestureDownOffset(int dy) {
         int maxOffset = monthHeight - getTop();
         dy = Math.abs(dy);
         if (dy > maxOffset) {
@@ -141,6 +141,11 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         } else {
             return dy;
         }
+    }
+
+
+    public int getChildLayoutOffset() {
+        return monthHeight - weekHeight;
     }
 
 

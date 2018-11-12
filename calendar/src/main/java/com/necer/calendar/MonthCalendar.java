@@ -140,7 +140,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
 
-    public int getGestureOffsetUp(int dy) {
+    public int getGestureUpOffset(int dy) {
         int maxOffset = getMonthCalendarOffset() - Math.abs(getTop());
         if (dy > maxOffset) {
             return maxOffset;
@@ -149,7 +149,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         }
     }
 
-    public int getGestureOffsetDown(int dy) {
+    public int getGestureDownOffset(int dy) {
         int maxOffset =  Math.abs(getTop());
         dy = Math.abs(dy);
         if (dy > maxOffset) {

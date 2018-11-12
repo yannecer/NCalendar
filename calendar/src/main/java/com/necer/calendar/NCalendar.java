@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnDateChangedListener;
@@ -21,8 +22,7 @@ import org.joda.time.LocalDate;
 /**
  * Created by necer on 2018/11/12.
  */
-public abstract class NCalemdar extends FrameLayout implements NestedScrollingParent,OnCalendarStateChangedListener, OnDateChangedListener {
-
+public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, OnCalendarStateChangedListener, OnDateChangedListener {
 
 
     protected WeekCalendar weekCalendar;
@@ -42,10 +42,10 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
     protected Rect weekRect;//周日历大小的矩形 ，用于判断点击事件是否在日历的范围内
 
 
-
-    public NCalemdar(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public NCalendar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
+        setMotionEventSplittingEnabled(false);
 
         weekCalendar = new WeekCalendar(context, attrs);
         Attrs attrss = weekCalendar.getAttrs();
@@ -60,17 +60,16 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
 
         monthCalendar.setOnDateChangedListener(this);
         weekCalendar.setOnDateChangedListener(this);
-        weekCalendar.setVisibility(STATE == Attrs.MONTH ? INVISIBLE : VISIBLE);
+
+        setState(STATE);
 
         post(new Runnable() {
             @Override
             public void run() {
-                monthRect = new Rect(0, monthCalendar.getTop(), monthCalendar.getWidth(), monthCalendar.getHeight());
-                weekRect = new Rect(0, weekCalendar.getTop(), weekCalendar.getWidth(), weekCalendar.getHeight());
-
+                monthRect = new Rect(0, 0, monthCalendar.getWidth(), monthCalendar.getHeight());
+                weekRect = new Rect(0, 0, weekCalendar.getWidth(), weekCalendar.getHeight());
             }
         });
-
 
     }
 
@@ -101,6 +100,8 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         ViewGroup.LayoutParams childLayoutLayoutParams = childLayout.getLayoutParams();
         childLayoutLayoutParams.height = getMeasuredHeight() - weekHeigh;
+
+
     }
 
 
@@ -126,7 +127,6 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
     }
 
 
-
     private void setState(int state) {
         if (state == Attrs.WEEK) {
             STATE = Attrs.WEEK;
@@ -136,10 +136,11 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
             weekCalendar.setVisibility(INVISIBLE);
         }
 
-        if (lastSate != state) {
+        if (lastSate != state && onCalendarChangedListener != null) {
             onCalendarChangedListener.onCalendarStateChanged(STATE == Attrs.MONTH);
-            lastSate = state;
         }
+
+        lastSate = state;
     }
 
     private void scroll() {
@@ -168,6 +169,7 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
             //月日历 变化
             if (STATE == Attrs.MONTH) {
                 weekCalendar.jumpDate(localDate, isDraw);
+                requestLayout();
                 if (onCalendarChangedListener != null && isDraw) {
                     onCalendarChangedListener.onCalendarDateChanged(localDate);
                 }
@@ -222,9 +224,7 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
     }
 
 
-    protected abstract void gestureMove(int dy,boolean isNest,int[] consumed);
-
-
+    protected abstract void gestureMove(int dy, boolean isNest, int[] consumed);
 
 
     private int dowmY;
@@ -275,9 +275,7 @@ public abstract class NCalemdar extends FrameLayout implements NestedScrollingPa
 
                 // 跟随手势滑动
                 gestureMove(dy, false, null);
-
                 lastY = y;
-
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
