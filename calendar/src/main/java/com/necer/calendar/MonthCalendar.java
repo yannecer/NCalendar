@@ -1,11 +1,15 @@
 package com.necer.calendar;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
+import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
 import com.necer.listener.OnClickMonthViewListener;
@@ -21,13 +25,23 @@ import org.joda.time.LocalDate;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListener {
+public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListener, ValueAnimator.AnimatorUpdateListener {
 
+
+    protected ValueAnimator monthValueAnimator;//月日历动画
 
     private OnMonthSelectListener onMonthSelectListener;
 
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
+    }
+
+    public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet,int duration) {
+        this(context, attributeSet);
+
+        monthValueAnimator = new ValueAnimator();
+        monthValueAnimator.setDuration(duration);
+        monthValueAnimator.addUpdateListener(this);
     }
 
     @Override
@@ -108,4 +122,62 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
 
+    public void toMonth() {
+        int top = getTop();//起始位置
+        int end = 0;
+        monthValueAnimator.setIntValues(top, end);
+
+        monthValueAnimator.start();
+    }
+
+    public void toWeek() {
+
+        int top = getTop();//起始位置
+        int end = -getMonthCalendarOffset(); //结束位置
+        monthValueAnimator.setIntValues(top, end);
+        monthValueAnimator.start();
+
+    }
+
+
+    public int getGestureOffsetUp(int dy) {
+        int maxOffset = getMonthCalendarOffset() - Math.abs(getTop());
+        if (dy > maxOffset) {
+            return maxOffset;
+        }else {
+            return dy;
+        }
+    }
+
+    public int getGestureOffsetDown(int dy) {
+        int maxOffset =  Math.abs(getTop());
+        dy = Math.abs(dy);
+        if (dy > maxOffset) {
+            return maxOffset;
+        }else {
+            return dy;
+        }
+    }
+
+
+
+
+    public boolean isMonthState() {
+        return getTop() == 0;
+    }
+
+
+    public boolean isWeekState() {
+        return getTop() == -getMonthCalendarOffset();
+    }
+
+
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        int animatedValue = (int) animation.getAnimatedValue();
+        int top = getTop();
+        int i = animatedValue - top;
+        offsetTopAndBottom(i);
+    }
 }

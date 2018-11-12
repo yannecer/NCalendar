@@ -7,5 +7,8 @@ import org.joda.time.LocalDate;
  */
 
 public interface OnCalendarChangedListener {
-    void onCalendarChanged(LocalDate date);
+    void onCalendarDateChanged(LocalDate date);
+
+    void onCalendarStateChanged(boolean isMonthSate);
+
 }

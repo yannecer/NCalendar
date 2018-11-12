@@ -7,6 +7,7 @@
 
 
     <Button
+        android:id="@+id/bt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -21,11 +22,9 @@
 
 
     <com.necer.calendar.Miui9Calendar
+        android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
         app:calendarHeight="300dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginLeft="100dp"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
