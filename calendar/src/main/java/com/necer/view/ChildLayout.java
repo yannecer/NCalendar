@@ -55,13 +55,10 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
             parent.removeView(child);
         }
         super.addView(child);
-
         targetView = getNestedScrollingChild(child);
-
         if (targetView == null) {
-              throw new RuntimeException("需要NestedScrollingChild的子类");
+              throw new RuntimeException("NCalendar需要实现了NestedScrollingChild的子类");
         }
-
     }
 
     private View getNestedScrollingChild(View view) {
@@ -96,8 +93,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     }
 
 
-    public void toMonth() {
-
+    public void autoToMonth() {
         int start = getTop();
         int end = monthHeight;
         childLayoutValueAnimator.setIntValues(start, end);
@@ -107,7 +103,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
 
 
-    public void toWeek() {
+    public void autoToWeek() {
         int start = getTop();
         int end = weekHeight;
         childLayoutValueAnimator.setIntValues(start, end);
@@ -121,26 +117,6 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
     public boolean isWeekState() {
         return getTop() == weekHeight;
-    }
-
-
-    public int getGestureUpOffset(int dy) {
-        int maxOffset = getTop() - weekHeight;
-        if (dy > maxOffset) {
-            return maxOffset;
-        }else {
-            return dy;
-        }
-    }
-
-    public int getGestureDownOffset(int dy) {
-        int maxOffset = monthHeight - getTop();
-        dy = Math.abs(dy);
-        if (dy > maxOffset) {
-            return maxOffset;
-        } else {
-            return dy;
-        }
     }
 
 

@@ -122,16 +122,14 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
 
-    public void toMonth() {
+    public void autoToMonth() {
         int top = getTop();//起始位置
         int end = 0;
         monthValueAnimator.setIntValues(top, end);
-
         monthValueAnimator.start();
     }
 
-    public void toWeek() {
-
+    public void autoToWeek() {
         int top = getTop();//起始位置
         int end = -getMonthCalendarOffset(); //结束位置
         monthValueAnimator.setIntValues(top, end);
@@ -140,32 +138,9 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
 
-    public int getGestureUpOffset(int dy) {
-        int maxOffset = getMonthCalendarOffset() - Math.abs(getTop());
-        if (dy > maxOffset) {
-            return maxOffset;
-        }else {
-            return dy;
-        }
-    }
-
-    public int getGestureDownOffset(int dy) {
-        int maxOffset =  Math.abs(getTop());
-        dy = Math.abs(dy);
-        if (dy > maxOffset) {
-            return maxOffset;
-        }else {
-            return dy;
-        }
-    }
-
-
-
-
     public boolean isMonthState() {
         return getTop() == 0;
     }
-
 
     public boolean isWeekState() {
         return getTop() == -getMonthCalendarOffset();
