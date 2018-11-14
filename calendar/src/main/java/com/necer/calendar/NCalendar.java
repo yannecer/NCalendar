@@ -103,9 +103,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         ViewGroup.LayoutParams childLayoutLayoutParams = childLayout.getLayoutParams();
         childLayoutLayoutParams.height = getMeasuredHeight() - weekHeigh;
-
-
-
     }
 
 
@@ -122,9 +119,13 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             childLayoutTop = childLayout.getTop() == 0 ? weekHeigh : childLayout.getTop();
         }
 
-        monthCalendar.layout(l, monthCalendarTop, r, monthHeigh + monthCalendarTop);
-        childLayout.layout(l, childLayoutTop, r, childLayout.getMeasuredHeight() + childLayoutTop);
         weekCalendar.layout(l, 0, r, weekHeigh);
+        monthCalendar.layout(l, monthCalendarTop, r, monthHeigh + monthCalendarTop);
+        //childLayout.layout(l, childLayoutTop, r, childLayout.getMeasuredHeight() + childLayoutTop);
+
+        ViewGroup.LayoutParams layoutParams = childLayout.getLayoutParams();
+        childLayout.layout(l, childLayoutTop, r, layoutParams.height + childLayoutTop);
+
 
 
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import com.necer.MyLog;
 
 
 /**
@@ -22,12 +21,14 @@ public class Miui10Calendar extends NCalendar {
     @Override
     public int getGestureMonthUpOffset(int dy) {
 
-
         int maxOffset = monthCalendar.getMonthCalendarOffset() - Math.abs(monthCalendar.getTop());
 
-        int monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
-        int childLayoutOffset = childLayout.getChildLayoutOffset();
-        int offset = (monthCalendarOffset * dy) / childLayoutOffset;
+        float monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
+        float childLayoutOffset = childLayout.getChildLayoutOffset();
+
+
+        int offset = (int) ((monthCalendarOffset * dy) / childLayoutOffset);
+
         if (offset == 0) {
             return getOffset(dy, maxOffset);
         } else {
@@ -42,6 +43,8 @@ public class Miui10Calendar extends NCalendar {
         int monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
         int childLayoutOffset = childLayout.getChildLayoutOffset();
         int offset = (monthCalendarOffset * dy) / childLayoutOffset;
+
+
         if (offset == 0) {
             return getOffset(Math.abs(dy), maxOffset);
         } else {
