@@ -57,10 +57,6 @@ public class TestMiui9Activity extends AppCompatActivity {
         });
 
 
-
-
-
-
         findViewById(R.id.bt)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override

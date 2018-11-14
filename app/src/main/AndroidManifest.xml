@@ -22,11 +22,11 @@
             android:name=".activity.NCalendarActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-         <activity
+        <activity
             android:name=".activity.TestMiui9Activity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-         <activity
+        <activity
             android:name=".activity.TestMiui10Activity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
@@ -42,6 +42,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".activity.TestFragmentActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <activity
+            android:name=".activity.TestEmuiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
 

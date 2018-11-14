@@ -34,14 +34,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void defaultSelect(View v) {
+    public void miui10(View v) {
         startActivity(new Intent(this, TestMiui10Activity.class));
     }
 
-    public void notDefaultSelect(View v) {
+    public void miui9(View v) {
         startActivity(new Intent(this, TestMiui9Activity.class));
        // startActivity(new Intent(this, MonthNotSelectActivity.class));
 
+    }
+
+    public void emui(View v) {
+        startActivity(new Intent(this, TestEmuiActivity.class));
     }
 
     public void week(View v) {

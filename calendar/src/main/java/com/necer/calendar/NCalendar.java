@@ -123,6 +123,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         monthCalendar.layout(l, monthCalendarTop, r, monthHeigh + monthCalendarTop);
         //childLayout.layout(l, childLayoutTop, r, childLayout.getMeasuredHeight() + childLayoutTop);
 
+
+
         ViewGroup.LayoutParams layoutParams = childLayout.getLayoutParams();
         childLayout.layout(l, childLayoutTop, r, layoutParams.height + childLayoutTop);
 
@@ -209,13 +211,16 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     @Override
     public void onStopNestedScroll(View target) {
         //嵌套滑动结束，根据条件自动滑动
-        if (monthCalendar.isMonthState() && childLayout.isMonthState() && STATE == Attrs.WEEK) {
+       /* if (monthCalendar.isMonthState() && childLayout.isMonthState() && STATE == Attrs.WEEK) {
             setCalenadrState(Attrs.MONTH);
         } else if (monthCalendar.isWeekState() && childLayout.isWeekState() && STATE == Attrs.MONTH) {
             setCalenadrState(Attrs.WEEK);
         } else {
             autoScroll();
-        }
+        }*/
+
+
+        autoScroll();
     }
 
     public void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener) {
@@ -336,5 +341,16 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
         return offset;
     }
+
+   /* //手势上
+    protected abstract void onGestureUp(int dy);
+    //手势下
+    protected abstract void onGestureDown(int dy);
+
+    protected abstract void onAutoToMonthState();
+
+    protected abstract void onAutoToWeekState();
+
+*/
 
 }
