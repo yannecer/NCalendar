@@ -4,40 +4,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
+<!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="toMiui"
-        android:text="仿miui日历" />
+        android:text="仿miui日历" />-->
 
     <Button
         android:id="@+id/bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick="notDefaultSelect"
-        android:text="默认不选中的月日历" />
+        android:onClick="miui9"
+        android:text="miui9" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="defaultSelect"
-        android:text="默认选中的月日历" />
+        android:onClick="miui10"
+        android:text="miui10" />
 
-    <Button
+      <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="emui"
+        android:text="emui" />
+
+   <!-- <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="week"
         android:text="周日历" />
-
-    <Button
+-->
+  <!--  <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="fragment"
-        android:text="Fragment" />
+        android:text="Fragment" />-->
 
 
     <TextView
@@ -55,6 +61,8 @@
         android:layout_margin="15dp"
         android:text="版本"
         android:textSize="12sp" />
+
+
 
 
 </LinearLayout>

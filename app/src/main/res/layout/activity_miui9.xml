@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+<!--
+    <com.necer.calendar.MonthCalendar
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"></com.necer.calendar.MonthCalendar>
+-->
+
+
+
+    <com.necer.calendar.Miui9Calendar
+        android:id="@+id/miui9Calendar"
+        android:layout_width="match_parent"
+        app:calendarHeight="300dp"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"/>
+
+    </com.necer.calendar.Miui9Calendar>
+
+
+</LinearLayout>
