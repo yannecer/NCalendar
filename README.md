@@ -1,4 +1,12 @@
 # NCalendar
+
+
+### 日历改版，新增加了 miui10，华为日历 两种月周交互 ，现在一共有 miui9、miui10、华为日历 三种，
+### 仿miui10的日历不是太完美，这次新增了不少属性，修复了一些bug，初版更新，后续完善中，README文件后续更新
+### 本次更新把 NCalendar 写成了抽象类，负责主要逻辑，Miui9Calendar、Miui10Calendar、EmuiCalendar根据不同的交互，返回一些必要的值
+
+
+
 一款仿miui日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
 支持自定义日期区间
@@ -17,33 +25,11 @@ http://fir.im/7lv4
 
 ## 使用方法
 
-#### Gradle
-```
-compile 'com.necer.ncalendar:ncalendar:2.4.6'
-```
-
 
 #### 布局文件
 
 ```
-<com.necer.ncalendar.calendar.NCalendar
-        android:id="@+id/ncalendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultCalendar="Month"
-        app:firstDayOfWeek="Sunday"
-        app:selectCircleColor="#3388ff">
-        
-        <!-- 内部需要 RecyclerView 、NestedScrollView 等实现了 NestedScrollingChild 的子类-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"/>
-
- </com.necer.ncalendar.calendar.NCalendar>
-       
 
 ```
 #### 注意
