@@ -1,9 +1,9 @@
 # NCalendar
 
 
-###### 日历改版，新增加了 miui10，华为日历 两种月周交互 ，现在一共有 miui9、miui10、华为日历 三种，
-###### 仿miui10的日历不是太完美，这次新增了不少属性，修复了一些bug，初版更新，后续完善中，README文件后续更新
-###### 本次更新把 NCalendar 写成了抽象类，负责主要逻辑，Miui9Calendar、Miui10Calendar、EmuiCalendar根据不同的交互，返回一些必要的值
+##### 日历改版，新增加了 miui10，华为日历 两种月周交互 ，现在一共有 miui9、miui10、华为日历 三种，
+##### 仿miui10的日历不是太完美，这次新增了不少属性，修复了一些bug，初版更新，后续完善中，README文件后续更新
+##### 本次更新把 NCalendar 写成了抽象类，负责主要逻辑，Miui9Calendar、Miui10Calendar、EmuiCalendar根据不同的交互，返回一些必要的值
 
 
 
