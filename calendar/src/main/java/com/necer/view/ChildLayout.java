@@ -7,11 +7,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.ViewCompat;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.necer.MyLog;
 import com.necer.listener.OnCalendarStateChangedListener;
 
 /**
@@ -28,8 +28,8 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     private OnCalendarStateChangedListener onCalendarStateChangedListenerr;
 
 
-    public ChildLayout(@NonNull Context context,int monthHeight,int duration,OnCalendarStateChangedListener onCalendarStateChangedListener) {
-        super(context);
+    public ChildLayout(@NonNull Context context, AttributeSet attrs,int monthHeight, int duration, OnCalendarStateChangedListener onCalendarStateChangedListener) {
+        super(context,attrs);
         this.monthHeight = monthHeight;
         this.weekHeight = monthHeight / 5;
 

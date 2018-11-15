@@ -33,6 +33,8 @@ public class Miui9Calendar extends MiuiCalendar {
         return getOffset(Math.abs(dy), maxOffset);
     }
 
+
+
     @Override
     protected int getGestureChildUpOffset(int dy) {
         int maxOffset = childLayout.getTop() - weekHeigh;
