@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.necer.MyLog;
 import com.necer.listener.OnClickMonthViewListener;
 import com.necer.utils.Attrs;
+import com.necer.view.BaseCalendarView;
 import com.necer.view.MonthView;
 
 import org.joda.time.LocalDate;
@@ -26,7 +27,7 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
     }
 
     @Override
-    protected View getView(int position) {
+    protected BaseCalendarView getView(int position) {
         int i = position - mCurr;
         LocalDate date = this.mInitializeDate.plusMonths(i);
         MonthView monthView = new MonthView(mContext,mAttrs, date,mOnClickMonthViewListener);

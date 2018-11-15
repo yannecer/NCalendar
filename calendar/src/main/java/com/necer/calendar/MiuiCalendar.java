@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.MyLog;
+
 /**
  * Created by necer on 2018/11/15.
  */
@@ -29,6 +31,7 @@ public abstract class MiuiCalendar extends NCalendar{
 
     @Override
     protected int getMonthTopOnWeekState() {
+
         return -monthCalendar.getMonthCalendarOffset();
     }
 

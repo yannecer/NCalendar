@@ -28,13 +28,8 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     protected int mCurr;//当前位置
     protected Attrs mAttrs;//属性参数
     protected LocalDate mInitializeDate;//日期初始化，默认是当天
+    protected SparseArray<BaseCalendarView> mCalendarViews;
 
-
-    private BaseCalendarView lastView;//上一个页面
-
-    protected SparseArray<View> mCalendarViews;
-
-    //private ViewGroup container;
 
 
     public BaseCalendarAdapter(Context context, Attrs attrs, int count, int curr) {
@@ -66,29 +61,18 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = getView(position);
+
+        BaseCalendarView view = getView(position);
         mCalendarViews.put(position, view);
         container.addView(view);
         return view;
     }
-/*
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
 
-      //  MyLog.d("当前view：：111：" + container.getChildCount());
-     //   MyLog.d("当前view：：2222：" +object);
-
-        BaseCalendarView currectView = (BaseCalendarView) object;
-        if (onRedrawCurrentViewListener != null && currectView != lastView) {
-            onRedrawCurrentViewListener.onRedrawCurrentView(currectView, lastView, position);
-            lastView = currectView;
-        }
-    }*/
-
-    protected abstract View getView(int position);
+    protected abstract BaseCalendarView getView(int position);
 
 
     public BaseCalendarView getBaseCalendarView(int position) {
+
         return (BaseCalendarView) mCalendarViews.get(position);
     }
 }

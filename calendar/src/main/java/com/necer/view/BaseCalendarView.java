@@ -116,6 +116,7 @@ public abstract class BaseCalendarView extends View {
                     }
 
                 } else {
+                    //公历
                     drawSolar(canvas, centerX, centerY, mAttrs.hintColor, date.getDayOfMonth() + "");
                     //农历
                     drawLunar(canvas, centerX, centerY, mAttrs.lunarTextColor, mLunarList.get(i * 7 + j));
@@ -181,7 +182,7 @@ public abstract class BaseCalendarView extends View {
             mCirclePaint.setStyle(Paint.Style.FILL);
             mCirclePaint.setColor(color);
             int solarTexyCenterY = getSolarTexyCenterY(centerY);
-            canvas.drawCircle(centerX, mAttrs.pointLocation == Attrs.DOWN ? (solarTexyCenterY + mAttrs.pointDistance) : (solarTexyCenterY -mAttrs.pointDistance), mAttrs.pointSize, mCirclePaint);
+            canvas.drawCircle(centerX, mAttrs.pointLocation == Attrs.DOWN ? (solarTexyCenterY + mAttrs.pointDistance) : (solarTexyCenterY - mAttrs.pointDistance), mAttrs.pointSize, mCirclePaint);
         }
     }
 
@@ -220,7 +221,6 @@ public abstract class BaseCalendarView extends View {
         int solarTexyCenterY = getSolarTexyCenterY(centerY);
 
         switch (mAttrs.holidayLocation) {
-
 
             case Attrs.TOP_LEFT:
                 location[0] = (int) (centerX - mAttrs.holidayDistance);
@@ -338,23 +338,22 @@ public abstract class BaseCalendarView extends View {
     }
 
 
-
     //选中的日期到顶部的距离
     public int getMonthCalendarOffset() {
         int monthCalendarOffset;
         //选中的是第几行
         int selectIndex = mLocalDateList.indexOf(mSelectDate) / 7;
+
         if (mLineNum == 5) {
             //5行的月份
             monthCalendarOffset = getMeasuredHeight() / 5 * selectIndex;
-        } else{
-           // int rectHeight5 = getMeasuredHeight() / 5;
+        } else {
+            // int rectHeight5 = getMeasuredHeight() / 5;
             int rectHeight6 = (getMeasuredHeight() / 5) * 4 / 5;
             monthCalendarOffset = rectHeight6 * selectIndex;
         }
         return monthCalendarOffset;
     }
-
 
 
 }

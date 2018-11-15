@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
+import com.necer.MyLog;
 import com.necer.R;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.listener.OnDateChangedListener;
@@ -129,7 +130,6 @@ public abstract class BaseCalendar extends ViewPager {
         this.mCurrView = calendarAdapter.getBaseCalendarView(position);
         this.mLastView = calendarAdapter.getBaseCalendarView(position - 1);
         this.mNextView = calendarAdapter.getBaseCalendarView(position + 1);
-
 
         LocalDate initialDate = mCurrView.getInitialDate();
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
@@ -276,17 +276,27 @@ public abstract class BaseCalendar extends ViewPager {
      * @param formatDate
      */
     public void jumpDate(String formatDate) {
-        LocalDate jumpDate = new LocalDate(formatDate);
-        mOnClickDate = jumpDate;
-        int num = getTwoDateNum(mSelectDate, jumpDate, attrs.firstDayOfWeek);
-        setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
-        notifyView(jumpDate, true);
+
+        LocalDate jumpDate=null;
+        try {
+            jumpDate = new LocalDate(formatDate);
+        } catch (Exception e) {
+            throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
+        }
+
+        jumpDate(jumpDate, true);
+    }
+
+    //回到今天
+    public void toToday() {
+        jumpDate(new LocalDate(), true);
     }
 
 
     //
     protected void jumpDate(LocalDate localDate, boolean isDraw) {
         if (mSelectDate != null) {
+            mOnClickDate = localDate;
             int num = getTwoDateNum(mSelectDate, localDate, attrs.firstDayOfWeek);
             setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
             notifyView(localDate, isDraw);

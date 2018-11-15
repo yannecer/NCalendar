@@ -28,8 +28,8 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     private OnCalendarStateChangedListener onCalendarStateChangedListenerr;
 
 
-    public ChildLayout(@NonNull Context context, AttributeSet attrs,int monthHeight, int duration, OnCalendarStateChangedListener onCalendarStateChangedListener) {
-        super(context,attrs);
+    public ChildLayout(@NonNull Context context, AttributeSet attrs, int monthHeight, int duration, OnCalendarStateChangedListener onCalendarStateChangedListener) {
+        super(context, attrs);
         this.monthHeight = monthHeight;
         this.weekHeight = monthHeight / 5;
 
@@ -57,7 +57,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         super.addView(child);
         targetView = getNestedScrollingChild(child);
         if (targetView == null) {
-              throw new RuntimeException("NCalendar需要实现了NestedScrollingChild的子类");
+            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild的子类");
         }
     }
 
@@ -87,7 +87,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
         int animatedValue = (int) animation.getAnimatedValue();
-        int top =getTop();
+        int top = getTop();
         int i = animatedValue - top;
         offsetTopAndBottom(i);
     }
@@ -100,7 +100,6 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         childLayoutValueAnimator.start();
 
     }
-
 
 
     public void autoToWeek() {

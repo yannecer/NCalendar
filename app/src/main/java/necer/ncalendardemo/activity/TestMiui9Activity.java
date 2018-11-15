@@ -42,7 +42,7 @@ public class TestMiui9Activity extends AppCompatActivity {
         recyclerView.setAdapter(aaAdapter);
 
 
-        Miui9Calendar miui9Calendar = findViewById(R.id.miui9Calendar);
+        final Miui9Calendar miui9Calendar = findViewById(R.id.miui9Calendar);
 
         miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
@@ -61,6 +61,8 @@ public class TestMiui9Activity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                       // miui9Calendar.toToday();
+                        miui9Calendar.toMonth();
 
                     }
                 });

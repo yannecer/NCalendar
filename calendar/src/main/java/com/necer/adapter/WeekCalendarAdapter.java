@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.necer.listener.OnClickWeekViewListener;
 import com.necer.utils.Attrs;
+import com.necer.view.BaseCalendarView;
 import com.necer.view.WeekView;
 
 /**
@@ -19,7 +20,7 @@ public class WeekCalendarAdapter extends BaseCalendarAdapter {
     }
 
     @Override
-    protected View getView(int position) {
+    protected BaseCalendarView getView(int position) {
         WeekView weekView = new WeekView(mContext, mAttrs, mInitializeDate.plusDays((position - mCurr) * 7),mOnClickWeekViewListener);
         return weekView;
     }

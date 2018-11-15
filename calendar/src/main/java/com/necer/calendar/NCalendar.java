@@ -57,7 +57,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         weekHeigh = monthHeigh / 5;
 
         monthCalendar = new MonthCalendar(context, attrs, duration, this);
-        childLayout = new ChildLayout(getContext(),attrs, monthHeigh, duration, this);
+        childLayout = new ChildLayout(getContext(), attrs, monthHeigh, duration, this);
 
         monthCalendar.setOnDateChangedListener(this);
         weekCalendar.setOnDateChangedListener(this);
@@ -192,9 +192,11 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     @Override
     public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw) {
 
+
         if (baseCalendar instanceof MonthCalendar && STATE == Attrs.MONTH) {
             //月日历变化,改变周的选中
             weekCalendar.jumpDate(localDate, true);
+            // requestLayout();
             if (onCalendarChangedListener != null) {
                 onCalendarChangedListener.onCalendarDateChanged(localDate);
             }
@@ -202,8 +204,14 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         } else if (baseCalendar instanceof WeekCalendar && STATE == Attrs.WEEK) {
             //周日历变化，改变月的选中
             monthCalendar.jumpDate(localDate, true);
-            //此时需要重新请求布局，不然会闪烁变成原来的状态
-            requestLayout();
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    //此时需要重新请求布局，不然会闪烁变成原来的状态，
+                    // post是因为在前面得到当前view是再post中完成，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
+                    requestLayout();
+                }
+            });
             if (onCalendarChangedListener != null) {
                 onCalendarChangedListener.onCalendarDateChanged(localDate);
             }
@@ -423,6 +431,45 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @return 根据不同日历的交互，计算不同的滑动值
      */
     protected abstract int getGestureChildDownOffset(int dy);
+
+
+    /**
+     * 跳转日期
+     *
+     * @param formatDate
+     */
+    public void jumpDate(String formatDate) {
+
+        if (STATE == Attrs.MONTH) {
+            monthCalendar.jumpDate(formatDate);
+        } else {
+            weekCalendar.jumpDate(formatDate);
+        }
+    }
+
+
+    public void toToday() {
+        if (STATE == Attrs.MONTH) {
+            monthCalendar.toToday();
+        } else {
+            weekCalendar.toToday();
+        }
+    }
+
+    public void toWeek() {
+        if (STATE == Attrs.MONTH) {
+            onAutoToWeekState();
+        }
+
+    }
+
+    public void toMonth() {
+        if (STATE == Attrs.WEEK) {
+            onAutoToMonthState();
+        }
+    }
+
+
 
 
 }
