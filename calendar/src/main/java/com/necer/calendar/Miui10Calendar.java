@@ -9,23 +9,20 @@ import android.util.AttributeSet;
 /**
  * Created by necer on 2018/11/12.
  */
-public class Miui10Calendar extends NCalendar {
+public class Miui10Calendar extends MiuiCalendar {
 
 
     public Miui10Calendar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
     }
 
 
     @Override
-    public int getGestureMonthUpOffset(int dy) {
+    protected int getGestureMonthUpOffset(int dy) {
 
         int maxOffset = monthCalendar.getMonthCalendarOffset() - Math.abs(monthCalendar.getTop());
-
         float monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
         float childLayoutOffset = childLayout.getChildLayoutOffset();
-
 
         int offset = (int) ((monthCalendarOffset * dy) / childLayoutOffset);
 
@@ -37,13 +34,12 @@ public class Miui10Calendar extends NCalendar {
     }
 
     @Override
-    public int getGestureMonthDownOffset(int dy) {
+    protected int getGestureMonthDownOffset(int dy) {
 
         int maxOffset = Math.abs(monthCalendar.getTop());
-        int monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
-        int childLayoutOffset = childLayout.getChildLayoutOffset();
-        int offset = (monthCalendarOffset * dy) / childLayoutOffset;
-
+        float monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
+        float childLayoutOffset = childLayout.getChildLayoutOffset();
+        int offset = (int) ((monthCalendarOffset * dy) / childLayoutOffset);
 
         if (offset == 0) {
             return getOffset(Math.abs(dy), maxOffset);
@@ -51,19 +47,17 @@ public class Miui10Calendar extends NCalendar {
             return getOffset(Math.abs(offset), maxOffset);
         }
     }
-    @Override
-    public int getChildLayoutDownOffset(int dy) {
 
+    @Override
+    protected int getGestureChildDownOffset(int dy) {
         int maxOffset = monthHeigh - childLayout.getTop();
         return getOffset(Math.abs(dy), maxOffset);
     }
 
     @Override
-    public int getGestureChildUpOffset(int dy) {
-
+    protected int getGestureChildUpOffset(int dy) {
         int maxOffset = childLayout.getTop() - weekHeigh;
         return getOffset(dy, maxOffset);
     }
-
 
 }

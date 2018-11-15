@@ -13,6 +13,7 @@ import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
 import com.necer.listener.OnClickMonthViewListener;
+import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
@@ -31,14 +32,16 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     protected ValueAnimator monthValueAnimator;//月日历动画
 
     private OnMonthSelectListener onMonthSelectListener;
+    private OnMonthAnimatorListener onMonthAnimatorListener;
 
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
     }
 
-    public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet,int duration) {
+    public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
         this(context, attributeSet);
 
+        this.onMonthAnimatorListener = onMonthAnimatorListener;
         monthValueAnimator = new ValueAnimator();
         monthValueAnimator.setDuration(duration);
         monthValueAnimator.addUpdateListener(this);
@@ -88,7 +91,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickCurrentMonth(LocalDate date) {
         onSelcetDate(date);
-        onDateChanged(date,true);
+        onDateChanged(date, true);
         onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
         notifyView(date, true);
@@ -97,7 +100,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickLastMonth(LocalDate date) {
         onSelcetDate(date);
-        onDateChanged(date,true);
+        onDateChanged(date, true);
         onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         setCurrentItem(getCurrentItem() - 1, true);
         notifyView(date, true);
@@ -106,7 +109,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickNextMonth(LocalDate date) {
         onSelcetDate(date);
-        onDateChanged(date,true);
+        onDateChanged(date, true);
         onYearMonthChanged(date.getYear(), date.getMonthOfYear());
         setCurrentItem(getCurrentItem() + 1, true);
         notifyView(date, true);
@@ -121,7 +124,6 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         return mCurrView.getMonthCalendarOffset();
     }
 
-
     public void autoToMonth() {
         int top = getTop();//起始位置
         int end = 0;
@@ -129,24 +131,29 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         monthValueAnimator.start();
     }
 
-    public void autoToWeek() {
+
+    public void autoToMIUIWeek() {
         int top = getTop();//起始位置
         int end = -getMonthCalendarOffset(); //结束位置
         monthValueAnimator.setIntValues(top, end);
         monthValueAnimator.start();
+    }
 
+    public void autoToEMUIWeek() {
+        int top = getTop();//起始位置
+        int end = -getHeight() * 4 / 5; //结束位置
+        monthValueAnimator.setIntValues(top, end);
+        monthValueAnimator.start();
     }
 
 
     public boolean isMonthState() {
-        return getTop() == 0;
+        return getTop() >= 0;
     }
 
     public boolean isWeekState() {
-        return getTop() == -getMonthCalendarOffset();
+        return getTop() <= -getMonthCalendarOffset();
     }
-
-
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
@@ -154,5 +161,13 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         int top = getTop();
         int i = animatedValue - top;
         offsetTopAndBottom(i);
+
+        if (onMonthAnimatorListener != null) {
+            onMonthAnimatorListener.onMonthAnimatorChanged(i);
+        }
     }
+
+
+
+
 }
