@@ -3,6 +3,9 @@
 
     <color name="solarTextColor">#000000</color>
     <color name="lunarTextColor">#B2B2B2</color>
+    <color name="solarTermTextColor">#ff00ff</color>
+    <color name="lunarHolidayTextColor">#00ff00</color>
+    <color name="solarHolidayTextColor">#0000ff</color>
     <color name="hintColor">#999999</color>
     <color name="selectCircleColor">#39AF81</color>
     <color name="todaySolarTextColor">#39AF81</color>

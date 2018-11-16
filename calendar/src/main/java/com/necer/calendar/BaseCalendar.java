@@ -56,6 +56,10 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.solarTextColor = ta.getColor(R.styleable.NCalendar_solarTextColor, getResources().getColor(R.color.solarTextColor));
         attrs.todaySolarTextColor = ta.getColor(R.styleable.NCalendar_todaySolarTextColor, getResources().getColor(R.color.todaySolarTextColor));
         attrs.lunarTextColor = ta.getColor(R.styleable.NCalendar_lunarTextColor, getResources().getColor(R.color.lunarTextColor));
+        attrs.solarHolidayTextColor = ta.getColor(R.styleable.NCalendar_solarHolidayTextColor, getResources().getColor(R.color.solarHolidayTextColor));
+        attrs.lunarHolidayTextColor = ta.getColor(R.styleable.NCalendar_lunarHolidayTextColor, getResources().getColor(R.color.lunarHolidayTextColor));
+        attrs.solarTermTextColor = ta.getColor(R.styleable.NCalendar_solarTermTextColor, getResources().getColor(R.color.solarTermTextColor));
+
         attrs.selectCircleColor = ta.getColor(R.styleable.NCalendar_selectCircleColor, getResources().getColor(R.color.selectCircleColor));
         attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, getResources().getColor(R.color.hintColor));
         attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Util.sp2px(context, 18));

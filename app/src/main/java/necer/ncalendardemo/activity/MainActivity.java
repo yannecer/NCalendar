@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.necer.ncalendar.utils.MyLog;
+import com.necer.utils.SolarTermUtil;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -27,6 +28,19 @@ public class MainActivity extends AppCompatActivity {
         TextView tvVersion = (TextView) findViewById(R.id.tv_version);
         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
 
+
+        String solatName = SolarTermUtil.getSolatName(2018, "1107");
+
+
+        MyLog.d("solatName11：：" + solatName);
+
+
+        String solatName2 = SolarTermUtil.getSolatName(2018, "117");
+
+
+        MyLog.d("solatName22：：" + solatName2);
+
+
     }
 
 
@@ -42,6 +56,5 @@ public class MainActivity extends AppCompatActivity {
     public void emui(View v) {
         startActivity(new Intent(this, TestEmuiActivity.class));
     }
-
 
 }

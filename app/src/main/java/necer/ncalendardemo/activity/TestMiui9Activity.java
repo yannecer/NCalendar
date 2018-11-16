@@ -62,7 +62,7 @@ public class TestMiui9Activity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                        // miui9Calendar.toToday();
-                        miui9Calendar.toMonth();
+                        miui9Calendar.jumpDate("2026-01-01");
 
                     }
                 });

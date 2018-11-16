@@ -1,16 +1,8 @@
 package com.necer.view;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-
-import com.necer.MyLog;
-import com.necer.entity.NCalendar;
+import com.necer.entity.NDate;
 import com.necer.listener.OnClickMonthViewListener;
-import com.necer.listener.OnClickWeekViewListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 
@@ -32,8 +24,8 @@ public class MonthView extends BaseCalendarView {
     }
 
     @Override
-    protected NCalendar getNCalendar(LocalDate localDate, int type) {
-        return Util.getMonthCalendar2(localDate,type);
+    protected List<NDate> getNCalendar(LocalDate localDate, int type) {
+        return Util.getMonthCalendar(localDate,type);
     }
 
     @Override

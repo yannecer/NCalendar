@@ -5,12 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.necer.MyLog;
-import com.necer.entity.NCalendar;
+import com.necer.entity.NDate;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 
@@ -28,12 +29,12 @@ public abstract class BaseCalendarView extends View {
 
     private Attrs mAttrs;
     private int mLineNum;//行数
-    private List<String> mLunarList;
-    protected List<LocalDate> mLocalDateList;
     protected LocalDate mInitialDate;//由mInitialDate和周开始的第一天 算出当前页面的数据
     protected Paint mTextPaint;
     protected Paint mCirclePaint;
     protected List<Rect> mRectList;//点击用的矩形集合
+
+    protected List<NDate> mDateList;//页面的数据集合
 
     private List<LocalDate> mPointList;
     protected List<String> mHolidayList;
@@ -48,12 +49,10 @@ public abstract class BaseCalendarView extends View {
         this.mAttrs = attrs;
         this.mInitialDate = localDate;
 
-        NCalendar nCalendar = getNCalendar(localDate, attrs.firstDayOfWeek);
-        mLunarList = nCalendar.lunarList;
-        mLocalDateList = nCalendar.dateList;
+        mDateList = getNCalendar(localDate, attrs.firstDayOfWeek);
 
         mRectList = new ArrayList<>();
-        mLineNum = mLocalDateList.size() / 7;//天数/7
+        mLineNum = mDateList.size() / 7;//天数/7
 
         mTextPaint = getPaint();
         mCirclePaint = getPaint();
@@ -72,7 +71,8 @@ public abstract class BaseCalendarView extends View {
             for (int j = 0; j < 7; j++) {
                 Rect rect = getRect(i, j);
                 mRectList.add(rect);
-                LocalDate date = mLocalDateList.get(i * 7 + j);
+                NDate nDate = mDateList.get(i * 7 + j);
+                LocalDate date = nDate.localDate;
 
                 //每个矩形的竖直中心，但不是文字的绘制中心
                 int centerY = rect.centerY();
@@ -81,20 +81,18 @@ public abstract class BaseCalendarView extends View {
 
                 //当月和上下月的颜色不同
                 if (isEqualsMonthOrWeek(date, mInitialDate)) {
-
                     //当天且选中的当天
                     if (Util.isToday(date) && date.equals(mSelectDate)) {
-
                         drawSolidCircle(canvas, rect.centerX(), centerY);
                         drawSolar(canvas, centerX, centerY, Color.WHITE, date.getDayOfMonth() + "");
-                        drawLunar(canvas, centerX, centerY, Color.WHITE, mLunarList.get(i * 7 + j));
+                        drawLunar(canvas, centerX, centerY, true, true, nDate);
                         drawPoint(canvas, centerX, centerY, Color.WHITE, date);
                         drawHolidays(canvas, centerX, centerY, Color.WHITE, date);
 
                     } else if (Util.isToday(date) && !date.equals(mSelectDate)) {
                         //当天但选中的不是今天
                         drawSolar(canvas, centerX, centerY, mAttrs.todaySolarTextColor, date.getDayOfMonth() + "");
-                        drawLunar(canvas, centerX, centerY, mAttrs.todaySolarTextColor, mLunarList.get(i * 7 + j));
+                        drawLunar(canvas, centerX, centerY, false, true, nDate);
                         drawPoint(canvas, centerX, centerY, mAttrs.todaySolarTextColor, date);
                         drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
 
@@ -102,14 +100,14 @@ public abstract class BaseCalendarView extends View {
                         //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
                         drawHollowCircle(canvas, centerX, centerY);
                         drawSolar(canvas, centerX, centerY, mAttrs.solarTextColor, date.getDayOfMonth() + "");
-                        drawLunar(canvas, centerX, centerY, mAttrs.lunarTextColor, mLunarList.get(i * 7 + j));
+                        drawLunar(canvas, centerX, centerY, false, true, nDate);
                         drawPoint(canvas, centerX, centerY, mAttrs.pointColor, date);
                         drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
                     } else {
 
                         drawSolar(canvas, centerX, centerY, mAttrs.solarTextColor, date.getDayOfMonth() + "");
                         //农历
-                        drawLunar(canvas, centerX, centerY, mAttrs.lunarTextColor, mLunarList.get(i * 7 + j));
+                        drawLunar(canvas, centerX, centerY, false, true, nDate);
                         //绘制圆点
                         drawPoint(canvas, centerX, centerY, mAttrs.pointColor, date);
                         drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
@@ -119,7 +117,7 @@ public abstract class BaseCalendarView extends View {
                     //公历
                     drawSolar(canvas, centerX, centerY, mAttrs.hintColor, date.getDayOfMonth() + "");
                     //农历
-                    drawLunar(canvas, centerX, centerY, mAttrs.lunarTextColor, mLunarList.get(i * 7 + j));
+                    drawLunar(canvas, centerX, centerY, false, false, nDate);
                     //绘制圆点
                     drawPoint(canvas, centerX, centerY, mAttrs.pointColor, date);
                     //绘制节假日
@@ -187,11 +185,30 @@ public abstract class BaseCalendarView extends View {
     }
 
     //绘制农历
-    private void drawLunar(Canvas canvas, int centerX, int centerY, int color, String lunar) {
+    private void drawLunar(Canvas canvas, int centerX, int centerY, boolean isWhite, boolean isCurrMonth, NDate nDate) {
         if (mAttrs.isShowLunar) {
-            mTextPaint.setColor(color);
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
-            canvas.drawText(lunar, centerX, centerY + mAttrs.lunarDistance, mTextPaint);
+            //优先顺序 农历节日、节气、公历节日、正常农历日期
+            String lunarString;
+            if (!TextUtils.isEmpty(nDate.lunarHoliday)) {
+                mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.lunarHolidayTextColor);
+                lunarString = nDate.lunarHoliday;
+            } else if (!TextUtils.isEmpty(nDate.solarTerm)) {
+                mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.solarTermTextColor);
+                lunarString = nDate.solarTerm;
+            } else if (!TextUtils.isEmpty(nDate.solarHoliday)) {
+                mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.solarHolidayTextColor);
+                lunarString = nDate.solarHoliday;
+            } else {
+                mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.lunarTextColor);
+                lunarString = nDate.lunarString;
+            }
+
+            if (!isCurrMonth) {
+                mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.lunarTextColor);
+            }
+
+            canvas.drawText(lunarString, centerX, centerY + mAttrs.lunarDistance, mTextPaint);
         }
     }
 
@@ -271,7 +288,7 @@ public abstract class BaseCalendarView extends View {
      * @param type        一周开始是周日还是周一
      * @return
      */
-    protected abstract NCalendar getNCalendar(LocalDate initialDate, int type);
+    protected abstract List<NDate> getNCalendar(LocalDate initialDate, int type);
 
 
     /**
@@ -319,7 +336,7 @@ public abstract class BaseCalendarView extends View {
             for (int i = 0; i < mRectList.size(); i++) {
                 Rect rect = mRectList.get(i);
                 if (rect.contains((int) e.getX(), (int) e.getY())) {
-                    LocalDate clickDate = mLocalDateList.get(i);
+                    LocalDate clickDate = mDateList.get(i).localDate;
                     onClick(clickDate, mInitialDate);
                     break;
                 }
@@ -342,8 +359,7 @@ public abstract class BaseCalendarView extends View {
     public int getMonthCalendarOffset() {
         int monthCalendarOffset;
         //选中的是第几行
-        int selectIndex = mLocalDateList.indexOf(mSelectDate) / 7;
-
+        int selectIndex = mDateList.indexOf(new NDate(mSelectDate)) / 7;
         if (mLineNum == 5) {
             //5行的月份
             monthCalendarOffset = getMeasuredHeight() / 5 * selectIndex;

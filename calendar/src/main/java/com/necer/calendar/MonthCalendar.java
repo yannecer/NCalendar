@@ -93,7 +93,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         onSelcetDate(date);
         onDateChanged(date, true);
         onYearMonthChanged(date.getYear(), date.getMonthOfYear());
-        Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
         notifyView(date, true);
     }
 
