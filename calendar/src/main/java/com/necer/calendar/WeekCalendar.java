@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.WeekCalendarAdapter;
+import com.necer.entity.NDate;
 import com.necer.listener.OnClickWeekViewListener;
 import com.necer.listener.OnWeekSelectListener;
 import com.necer.utils.Attrs;
@@ -59,19 +60,19 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
-    protected void onSelcetDate(LocalDate localDate) {
-        mOnClickDate = localDate;
+    protected void onSelcetDate(NDate date) {
+        mOnClickDate = date.localDate;
         if (onWeekSelectListener != null) {
-            onWeekSelectListener.onWeekSelect(localDate);
+            onWeekSelectListener.onWeekSelect(date);
         }
     }
 
     @Override
-    public void onClickCurrentWeek(LocalDate date) {
-        onSelcetDate(date);
-        onDateChanged(date,true);
-        onYearMonthChanged(date.getYear(),date.getMonthOfYear());
-        notifyView(date,true);
+    public void onClickCurrentWeek(NDate nDate) {
+        onSelcetDate(nDate);
+        onDateChanged(nDate,true);
+        onYearMonthChanged(nDate.localDate.getYear(),nDate.localDate.getMonthOfYear());
+        notifyView(nDate.localDate,true);
       //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
     }
 

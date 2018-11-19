@@ -208,99 +208,76 @@ public class SolarTermUtil {
         }
         // 1
         mSolarName.add("立春");
-        mSolarData.add("02"
-                + getSolarTermNum(year, SolarTermsEnum.LICHUN.name()));
+        mSolarData.add("02" + getSolarTermNum(year, SolarTermsEnum.LICHUN.name()));
         // 2
         mSolarName.add("雨水");
-        mSolarData.add("02"
-                + getSolarTermNum(year, SolarTermsEnum.YUSHUI.name()));
+        mSolarData.add("02" + getSolarTermNum(year, SolarTermsEnum.YUSHUI.name()));
         // 3
         mSolarName.add("惊蛰");
-        mSolarData.add("03"
-                + getSolarTermNum(year, SolarTermsEnum.JINGZHE.name()));
+        mSolarData.add("03" + getSolarTermNum(year, SolarTermsEnum.JINGZHE.name()));
         // 4
         mSolarName.add("春分");
-        mSolarData.add("03"
-                + getSolarTermNum(year, SolarTermsEnum.CHUNFEN.name()));
+        mSolarData.add("03" + getSolarTermNum(year, SolarTermsEnum.CHUNFEN.name()));
         // 5
         mSolarName.add("清明");
-        mSolarData.add("04"
-                + getSolarTermNum(year, SolarTermsEnum.QINGMING.name()));
+        mSolarData.add("04" + getSolarTermNum(year, SolarTermsEnum.QINGMING.name()));
         // 6
         mSolarName.add("谷雨");
         mSolarData.add("04" + getSolarTermNum(year, SolarTermsEnum.GUYU.name()));
         // 7
         mSolarName.add("立夏");
-        mSolarData
-                .add("05" + getSolarTermNum(year, SolarTermsEnum.LIXIA.name()));
+        mSolarData.add("05" + getSolarTermNum(year, SolarTermsEnum.LIXIA.name()));
         // 8
         mSolarName.add("小满");
-        mSolarData.add("05"
-                + getSolarTermNum(year, SolarTermsEnum.XIAOMAN.name()));
+        mSolarData.add("05" + getSolarTermNum(year, SolarTermsEnum.XIAOMAN.name()));
         // 9
         mSolarName.add("芒种");
-        mSolarData.add("06"
-                + getSolarTermNum(year, SolarTermsEnum.MANGZHONG.name()));
+        mSolarData.add("06" + getSolarTermNum(year, SolarTermsEnum.MANGZHONG.name()));
         // 10
         mSolarName.add("夏至");
-        mSolarData.add("06"
-                + getSolarTermNum(year, SolarTermsEnum.XIAZHI.name()));
+        mSolarData.add("06" + getSolarTermNum(year, SolarTermsEnum.XIAZHI.name()));
         // 11
         mSolarName.add("小暑");
-        mSolarData.add("07"
-                + getSolarTermNum(year, SolarTermsEnum.XIAOSHU.name()));
+        mSolarData.add("07" + getSolarTermNum(year, SolarTermsEnum.XIAOSHU.name()));
         // 12
         mSolarName.add("大暑");
-        mSolarData
-                .add("07" + getSolarTermNum(year, SolarTermsEnum.DASHU.name()));
+        mSolarData.add("07" + getSolarTermNum(year, SolarTermsEnum.DASHU.name()));
         // 13
         mSolarName.add("立秋");
-        mSolarData
-                .add("08" + getSolarTermNum(year, SolarTermsEnum.LIQIU.name()));
+        mSolarData.add("08" + getSolarTermNum(year, SolarTermsEnum.LIQIU.name()));
         // 14
         mSolarName.add("处暑");
-        mSolarData.add("08"
-                + getSolarTermNum(year, SolarTermsEnum.CHUSHU.name()));
+        mSolarData.add("08" + getSolarTermNum(year, SolarTermsEnum.CHUSHU.name()));
         // 15
         mSolarName.add("白露");
-        mSolarData
-                .add("09" + getSolarTermNum(year, SolarTermsEnum.BAILU.name()));
+        mSolarData.add("09" + getSolarTermNum(year, SolarTermsEnum.BAILU.name()));
         // 16
         mSolarName.add("秋分");
-        mSolarData.add("09"
-                + getSolarTermNum(year, SolarTermsEnum.QIUFEN.name()));
+        mSolarData.add("09" + getSolarTermNum(year, SolarTermsEnum.QIUFEN.name()));
         // 17
         mSolarName.add("寒露");
-        mSolarData.add("10"
-                + getSolarTermNum(year, SolarTermsEnum.HANLU.name()));
+        mSolarData.add("10" + getSolarTermNum(year, SolarTermsEnum.HANLU.name()));
         // 18
         mSolarName.add("霜降");
-        mSolarData.add("10"
-                + getSolarTermNum(year, SolarTermsEnum.SHUANGJIANG.name()));
+        mSolarData.add("10" + getSolarTermNum(year, SolarTermsEnum.SHUANGJIANG.name()));
         // 19
         mSolarName.add("立冬");
-        mSolarData.add("11"
-                + getSolarTermNum(year, SolarTermsEnum.LIDONG.name()));
+        mSolarData.add("11" + getSolarTermNum(year, SolarTermsEnum.LIDONG.name()));
         // 20
         mSolarName.add("小雪");
-        mSolarData.add("11"
-                + getSolarTermNum(year, SolarTermsEnum.XIAOXUE.name()));
+        mSolarData.add("11" + getSolarTermNum(year, SolarTermsEnum.XIAOXUE.name()));
         // 21
         mSolarName.add("大雪");
-        mSolarData.add("12"
-                + getSolarTermNum(year, SolarTermsEnum.DAXUE.name()));
+        mSolarData.add("12" + getSolarTermNum(year, SolarTermsEnum.DAXUE.name()));
         // 22
         mSolarName.add("冬至");
-        mSolarData.add("12"
-                + getSolarTermNum(year, SolarTermsEnum.DONGZHI.name()));
+        mSolarData.add("12" + getSolarTermNum(year, SolarTermsEnum.DONGZHI.name()));
         // 23
         mSolarName.add("小寒");
-        mSolarData.add("01"
-                + getSolarTermNum(year, SolarTermsEnum.XIAOHAN.name()));
+        mSolarData.add("01" + getSolarTermNum(year, SolarTermsEnum.XIAOHAN.name()));
         // 24
         mSolarName.add("大寒");
-        mSolarData
-                .add("01" + getSolarTermNum(year, SolarTermsEnum.DAHAN.name()));
+        mSolarData.add("01" + getSolarTermNum(year, SolarTermsEnum.DAHAN.name()));
 
     }
 

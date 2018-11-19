@@ -26,10 +26,6 @@ public class Attrs {
     public static final int BOTTOM_LEFT = 403;//左下方
 
 
-    public static int HOLIDAY_SOLAR = 1000;//公历节日
-    public static int HOLIDAY_LUNAR = 2000;//阴历节日
-    public static int SOLARTERM = 3000;//节气
-
 
     public int solarTextColor;
     public int todaySolarTextColor;
@@ -67,7 +63,8 @@ public class Attrs {
     public int holidayLocation;
     public int workdayColor;
 
-    public int backgroundColor;
+    public int bgCalendarColor;//日历的背景
+    public int bgChildColor;//子view的背景
 
     public boolean isDefaultSelect;//是否默认选中
 

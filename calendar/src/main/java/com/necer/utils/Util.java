@@ -317,8 +317,8 @@ public class Util {
     }
 
 
-    private static NDate getNDate(LocalDate localDate) {
-
+    public static NDate getNDate(LocalDate localDate) {
+        NDate nDate = new NDate();
 
         int solarYear = localDate.getYear();
         int solarMonth = localDate.getMonthOfYear();
@@ -326,10 +326,8 @@ public class Util {
 
         Lunar lunar = LunarUtil.getLunar(solarYear, solarMonth, solarDay);
 
-        NDate nDate = new NDate();
+        nDate.lunar = lunar;
         nDate.localDate = localDate;
-        nDate.lunarString = LunarUtil.getLunarString(lunar);
-        nDate.isLeap = lunar.isLeap;
         nDate.solarTerm = SolarTermUtil.getSolatName(solarYear, solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "") + solarDay);
         nDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
         nDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay);

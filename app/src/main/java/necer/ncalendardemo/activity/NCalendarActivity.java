@@ -54,10 +54,6 @@ public class NCalendarActivity extends AppCompatActivity implements OnCalendarCh
         tv_date = (TextView) findViewById(R.id.tv_date);
 
 
-     //   ncalendar.setDateInterval("2017-04-02","2018-01-01");
-
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         AAAdapter aaAdapter = new AAAdapter(this);
         recyclerView.setAdapter(aaAdapter);

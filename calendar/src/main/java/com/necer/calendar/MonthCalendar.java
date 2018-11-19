@@ -1,25 +1,17 @@
 package com.necer.calendar;
-
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.Toast;
-
-import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
+import com.necer.entity.NDate;
 import com.necer.listener.OnClickMonthViewListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
-import com.necer.view.BaseCalendarView;
-import com.necer.view.MonthView;
-
 import org.joda.time.LocalDate;
 
 /**
@@ -30,7 +22,6 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
 
 
     protected ValueAnimator monthValueAnimator;//月日历动画
-
     private OnMonthSelectListener onMonthSelectListener;
     private OnMonthAnimatorListener onMonthAnimatorListener;
 
@@ -79,40 +70,40 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected void onSelcetDate(LocalDate localDate) {
+    protected void onSelcetDate(NDate nDate) {
         //选中，即理解为点击，因为点击了肯定会选中
-        mOnClickDate = localDate;
+        mOnClickDate = nDate.localDate;
         if (onMonthSelectListener != null) {
-            onMonthSelectListener.onMonthSelect(localDate);
+            onMonthSelectListener.onMonthSelect(nDate);
         }
     }
 
 
     @Override
-    public void onClickCurrentMonth(LocalDate date) {
-        onSelcetDate(date);
-        onDateChanged(date, true);
-        onYearMonthChanged(date.getYear(), date.getMonthOfYear());
+    public void onClickCurrentMonth(NDate nDate) {
+        onSelcetDate(nDate);
+        onDateChanged(nDate, true);
+        onYearMonthChanged(nDate.localDate.getYear(), nDate.localDate.getMonthOfYear());
       //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
-        notifyView(date, true);
+        notifyView(nDate.localDate, true);
     }
 
     @Override
-    public void onClickLastMonth(LocalDate date) {
-        onSelcetDate(date);
-        onDateChanged(date, true);
-        onYearMonthChanged(date.getYear(), date.getMonthOfYear());
+    public void onClickLastMonth(NDate nDate) {
+        onSelcetDate(nDate);
+        onDateChanged(nDate, true);
+        onYearMonthChanged(nDate.localDate.getYear(), nDate.localDate.getMonthOfYear());
         setCurrentItem(getCurrentItem() - 1, true);
-        notifyView(date, true);
+        notifyView(nDate.localDate, true);
     }
 
     @Override
-    public void onClickNextMonth(LocalDate date) {
-        onSelcetDate(date);
-        onDateChanged(date, true);
-        onYearMonthChanged(date.getYear(), date.getMonthOfYear());
+    public void onClickNextMonth(NDate nDate) {
+        onSelcetDate(nDate);
+        onDateChanged(nDate, true);
+        onYearMonthChanged(nDate.localDate.getYear(), nDate.localDate.getMonthOfYear());
         setCurrentItem(getCurrentItem() + 1, true);
-        notifyView(date, true);
+        notifyView(nDate.localDate, true);
     }
 
     public void setOnMonthSelectListener(OnMonthSelectListener onMonthSelectListener) {

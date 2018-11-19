@@ -29,13 +29,13 @@ public class MonthView extends BaseCalendarView {
     }
 
     @Override
-    protected void onClick(LocalDate clickData, LocalDate initialDate) {
-        if (Util.isLastMonth(clickData, initialDate)) {
-            mOnClickMonthViewListener.onClickLastMonth(clickData);
-        } else if (Util.isNextMonth(clickData, initialDate)) {
-            mOnClickMonthViewListener.onClickNextMonth(clickData);
+    protected void onClick(NDate nDate, LocalDate initialDate) {
+        if (Util.isLastMonth(nDate.localDate, initialDate)) {
+            mOnClickMonthViewListener.onClickLastMonth(nDate);
+        } else if (Util.isNextMonth(nDate.localDate, initialDate)) {
+            mOnClickMonthViewListener.onClickNextMonth(nDate);
         } else {
-            mOnClickMonthViewListener.onClickCurrentMonth(clickData);
+            mOnClickMonthViewListener.onClickCurrentMonth(nDate);
         }
     }
 

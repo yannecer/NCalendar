@@ -18,7 +18,9 @@ public class LunarUtil {
      * 用于保存中文的月份
      */
     private final static String CHINESE_NUMBER[] = {"一", "二", "三", "四", "五",
-            "六", "七", "八", "九", "十", "十一", "腊"};
+            "六", "七", "八", "九", "十", "冬", "腊"};
+
+
     /**
      * 用来表示1900年到2099年间农历年份的相关信息，共24位bit的16进制表示，其中：
      * 1. 前4位表示该年闰哪个月；
@@ -93,6 +95,11 @@ public class LunarUtil {
             0x107e48};
 
 
+    private static String[] Gan = {"癸", "甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬"};
+    private static String[] Zhi = {"亥", "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌"};
+    private static String[] Animals = {"猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗"};
+    private static String chineseTen[] = {"初", "十", "廿", "卅"};
+
     /**
      * 传回农历year年month月的总天数
      *
@@ -159,36 +166,6 @@ public class LunarUtil {
     }
 
 
-    /**
-     * 返回农历中文格式
-     *
-     * @return
-     */
-    public static String getLunarString(Lunar lunar) {
-
-        String chineseTen[] = {"初", "十", "廿", "卅"};
-        int n = lunar.lunarDay % 10 == 0 ? 9 : lunar.lunarDay % 10 - 1;
-        String relust = "";
-        if (lunar.lunarDay > 30)
-            relust = "";
-        if (lunar.lunarDay == 10)
-            relust = "初十";
-        else
-            relust = chineseTen[lunar.lunarDay / 10] + CHINESE_NUMBER[n];
-
-        if (relust.equals("初一") && lunar.isLeap) {
-            relust = "闰" + CHINESE_NUMBER[lunar.lunarMonth - 1] + "月";
-        }
-
-        if (relust.equals("初一") && !lunar.isLeap) {
-            relust = CHINESE_NUMBER[lunar.lunarMonth - 1] + "月";
-        }
-
-        return relust;
-
-    }
-
-
     private static int getBitInt(int data, int length, int shift) {
         return (data & (((1 << length) - 1) << shift)) >> shift;
     }
@@ -202,7 +179,7 @@ public class LunarUtil {
     /**
      * 公历转农历
      */
-    public static Lunar getLunar(int solarYear,int solarMonth,int solarDay) {
+    public static Lunar getLunar(int solarYear, int solarMonth, int solarDay) {
         Lunar lunar = new Lunar();
         int index = solarYear - solar_1_1[0];
         int data = (solarYear << 9) | (solarMonth << 5) | (solarDay);
@@ -240,10 +217,60 @@ public class LunarUtil {
             lunar.lunarMonth = lunarM - 1;
             if (lunarM == leap + 1) {
                 lunar.isLeap = true;
+                lunar.leapMonth = lunar.lunarMonth;
             }
         }
         lunar.lunarDay = lunarD;
+
+        lunar.lunarYearStr = getGan(lunar.lunarYear) + getZhi(lunar.lunarYear) + getAnimalString(lunar.lunarYear);
+        lunar.lunarMonthStr = getMonthStr(lunar.lunarMonth, lunar.isLeap);
+        lunar.lunarDayStr = getDayStr(lunar.lunarDay);
+        lunar.lunarDrawStr = getDrawStr(lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+
+
         return lunar;
+    }
+
+
+    /**
+     * 取农历年生肖
+     *
+     * @return 农历年生肖(例 : 2000年龙年)
+     */
+    private static String getAnimalString(int lunarYear) {
+        return Animals[(lunarYear - 3) % 12];
+    }
+
+    private static String getGan(int lunarYear) {
+        return Gan[(lunarYear - 3) % 10];
+    }
+
+    private static String getZhi(int lunarYear) {
+        return Zhi[(lunarYear - 3) % 12];
+    }
+
+    private static String getMonthStr(int lunarMonth, boolean isLeap) {
+        return isLeap ? "闰" : "" + CHINESE_NUMBER[lunarMonth - 1] + "月";
+    }
+
+    private static String getDrawStr(int lunatMonth, int lunatDay, boolean isLeap) {
+        String relust = "";
+        if (relust.equals("初一") && isLeap) {
+            relust = "闰" + CHINESE_NUMBER[lunatMonth - 1] + "月";
+        } else if (relust.equals("初一") && !isLeap) {
+            relust = CHINESE_NUMBER[lunatMonth - 1] + "月";
+        } else if (lunatDay == 10) {
+            relust = "初十";
+        } else {
+            int n = lunatDay % 10 == 0 ? 9 : lunatDay % 10 - 1;
+            relust = chineseTen[lunatDay / 10] + CHINESE_NUMBER[n];
+        }
+        return relust;
+    }
+
+    private static String getDayStr(int lunatDay) {
+        int n = lunatDay % 10 == 0 ? 9 : lunatDay % 10 - 1;
+        return chineseTen[lunatDay / 10] + CHINESE_NUMBER[n];
     }
 
 }

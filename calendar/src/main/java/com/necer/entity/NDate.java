@@ -11,8 +11,7 @@ public class NDate implements Serializable {
 
 
     public LocalDate localDate;//公历日期
-    public String lunarString;//农历日期
-    public boolean isLeap;//是否闰年
+    public Lunar lunar;
     public String solarHoliday;//公历节日
     public String lunarHoliday;//农历节日
     public String solarTerm;//节气

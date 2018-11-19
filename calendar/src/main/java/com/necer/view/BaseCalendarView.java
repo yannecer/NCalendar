@@ -9,14 +9,10 @@ import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.necer.MyLog;
 import com.necer.entity.NDate;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
-
 import org.joda.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,7 +197,7 @@ public abstract class BaseCalendarView extends View {
                 lunarString = nDate.solarHoliday;
             } else {
                 mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.lunarTextColor);
-                lunarString = nDate.lunarString;
+                lunarString = nDate.lunar.lunarDrawStr;
             }
 
             if (!isCurrMonth) {
@@ -294,10 +290,10 @@ public abstract class BaseCalendarView extends View {
     /**
      * 点击事件
      *
-     * @param clickData   点击的date
+     * @param clickNData   点击的date
      * @param initialDate 初始化当前页面的date
      */
-    protected abstract void onClick(LocalDate clickData, LocalDate initialDate);
+    protected abstract void onClick(NDate clickNData, LocalDate initialDate);
 
 
     /**
@@ -336,7 +332,7 @@ public abstract class BaseCalendarView extends View {
             for (int i = 0; i < mRectList.size(); i++) {
                 Rect rect = mRectList.get(i);
                 if (rect.contains((int) e.getX(), (int) e.getY())) {
-                    LocalDate clickDate = mDateList.get(i).localDate;
+                    NDate clickDate = mDateList.get(i);
                     onClick(clickDate, mInitialDate);
                     break;
                 }
@@ -370,6 +366,4 @@ public abstract class BaseCalendarView extends View {
         }
         return monthCalendarOffset;
     }
-
-
 }

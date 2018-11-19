@@ -10,6 +10,7 @@ import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
+import com.necer.entity.NDate;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnWeekSelectListener;
@@ -55,10 +56,15 @@ public class TestActivity extends AppCompatActivity {
 
 
         monthcalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
-            @Override
-            public void onMonthSelect(LocalDate date) {
-                MyLog.d("datedatedatedate:  月:" + date);
 
+            @Override
+            public void onMonthSelect(NDate date) {
+                MyLog.d("date:::" + date.localDate);
+                MyLog.d("date:::" + date.lunar.lunarYearStr);
+                MyLog.d("date:::" + date.lunar.lunarMonthStr);
+                MyLog.d("date:::" + date.lunar.lunarDayStr);
+                MyLog.d("date:::" + date.lunar.isLeap);
+                MyLog.d("date:::" + date.lunar.leapMonth);
             }
         });
 
@@ -71,12 +77,14 @@ public class TestActivity extends AppCompatActivity {
                     }
                 });
 
-        weekcalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
+      /*  weekcalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
             @Override
             public void onWeekSelect(LocalDate date) {
                 MyLog.d("datedatedatedate  周   ：：" + date);
             }
-        });
+        });*/
+
+
 
 
         monthcalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
