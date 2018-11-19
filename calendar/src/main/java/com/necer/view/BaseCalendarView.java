@@ -53,8 +53,8 @@ public abstract class BaseCalendarView extends View {
         mTextPaint = getPaint();
         mCirclePaint = getPaint();
 
-        mHolidayList = Util.getHolidayList(getContext());
-        mWorkdayList = Util.getWorkdayList(getContext());
+        mHolidayList = Util.getHolidayList();
+        mWorkdayList = Util.getWorkdayList();
     }
 
 

@@ -48,16 +48,12 @@ public class TestEmuiActivity extends AppCompatActivity {
 
 
 
-
-
-
         EmuiCalendar emuiCalendar = findViewById(R.id.emuiCalendar);
         emuiCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date) {
                 tv_date.setText(date.localDate.getYear() + "年" + date.localDate.getMonthOfYear() + "月");
                 tv_lunar.setText((Days.daysBetween(new LocalDate(), date.localDate).getDays() + "天后  ") + "农历" + date.lunar.lunarYearStr + "年 " + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
-               // tv_date.setText(date.lunar.lunarMonthStr + date.lunar.lunarDayStr + (TextUtils.isEmpty(date.lunarHoliday) ? "" : (" | " + date.lunarHoliday)) + (TextUtils.isEmpty(date.solarHoliday) ? "" : (" | " + date.solarHoliday)));
             }
 
             @Override

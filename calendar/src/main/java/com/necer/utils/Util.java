@@ -131,7 +131,7 @@ public class Util {
 
     /**
      * @param localDate 今天
-     * @param type 300，周日，301周一
+     * @param type      300，周日，301周一
      * @return
      */
     public static List<NDate> getMonthCalendar(LocalDate localDate, int type) {
@@ -205,7 +205,7 @@ public class Util {
      * @param localDate
      * @return
      */
-    public static  List<NDate>  getWeekCalendar(LocalDate localDate, int type) {
+    public static List<NDate> getWeekCalendar(LocalDate localDate, int type) {
         List<NDate> dateList = new ArrayList<>();
 
         if (type == Attrs.MONDAY) {
@@ -222,7 +222,13 @@ public class Util {
     }
 
 
+    public static List<String> getHolidayList() {
+        return HolidayUtil.holidayList;
+    }
 
+    public static List<String> getWorkdayList() {
+        return HolidayUtil.workdayList;
+    }
 
 
     //转化一周从周日开始
@@ -237,83 +243,6 @@ public class Util {
     //转化一周从周一开始
     public static LocalDate getMonFirstDayOfWeek(LocalDate date) {
         return date.dayOfWeek().withMinimumValue();
-    }
-
-
-    //包含农历,公历,格式化的日期
-    /*public static class NCalendar {
-
-    }*/
-
-
-    private static List<String> holidayList;
-    private static List<String> workdayList;
-
-
-    public static void initHoliday(Context context) {
-        String holidayJson = getHolidayJson(context);
-
-        try {
-            JSONObject jsonObject = new JSONObject(holidayJson);
-
-            JSONObject data = jsonObject.getJSONObject("data");
-            JSONArray dataArray = data.getJSONArray("data");
-
-            holidayList = new ArrayList<>();
-            workdayList = new ArrayList<>();
-
-            for (int i = 0; i < dataArray.length(); i++) {
-
-                JSONObject jsonObject1 = dataArray.getJSONObject(i);
-                String date = jsonObject1.getString("date");
-                int val = jsonObject1.getInt("val");
-                if (val == 2 || val == 3) {
-                    holidayList.add(date);
-                } else {
-                    workdayList.add(date);
-                }
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    public static List<String> getHolidayList(Context context) {
-        if (holidayList == null) {
-            initHoliday(context);
-        }
-        return holidayList;
-    }
-
-    public static List<String> getWorkdayList(Context context) {
-        if (workdayList == null) {
-            initHoliday(context);
-        }
-        return workdayList;
-    }
-
-    public static String getHolidayJson(Context context) {
-        String json = null;
-        try {
-            AssetManager asset = context.getAssets();
-            InputStream in = asset.open("holiday.txt");
-            InputStreamReader inputStreamReader = new InputStreamReader(in, "utf-8");
-            BufferedReader reader = new BufferedReader(inputStreamReader);
-            StringBuffer sb = new StringBuffer("");
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
-
-            }
-            inputStreamReader.close();
-            json = sb.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return json;
     }
 
 
