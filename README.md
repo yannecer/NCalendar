@@ -165,7 +165,9 @@ List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20",
 ncalendar.setPointList(list);
 
 ```
-
+##### 7、默认视图 
+app:defaultCalendar="week"  默认周视图
+app:defaultCalendar="month"  默认月视图
 
 
 
