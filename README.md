@@ -47,7 +47,7 @@ miui9 和 钉钉日历
 
     </com.necer.calendar.Miui9Calendar>
     
-    miui10
+ miui10（不完美）
     
     <com.necer.calendar.Miui10Calendar
         android:id="@+id/miui10Calendar"
@@ -65,28 +65,7 @@ miui9 和 钉钉日历
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="15dp"
-                android:background="@drawable/bg_miui10"
-                android:orientation="vertical"
-                android:padding="15dp">
-                <TextView
-                    android:id="@+id/tv_lunar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textColor="#333333" />
-
-                <TextView
-                    android:id="@+id/tv_lunar_tg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:textColor="#666666" />
-            </LinearLayout>
+           
         </android.support.v4.widget.NestedScrollView>
     </com.necer.calendar.Miui10Calendar>
 
