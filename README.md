@@ -23,10 +23,10 @@
 
 ## 效果图
 
-![](https://github.com/yannecer/NCalendar/blob/master/app/ncalendar3.gif)
+![](https://github.com/yannecer/NCalendar/blob/master/app/new_.gif)
 
 ## 下载demo：
-http://fir.im/7lv4
+https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk
 
 ## 使用方法
 
@@ -34,17 +34,95 @@ http://fir.im/7lv4
 #### 布局文件
 
 ```
+miui9 和 钉钉日历
+     android:id="@+id/miui9Calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:calendarHeight="300dp">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.necer.calendar.Miui9Calendar>
+    
+    miui10
+    
+    <com.necer.calendar.Miui10Calendar
+        android:id="@+id/miui10Calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:bgCalendarColor="#f5f5f5"
+        app:holidayColor="#519EDC"
+        app:solarHolidayTextColor="#519EDC"
+        app:solarTermTextColor="#519EDC"
+        app:lunarHolidayTextColor="#519EDC"
+        app:todaySolarTextColor="#398FE9"
+        app:selectCircleColor="#398FE9"
+        app:bgChildColor="#F5f5f5">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:background="@drawable/bg_miui10"
+                android:orientation="vertical"
+                android:padding="15dp">
+                <TextView
+                    android:id="@+id/tv_lunar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:id="@+id/tv_lunar_tg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:textColor="#666666" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </com.necer.calendar.Miui10Calendar>
+
+
+华为 和 365日历
+    <com.necer.calendar.EmuiCalendar
+        android:id="@+id/emuiCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:bgCalendarColor="#ffffff"
+        app:holidayColor="#F29B38"
+        app:solarHolidayTextColor="#F29B38"
+        app:solarTermTextColor="#F29B38"
+        app:lunarHolidayTextColor="#F29B38"
+        app:todaySolarTextColor="#F29B38"
+        app:selectCircleColor="#F29B38"
+        app:bgChildColor="#F5f5f5">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_lunar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_margin="15dp"
+                android:background="#f5f5f5"
+                android:textColor="#333333" />
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.necer.calendar.EmuiCalendar>
 
 ```
 #### 注意
 
-```NCalendar```内部的布局需要加上背景颜色，只要是不透明的颜色都可以
-
-```ncalendar:2.x.x```包含一个月日历```MonthCalendar```，一个周日历```WeekCalendar```和一个滑动切换不同视图的```NCalendar```，
-单一日历请使用```MonthCalendar```或者```WeekCalendar```。
-
-```NCalendar```日历包含了周日历和月日历，通过滑动切换不同的视图，交互效果仿miui日历，尽可能的实现miui的交互逻辑。
 
 ```NCalendar```内部需要一个实现了```NestedScrollingChild```的子类，```RecyclerView```，```NestedScrollView```都可以。
 
@@ -66,10 +144,15 @@ http://fir.im/7lv4
 
 ##### 1、监听
 ```
-ncalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChanged(DateTime dateTime) {
-                //日历变化回调
+            public void onCalendarDateChanged(NDate date) {
+               //日历回调 NDate包含公历、农历、节气、节假日、闰年等信息
+            }
+               
+            @Override
+            public void onCalendarStateChanged(boolean isMonthSate) {
+               //日历状态回调， 月->周 isMonthSate返回false ，反之返回true   
             }
         });
 ```
@@ -78,7 +161,7 @@ ncalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
 ```
 参数为 yyyy-MM-dd 格式的日期
 
-ncalendar.setDate("2017-12-31"); 
+ncalendar.jumpDate("2017-12-31"); 
 ```
 ##### 3、回到今天
 ```
@@ -99,80 +182,17 @@ ncalendar.toLastPager();
 
 ##### 6、添加指示圆点
 ```
-List<String> list = new ArrayList<>();
-list.add("2017-09-21");
-list.add("2017-10-21");
-list.add("2017-10-1");
-list.add("2017-10-15");
-list.add("2017-10-18");
-list.add("2017-10-26");
-list.add("2017-11-21");
-ncalendar.setPoint(list);
-
-```
-##### 7、支持自定义属性，设置NCalendar默认视图、一周的第一天是周日还是周一等
-```
-NCalendar默认视图,Month 或者 Week，默认是 Month
-
-app:defaultCalendar="Month"
-app:defaultCalendar="Week"
-
-
-设置一周开始是周一还是周日，Sunday 或者 Monday ，默认是周日Sunday
-
-app:firstDayOfWeek="Sunday"
-app:firstDayOfWeek="Monday" 
+List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
+ncalendar.setPointList(list);
 
 ```
 
-##### 8、支持自定义日期区间
-```
-app:startDate="2010-10-01"
-app:endDate="2018-10-31"
 
-或者代码设置
-
-ncalendar.setDateInterval("2017-04-02","2018-01-01");
-```
-
-
-##### 9、单一月日历、周日历设置默认不选中
-```
-false为不选中，只有点击或者跳转日期才会选中，默认为true
-
-monthcalendar.setDefaultSelect(false);
-```
 
 
 
 ### 支持的属性：
-
-
-| 属性| 描述|
-|:---|:---|
-| solarTextColor| 公历日期的文本颜色 |
-| lunarTextColor| 农历日期的文本颜色 |
-| solarTextSize| 公历日期的文本大小 |
-| lunarTextSize| 农历日期的文本大小 |
-| hintColor|不是本月的日期文本颜色 |
-| selectCircleColor| 选中日期和当天的圆颜色 |
-| selectCircleRadius| 选中和当天圆环半径 |
-| isShowLunar| 是否显示农历 |
-| hollowCircleColor| 选中空心圆中间的颜色|
-| hollowCircleStroke| 选中空心圆圆环粗细 |
-| calendarHeight|月日历高度 |
-| defaultCalendar|NCalendar日历默认视图|
-| firstDayOfWeek|每周第一天是周日还是周一|
-| duration|自动折叠时间|
-| isShowHoliday|是否显示节假日|
-| holidayColor|节假日“休”字颜色|
-| workdayColor|工作日日“班”字颜色|
-| pointSize|指示圆点大小|
-| pointColor|指示圆点颜色|
-| startDate|日期开始时间|
-| endDate|日期结束时间|
-| backgroundColor|日历背景颜色|
-
+新增了不少属性，待整理
 
 #### View绘制：http://blog.csdn.net/y12345654321/article/details/73331253
 #### 滑动处理：http://blog.csdn.net/y12345654321/article/details/77978148
