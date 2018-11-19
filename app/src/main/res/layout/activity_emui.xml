@@ -127,13 +127,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
+
                 android:layout_margin="15dp"
                 android:background="#f5f5f5"
                 android:textColor="#333333" />
 
         </android.support.v4.widget.NestedScrollView>
-
-
     </com.necer.calendar.EmuiCalendar>
 
 

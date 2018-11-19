@@ -118,6 +118,7 @@
         android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:defaultCalendar="month"
         app:calendarHeight="300dp">
 
         <android.support.v7.widget.RecyclerView

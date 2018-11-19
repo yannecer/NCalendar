@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.necer.ncalendar.utils.MyLog;
+
+import com.necer.MyLog;
 
 import necer.ncalendardemo.R;
 

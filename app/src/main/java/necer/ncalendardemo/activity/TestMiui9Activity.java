@@ -16,10 +16,7 @@ import com.necer.MyLog;
 import com.necer.calendar.Miui9Calendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
-import com.necer.ncalendar.calendar.NCalendar;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;

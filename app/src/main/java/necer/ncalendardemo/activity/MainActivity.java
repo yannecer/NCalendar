@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.necer.ncalendar.utils.MyLog;
+import com.necer.MyLog;
 import com.necer.utils.SolarTermUtil;
 
 import org.joda.time.LocalDate;
@@ -29,16 +29,6 @@ public class MainActivity extends AppCompatActivity {
         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
 
 
-        String solatName = SolarTermUtil.getSolatName(2018, "1107");
-
-
-        MyLog.d("solatName11：：" + solatName);
-
-
-        String solatName2 = SolarTermUtil.getSolatName(2018, "117");
-
-
-        MyLog.d("solatName22：：" + solatName2);
 
 
     }

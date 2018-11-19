@@ -112,7 +112,11 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
 
 
     public int getMonthCalendarOffset() {
-        return mCurrView.getMonthCalendarOffset();
+        if (mCurrView != null) {
+            return mCurrView.getMonthCalendarOffset();
+        }
+        return 0;
+
     }
 
     public void autoToMonth() {
