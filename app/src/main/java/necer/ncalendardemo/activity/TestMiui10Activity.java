@@ -13,6 +13,9 @@ import com.necer.calendar.Miui10Calendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 
+import java.util.Arrays;
+import java.util.List;
+
 import necer.ncalendardemo.R;
 import necer.ncalendardemo.adapter.AAAdapter;
 
@@ -47,8 +50,11 @@ public class TestMiui10Activity extends AppCompatActivity {
         tv_lunar = findViewById(R.id.tv_lunar);
         tv_lunar_tg = findViewById(R.id.tv_lunar_tg);
 
+        List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
+
 
         Miui10Calendar miui10Calendar = findViewById(R.id.miui10Calendar);
+        miui10Calendar.setPointList(pointList);
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date) {

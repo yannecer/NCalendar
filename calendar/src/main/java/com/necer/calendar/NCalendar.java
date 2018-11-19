@@ -21,7 +21,8 @@ import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.utils.Attrs;
 import com.necer.view.ChildLayout;
 
-import org.joda.time.LocalDate;
+import java.util.List;
+
 
 /**
  * Created by necer on 2018/11/12.
@@ -471,6 +472,11 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         if (STATE == Attrs.WEEK) {
             onAutoToMonthState();
         }
+    }
+
+    public void setPointList(List<String> pointList) {
+        weekCalendar.setPointList(pointList);
+        monthCalendar.setPointList(pointList);
     }
 
 
