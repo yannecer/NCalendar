@@ -9,9 +9,9 @@
 
 一款安卓日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
-支持自定义日期区间
+支持周状态固定，下拉刷新等，
 
-支持农历，节假日，指示圆点，默认视图，周的第一天设置等
+支持农历，节假日，节气，指示圆点，默认视图，周的第一天设置等
 
 支持单一月日历、周日历设置默认选中和默认不选中
 
@@ -19,7 +19,8 @@
 ## 效果图
 
 ![](https://github.com/yannecer/NCalendar/blob/master/app/new_.gif)
-
+## 周状态固定效果图
+![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)
 ## 下载demo：
 https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk
 
@@ -80,7 +81,7 @@ miui9 和 钉钉日历
 #### 注意
 
 
-```NCalendar```内部需要一个实现了```NestedScrollingChild```的子类，```RecyclerView```，```NestedScrollView```都可以。
+```NCalendar```内部需要一个实现了```NestedScrollingChild2```的子类，```RecyclerView```，```NestedScrollView```都可以。
 
 单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中，这样才能体现出月周日期无缝切换的特点，
 该日历不支持月周切换的不选中设置
@@ -147,7 +148,10 @@ ncalendar.setPointList(list);
 app:defaultCalendar="week"  默认周视图
 app:defaultCalendar="month"  默认月视图
 ```
-
+##### 8、周状态固定
+```
+app:isWeekHold="true"  周视图固定，下拉刷新
+```
 
 
 ### 支持的属性：
@@ -179,6 +183,7 @@ app:defaultCalendar="month"  默认月视图
 |duration|integer| 日历自动滑动的时间
 |isShowLunar| boolean |是否显示农历
 |isShowHoliday|boolean| 是否显示法定节假日
+|isWeekHold|boolean| 周状态是否固定，默认不固定
 |isDefaultSelect|boolean| 是否默认选中（只对单个月日历或者周日历有效）
 |defaultCalendar|enum| 默认视图 week 或者 month
 |pointLocation|enum| 指示点的文职 up（在公历的上方） 或者 down（在公历的下方） 默认是up
