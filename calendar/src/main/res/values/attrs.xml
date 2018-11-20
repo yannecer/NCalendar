@@ -38,22 +38,22 @@
         <attr name="bgChildColor" format="color" />
 
 
-        <attr name="defaultCalendar">
+        <attr name="defaultCalendar" format="enum">
             <enum name="week" value="100" />
             <enum name="month" value="101" />
         </attr>
 
-        <attr name="pointLocation">
+        <attr name="pointLocation" format="enum">
             <enum name="up" value="200" />
             <enum name="down" value="201" />
         </attr>
 
-        <attr name="firstDayOfWeek">
+        <attr name="firstDayOfWeek" format="enum">
             <enum name="sunday" value="300" />
             <enum name="monday" value="301" />
         </attr>
 
-        <attr name="holidayLocation">
+        <attr name="holidayLocation" format="enum">
             <enum name="top_right" value="400" />
             <enum name="top_left" value="401" />
             <enum name="bottom_right" value="402" />

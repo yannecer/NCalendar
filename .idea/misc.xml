@@ -25,14 +25,6 @@
       </value>
     </option>
   </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_fragment.xml" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_new.xml" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_week.xml" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_1.xml" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_2.xml" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_leave_shift.xml" />
-  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
