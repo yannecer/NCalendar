@@ -1,18 +1,13 @@
 # NCalendar
 
 
-#### 日历改版，新增加了 miui10，华为日历 两种月周交互 ，现在一共有 miui9、miui10、华为日历 三种，
-#### 仿miui10的日历不是太完美，这次新增了不少属性，修复了一些bug，初版更新，后续完善中，README文件后续更新
-#### 本次更新把 NCalendar 写成了抽象类，负责主要逻辑，Miui9Calendar、Miui10Calendar、EmuiCalendar根据不同的交互，返回一些必要的值
 
 
 
 
 
 
-
-
-一款仿miui日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
+一款安卓日历，月视图，周视图滑动切换，时间从1901-01-01到2099-12-31
 
 支持自定义日期区间
 
@@ -35,6 +30,7 @@ https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk
 
 ```
 miui9 和 钉钉日历
+
      android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,49 +49,30 @@ miui9 和 钉钉日历
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bgCalendarColor="#f5f5f5"
-        app:holidayColor="#519EDC"
-        app:solarHolidayTextColor="#519EDC"
-        app:solarTermTextColor="#519EDC"
-        app:lunarHolidayTextColor="#519EDC"
-        app:todaySolarTextColor="#398FE9"
-        app:selectCircleColor="#398FE9"
         app:bgChildColor="#F5f5f5">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-           
         </android.support.v4.widget.NestedScrollView>
+        
     </com.necer.calendar.Miui10Calendar>
 
 
 华为 和 365日历
+
     <com.necer.calendar.EmuiCalendar
         android:id="@+id/emuiCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:bgCalendarColor="#ffffff"
         app:holidayColor="#F29B38"
-        app:solarHolidayTextColor="#F29B38"
-        app:solarTermTextColor="#F29B38"
-        app:lunarHolidayTextColor="#F29B38"
-        app:todaySolarTextColor="#F29B38"
-        app:selectCircleColor="#F29B38"
-        app:bgChildColor="#F5f5f5">
+        >
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tv_lunar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:layout_margin="15dp"
-                android:background="#f5f5f5"
-                android:textColor="#333333" />
-
+            
         </android.support.v4.widget.NestedScrollView>
     </com.necer.calendar.EmuiCalendar>
 
@@ -166,15 +143,47 @@ ncalendar.setPointList(list);
 
 ```
 ##### 7、默认视图 
+```
 app:defaultCalendar="week"  默认周视图
 app:defaultCalendar="month"  默认月视图
-
+```
 
 
 
 ### 支持的属性：
-新增了不少属性，待整理
 
-#### View绘制：http://blog.csdn.net/y12345654321/article/details/73331253
-#### 滑动处理：http://blog.csdn.net/y12345654321/article/details/77978148
+|Attributes|forma|describe
+|---|---|---|
+|solarTextColor| color|公历日期的颜色
+|lunarTextColor| color|农历日期的颜色
+|solarHolidayTextColor| color|公历节假日的颜色
+|lunarHolidayTextColor| color|农历节假日的颜色
+|solarTermTextColor| color|节气颜色
+|hintColor| color|不是本月公历日期的颜色
+|selectCircleColor| color|选中圈的颜色
+|holidayColor|color| 法定节休息日颜色
+|workdayColor|color| 法定节调休工作日颜色
+|bgCalendarColor|color| 日历的背景
+|bgChildColor|color| 日历包含子view的背景
+|pointColor| color |小圆点的颜色
+|todaySolarTextColor| color|今天不选中的颜色
+|selectCircleRadius| dimension | 选中圈的半径
+|solarTextSize| dimension|公历日期字体大小
+|lunarTextSize| dimension|农历日期字体大小
+|lunarDistance| dimension|农历日期到公历字体的距离
+|holidayTextSize| dimension|法定节假日字体的大小
+|holidayDistance| dimension |法定节假日到公历的距离
+|pointDistance| dimension |小圆点到公历的距离
+|hollowCircleStroke| dimension |空心圆的宽度
+|calendarHeight| dimension |日历的高度
+|duration|integer| 日历自动滑动的时间
+|isShowLunar| boolean |是否显示农历
+|isShowHoliday|boolean| 是否显示法定节假日
+|isDefaultSelect|boolean| 是否默认选中（只对单个月日历或者周日历有效）
+|defaultCalendar|enum| 默认视图 week 或者 month
+|pointLocation|enum| 指示点的文职 up（在公历的上方） 或者 down（在公历的下方） 默认是up
+|firstDayOfWeek|enum| 一周开始的星期天还是星期一 sunday 或者 monday 默认是sunday
+|holidayLocation|enum| 法定节假日相对公历日期的位置 top_right（右上方）、top_left（左上方）、bottom_right（右下方）、bottom_left（左下方）
+
+
 
