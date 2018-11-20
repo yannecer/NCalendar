@@ -151,7 +151,7 @@ app:defaultCalendar="month"  默认月视图
 
 
 ### 支持的属性：
-## Attributes属性（banner布局文件中调用）
+
 |Attributes|forma|describe
 |---|---|---|
 |solarTextColor| color|公历日期的颜色
