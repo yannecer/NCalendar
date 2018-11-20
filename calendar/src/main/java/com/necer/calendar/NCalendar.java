@@ -122,7 +122,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        //super.onLayout(changed, l, t, r, b); 调用父类的该方法会造成 快速滑动月日历同时快速上滑recyclerview造成月日历的残影
+        //super.onLayout(changed, l, t, r, b); //调用父类的该方法会造成 快速滑动月日历同时快速上滑recyclerview造成月日历的残影
         int monthCalendarTop;
         int childLayoutTop;
         if (STATE == Attrs.MONTH) {
