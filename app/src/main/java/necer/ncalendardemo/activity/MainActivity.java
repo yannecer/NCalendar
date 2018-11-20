@@ -47,4 +47,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, TestEmuiActivity.class));
     }
 
+    public void toHoldWeek(View view) {
+        startActivity(new Intent(this, TestWeekHoldActivity.class));
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.necer.calendar;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import com.necer.MyLog;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
@@ -20,7 +17,6 @@ import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.utils.Attrs;
 import com.necer.view.ChildLayout;
-
 import java.util.List;
 
 
@@ -45,6 +41,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected Rect monthRect;//月日历大小的矩形
     protected Rect weekRect;//周日历大小的矩形 ，用于判断点击事件是否在日历的范围内
 
+    private boolean isWeekHold;//是否需要周状态定住
+
 
     public NCalendar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -58,6 +56,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         monthHeigh = attrss.monthCalendarHeight;
         STATE = attrss.defaultCalendar;
         weekHeigh = monthHeigh / 5;
+        isWeekHold = attrss.isWeekHold;
 
         monthCalendar = new MonthCalendar(context, attrs, duration, this);
         childLayout = new ChildLayout(getContext(), attrs, monthHeigh, duration, this);
@@ -191,7 +190,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * 月日历和周日历的日期变化回调，每次日期变化都会回调，用于不同状态下，设置另一个日历的日期
      *
      * @param baseCalendar 日历本身
-     * @param date    当前选中的时间
+     * @param date         当前选中的时间
      * @param isDraw       是否绘制 此处选择都绘制，默认不选中，不适用鱼月周切换
      */
     @Override
@@ -263,6 +262,9 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             monthCalendar.offsetTopAndBottom(-getGestureMonthUpOffset(dy));
             childLayout.offsetTopAndBottom(-getGestureChildUpOffset(dy));
             if (consumed != null) consumed[1] = dy;
+
+        } else if (dy < 0 && isWeekHold && childLayout.isWeekState()) {
+            //不操作，
 
         } else if (dy < 0 && !childLayout.isMonthState() && !childLayout.canScrollVertically(-1)) {
             monthCalendar.offsetTopAndBottom(getGestureMonthDownOffset(dy));
@@ -478,8 +480,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         weekCalendar.setPointList(pointList);
         monthCalendar.setPointList(pointList);
     }
-
-
 
 
 }

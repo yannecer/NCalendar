@@ -18,9 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.NCalendarActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
 
         <activity
             android:name=".activity.TestMiui9Activity"
@@ -30,22 +27,11 @@
             android:name=".activity.TestMiui10Activity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-
-        <activity
-            android:name=".activity.MonthNotSelectActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
-        <activity
-            android:name=".activity.MonthSelectActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
-        <activity
-            android:name=".activity.WeekActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
-        <activity
-            android:name=".activity.TestFragmentActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
-
         <activity
             android:name=".activity.TestEmuiActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".activity.TestWeekHoldActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
 

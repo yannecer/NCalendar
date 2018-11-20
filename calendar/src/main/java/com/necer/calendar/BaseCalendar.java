@@ -78,6 +78,7 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.monthCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Util.dp2px(context, 300));
         attrs.duration = ta.getInt(R.styleable.NCalendar_duration, 240);
         attrs.isShowHoliday = ta.getBoolean(R.styleable.NCalendar_isShowHoliday, true);
+        attrs.isWeekHold = ta.getBoolean(R.styleable.NCalendar_isWeekHold, false);
         attrs.holidayColor = ta.getColor(R.styleable.NCalendar_holidayColor, getResources().getColor(R.color.holidayColor));
         attrs.workdayColor = ta.getColor(R.styleable.NCalendar_workdayColor, getResources().getColor(R.color.workdayColor));
         attrs.bgCalendarColor = ta.getColor(R.styleable.NCalendar_bgCalendarColor, getResources().getColor(R.color.white));

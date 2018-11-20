@@ -24,28 +24,23 @@ import necer.ncalendardemo.adapter.AAAdapter;
 /**
  * Created by necer on 2018/11/12.
  */
-public class TestEmuiActivity extends AppCompatActivity {
+public class TestEmuiActivity extends BaseActivity {
 
 
 
     TextView tv_lunar;
     TextView tv_date;
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_emui;
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_emui);
-
-
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.hide();
-        }
+    protected void onCreatee() {
 
         tv_lunar = findViewById(R.id.tv_lunar);
         tv_date = findViewById(R.id.tv_date);
-
 
 
         EmuiCalendar emuiCalendar = findViewById(R.id.emuiCalendar);
@@ -61,6 +56,5 @@ public class TestEmuiActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }

@@ -13,35 +13,24 @@
 
 
         <TextView
-            android:id="@+id/tv_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
-            android:text="9月"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/tv_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="55dp"
-            android:layout_toRightOf="@id/tv_month"
-            android:text="2017nian"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/tv_lunar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="15dp"
-            android:text=""
+            android:layout_marginTop="30dp"
+            android:onClick="monthCalendar"
+            android:padding="15dp"
+            android:text="日历"
             android:textColor="#ffffff" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="周状态保持"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,14 +104,17 @@
 
     </RelativeLayout>
 
+
     <com.necer.calendar.Miui9Calendar
         android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:calendarHeight="300dp"
-        app:defaultCalendar="month">
+        app:defaultCalendar="month"
+        app:isWeekHold="true">
 
         <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

@@ -18,14 +18,14 @@ public final class R {
         public static int fontProviderQuery = 0x7f040080;
         public static int fontStyle = 0x7f040081;
         public static int fontWeight = 0x7f040082;
-        public static int keylines = 0x7f04009c;
-        public static int layout_anchor = 0x7f04009e;
-        public static int layout_anchorGravity = 0x7f04009f;
-        public static int layout_behavior = 0x7f0400a0;
-        public static int layout_dodgeInsetEdges = 0x7f0400a1;
-        public static int layout_insetEdge = 0x7f0400a2;
-        public static int layout_keyline = 0x7f0400a3;
-        public static int statusBarBackground = 0x7f0400ec;
+        public static int keylines = 0x7f04009d;
+        public static int layout_anchor = 0x7f04009f;
+        public static int layout_anchorGravity = 0x7f0400a0;
+        public static int layout_behavior = 0x7f0400a1;
+        public static int layout_dodgeInsetEdges = 0x7f0400a2;
+        public static int layout_insetEdge = 0x7f0400a3;
+        public static int layout_keyline = 0x7f0400a4;
+        public static int statusBarBackground = 0x7f0400ed;
     }
     public static final class bool {
         public static int abc_action_bar_embed_tabs = 0x7f050001;
@@ -132,10 +132,10 @@ public final class R {
         public static int Widget_Support_CoordinatorLayout = 0x7f160155;
     }
     public static final class styleable {
-        public static int[] CoordinatorLayout = { 0x7f04009c, 0x7f0400ec };
+        public static int[] CoordinatorLayout = { 0x7f04009d, 0x7f0400ed };
         public static int CoordinatorLayout_keylines = 0;
         public static int CoordinatorLayout_statusBarBackground = 1;
-        public static int[] CoordinatorLayout_Layout = { 0x010100b3, 0x7f04009e, 0x7f04009f, 0x7f0400a0, 0x7f0400a1, 0x7f0400a2, 0x7f0400a3 };
+        public static int[] CoordinatorLayout_Layout = { 0x010100b3, 0x7f04009f, 0x7f0400a0, 0x7f0400a1, 0x7f0400a2, 0x7f0400a3, 0x7f0400a4 };
         public static int CoordinatorLayout_Layout_android_layout_gravity = 0;
         public static int CoordinatorLayout_Layout_layout_anchor = 1;
         public static int CoordinatorLayout_Layout_layout_anchorGravity = 2;

@@ -1,11 +1,5 @@
 package necer.ncalendardemo.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.TextView;
 
@@ -17,12 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import necer.ncalendardemo.R;
-import necer.ncalendardemo.adapter.AAAdapter;
 
 /**
  * Created by necer on 2018/11/12.
  */
-public class TestMiui10Activity extends AppCompatActivity {
+public class TestMiui10Activity extends BaseActivity {
 
     TextView tv_month;
     TextView tv_week;
@@ -34,16 +27,12 @@ public class TestMiui10Activity extends AppCompatActivity {
     private final String[] weeks = {"周一", "周二", "周三", "周四", "周五", "周六", "周日",};
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_miui10);
+    protected int getLayoutId() {
+        return R.layout.activity_miui10;
+    }
 
-
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.hide();
-        }
-
+    @Override
+    protected void onCreatee() {
         tv_month = findViewById(R.id.tv_month);
         tv_week = findViewById(R.id.tv_week);
         tv_year = findViewById(R.id.tv_year);
@@ -71,9 +60,5 @@ public class TestMiui10Activity extends AppCompatActivity {
 
             }
         });
-
-
-
-
     }
 }

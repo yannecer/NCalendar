@@ -56,6 +56,7 @@ public class Attrs {
     public int duration;
 
 
+    public boolean isWeekHold;
     public boolean isShowHoliday;
     public int holidayColor;
     public float holidayTextSize;

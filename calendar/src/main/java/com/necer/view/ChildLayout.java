@@ -4,15 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v4.view.NestedScrollingChild;
+import android.support.v4.view.NestedScrollingChild2;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import com.necer.listener.OnCalendarStateChangedListener;
 
 /**
@@ -58,19 +56,19 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         super.addView(child);
         targetView = getNestedScrollingChild(child);
         if (targetView == null) {
-            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild的子类");
+            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild2的子类");
         }
     }
 
     private View getNestedScrollingChild(View view) {
 
-        if (view instanceof NestedScrollingChild) {
+        if (view instanceof NestedScrollingChild2) {
             return view;
         } else if (view instanceof ViewGroup) {
             int childCount = ((ViewGroup) view).getChildCount();
             for (int i = 0; i < childCount; i++) {
                 View childAt = ((ViewGroup) view).getChildAt(i);
-                if (childAt instanceof NestedScrollingChild) {
+                if (childAt instanceof NestedScrollingChild2) {
                     return childAt;
                 } else {
                     getNestedScrollingChild(((ViewGroup) view).getChildAt(i));

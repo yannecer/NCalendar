@@ -5,12 +5,7 @@
     android:orientation="vertical">
 
 <!--
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="toMiui"
-        android:text="仿miui日历" />-->
+    -->
 
     <Button
         android:id="@+id/bt"
@@ -32,6 +27,12 @@
         android:layout_height="wrap_content"
         android:onClick="emui"
         android:text="emui" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="toHoldWeek"
+        android:text="周日历hold" />
 
    <!-- <Button
         android:layout_width="wrap_content"

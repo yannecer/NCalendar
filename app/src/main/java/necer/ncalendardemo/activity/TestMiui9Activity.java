@@ -24,7 +24,7 @@ import necer.ncalendardemo.adapter.AAAdapter;
 /**
  * Created by necer on 2018/11/7.
  */
-public class TestMiui9Activity extends AppCompatActivity {
+public class TestMiui9Activity extends BaseActivity {
 
 
     private Miui9Calendar miui9Calendar;
@@ -33,26 +33,18 @@ public class TestMiui9Activity extends AppCompatActivity {
     private TextView tv_year;
     private TextView tv_lunar;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutId() {
+        return R.layout.activity_miui9;
+    }
 
-        setContentView(R.layout.activity_miui9);
-
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.hide();
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-        }
-
-        miui9Calendar = (Miui9Calendar) findViewById(R.id.miui9Calendar);
-        tv_month = (TextView) findViewById(R.id.tv_month);
-        tv_year = (TextView) findViewById(R.id.tv_year);
-        tv_lunar = (TextView) findViewById(R.id.tv_lunar);
+    @Override
+    protected void onCreatee() {
+        miui9Calendar = findViewById(R.id.miui9Calendar);
+        tv_month = findViewById(R.id.tv_month);
+        tv_year = findViewById(R.id.tv_year);
+        tv_lunar = findViewById(R.id.tv_lunar);
 
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -84,7 +76,6 @@ public class TestMiui9Activity extends AppCompatActivity {
                 MyLog.d("OnCalendarChangedListener:::" + isMonthSate);
             }
         });
-
 
     }
 }
