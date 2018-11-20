@@ -168,7 +168,6 @@ app:defaultCalendar="month"  默认月视图
 |pointColor| color |小圆点的颜色
 |todaySolarTextColor| color|今天不选中的颜色
 |selectCircleRadius| dimension | 选中圈的半径
-
 |solarTextSize| dimension|公历日期字体大小
 |lunarTextSize| dimension|农历日期字体大小
 |lunarDistance| dimension|农历日期到公历字体的距离
@@ -177,14 +176,10 @@ app:defaultCalendar="month"  默认月视图
 |pointDistance| dimension |小圆点到公历的距离
 |hollowCircleStroke| dimension |空心圆的宽度
 |calendarHeight| dimension |日历的高度
-
-
-
 |duration|integer| 日历自动滑动的时间
 |isShowLunar| boolean |是否显示农历
 |isShowHoliday|boolean| 是否显示法定节假日
 |isDefaultSelect|boolean| 是否默认选中（只对单个月日历或者周日历有效）
-
 |defaultCalendar|enum| 默认视图 week 或者 month
 |pointLocation|enum| 指示点的文职 up（在公历的上方） 或者 down（在公历的下方） 默认是up
 |firstDayOfWeek|enum| 一周开始的星期天还是星期一 sunday 或者 monday 默认是sunday
