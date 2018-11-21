@@ -27,22 +27,24 @@ https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk
 
 ## 使用方法
 
+#### Gradle
+```
+implementation 'com.necer.ncalendar:ncalendar:3.0.4'
+```
 
 #### 布局文件
 
 ```
 miui9 和 钉钉日历
-
-     android:id="@+id/miui9Calendar"
+    <com.necer.calendar.Miui9Calendar
+        android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:calendarHeight="300dp">
-
+        >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </com.necer.calendar.Miui9Calendar>
     
  miui10（不完美）
@@ -51,13 +53,11 @@ miui9 和 钉钉日历
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bgChildColor="#F5f5f5">
-
+        >
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v4.widget.NestedScrollView>
-        
+        </android.support.v4.widget.NestedScrollView>  
     </com.necer.calendar.Miui10Calendar>
 
 
@@ -67,31 +67,26 @@ miui9 和 钉钉日历
         android:id="@+id/emuiCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bgCalendarColor="#ffffff"
-        app:holidayColor="#F29B38"
         >
-
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            
+            android:layout_height="match_parent">           
         </android.support.v4.widget.NestedScrollView>
     </com.necer.calendar.EmuiCalendar>
 
 ```
 #### 注意
 
+- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild2```的子类，
+如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个NestedScrollingChild2
+- 单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中
 
-```NCalendar```内部需要一个实现了```NestedScrollingChild2```的子类，```RecyclerView```，```NestedScrollView```都可以。
-
-单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中，这样才能体现出月周日期无缝切换的特点，
-该日历不支持月周切换的不选中设置
 
 
 
 ### 交流群
 
-技术交流QQ群：127278900<br/>请添加备注：github、NCalendar、安卓....
+技术交流QQ群：127278900
 
 
 
