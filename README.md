@@ -75,7 +75,7 @@ miui9 和 钉钉日历
 #### 注意
 
 - NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild2```的子类，
-如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个NestedScrollingChild2
+如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个```NestedScrollingChild2```
 - 单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中
 
 
