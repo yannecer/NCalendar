@@ -48,7 +48,6 @@ miui9 和 钉钉日历
     </com.necer.calendar.Miui9Calendar>
     
  miui10（不完美）
-    
     <com.necer.calendar.Miui10Calendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
@@ -60,9 +59,7 @@ miui9 和 钉钉日历
         </android.support.v4.widget.NestedScrollView>  
     </com.necer.calendar.Miui10Calendar>
 
-
 华为 和 365日历
-
     <com.necer.calendar.EmuiCalendar
         android:id="@+id/emuiCalendar"
         android:layout_width="match_parent"
