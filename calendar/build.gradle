@@ -1,9 +1,11 @@
 apply plugin: 'com.android.library'
 
 
+/*
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 version = "3.0.0" //版本号
+*/
 
 android {
     compileSdkVersion 27
@@ -35,6 +37,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api 'joda-time:joda-time:2.9.9'
 }
+/*
 
 def siteUrl = 'https://github.com/yannecer/NCalendar'      // 项目的主页
 def gitUrl = 'https://github.com/yannecer/NCalendar.git'   // Git仓库的url
@@ -107,3 +110,4 @@ bintray {
         publish = true
     }
 }
+*/

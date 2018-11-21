@@ -9,10 +9,13 @@ import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.necer.entity.NDate;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+
 import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,14 +86,14 @@ public abstract class BaseCalendarView extends View {
                         drawSolar(canvas, centerX, centerY, Color.WHITE, date.getDayOfMonth() + "");
                         drawLunar(canvas, centerX, centerY, true, true, nDate);
                         drawPoint(canvas, centerX, centerY, Color.WHITE, date);
-                        drawHolidays(canvas, centerX, centerY, Color.WHITE, date);
+                        drawHolidays(canvas, centerX, centerY, true, date);
 
                     } else if (Util.isToday(date) && !date.equals(mSelectDate)) {
                         //当天但选中的不是今天
                         drawSolar(canvas, centerX, centerY, mAttrs.todaySolarTextColor, date.getDayOfMonth() + "");
                         drawLunar(canvas, centerX, centerY, false, true, nDate);
                         drawPoint(canvas, centerX, centerY, mAttrs.todaySolarTextColor, date);
-                        drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
+                        drawHolidays(canvas, centerX, centerY, false, date);
 
                     } else if (isDraw && date.equals(mSelectDate)) {
                         //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
@@ -98,7 +101,7 @@ public abstract class BaseCalendarView extends View {
                         drawSolar(canvas, centerX, centerY, mAttrs.solarTextColor, date.getDayOfMonth() + "");
                         drawLunar(canvas, centerX, centerY, false, true, nDate);
                         drawPoint(canvas, centerX, centerY, mAttrs.pointColor, date);
-                        drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
+                        drawHolidays(canvas, centerX, centerY, false, date);
                     } else {
 
                         drawSolar(canvas, centerX, centerY, mAttrs.solarTextColor, date.getDayOfMonth() + "");
@@ -106,7 +109,7 @@ public abstract class BaseCalendarView extends View {
                         drawLunar(canvas, centerX, centerY, false, true, nDate);
                         //绘制圆点
                         drawPoint(canvas, centerX, centerY, mAttrs.pointColor, date);
-                        drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
+                        drawHolidays(canvas, centerX, centerY, false, date);
                     }
 
                 } else {
@@ -117,7 +120,7 @@ public abstract class BaseCalendarView extends View {
                     //绘制圆点
                     drawPoint(canvas, centerX, centerY, mAttrs.pointColor, date);
                     //绘制节假日
-                    drawHolidays(canvas, centerX, centerY, mAttrs.holidayColor, date);
+                    drawHolidays(canvas, centerX, centerY, false, date);
                 }
             }
         }
@@ -209,18 +212,18 @@ public abstract class BaseCalendarView extends View {
 
 
     //绘制节假日
-    private void drawHolidays(Canvas canvas, int centerX, int centerY, int color, LocalDate date) {
+    private void drawHolidays(Canvas canvas, int centerX, int centerY, boolean isWhite, LocalDate date) {
         if (mAttrs.isShowHoliday) {
 
             int[] holidayLocation = getHolidayLocation(centerX, centerY);
-
-            mTextPaint.setColor(color);
             mTextPaint.setTextSize(mAttrs.holidayTextSize);
 
             if (mHolidayList.contains(date.toString())) {
+                mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.holidayColor);
                 canvas.drawText("休", holidayLocation[0], holidayLocation[1], mTextPaint);
 
             } else if (mWorkdayList.contains(date.toString())) {
+                mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.workdayColor);
                 canvas.drawText("班", holidayLocation[0], holidayLocation[1], mTextPaint);
 
             }
@@ -289,7 +292,7 @@ public abstract class BaseCalendarView extends View {
     /**
      * 点击事件
      *
-     * @param clickNData   点击的date
+     * @param clickNData  点击的date
      * @param initialDate 初始化当前页面的date
      */
     protected abstract void onClick(NDate clickNData, LocalDate initialDate);
