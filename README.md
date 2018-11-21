@@ -18,8 +18,10 @@
 |miui9|miui10|
 |:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|
-## 周状态固定效果图
-![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)
+
+|emui|周固定，下拉刷新|
+|:---:|:---:|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|
 ## 下载demo：
 https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk
 
