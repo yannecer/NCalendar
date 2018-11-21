@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">ncalendar</string>
-    <string name="illegal_date">日期不在许可范围内!</string>
-    <string name="range_date">日期范围不合法!</string>
-</resources>

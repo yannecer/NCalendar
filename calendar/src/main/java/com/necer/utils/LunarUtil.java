@@ -220,13 +220,14 @@ public class LunarUtil {
                 lunar.leapMonth = lunar.lunarMonth;
             }
         }
-        lunar.lunarDay = lunarD;
 
+        lunar.lunarDay = lunarD;
+        lunar.chineseEra = getGan(lunar.lunarYear) + getZhi(lunar.lunarYear);
+        lunar.animals = getAnimalString(lunar.lunarYear);
         lunar.lunarYearStr = getGan(lunar.lunarYear) + getZhi(lunar.lunarYear) + getAnimalString(lunar.lunarYear);
         lunar.lunarMonthStr = getMonthStr(lunar.lunarMonth, lunar.isLeap);
         lunar.lunarDayStr = getDayStr(lunar.lunarDay);
         lunar.lunarDrawStr = getDrawStr(lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
-
 
         return lunar;
     }

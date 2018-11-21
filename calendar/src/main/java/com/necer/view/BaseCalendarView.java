@@ -129,7 +129,6 @@ public abstract class BaseCalendarView extends View {
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
 
-
         Rect rect;
         //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
         if (mLineNum == 5 || mLineNum == 1) {

@@ -73,7 +73,6 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
         onDateChanged(nDate,true);
         onYearMonthChanged(nDate.localDate.getYear(),nDate.localDate.getMonthOfYear());
         notifyView(nDate.localDate,true);
-      //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
     }
 
 

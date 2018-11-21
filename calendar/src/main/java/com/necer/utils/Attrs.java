@@ -55,7 +55,6 @@ public class Attrs {
     public int monthCalendarHeight;
     public int duration;
 
-
     public boolean isWeekHold;
     public boolean isShowHoliday;
     public int holidayColor;
@@ -63,10 +62,8 @@ public class Attrs {
     public float holidayDistance;
     public int holidayLocation;
     public int workdayColor;
-
     public int bgCalendarColor;//日历的背景
     public int bgChildColor;//子view的背景
-
     public boolean isDefaultSelect;//是否默认选中
 
 

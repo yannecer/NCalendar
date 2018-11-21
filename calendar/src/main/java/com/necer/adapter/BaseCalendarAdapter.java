@@ -73,6 +73,6 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
 
     public BaseCalendarView getBaseCalendarView(int position) {
 
-        return (BaseCalendarView) mCalendarViews.get(position);
+        return mCalendarViews.get(position);
     }
 }

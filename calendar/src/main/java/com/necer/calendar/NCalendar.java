@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
@@ -17,6 +18,7 @@ import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.utils.Attrs;
 import com.necer.view.ChildLayout;
+
 import java.util.List;
 
 
@@ -133,10 +135,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             childLayoutTop = childLayout.getTop() == 0 ? weekHeigh : childLayout.getTop();
         }
 
-        weekCalendar.layout(l, 0, r, weekHeigh);
-        monthCalendar.layout(l, monthCalendarTop, r, monthHeigh + monthCalendarTop);
-        childLayout.layout(l, childLayoutTop, r, childLayout.getMeasuredHeight() + childLayoutTop);
-
+        int measuredWidth = getMeasuredWidth();
+        weekCalendar.layout(0, 0, measuredWidth, weekHeigh);
+        monthCalendar.layout(0, monthCalendarTop, measuredWidth, monthHeigh + monthCalendarTop);
+        childLayout.layout(0, childLayoutTop, measuredWidth, childLayout.getMeasuredHeight() + childLayoutTop);
     }
 
 
@@ -382,7 +384,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         this.onCalendarChangedListener = onCalendarChangedListener;
     }
 
-
     /**
      * 自动回到月的状态 包括月日历和chilayout
      */
@@ -455,6 +456,9 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
 
+    /**
+     * 回到今天
+     */
     public void toToday() {
         if (STATE == Attrs.MONTH) {
             monthCalendar.toToday();
@@ -463,22 +467,42 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
+    /**
+     * 自动滑动到周视图
+     */
     public void toWeek() {
         if (STATE == Attrs.MONTH) {
             onAutoToWeekState();
         }
-
     }
 
+    /**
+     * 自动滑动到月视图
+     */
     public void toMonth() {
         if (STATE == Attrs.WEEK) {
             onAutoToMonthState();
         }
     }
 
+    /**
+     * 设置小圆点
+     * @param pointList
+     */
     public void setPointList(List<String> pointList) {
         weekCalendar.setPointList(pointList);
         monthCalendar.setPointList(pointList);
+    }
+
+
+    /**
+     * 获取当前日历的状态
+     * Attrs.MONTH==月视图    Attrs.WEEK==周视图
+     *
+     * @return
+     */
+    public int getState() {
+        return STATE;
     }
 
 
