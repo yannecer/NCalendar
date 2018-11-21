@@ -35,7 +35,7 @@ implementation 'com.necer.ncalendar:ncalendar:3.0.4'
 #### 布局文件
 
 ```
-miui9 和 钉钉日历
+    miui9 和 钉钉日历
     <com.necer.calendar.Miui9Calendar
         android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@ miui9 和 钉钉日历
             android:layout_height="match_parent" />
     </com.necer.calendar.Miui9Calendar>
     
- miui10（不完美）
+    miui10（不完美）
     <com.necer.calendar.Miui10Calendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@ miui9 和 钉钉日历
         </android.support.v4.widget.NestedScrollView>  
     </com.necer.calendar.Miui10Calendar>
 
-华为 和 365日历
+    华为 和 365日历
     <com.necer.calendar.EmuiCalendar
         android:id="@+id/emuiCalendar"
         android:layout_width="match_parent"
