@@ -14,8 +14,11 @@
  - 支持各种颜色、距离、位置等属性
 
 
-## 效果图 miui9，miui10，华为emui
-![](https://github.com/yannecer/NCalendar/blob/master/app/new_.gif)
+## 效果图 
+|miui9|miui10|
+|:---:|:---:|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)
+|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|
 ## 周状态固定效果图
 ![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)
 ## 下载demo：
