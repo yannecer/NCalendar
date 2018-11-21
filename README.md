@@ -23,7 +23,7 @@
 |:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|
 ## 下载demo：
-[下载demo]https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk
+[下载demo](https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk)
 
 ## 使用方法
 
