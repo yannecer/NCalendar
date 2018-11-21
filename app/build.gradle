@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "necer.ncalendardemo"
+        applicationId "com.necer.ncalendar"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 2
@@ -25,6 +25,6 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
-    implementation project(':calendar')
+    implementation project(':ncalendar')
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 }

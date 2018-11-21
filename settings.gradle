@@ -1,2 +1,2 @@
-include ':app', ':calendar', ':calendar'
+include ':app', ':ncalendar'
 
