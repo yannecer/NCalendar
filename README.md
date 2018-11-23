@@ -10,84 +10,80 @@
  - 日历时间从1901-01-01到2099-12-31
  - 支持单独月日历和单独周日历默认不选中
  - 支持农历，节气、法定节假日等
- - 支持添加指示点
+ - 支持添加指示点及设置指示点位置
  - 支持各种颜色、距离、位置等属性
 
 
-## 效果图 miui9，miui10，华为emui
-![](https://github.com/yannecer/NCalendar/blob/master/app/new_.gif)
-## 周状态固定效果图
-![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)
+## 效果图 
+|miui9|miui10|
+|:---:|:---:|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|
+
+|emui|周固定，下拉刷新|
+|:---:|:---:|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|
 ## 下载demo：
-https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk
+[下载demo](https://github.com/yannecer/NCalendar/blob/master/app/app-debug.apk)
 
 ## 使用方法
 
+#### Gradle
+```
+implementation 'com.necer.ncalendar:ncalendar:3.0.4'
+```
 
 #### 布局文件
 
 ```
-miui9 和 钉钉日历
-
-     android:id="@+id/miui9Calendar"
+    miui9 和 钉钉日历
+    <com.necer.calendar.Miui9Calendar
+        android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:calendarHeight="300dp">
-
+        >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </com.necer.calendar.Miui9Calendar>
     
- miui10（不完美）
-    
+    miui10（不完美）
     <com.necer.calendar.Miui10Calendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bgChildColor="#F5f5f5">
-
+        >
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v4.widget.NestedScrollView>
-        
+        </android.support.v4.widget.NestedScrollView>  
     </com.necer.calendar.Miui10Calendar>
 
-
-华为 和 365日历
-
+    华为 和 365日历
     <com.necer.calendar.EmuiCalendar
         android:id="@+id/emuiCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bgCalendarColor="#ffffff"
-        app:holidayColor="#F29B38"
         >
-
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            
+            android:layout_height="match_parent">           
         </android.support.v4.widget.NestedScrollView>
     </com.necer.calendar.EmuiCalendar>
 
 ```
 #### 注意
 
+- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild2```的子类，
+如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个```NestedScrollingChild2```
+- 单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中
 
-```NCalendar```内部需要一个实现了```NestedScrollingChild2```的子类，```RecyclerView```，```NestedScrollView```都可以。
-
-单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中，这样才能体现出月周日期无缝切换的特点，
-该日历不支持月周切换的不选中设置
 
 
 
 ### 交流群
 
-技术交流QQ群：127278900<br/>请添加备注：github、NCalendar、安卓....
+技术交流QQ群：127278900
 
 
 
@@ -187,5 +183,23 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 |firstDayOfWeek|enum| 一周开始的星期天还是星期一 sunday 或者 monday 默认是sunday
 |holidayLocation|enum| 法定节假日相对公历日期的位置 top_right（右上方）、top_left（左上方）、bottom_right（右下方）、bottom_left（左下方）
 
+License
+-------
 
+
+     Copyright 2018 necer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+   
+   
 
