@@ -1,5 +1,4 @@
 package com.necer.calendar;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -18,7 +17,6 @@ import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.utils.Attrs;
 import com.necer.view.ChildLayout;
-
 import java.util.List;
 
 
@@ -233,11 +231,17 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
         //跟随手势滑动
         gestureMove(dy, consumed);
+    }
 
+    @Override
+    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
+        //只有都在都在周状态下，才允许子View Fling滑动
+        return !(childLayout.isWeekState() && monthCalendar.isWeekState());
     }
 
     @Override
     public void onStopNestedScroll(View target) {
+
         //该方法手指抬起的时候回调，此时根据此刻的位置，自动滑动到相应的状态，
         //如果已经在对应的位置上，则不执行动画，
         if (monthCalendar.isMonthState() && childLayout.isMonthState() && STATE == Attrs.WEEK) {
