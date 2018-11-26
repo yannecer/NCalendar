@@ -48,6 +48,20 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
 
     @Override
+    public void addView(View child, ViewGroup.LayoutParams params) {
+        ViewGroup parent = (ViewGroup) child.getParent();
+        if (parent != null) {
+            parent.removeView(child);
+        }
+        super.addView(child, params);
+
+        targetView = getNestedScrollingChild(child);
+        if (targetView == null) {
+            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild2的子类");
+        }
+    }
+
+/*    @Override
     public void addView(View child) {
         ViewGroup parent = (ViewGroup) child.getParent();
         if (parent != null) {
@@ -58,7 +72,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         if (targetView == null) {
             throw new RuntimeException("NCalendar需要实现了NestedScrollingChild2的子类");
         }
-    }
+    }*/
 
     private View getNestedScrollingChild(View view) {
 
@@ -78,6 +92,12 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         return null;
     }
 
+
+    @Override
+    public void offsetTopAndBottom(int offset) {
+        super.offsetTopAndBottom(offset);
+        invalidate();
+    }
 
     public boolean canScrollVertically(int direction) {
         return ViewCompat.canScrollVertically(targetView, direction);

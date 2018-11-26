@@ -39,8 +39,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/tv_month"
                     android:text="周一"
-                    android:textSize="12sp"
-                    android:textColor="#444444" />
+                    android:textColor="#444444"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_year"
@@ -49,8 +49,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/tv_month"
                     android:text="2017nian"
-                    android:textSize="12sp"
-                    android:textColor="#444444" />
+                    android:textColor="#444444"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -135,13 +135,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:bgCalendarColor="#f5f5f5"
+        app:bgChildColor="#F5f5f5"
         app:holidayColor="#519EDC"
+        app:lunarHolidayTextColor="#519EDC"
+        app:selectCircleColor="#398FE9"
         app:solarHolidayTextColor="#519EDC"
         app:solarTermTextColor="#519EDC"
-        app:lunarHolidayTextColor="#519EDC"
-        app:todaySolarTextColor="#398FE9"
-        app:selectCircleColor="#398FE9"
-        app:bgChildColor="#F5f5f5">
+        app:todaySolarTextColor="#398FE9">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -160,338 +160,125 @@
                     android:id="@+id/tv_lunar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textColor="#333333" />
+                    android:textColor="#333333"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_lunar_tg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:textColor="#666666" />
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                 <TextView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
-                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:text="测试"
-                    android:textColor="#666666" />
-
+                    android:gravity="center"
+                    android:text="asdfasdfasdf "
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
 
             </LinearLayout>

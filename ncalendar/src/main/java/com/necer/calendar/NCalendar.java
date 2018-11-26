@@ -102,7 +102,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         if (getChildCount() != 1) {
             throw new RuntimeException("NCalendar中的只能有一个直接子view");
         }
-        childLayout.addView(getChildAt(0));
+        childLayout.addView(getChildAt(0), new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         addView(monthCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, monthHeigh));
         addView(weekCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, weekHeigh));
@@ -227,6 +227,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         return true;
     }
 
+
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
         //跟随手势滑动
@@ -268,7 +269,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             monthCalendar.offsetTopAndBottom(-getGestureMonthUpOffset(dy));
             childLayout.offsetTopAndBottom(-getGestureChildUpOffset(dy));
             if (consumed != null) consumed[1] = dy;
-
         } else if (dy < 0 && isWeekHold && childLayout.isWeekState()) {
             //不操作，
 
