@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.0.4'
+implementation 'com.necer.ncalendar:ncalendar:3.1.0'
 ```
 
 #### 布局文件
