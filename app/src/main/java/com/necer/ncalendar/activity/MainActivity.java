@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
 
 
-
-
     }
 
 
@@ -41,5 +39,10 @@ public class MainActivity extends AppCompatActivity {
     public void toHoldWeek(View view) {
         startActivity(new Intent(this, TestWeekHoldActivity.class));
     }
+
+    public void toMonthWeek(View view) {
+        startActivity(new Intent(this, TestMonthWeekActivity.class));
+    }
+
 
 }

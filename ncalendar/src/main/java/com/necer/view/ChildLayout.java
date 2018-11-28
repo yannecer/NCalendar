@@ -61,19 +61,6 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         }
     }
 
-/*    @Override
-    public void addView(View child) {
-        ViewGroup parent = (ViewGroup) child.getParent();
-        if (parent != null) {
-            parent.removeView(child);
-        }
-        super.addView(child);
-        targetView = getNestedScrollingChild(child);
-        if (targetView == null) {
-            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild2的子类");
-        }
-    }*/
-
     private View getNestedScrollingChild(View view) {
 
         if (view instanceof NestedScrollingChild2) {

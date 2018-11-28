@@ -29,7 +29,7 @@ public class Miui9Calendar extends MiuiCalendar {
 
     @Override
     protected int getGestureChildDownOffset(int dy) {
-        int maxOffset = monthHeigh - childLayout.getTop();
+        int maxOffset = monthHeight - childLayout.getTop();
         return getOffset(Math.abs(dy), maxOffset);
     }
 
@@ -37,7 +37,7 @@ public class Miui9Calendar extends MiuiCalendar {
 
     @Override
     protected int getGestureChildUpOffset(int dy) {
-        int maxOffset = childLayout.getTop() - weekHeigh;
+        int maxOffset = childLayout.getTop() - weekHeight;
         return getOffset(dy, maxOffset);
     }
 

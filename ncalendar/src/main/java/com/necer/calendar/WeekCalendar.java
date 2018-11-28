@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.WeekCalendarAdapter;
@@ -24,6 +23,10 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
 
 
     private OnWeekSelectListener onWeekSelectListener;
+
+    public WeekCalendar(Context context,Attrs attrs) {
+        super(context,attrs);
+    }
 
     public WeekCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);

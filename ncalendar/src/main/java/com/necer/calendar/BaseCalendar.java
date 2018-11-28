@@ -1,18 +1,17 @@
 package com.necer.calendar;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-import com.necer.R;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.entity.NDate;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.utils.Attrs;
+import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
 
@@ -49,55 +48,22 @@ public abstract class BaseCalendar extends ViewPager {
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
-
-        TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.NCalendar);
-
-        attrs = new Attrs();
-        attrs.solarTextColor = ta.getColor(R.styleable.NCalendar_solarTextColor, getResources().getColor(R.color.solarTextColor));
-        attrs.todaySolarTextColor = ta.getColor(R.styleable.NCalendar_todaySolarTextColor, getResources().getColor(R.color.todaySolarTextColor));
-        attrs.lunarTextColor = ta.getColor(R.styleable.NCalendar_lunarTextColor, getResources().getColor(R.color.lunarTextColor));
-        attrs.solarHolidayTextColor = ta.getColor(R.styleable.NCalendar_solarHolidayTextColor, getResources().getColor(R.color.solarHolidayTextColor));
-        attrs.lunarHolidayTextColor = ta.getColor(R.styleable.NCalendar_lunarHolidayTextColor, getResources().getColor(R.color.lunarHolidayTextColor));
-        attrs.solarTermTextColor = ta.getColor(R.styleable.NCalendar_solarTermTextColor, getResources().getColor(R.color.solarTermTextColor));
-
-        attrs.selectCircleColor = ta.getColor(R.styleable.NCalendar_selectCircleColor, getResources().getColor(R.color.selectCircleColor));
-        attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, getResources().getColor(R.color.hintColor));
-        attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Util.sp2px(context, 18));
-        attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Util.sp2px(context, 10));
-        attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, Util.sp2px(context, 15));
-        attrs.holidayDistance = ta.getDimension(R.styleable.NCalendar_holidayDistance, Util.sp2px(context, 15));
-        attrs.holidayTextSize = ta.getDimension(R.styleable.NCalendar_holidayTextSize, Util.sp2px(context, 10));
-        attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 22));
-        attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
-        attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
-        attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, Util.dp2px(context, 2));
-        attrs.pointDistance = ta.getDimension(R.styleable.NCalendar_pointDistance, Util.dp2px(context, 12));
-        attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, getResources().getColor(R.color.pointColor));
-        attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, getResources().getColor(R.color.hollowCircleColor));
-        attrs.hollowCircleStroke = ta.getDimension(R.styleable.NCalendar_hollowCircleStroke, Util.dp2px(context, 1));
-        attrs.monthCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, Util.dp2px(context, 300));
-        attrs.duration = ta.getInt(R.styleable.NCalendar_duration, 240);
-        attrs.isShowHoliday = ta.getBoolean(R.styleable.NCalendar_isShowHoliday, true);
-        attrs.isWeekHold = ta.getBoolean(R.styleable.NCalendar_isWeekHold, false);
-        attrs.holidayColor = ta.getColor(R.styleable.NCalendar_holidayColor, getResources().getColor(R.color.holidayColor));
-        attrs.workdayColor = ta.getColor(R.styleable.NCalendar_workdayColor, getResources().getColor(R.color.workdayColor));
-        attrs.bgCalendarColor = ta.getColor(R.styleable.NCalendar_bgCalendarColor, getResources().getColor(R.color.white));
-        attrs.bgChildColor = ta.getColor(R.styleable.NCalendar_bgChildColor, getResources().getColor(R.color.white));
-        attrs.firstDayOfWeek = ta.getInt(R.styleable.NCalendar_firstDayOfWeek, Attrs.SUNDAY);
-        attrs.pointLocation = ta.getInt(R.styleable.NCalendar_pointLocation, Attrs.UP);
-        attrs.defaultCalendar = ta.getInt(R.styleable.NCalendar_defaultCalendar, Attrs.MONTH);
-        attrs.holidayLocation = ta.getInt(R.styleable.NCalendar_holidayLocation, Attrs.TOP_RIGHT);
-
-        String startString = ta.getString(R.styleable.NCalendar_startDate);
-        String endString = ta.getString(R.styleable.NCalendar_endDate);
+        Attrs attrs = AttrsUtil.getAttrs(context, attributeSet);
+        init(context, attrs);
+    }
 
 
-        ta.recycle();
+    public BaseCalendar(Context context,Attrs attrs) {
+        super(context);
+        init(context,attrs);
+    }
 
+
+    private void init(Context context, Attrs attrs) {
+        this.attrs = attrs;
         mPointList = new ArrayList<>();
-
-        LocalDate startDate = new LocalDate(startString == null ? "1901-01-01" : startString);
-        LocalDate endDate = new LocalDate(endString == null ? "2099-12-31" : endString);
+        LocalDate startDate = new LocalDate("1901-01-01");
+        LocalDate endDate = new LocalDate("2099-12-31");
 
         mCalendarSize = getCalendarSize(startDate, endDate, attrs.firstDayOfWeek);
         int currNum = getTwoDateNum(startDate, new LocalDate(), attrs.firstDayOfWeek);
@@ -259,7 +225,7 @@ public abstract class BaseCalendar extends ViewPager {
      * 任何操作都会回调
      *
      * @param date
-     * @param isDraw    页面是否选中
+     * @param isDraw 页面是否选中
      */
     public void onDateChanged(NDate date, boolean isDraw) {
         if (onDateChangedListener != null) {
@@ -283,7 +249,7 @@ public abstract class BaseCalendar extends ViewPager {
      */
     public void jumpDate(String formatDate) {
 
-        LocalDate jumpDate=null;
+        LocalDate jumpDate = null;
         try {
             jumpDate = new LocalDate(formatDate);
         } catch (Exception e) {

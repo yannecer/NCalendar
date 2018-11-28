@@ -1,11 +1,9 @@
 apply plugin: 'com.android.library'
 
 
-/*
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-version = "3.0.4" //版本号
-*/
+version = "3.0.14" //版本号
 
 android {
     compileSdkVersion 27
@@ -35,9 +33,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    api 'joda-time:joda-time:2.9.9'
+    api 'joda-time:joda-time:2.10.1'
 }
-/*
+
 
 def siteUrl = 'https://github.com/yannecer/NCalendar'      // 项目的主页
 def gitUrl = 'https://github.com/yannecer/NCalendar.git'   // Git仓库的url
@@ -110,4 +108,3 @@ bintray {
         publish = true
     }
 }
-*/

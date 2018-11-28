@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.necer.MyLog;
 import com.necer.ncalendar.R;
 
 
@@ -29,16 +28,10 @@ public class AAAdapter extends RecyclerView.Adapter<AAAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         TextView textView = holder.textView;
         textView.setText("-----"+position);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyLog.d("position:::::" + position);
-            }
-        });
 
     }
 

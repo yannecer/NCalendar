@@ -1,9 +1,11 @@
 package com.necer.calendar;
+
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
 import com.necer.entity.NDate;
@@ -12,6 +14,7 @@ import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+
 import org.joda.time.LocalDate;
 
 /**
@@ -25,13 +28,12 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     private OnMonthSelectListener onMonthSelectListener;
     private OnMonthAnimatorListener onMonthAnimatorListener;
 
+
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
     }
-
-    public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
-        this(context, attributeSet);
-
+    public MonthCalendar(Context context,Attrs attrs, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
+        super(context,attrs);
         this.onMonthAnimatorListener = onMonthAnimatorListener;
         monthValueAnimator = new ValueAnimator();
         monthValueAnimator.setDuration(duration);
@@ -84,7 +86,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         onSelcetDate(nDate);
         onDateChanged(nDate, true);
         onYearMonthChanged(nDate.localDate.getYear(), nDate.localDate.getMonthOfYear());
-      //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
         notifyView(nDate.localDate, true);
     }
 

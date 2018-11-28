@@ -1,4 +1,5 @@
 package com.necer.calendar;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -16,7 +17,9 @@ import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.utils.Attrs;
+import com.necer.utils.AttrsUtil;
 import com.necer.view.ChildLayout;
+
 import java.util.List;
 
 
@@ -29,8 +32,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected WeekCalendar weekCalendar;
     protected MonthCalendar monthCalendar;
 
-    protected int weekHeigh;//周日历的高度
-    protected int monthHeigh;//月日历的高度,是日历整个的高
+    protected int weekHeight;//周日历的高度
+    protected int monthHeight;//月日历的高度,是日历整个的高
 
     protected int STATE;//默认月
     private int lastSate;//防止状态监听重复回调
@@ -43,23 +46,29 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     private boolean isWeekHold;//是否需要周状态定住
 
+    public NCalendar(@NonNull Context context) {
+        this(context, null);
+    }
 
     public NCalendar(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+    }
+
+    public NCalendar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
 
         setMotionEventSplittingEnabled(false);
-
-        weekCalendar = new WeekCalendar(context, attrs);
-        Attrs attrss = weekCalendar.getAttrs();
+        Attrs attrss = AttrsUtil.getAttrs(context, attrs);
 
         int duration = attrss.duration;
-        monthHeigh = attrss.monthCalendarHeight;
+        monthHeight = attrss.monthCalendarHeight;
         STATE = attrss.defaultCalendar;
-        weekHeigh = monthHeigh / 5;
+        weekHeight = monthHeight / 5;
         isWeekHold = attrss.isWeekHold;
 
-        monthCalendar = new MonthCalendar(context, attrs, duration, this);
-        childLayout = new ChildLayout(getContext(), attrs, monthHeigh, duration, this);
+        weekCalendar = new WeekCalendar(context, attrss);
+        monthCalendar = new MonthCalendar(context, attrss, duration, this);
+        childLayout = new ChildLayout(getContext(), attrs, monthHeight, duration, this);
 
         monthCalendar.setOnDateChangedListener(this);
         weekCalendar.setOnDateChangedListener(this);
@@ -75,6 +84,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
                 weekRect = new Rect(0, 0, weekCalendar.getWidth(), weekCalendar.getHeight());
             }
         });
+
 
     }
 
@@ -99,13 +109,14 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
         if (getChildCount() != 1) {
             throw new RuntimeException("NCalendar中的只能有一个直接子view");
         }
         childLayout.addView(getChildAt(0), new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        addView(monthCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, monthHeigh));
-        addView(weekCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, weekHeigh));
+        addView(monthCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, monthHeight));
+        addView(weekCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, weekHeight));
         addView(childLayout, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
@@ -113,7 +124,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         ViewGroup.LayoutParams childLayoutLayoutParams = childLayout.getLayoutParams();
-        childLayoutLayoutParams.height = getMeasuredHeight() - weekHeigh;
+        childLayoutLayoutParams.height = getMeasuredHeight() - weekHeight;
 
         //需要再调一次父类的方法？真机不调用首次高度不对，为何？
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -127,15 +138,15 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         int childLayoutTop;
         if (STATE == Attrs.MONTH) {
             monthCalendarTop = monthCalendar.getTop();
-            childLayoutTop = childLayout.getTop() == 0 ? monthHeigh : childLayout.getTop();
+            childLayoutTop = childLayout.getTop() == 0 ? monthHeight : childLayout.getTop();
         } else {
             monthCalendarTop = getMonthTopOnWeekState();
-            childLayoutTop = childLayout.getTop() == 0 ? weekHeigh : childLayout.getTop();
+            childLayoutTop = childLayout.getTop() == 0 ? weekHeight : childLayout.getTop();
         }
 
         int measuredWidth = getMeasuredWidth();
-        weekCalendar.layout(0, 0, measuredWidth, weekHeigh);
-        monthCalendar.layout(0, monthCalendarTop, measuredWidth, monthHeigh + monthCalendarTop);
+        weekCalendar.layout(0, 0, measuredWidth, weekHeight);
+        monthCalendar.layout(0, monthCalendarTop, measuredWidth, monthHeight + monthCalendarTop);
         childLayout.layout(0, childLayoutTop, measuredWidth, childLayout.getMeasuredHeight() + childLayoutTop);
     }
 
@@ -147,10 +158,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     private void setCalenadrState(int state) {
 
-        if (lastSate == state) {
-            return;
-        }
-
         if (state == Attrs.WEEK) {
             STATE = Attrs.WEEK;
             weekCalendar.setVisibility(VISIBLE);
@@ -159,7 +166,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             weekCalendar.setVisibility(INVISIBLE);
         }
 
-        if (onCalendarChangedListener != null) {
+        if (onCalendarChangedListener != null && lastSate != state) {
             onCalendarChangedListener.onCalendarStateChanged(STATE == Attrs.MONTH);
         }
 
@@ -172,17 +179,15 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     private void autoScroll() {
 
-
-
         int childLayoutTop = childLayout.getTop();
 
-        if (STATE == Attrs.MONTH && monthHeigh - childLayoutTop < weekHeigh) {
+        if (STATE == Attrs.MONTH && monthHeight - childLayoutTop < weekHeight) {
             onAutoToMonthState();
-        } else if (STATE == Attrs.MONTH && monthHeigh - childLayoutTop >= weekHeigh) {
+        } else if (STATE == Attrs.MONTH && monthHeight - childLayoutTop >= weekHeight) {
             onAutoToWeekState();
-        } else if (STATE == Attrs.WEEK && childLayoutTop < weekHeigh * 2) {
+        } else if (STATE == Attrs.WEEK && childLayoutTop < weekHeight * 2) {
             onAutoToWeekState();
-        } else if (STATE == Attrs.WEEK && childLayoutTop >= weekHeigh * 2) {
+        } else if (STATE == Attrs.WEEK && childLayoutTop >= weekHeight * 2) {
             onAutoToMonthState();
         }
     }
@@ -256,7 +261,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             autoScroll();
         }
     }
-
 
 
     /**
@@ -495,6 +499,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     /**
      * 设置小圆点
+     *
      * @param pointList
      */
     public void setPointList(List<String> pointList) {
