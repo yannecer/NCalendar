@@ -32,7 +32,7 @@
 implementation 'com.necer.ncalendar:ncalendar:3.1.0'
 ```
 
-#### 布局文件
+#### 月周切换
 
 ```
     miui9 和 钉钉日历
@@ -72,6 +72,28 @@ implementation 'com.necer.ncalendar:ncalendar:3.1.0'
     </com.necer.calendar.EmuiCalendar>
 
 ```
+
+#### 单个月日历，单个周日历
+
+
+```
+   月日历
+   <com.necer.calendar.MonthCalendar
+        android:layout_width="match_parent"
+        app:todaySolarTextColor="#ff00ff"
+        app:selectCircleColor="#00c3aa"
+        app:hollowCircleColor="#00c3aa"
+        android:layout_height="300dp" />
+
+   周日历
+   <com.necer.calendar.WeekCalendar
+        android:layout_width="match_parent"
+        app:lunarTextColor="#00aa00"
+        android:layout_height="50dp" />
+
+```
+
+
 #### 注意
 
 - NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild2```的子类，
