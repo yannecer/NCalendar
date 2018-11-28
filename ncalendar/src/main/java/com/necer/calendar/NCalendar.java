@@ -172,6 +172,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     private void autoScroll() {
 
+
+
         int childLayoutTop = childLayout.getTop();
 
         if (STATE == Attrs.MONTH && monthHeigh - childLayoutTop < weekHeigh) {
@@ -249,10 +251,12 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             setCalenadrState(Attrs.MONTH);
         } else if (monthCalendar.isWeekState() && childLayout.isWeekState() && STATE == Attrs.MONTH) {
             setCalenadrState(Attrs.WEEK);
-        } else {
+        } else if (!childLayout.isMonthState() && !childLayout.isWeekState()) {
+            //不是周状态也不是月状态时，自动滑动
             autoScroll();
         }
     }
+
 
 
     /**
