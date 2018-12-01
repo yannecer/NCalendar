@@ -104,7 +104,7 @@ public abstract class BaseCalendarView extends View {
                         drawHolidays(canvas, centerX, centerY, false, date);
                     } else {
 
-                        drawSolar(canvas, centerX, centerY, mAttrs.solarTextColor, date.getDayOfMonth() + "");
+                        drawSolar(canvas, rect.centerX(), rect.centerY(), mAttrs.solarTextColor, date.getDayOfMonth() + "");
                         //农历
                         drawLunar(canvas, centerX, centerY, false, true, nDate);
                         //绘制圆点
@@ -114,7 +114,7 @@ public abstract class BaseCalendarView extends View {
 
                 } else {
                     //公历
-                    drawSolar(canvas, centerX, centerY, mAttrs.hintColor, date.getDayOfMonth() + "");
+                    drawSolar(canvas, rect.centerX(), rect.centerY(), mAttrs.hintColor, date.getDayOfMonth() + "");
                     //农历
                     drawLunar(canvas, centerX, centerY, false, false, nDate);
                     //绘制圆点
@@ -169,7 +169,7 @@ public abstract class BaseCalendarView extends View {
     private void drawSolar(Canvas canvas, int centerX, int centerY, int color, String solar) {
         mTextPaint.setColor(color);
         mTextPaint.setTextSize(mAttrs.solarTextSize);
-        canvas.drawText(solar, centerX, centerY, mTextPaint);
+        canvas.drawText(solar, centerX, centerY-(getSolarTexyCenterY(centerY)-centerY), mTextPaint);
     }
 
     //绘制圆点
@@ -206,7 +206,7 @@ public abstract class BaseCalendarView extends View {
                 mTextPaint.setColor(isWhite ? Color.WHITE : mAttrs.lunarTextColor);
             }
 
-            canvas.drawText(lunarString, centerX, centerY + mAttrs.lunarDistance, mTextPaint);
+//            canvas.drawText(lunarString, centerX, centerY + mAttrs.lunarDistance, mTextPaint);
         }
     }
 
