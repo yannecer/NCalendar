@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.1.1'
+implementation 'com.necer.ncalendar:ncalendar:3.1.2'
 
 ```
 
@@ -209,6 +209,8 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 
 
 ## 版本更新
+* 3.1.:
+  修复初十的农历日期显示
 * 3.1.1:
   修复当月跳转今天不回调
 
