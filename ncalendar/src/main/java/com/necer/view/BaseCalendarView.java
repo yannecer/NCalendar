@@ -305,7 +305,7 @@ public abstract class BaseCalendarView extends View {
      * @param initialDate
      * @return
      */
-    protected abstract boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate);
+    public abstract boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate);
 
 
     /**

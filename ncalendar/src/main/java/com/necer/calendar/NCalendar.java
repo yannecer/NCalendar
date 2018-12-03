@@ -46,6 +46,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     private boolean isWeekHold;//是否需要周状态定住
 
+
     public NCalendar(@NonNull Context context) {
         this(context, null);
     }
@@ -148,6 +149,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         weekCalendar.layout(0, 0, measuredWidth, weekHeight);
         monthCalendar.layout(0, monthCalendarTop, measuredWidth, monthHeight + monthCalendarTop);
         childLayout.layout(0, childLayoutTop, measuredWidth, childLayout.getMeasuredHeight() + childLayoutTop);
+
     }
 
 
@@ -207,7 +209,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         if (baseCalendar instanceof MonthCalendar && STATE == Attrs.MONTH) {
             //月日历变化,改变周的选中
             weekCalendar.jumpDate(date.localDate, true);
-            // requestLayout();
             if (onCalendarChangedListener != null) {
                 onCalendarChangedListener.onCalendarDateChanged(date);
             }

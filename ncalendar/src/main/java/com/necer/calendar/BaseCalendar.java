@@ -104,27 +104,31 @@ public abstract class BaseCalendar extends ViewPager {
         this.mNextView = calendarAdapter.getBaseCalendarView(position + 1);
 
         LocalDate initialDate = mCurrView.getInitialDate();
+        LocalDate localDate;
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
         if (mSelectDate != null) {
             int currNum = getTwoDateNum(mSelectDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
-            mSelectDate = getDate(mSelectDate, currNum);
+            localDate = getDate(mSelectDate, currNum);
         } else {
-            mSelectDate = initialDate;
+            localDate = initialDate;
         }
 
         //绘制的规则：1、默认选中，每个页面都会有选中。1、默认不选中，但是点击了当前页面的某个日期
         boolean isDraw = attrs.isDefaultSelect || (mSelectDate.equals(mOnClickDate));
-        notifyView(mSelectDate, isDraw);
+        notifyView(localDate, isDraw);
+
+
 
         //选中回调 ,绘制了才会回到
         if (isDraw) {
             onSelcetDate(Util.getNDate(mSelectDate));
         }
-
         //年月回调
         onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
         //日期回调
         onDateChanged(Util.getNDate(mSelectDate), isDraw);
+
+
     }
 
     public void setPointList(List<String> list) {
@@ -269,15 +273,16 @@ public abstract class BaseCalendar extends ViewPager {
     protected void jumpDate(LocalDate localDate, boolean isDraw) {
         if (mSelectDate != null) {
             mOnClickDate = localDate;
+
             int num = getTwoDateNum(mSelectDate, localDate, attrs.firstDayOfWeek);
             setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
+
+            //同一月份的跳转回调
+            if (mCurrView.isEqualsMonthOrWeek(localDate,mSelectDate)) {
+                onDateChanged(Util.getNDate(localDate), isDraw);
+            }
+
             notifyView(localDate, isDraw);
         }
     }
-
-
-    protected Attrs getAttrs() {
-        return attrs;
-    }
-
 }

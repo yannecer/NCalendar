@@ -40,7 +40,7 @@ public class MonthView extends BaseCalendarView {
     }
 
     @Override
-    protected boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
+    public boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
         return Util.isEqualsMonth(date, initialDate);
     }
 }

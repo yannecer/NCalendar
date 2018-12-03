@@ -2,6 +2,7 @@ package com.necer.ncalendar.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.necer.MyLog;
@@ -65,6 +66,15 @@ public class TestMiui9Activity extends BaseActivity {
             @Override
             public void onCalendarStateChanged(boolean isMonthSate) {
                 MyLog.d("OnCalendarChangedListener:::" + isMonthSate);
+            }
+        });
+
+
+        tv_month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                miui9Calendar.toToday();
+
             }
         });
 

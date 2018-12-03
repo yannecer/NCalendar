@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toToday"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,6 +82,7 @@
     </LinearLayout>
 
     <com.necer.calendar.MonthCalendar
+        android:id="@+id/monthCalendar"
         android:layout_width="match_parent"
         app:todaySolarTextColor="#ff00ff"
         app:selectCircleColor="#00c3aa"
@@ -86,10 +92,10 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="50dp"
-
         android:background="#cccccc" />
 
     <com.necer.calendar.WeekCalendar
+        android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
         app:lunarTextColor="#00aa00"
         android:layout_height="50dp" />

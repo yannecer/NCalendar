@@ -32,7 +32,7 @@ public class WeekView extends BaseCalendarView {
     }
 
     @Override
-    protected boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
-        return true;
+    public boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
+        return mDateList.contains(new NDate(date));
     }
 }
