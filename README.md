@@ -29,7 +29,8 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.1.0'
+implementation 'com.necer.ncalendar:ncalendar:3.1.1'
+
 ```
 
 #### 月周切换
