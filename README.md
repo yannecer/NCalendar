@@ -206,6 +206,14 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 |firstDayOfWeek|enum| 一周开始的星期天还是星期一 sunday 或者 monday 默认是sunday
 |holidayLocation|enum| 法定节假日相对公历日期的位置 top_right（右上方）、top_left（左上方）、bottom_right（右下方）、bottom_left（左下方）
 
+
+
+## 版本更新
+* 3.1.1:
+  修复当月跳转今天不回调
+
+
+
 License
 -------
 
