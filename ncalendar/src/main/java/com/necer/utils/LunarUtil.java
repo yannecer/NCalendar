@@ -263,15 +263,19 @@ public class LunarUtil {
         } else if (lunatDay == 10) {
             relust = "初十";
         } else {
-            int n = lunatDay % 10 == 0 ? 9 : lunatDay % 10 - 1;
+            int n = lunatDay % 10 == 0 ? 9 : (lunatDay % 10 - 1);
             relust = chineseTen[lunatDay / 10] + CHINESE_NUMBER[n];
         }
         return relust;
     }
 
     private static String getDayStr(int lunatDay) {
-        int n = lunatDay % 10 == 0 ? 9 : lunatDay % 10 - 1;
-        return chineseTen[lunatDay / 10] + CHINESE_NUMBER[n];
+        if (lunatDay == 10) {
+            return "初十";
+        } else {
+            int n = lunatDay % 10 == 0 ? 9 : (lunatDay % 10 - 1);
+            return chineseTen[lunatDay / 10] + CHINESE_NUMBER[n];
+        }
     }
 
 }
