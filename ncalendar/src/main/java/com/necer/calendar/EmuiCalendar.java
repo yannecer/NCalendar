@@ -52,10 +52,11 @@ public class EmuiCalendar extends NCalendar {
 
 
     @Override
-    protected void onSetWeekVisible() {
-        if (monthCalendar.isWeekState()) {
+    protected void onSetWeekVisible(int dy) {
+
+        if (monthCalendar.isWeekState() && dy>0) {
             weekCalendar.setVisibility(VISIBLE);
-        } else if (monthCalendar.getTop() >= -monthCalendar.getMonthCalendarOffset()) {
+        } else if (monthCalendar.getTop() >= -monthCalendar.getMonthCalendarOffset() && dy < 0) {
             weekCalendar.setVisibility(INVISIBLE);
         }
     }

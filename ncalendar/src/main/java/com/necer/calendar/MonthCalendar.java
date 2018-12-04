@@ -160,7 +160,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         offsetTopAndBottom(i);
 
         if (onMonthAnimatorListener != null) {
-            onMonthAnimatorListener.onMonthAnimatorChanged(i);
+            //回调遵循>0向上，<0向下
+            onMonthAnimatorListener.onMonthAnimatorChanged(-i);
         }
     }
 

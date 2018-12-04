@@ -34,7 +34,7 @@ public abstract class MiuiCalendar extends NCalendar{
     }
 
     @Override
-    protected void onSetWeekVisible() {
+    protected void onSetWeekVisible(int dy) {
         if (childLayout.isWeekState() ) {
             weekCalendar.setVisibility(VISIBLE);
         } else  {

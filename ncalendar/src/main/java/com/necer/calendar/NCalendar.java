@@ -287,7 +287,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             if (consumed != null) consumed[1] = dy;
         }
 
-        onSetWeekVisible();
+        onSetWeekVisible(dy);
     }
 
 
@@ -299,7 +299,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     @Override
     public void onMonthAnimatorChanged(int offset) {
-        onSetWeekVisible();
+        onSetWeekVisible(offset);
     }
 
 
@@ -410,7 +410,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     /**
      * 设置weekCalendar的显示隐藏，该方法会在手势滑动和自动滑动的的时候一直回调
      */
-    protected abstract void onSetWeekVisible();
+    protected abstract void onSetWeekVisible(int dy);
 
     /**
      * 周状态下 月日历的顶部距离父view顶部的值 是个负值
