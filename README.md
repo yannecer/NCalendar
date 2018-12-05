@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.1.2'
+implementation 'com.necer.ncalendar:ncalendar:3.1.3'
 
 ```
 
@@ -209,6 +209,7 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 
 
 ## 版本更新
+* 3.1.3<br/>修复Emui日历选中第一行下拉时周日历不消失的bug
 * 3.1.2<br/>修复初十的农历日期显示
 * 3.1.1<br/>修复当月跳转今天不回调
 
