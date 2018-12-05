@@ -246,6 +246,22 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
+
+    /**
+     * 下一页，月日历即是下一月，周日历即是下一周
+     */
+    public void toNextPager() {
+        setCurrentItem(getCurrentItem() + 1, true);
+    }
+
+    /**
+     * 上一页
+     */
+    public void toLastPager() {
+        setCurrentItem(getCurrentItem() - 1, true);
+    }
+
+
     /**
      * 跳转日期
      *

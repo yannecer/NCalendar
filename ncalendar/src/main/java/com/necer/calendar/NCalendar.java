@@ -520,4 +520,21 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
 
+    public void toNextPager() {
+        if (STATE == Attrs.MONTH) {
+            monthCalendar.toNextPager();
+        } else {
+            weekCalendar.toNextPager();
+        }
+    }
+
+    public void toLastPager() {
+        if (STATE == Attrs.MONTH) {
+            monthCalendar.toLastPager();
+        } else {
+            weekCalendar.toLastPager();
+        }
+    }
+
+
 }
