@@ -11,14 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
+import com.necer.utils.Util;
 import com.necer.view.ChildLayout;
+
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -83,6 +85,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             public void run() {
                 monthRect = new Rect(0, 0, monthCalendar.getWidth(), monthCalendar.getHeight());
                 weekRect = new Rect(0, 0, weekCalendar.getWidth(), weekCalendar.getHeight());
+
+                monthCalendar.setY(STATE == Attrs.MONTH ? 0 : getMonthYOnWeekState());
+                childLayout.setY(STATE == Attrs.MONTH ? monthHeight : weekHeight);
+
             }
         });
 
@@ -135,21 +141,13 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         //super.onLayout(changed, l, t, r, b); //调用父类的该方法会造成 快速滑动月日历同时快速上滑recyclerview造成月日历的残影
-        int monthCalendarTop;
-        int childLayoutTop;
-        if (STATE == Attrs.MONTH) {
-            monthCalendarTop = monthCalendar.getTop();
-            childLayoutTop = childLayout.getTop() == 0 ? monthHeight : childLayout.getTop();
-        } else {
-            monthCalendarTop = getMonthTopOnWeekState();
-            childLayoutTop = childLayout.getTop() == 0 ? weekHeight : childLayout.getTop();
-        }
 
+        int monthCalendarTop = 0;
+        int childLayoutTop = monthHeight;
         int measuredWidth = getMeasuredWidth();
         weekCalendar.layout(0, 0, measuredWidth, weekHeight);
         monthCalendar.layout(0, monthCalendarTop, measuredWidth, monthHeight + monthCalendarTop);
         childLayout.layout(0, childLayoutTop, measuredWidth, childLayout.getMeasuredHeight() + childLayoutTop);
-
     }
 
 
@@ -181,15 +179,15 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     private void autoScroll() {
 
-        int childLayoutTop = childLayout.getTop();
+        float childLayoutY = childLayout.getY();
 
-        if (STATE == Attrs.MONTH && monthHeight - childLayoutTop < weekHeight) {
+        if (STATE == Attrs.MONTH && monthHeight - childLayoutY < weekHeight) {
             onAutoToMonthState();
-        } else if (STATE == Attrs.MONTH && monthHeight - childLayoutTop >= weekHeight) {
+        } else if (STATE == Attrs.MONTH && monthHeight - childLayoutY >= weekHeight) {
             onAutoToWeekState();
-        } else if (STATE == Attrs.WEEK && childLayoutTop < weekHeight * 2) {
+        } else if (STATE == Attrs.WEEK && childLayoutY < weekHeight * 2) {
             onAutoToWeekState();
-        } else if (STATE == Attrs.WEEK && childLayoutTop >= weekHeight * 2) {
+        } else if (STATE == Attrs.WEEK && childLayoutY >= weekHeight * 2) {
             onAutoToMonthState();
         }
     }
@@ -199,33 +197,33 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * 月日历和周日历的日期变化回调，每次日期变化都会回调，用于不同状态下，设置另一个日历的日期
      *
      * @param baseCalendar 日历本身
-     * @param date         当前选中的时间
+     * @param localDate    当前选中的时间
      * @param isDraw       是否绘制 此处选择都绘制，默认不选中，不适用鱼月周切换
      */
     @Override
-    public void onDateChanged(BaseCalendar baseCalendar, NDate date, boolean isDraw) {
+    public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw) {
 
 
         if (baseCalendar instanceof MonthCalendar && STATE == Attrs.MONTH) {
             //月日历变化,改变周的选中
-            weekCalendar.jumpDate(date.localDate, true);
+            weekCalendar.jumpDate(localDate, true);
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(date);
+                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate));
             }
 
         } else if (baseCalendar instanceof WeekCalendar && STATE == Attrs.WEEK) {
             //周日历变化，改变月的选中
-            monthCalendar.jumpDate(date.localDate, true);
+            monthCalendar.jumpDate(localDate, true);
             post(new Runnable() {
                 @Override
                 public void run() {
-                    //此时需要重新请求布局，不然会闪烁变成原来的状态，
+                    //此时需要根据月日历的选中日期调整Y值
                     // post是因为在前面得到当前view是再post中完成，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
-                    requestLayout();
+                    monthCalendar.setY(getMonthYOnWeekState());
                 }
             });
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(date);
+                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate));
             }
         }
     }
@@ -274,16 +272,21 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     protected void gestureMove(int dy, int[] consumed) {
 
+
+        float monthCalendarY = monthCalendar.getY();
+        float childLayoutY = childLayout.getY();
+
+
         if (dy > 0 && !childLayout.isWeekState()) {
-            monthCalendar.offsetTopAndBottom(-getGestureMonthUpOffset(dy));
-            childLayout.offsetTopAndBottom(-getGestureChildUpOffset(dy));
+            monthCalendar.setY(-getGestureMonthUpOffset(dy) + monthCalendarY);
+            childLayout.setY(-getGestureChildUpOffset(dy) + childLayoutY);
             if (consumed != null) consumed[1] = dy;
         } else if (dy < 0 && isWeekHold && childLayout.isWeekState()) {
             //不操作，
 
         } else if (dy < 0 && !childLayout.isMonthState() && !childLayout.canScrollVertically(-1)) {
-            monthCalendar.offsetTopAndBottom(getGestureMonthDownOffset(dy));
-            childLayout.offsetTopAndBottom(getGestureChildDownOffset(dy));
+            monthCalendar.setY(getGestureMonthDownOffset(dy) + monthCalendarY);
+            childLayout.setY(getGestureChildDownOffset(dy) + childLayoutY);
             if (consumed != null) consumed[1] = dy;
         }
 
@@ -386,7 +389,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @param maxOffset 当前滑动的最大距离
      * @return
      */
-    protected int getOffset(int offset, int maxOffset) {
+    protected float getOffset(float offset, float maxOffset) {
         if (offset > maxOffset) {
             return maxOffset;
         }
@@ -413,12 +416,12 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected abstract void onSetWeekVisible(int dy);
 
     /**
-     * 周状态下 月日历的顶部距离父view顶部的值 是个负值
-     * 用于在 onLayout 方法中摆放月日历的位置
+     * 周状态下 月日历的getY 是个负值
+     * 用于在 周状态下日期改变设置正确的y值
      *
      * @return
      */
-    protected abstract int getMonthTopOnWeekState();
+    protected abstract float getMonthYOnWeekState();
 
 
     /**
@@ -427,7 +430,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
      * @return 根据不同日历的交互，计算不同的滑动值
      */
-    protected abstract int getGestureMonthUpOffset(int dy);
+    protected abstract float getGestureMonthUpOffset(int dy);
 
     /**
      * Child根据手势向上移动的距离
@@ -435,7 +438,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
      * @return 根据不同日历的交互，计算不同的滑动值
      */
-    protected abstract int getGestureChildUpOffset(int dy);
+    protected abstract float getGestureChildUpOffset(int dy);
 
     /**
      * 月日历根据手势向下移动的距离
@@ -443,7 +446,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
      * @return 根据不同日历的交互，计算不同的滑动值
      */
-    protected abstract int getGestureMonthDownOffset(int dy);
+    protected abstract float getGestureMonthDownOffset(int dy);
 
     /**
      * Child根据手势向下移动的距离
@@ -451,7 +454,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
      * @return 根据不同日历的交互，计算不同的滑动值
      */
-    protected abstract int getGestureChildDownOffset(int dy);
+    protected abstract float getGestureChildDownOffset(int dy);
 
 
     /**

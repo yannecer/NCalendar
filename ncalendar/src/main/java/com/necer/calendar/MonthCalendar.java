@@ -82,30 +82,30 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
 
 
     @Override
-    public void onClickCurrentMonth(NDate nDate) {
-        onSelcetDate(nDate);
-        onDateChanged(nDate, true);
-        onYearMonthChanged(nDate.localDate.getYear(), nDate.localDate.getMonthOfYear());
+    public void onClickCurrentMonth(LocalDate localDate) {
+        onSelcetDate(Util.getNDate(localDate));
+        onDateChanged(localDate, true);
+        onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
         //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
-        notifyView(nDate.localDate, true);
+        notifyView(localDate, true);
     }
 
     @Override
-    public void onClickLastMonth(NDate nDate) {
-        onSelcetDate(nDate);
-        onDateChanged(nDate, true);
-        onYearMonthChanged(nDate.localDate.getYear(), nDate.localDate.getMonthOfYear());
+    public void onClickLastMonth(LocalDate localDate) {
+        onSelcetDate(Util.getNDate(localDate));
+        onDateChanged(localDate, true);
+        onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
         setCurrentItem(getCurrentItem() - 1, true);
-        notifyView(nDate.localDate, true);
+        notifyView(localDate, true);
     }
 
     @Override
-    public void onClickNextMonth(NDate nDate) {
-        onSelcetDate(nDate);
-        onDateChanged(nDate, true);
-        onYearMonthChanged(nDate.localDate.getYear(), nDate.localDate.getMonthOfYear());
+    public void onClickNextMonth(LocalDate localDate) {
+        onSelcetDate(Util.getNDate(localDate));
+        onDateChanged(localDate, true);
+        onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
         setCurrentItem(getCurrentItem() + 1, true);
-        notifyView(nDate.localDate, true);
+        notifyView(localDate, true);
     }
 
     public void setOnMonthSelectListener(OnMonthSelectListener onMonthSelectListener) {
@@ -118,50 +118,53 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
             return mCurrView.getMonthCalendarOffset();
         }
         return 0;
-
     }
 
     public void autoToMonth() {
-        int top = getTop();//起始位置
+        float top = getY();//起始位置
         int end = 0;
-        monthValueAnimator.setIntValues(top, end);
+        monthValueAnimator.setFloatValues(top, end);
         monthValueAnimator.start();
     }
 
 
     public void autoToMIUIWeek() {
-        int top = getTop();//起始位置
+        float top = getY();//起始位置
         int end = -getMonthCalendarOffset(); //结束位置
-        monthValueAnimator.setIntValues(top, end);
+        monthValueAnimator.setFloatValues(top, end);
         monthValueAnimator.start();
     }
 
     public void autoToEMUIWeek() {
-        int top = getTop();//起始位置
+        float top = getY();//起始位置
         int end = -getHeight() * 4 / 5; //结束位置
-        monthValueAnimator.setIntValues(top, end);
+        monthValueAnimator.setFloatValues(top, end);
         monthValueAnimator.start();
     }
 
 
     public boolean isMonthState() {
-        return getTop() >= 0;
+        return getY() >= 0;
     }
 
     public boolean isWeekState() {
-        return getTop() <= -getMonthCalendarOffset();
+        return getY() <= -getMonthCalendarOffset();
     }
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
-        int animatedValue = (int) animation.getAnimatedValue();
-        int top = getTop();
-        int i = animatedValue - top;
-        offsetTopAndBottom(i);
+        float animatedValue = (float) animation.getAnimatedValue();
+        float top = getY();
+        float i = animatedValue - top;
+        //offsetTopAndBottom(i);
+
+        float y = getY();
+        setY(i + y);
+
 
         if (onMonthAnimatorListener != null) {
             //回调遵循>0向上，<0向下
-            onMonthAnimatorListener.onMonthAnimatorChanged(-i);
+            onMonthAnimatorListener.onMonthAnimatorChanged((int) -i);
         }
     }
 

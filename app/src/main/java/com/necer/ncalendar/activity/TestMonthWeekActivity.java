@@ -2,12 +2,10 @@ package com.necer.ncalendar.activity;
 
 import android.view.View;
 
-import com.necer.MyLog;
-import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
 import com.necer.entity.NDate;
-import com.necer.listener.OnDateChangedListener;
+import com.necer.listener.OnWeekSelectListener;
 import com.necer.ncalendar.R;
 
 /**
@@ -32,10 +30,10 @@ public class TestMonthWeekActivity extends BaseActivity {
         weekCalendar = findViewById(R.id.weekCalendar);
 
 
-        weekCalendar.setOnDateChangedListener(new OnDateChangedListener() {
+        weekCalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
             @Override
-            public void onDateChanged(BaseCalendar baseCalendar, NDate nDate, boolean isDraw) {
-                MyLog.d("nDate:onDateChanged:" + nDate.localDate);
+            public void onWeekSelect(NDate date) {
+
             }
         });
 
@@ -43,7 +41,7 @@ public class TestMonthWeekActivity extends BaseActivity {
 
     public void toToday(View view) {
         weekCalendar.toToday();
-       // monthCalendar.toToday();
+        // monthCalendar.toToday();
 
 
     }

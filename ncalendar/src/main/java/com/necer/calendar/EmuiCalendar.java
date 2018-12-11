@@ -27,26 +27,26 @@ public class EmuiCalendar extends NCalendar {
     }
 
     @Override
-    protected int getMonthTopOnWeekState() {
+    protected float getMonthYOnWeekState() {
         return weekHeight - monthHeight;
     }
 
     @Override
-    protected int getGestureMonthUpOffset(int dy) {
+    protected float getGestureMonthUpOffset(int dy) {
         return getGestureChildUpOffset(dy);
     }
 
-    protected int getGestureMonthDownOffset(int dy) {
+    protected float getGestureMonthDownOffset(int dy) {
         return getGestureChildDownOffset(dy);
     }
     @Override
-    protected int getGestureChildDownOffset(int dy) {
-        int maxOffset = monthHeight - childLayout.getTop();
+    protected float getGestureChildDownOffset(int dy) {
+        float maxOffset = monthHeight - childLayout.getY();
         return getOffset(Math.abs(dy), maxOffset);
     }
     @Override
-    protected int getGestureChildUpOffset(int dy) {
-        int maxOffset = childLayout.getTop() - weekHeight;
+    protected float getGestureChildUpOffset(int dy) {
+        float maxOffset = childLayout.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }
 
@@ -56,7 +56,7 @@ public class EmuiCalendar extends NCalendar {
 
         if (monthCalendar.isWeekState() && dy>0) {
             weekCalendar.setVisibility(VISIBLE);
-        } else if (monthCalendar.getTop() >= -monthCalendar.getMonthCalendarOffset() && dy < 0) {
+        } else if (monthCalendar.getY() >= -monthCalendar.getMonthCalendarOffset() && dy < 0) {
             weekCalendar.setVisibility(INVISIBLE);
         }
     }

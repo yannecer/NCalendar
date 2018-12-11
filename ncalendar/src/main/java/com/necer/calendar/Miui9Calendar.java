@@ -16,28 +16,28 @@ public class Miui9Calendar extends MiuiCalendar {
     }
 
     @Override
-    protected int getGestureMonthUpOffset(int dy) {
-        int maxOffset = monthCalendar.getMonthCalendarOffset() - Math.abs(monthCalendar.getTop());
+    protected float getGestureMonthUpOffset(int dy) {
+        float maxOffset = monthCalendar.getMonthCalendarOffset() - Math.abs(monthCalendar.getY());
         return getOffset(dy, maxOffset);
     }
 
     @Override
-    protected int getGestureMonthDownOffset(int dy) {
-        int maxOffset = Math.abs(monthCalendar.getTop());
+    protected float getGestureMonthDownOffset(int dy) {
+        float maxOffset = Math.abs(monthCalendar.getY());
         return getOffset(Math.abs(dy), maxOffset);
     }
 
     @Override
-    protected int getGestureChildDownOffset(int dy) {
-        int maxOffset = monthHeight - childLayout.getTop();
+    protected float getGestureChildDownOffset(int dy) {
+        float maxOffset = monthHeight - childLayout.getY();
         return getOffset(Math.abs(dy), maxOffset);
     }
 
 
 
     @Override
-    protected int getGestureChildUpOffset(int dy) {
-        int maxOffset = childLayout.getTop() - weekHeight;
+    protected float getGestureChildUpOffset(int dy) {
+        float maxOffset = childLayout.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }
 

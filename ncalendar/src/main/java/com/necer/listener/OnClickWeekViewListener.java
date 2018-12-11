@@ -1,7 +1,5 @@
 package com.necer.listener;
 
-import com.necer.entity.NDate;
-
 import org.joda.time.LocalDate;
 
 /**
@@ -10,6 +8,6 @@ import org.joda.time.LocalDate;
 
 public interface OnClickWeekViewListener {
 
-    void onClickCurrentWeek(NDate nDate);
+    void onClickCurrentWeek(LocalDate localDate);
 
 }

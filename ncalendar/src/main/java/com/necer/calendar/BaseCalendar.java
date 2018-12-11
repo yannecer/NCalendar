@@ -126,7 +126,7 @@ public abstract class BaseCalendar extends ViewPager {
         //年月回调
         onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
         //日期回调
-        onDateChanged(Util.getNDate(mSelectDate), isDraw);
+        onDateChanged(mSelectDate, isDraw);
 
 
     }
@@ -228,12 +228,12 @@ public abstract class BaseCalendar extends ViewPager {
     /**
      * 任何操作都会回调
      *
-     * @param date
+     * @param localDate
      * @param isDraw 页面是否选中
      */
-    public void onDateChanged(NDate date, boolean isDraw) {
+    public void onDateChanged(LocalDate localDate, boolean isDraw) {
         if (onDateChangedListener != null) {
-            onDateChangedListener.onDateChanged(this, date, isDraw);
+            onDateChangedListener.onDateChanged(this, localDate, isDraw);
         }
     }
 
@@ -289,13 +289,11 @@ public abstract class BaseCalendar extends ViewPager {
     protected void jumpDate(LocalDate localDate, boolean isDraw) {
         if (mSelectDate != null) {
             mOnClickDate = localDate;
-
             int num = getTwoDateNum(mSelectDate, localDate, attrs.firstDayOfWeek);
             setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
-
             //同一月份的跳转回调
             if (mCurrView.isEqualsMonthOrWeek(localDate,mSelectDate)) {
-                onDateChanged(Util.getNDate(localDate), isDraw);
+                onDateChanged(localDate, isDraw);
             }
 
             notifyView(localDate, isDraw);

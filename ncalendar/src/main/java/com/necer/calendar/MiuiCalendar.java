@@ -29,7 +29,7 @@ public abstract class MiuiCalendar extends NCalendar{
     }
 
     @Override
-    protected int getMonthTopOnWeekState() {
+    protected float getMonthYOnWeekState() {
         return -monthCalendar.getMonthCalendarOffset();
     }
 

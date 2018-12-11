@@ -1,6 +1,6 @@
 package com.necer.listener;
 
-import com.necer.entity.NDate;
+import org.joda.time.LocalDate;
 
 
 /**
@@ -9,10 +9,10 @@ import com.necer.entity.NDate;
 
 public interface OnClickMonthViewListener {
 
-    void onClickCurrentMonth(NDate nDate);
+    void onClickCurrentMonth(LocalDate localDate);
 
-    void onClickLastMonth(NDate nDate);
+    void onClickLastMonth(LocalDate localDate);
 
-    void onClickNextMonth(NDate nDate);
+    void onClickNextMonth(LocalDate localDate);
 
 }

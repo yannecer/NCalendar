@@ -92,36 +92,40 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
-        int animatedValue = (int) animation.getAnimatedValue();
-        int top = getTop();
-        int i = animatedValue - top;
-        offsetTopAndBottom(i);
+        float animatedValue = (float) animation.getAnimatedValue();
+        float top = getY();
+        float i = animatedValue - top;
+        float y = getY();
+       // offsetTopAndBottom(i);
+        setY(i + y);
     }
 
 
     public void autoToMonth() {
-        int start = getTop();
+        float start = getY();
         int end = monthHeight;
-        childLayoutValueAnimator.setIntValues(start, end);
+        childLayoutValueAnimator.setFloatValues(start, end);
         childLayoutValueAnimator.start();
 
     }
 
 
     public void autoToWeek() {
-        int start = getTop();
+        float start = getY();
         int end = weekHeight;
-        childLayoutValueAnimator.setIntValues(start, end);
+        childLayoutValueAnimator.setFloatValues(start, end);
         childLayoutValueAnimator.start();
     }
 
 
     public boolean isMonthState() {
-        return getTop() >= monthHeight;
+        return getY() >= monthHeight;
     }
 
     public boolean isWeekState() {
-        return getTop() <= weekHeight;
+       // return getTop() <= weekHeight;
+        return getY() <= weekHeight;
+
     }
 
 

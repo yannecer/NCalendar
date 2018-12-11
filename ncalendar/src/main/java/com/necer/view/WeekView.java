@@ -28,7 +28,7 @@ public class WeekView extends BaseCalendarView {
 
     @Override
     protected void onClick(NDate nDate, LocalDate initialDate) {
-        mOnClickWeekViewListener.onClickCurrentWeek(nDate);
+        mOnClickWeekViewListener.onClickCurrentWeek(nDate.localDate);
     }
 
     @Override
