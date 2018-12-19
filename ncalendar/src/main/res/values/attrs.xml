@@ -37,6 +37,7 @@
         <attr name="workdayColor" format="color" />
         <attr name="bgCalendarColor" format="color" />
         <attr name="bgChildColor" format="color" />
+        <attr name="disabledColor" format="color" />
 
 
         <attr name="defaultCalendar" format="enum">

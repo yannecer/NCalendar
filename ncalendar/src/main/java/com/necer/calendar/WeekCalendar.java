@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.WeekCalendarAdapter;
@@ -28,22 +29,17 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
         super(context,attrs);
     }
 
+    @Override
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs) {
+        return new WeekCalendarAdapter(context, attrs, this);
+    }
+
     public WeekCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum) {
-        return new WeekCalendarAdapter(context, attrs, calendarSize, currNum, this);
-    }
-
-    @Override
-    protected int getCalendarSize(LocalDate startDate, LocalDate endDate, int type) {
-        return Util.getIntervalWeek(startDate, endDate, type) + 1;
-    }
-
-    @Override
-    protected int getTwoDateNum(LocalDate startDate, LocalDate endDate, int type) {
+    protected int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type) {
         return Util.getIntervalWeek(startDate, endDate, type);
     }
 
@@ -72,10 +68,15 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
 
     @Override
     public void onClickCurrentWeek(LocalDate localDate) {
-        onSelcetDate(Util.getNDate(localDate));
-        onDateChanged(localDate,true);
-        onYearMonthChanged(localDate.getYear(),localDate.getMonthOfYear());
-        notifyView(localDate,true);
+        if (isClickDateEnable(localDate)) {
+            onSelcetDate(Util.getNDate(localDate));
+            onDateChanged(localDate, true);
+            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+            notifyView(localDate, true);
+        } else {
+            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

@@ -33,7 +33,7 @@ public class Attrs {
     public int solarHolidayTextColor;
     public int lunarHolidayTextColor;
     public int solarTermTextColor;
-    public int hintColor;
+  //  public int hintColor;
     public int selectCircleColor;
     public float solarTextSize;
     public float lunarTextSize;
@@ -65,6 +65,11 @@ public class Attrs {
     public int bgCalendarColor;//日历的背景
     public int bgChildColor;//子view的背景
     public boolean isDefaultSelect;//是否默认选中
+
+    public String startDateString;
+    public String endDateString;
+
+    public int disabledColor;//不在可用日期内的颜色
 
 
 }

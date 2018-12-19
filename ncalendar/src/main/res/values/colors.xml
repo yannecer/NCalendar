@@ -2,7 +2,7 @@
 <resources>
 
     <color name="solarTextColor">#000000</color>
-    <color name="lunarTextColor">#B2B2B2</color>
+    <color name="lunarTextColor">#AEAEAE</color>
     <color name="solarTermTextColor">#B2B2B2</color>
     <color name="lunarHolidayTextColor">#B2B2B2</color>
     <color name="solarHolidayTextColor">#B2B2B2</color>
@@ -14,6 +14,7 @@
     <color name="pointColor">#B2B2B2</color>
     <color name="hollowCircleColor">#B2B2B2</color>
     <color name="white">#ffffff</color>
+    <color name="disabledColor">#999999</color>
 
 
 </resources>

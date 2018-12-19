@@ -1,7 +1,7 @@
 package com.necer.utils;
 
 import android.content.Context;
-import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.util.TypedValue;
 
 import com.necer.entity.Lunar;
@@ -10,13 +10,7 @@ import com.necer.entity.NDate;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.Weeks;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +19,27 @@ import java.util.List;
  */
 
 public class Util {
+
+
+    /**
+     *
+     * @param color 原来的颜色
+     * @param alpha 透明度，小数
+     * @return
+     */
+    public static int getAlphaColor(int color, double alpha) {
+        int a = (int) Math.round(alpha * 255);
+        String hex = Integer.toHexString(a).toUpperCase();
+        if (hex.length() == 1) hex = "0" + hex;
+        String hexCode = "#" + hex + String.format("%06X", Integer.valueOf(16777215 & color));
+        int newColor;
+        try {
+            newColor = Color.parseColor(hexCode);
+        } catch (Throwable throwable) {
+            newColor = color;
+        }
+        return newColor;
+    }
 
 
     /**

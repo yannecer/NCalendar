@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
@@ -32,8 +33,14 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
     }
-    public MonthCalendar(Context context,Attrs attrs, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
-        super(context,attrs);
+
+    @Override
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs) {
+        return new MonthCalendarAdapter(context, attrs, this);
+    }
+
+    public MonthCalendar(Context context, Attrs attrs, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
+        super(context, attrs);
         this.onMonthAnimatorListener = onMonthAnimatorListener;
         monthValueAnimator = new ValueAnimator();
         monthValueAnimator.setDuration(duration);
@@ -41,17 +48,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, int calendarSize, int currNum) {
-        return new MonthCalendarAdapter(context, attrs, calendarSize, currNum, this);
-    }
-
-    @Override
-    protected int getCalendarSize(LocalDate startDate, LocalDate endDate, int type) {
-        return Util.getIntervalMonths(startDate, endDate) + 1;
-    }
-
-    @Override
-    protected int getTwoDateNum(LocalDate startDate, LocalDate endDate, int type) {
+    protected int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type) {
         return Util.getIntervalMonths(startDate, endDate);
     }
 
@@ -83,29 +80,41 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
 
     @Override
     public void onClickCurrentMonth(LocalDate localDate) {
-        onSelcetDate(Util.getNDate(localDate));
-        onDateChanged(localDate, true);
-        onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
-        //  Toast.makeText(getContext(), date.toString(), Toast.LENGTH_SHORT).show();
-        notifyView(localDate, true);
+        if (isClickDateEnable(localDate)) {
+            onSelcetDate(Util.getNDate(localDate));
+            onDateChanged(localDate, true);
+            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+            notifyView(localDate, true);
+        } else {
+            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void onClickLastMonth(LocalDate localDate) {
-        onSelcetDate(Util.getNDate(localDate));
-        onDateChanged(localDate, true);
-        onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
-        setCurrentItem(getCurrentItem() - 1, true);
-        notifyView(localDate, true);
+        if (isClickDateEnable(localDate)) {
+            onSelcetDate(Util.getNDate(localDate));
+            onDateChanged(localDate, true);
+            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+            setCurrentItem(getCurrentItem() - 1, true);
+            notifyView(localDate, true);
+        } else {
+            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onClickNextMonth(LocalDate localDate) {
-        onSelcetDate(Util.getNDate(localDate));
-        onDateChanged(localDate, true);
-        onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
-        setCurrentItem(getCurrentItem() + 1, true);
-        notifyView(localDate, true);
+        if (isClickDateEnable(localDate)) {
+            onSelcetDate(Util.getNDate(localDate));
+            onDateChanged(localDate, true);
+            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+            setCurrentItem(getCurrentItem() + 1, true);
+            notifyView(localDate, true);
+        } else {
+            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setOnMonthSelectListener(OnMonthSelectListener onMonthSelectListener) {
@@ -156,11 +165,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         float animatedValue = (float) animation.getAnimatedValue();
         float top = getY();
         float i = animatedValue - top;
-        //offsetTopAndBottom(i);
-
         float y = getY();
         setY(i + y);
-
 
         if (onMonthAnimatorListener != null) {
             //回调遵循>0向上，<0向下

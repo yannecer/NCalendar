@@ -1,13 +1,10 @@
 package com.necer.adapter;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.necer.MyLog;
 import com.necer.listener.OnClickMonthViewListener;
 import com.necer.utils.Attrs;
+import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
 import com.necer.view.MonthView;
 
@@ -21,8 +18,9 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
 
 
     private OnClickMonthViewListener mOnClickMonthViewListener;
-    public MonthCalendarAdapter(Context context, Attrs attrs, int count, int curr ,OnClickMonthViewListener onClickMonthViewListener) {
-        super(context, attrs, count, curr);
+
+    public MonthCalendarAdapter(Context context, Attrs attrs, OnClickMonthViewListener onClickMonthViewListener) {
+        super(context, attrs);
         this.mOnClickMonthViewListener = onClickMonthViewListener;
     }
 
@@ -30,8 +28,13 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
     protected BaseCalendarView getView(int position) {
         int i = position - mCurr;
         LocalDate date = this.mInitializeDate.plusMonths(i);
-        MonthView monthView = new MonthView(mContext,mAttrs, date,mOnClickMonthViewListener);
+        MonthView monthView = new MonthView(mContext, mAttrs, date, mOnClickMonthViewListener);
         return monthView;
+    }
+
+    @Override
+    protected int getIntervalCount(LocalDate startDate, LocalDate endDate, int type) {
+        return Util.getIntervalMonths(startDate, endDate);
     }
 
 }
