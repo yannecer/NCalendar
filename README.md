@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.1.5'
+implementation 'com.necer.ncalendar:ncalendar:3.2.0'
 
 ```
 
@@ -48,7 +48,7 @@ implementation 'com.necer.ncalendar:ncalendar:3.1.5'
             android:layout_height="match_parent" />
     </com.necer.calendar.Miui9Calendar>
     
-    miui10（不完美）
+    miui10
     <com.necer.calendar.Miui10Calendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
@@ -209,6 +209,7 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 
 
 ## 版本更新
+* 3.2.0<br/>miui10完美了
 * 3.1.5<br/>更正2019年劳动节公休
 * 3.1.4<br/>增加toNextPager()和toLastPager()
 * 3.1.3<br/>修复Emui日历选中第一行下拉时周日历不消失的bug
