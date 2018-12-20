@@ -26,6 +26,8 @@
         <attr name="startDate" format="string" />
         <attr name="endDate" format="string" />
 
+        <attr name="disabledString" format="string" />
+
         <attr name="calendarHeight" format="dimension" />
         <attr name="duration" format="integer" />
 

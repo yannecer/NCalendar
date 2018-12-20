@@ -57,11 +57,11 @@ public class AttrsUtil {
 
         String startString = ta.getString(R.styleable.NCalendar_startDate);
         String endString = ta.getString(R.styleable.NCalendar_endDate);
+        attrs.disabledString = ta.getString(R.styleable.NCalendar_disabledString);
+
 
         attrs.startDateString = TextUtils.isEmpty(startString) ? "1901-01-01" : startString;
         attrs.endDateString = TextUtils.isEmpty(endString) ? "2099-12-31" : endString;
-
-
 
         ta.recycle();
 

@@ -83,47 +83,39 @@ public abstract class BaseCalendarView extends View {
                 //每个日期水平方向的中点 centerX
                 int centerX = rect.centerX();
 
-                //在可用区间内的正常绘制，不在可用区间的置灰色
+                //在可用区间内的正常绘制，不在可用区间的置本色的透明色
                 if (!(date.isBefore(startDate) || date.isAfter(endDate))) {
-                    //当月和上下月的颜色不同
-                    if (isEqualsMonthOrWeek(date, mInitialDate)) {
-                        //当天且选中的当天
-                        if (Util.isToday(date) && date.equals(mSelectDate)) {
+                    if (isEqualsMonthOrWeek(date, mInitialDate)) {  //当月和上下月的颜色不同
+                        if (Util.isToday(date) && date.equals(mSelectDate)) {  //当天且选中的当天
                             drawSolidCircle(canvas, rect.centerX(), centerY);
                             drawTodaySolar(canvas, centerX, centerY, true, date);
                             drawLunar(canvas, centerX, centerY, true, noAlphaColor, nDate);
                             drawPoint(canvas, centerX, centerY, true, noAlphaColor, date);
                             drawHolidays(canvas, centerX, centerY, true, noAlphaColor, date);
-                        } else if (Util.isToday(date) && !date.equals(mSelectDate)) {
-                            //当天但选中的不是今天
+                        } else if (Util.isToday(date) && !date.equals(mSelectDate)) { //当天但选中的不是今天
                             drawTodaySolar(canvas, centerX, centerY, false, date);
                             drawLunar(canvas, centerX, centerY, false, noAlphaColor, nDate);
                             drawPoint(canvas, centerX, centerY, false, noAlphaColor, date);
                             drawHolidays(canvas, centerX, centerY, false, noAlphaColor, date);
-                        } else if (isDraw && date.equals(mSelectDate)) {
-                            //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
+                        } else if (isDraw && date.equals(mSelectDate)) { //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
                             drawHollowCircle(canvas, centerX, centerY);
                             drawOtherSolar(canvas, centerX, centerY, noAlphaColor, date);
                             drawLunar(canvas, centerX, centerY, false, noAlphaColor, nDate);
                             drawPoint(canvas, centerX, centerY, false, noAlphaColor, date);
                             drawHolidays(canvas, centerX, centerY, false, noAlphaColor, date);
-                        } else {
+                        } else { //当月其他的日历绘制
                             drawOtherSolar(canvas, centerX, centerY, noAlphaColor, date);
                             drawLunar(canvas, centerX, centerY, false, noAlphaColor, nDate);
                             drawPoint(canvas, centerX, centerY, false, noAlphaColor, date);
                             drawHolidays(canvas, centerX, centerY, false, noAlphaColor, date);
                         }
-
-                    } else {
+                    } else {  //不是当月的日历
                         drawOtherSolar(canvas, centerX, centerY, mAttrs.alphaColor, date);
                         drawLunar(canvas, centerX, centerY, false, mAttrs.alphaColor, nDate);
                         drawPoint(canvas, centerX, centerY, false, mAttrs.alphaColor, date);
                         drawHolidays(canvas, centerX, centerY, false, mAttrs.alphaColor, date);
                     }
-                } else {
-
-
-
+                } else { //日期区间之外的日期
                     drawOtherSolar(canvas, centerX, centerY, mAttrs.disabledAlphaColor, date);
                     drawLunar(canvas, centerX, centerY, false, mAttrs.disabledAlphaColor, nDate);
                     drawPoint(canvas, centerX, centerY, false, mAttrs.disabledAlphaColor, date);
@@ -172,6 +164,7 @@ public abstract class BaseCalendarView extends View {
         canvas.drawCircle(centerX, mAttrs.isShowLunar ? centerY : getSolarTexyCenterY(centerY), mAttrs.selectCircleRadius, mCirclePaint);
     }
 
+    //今天的公历
     private void drawTodaySolar(Canvas canvas, int centerX, int centerY, boolean isSelect, LocalDate date) {
         if (isSelect) {
             mTextPaint.setColor(mAttrs.bgCalendarColor);
@@ -244,7 +237,7 @@ public abstract class BaseCalendarView extends View {
         }
     }
 
-
+    //Holiday的位置
     private int[] getHolidayLocation(int centerX, int centerY) {
         int[] location = new int[2];
         int solarTexyCenterY = getSolarTexyCenterY(centerY);
@@ -333,7 +326,6 @@ public abstract class BaseCalendarView extends View {
         return mGestureDetector.onTouchEvent(event);
     }
 
-
     private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
@@ -355,22 +347,27 @@ public abstract class BaseCalendarView extends View {
     });
 
 
+    /**
+     * 设置选中的日期 并绘制
+     *
+     * @param localDate
+     * @param pointList
+     * @param isDraw
+     */
     public void setSelectDate(LocalDate localDate, List<LocalDate> pointList, boolean isDraw) {
         //默认选中和isDraw满足其一就绘制
         this.isDraw = mAttrs.isDefaultSelect || isDraw;
         this.mPointList = pointList;
-        if (localDate.isBefore(startDate)) {
-            this.mSelectDate = startDate;
-        } else if (localDate.isAfter(endDate)) {
-            this.mSelectDate = endDate;
-        } else {
-            this.mSelectDate = localDate;
-        }
+        this.mSelectDate = localDate;
         invalidate();
     }
 
 
-    //选中的日期到顶部的距离
+    /**
+     * 选中的日期到顶部的距离
+     *
+     * @return
+     */
     public int getMonthCalendarOffset() {
         int monthCalendarOffset;
         //选中的是第几行

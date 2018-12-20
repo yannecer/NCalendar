@@ -71,6 +71,7 @@ public class Attrs {
 
     public int alphaColor;//不在同一月的颜色透明度
     public int disabledAlphaColor;//不可用的日期颜色透明度
+    public String disabledString;//点击不可用的日期提示语
 
 
 

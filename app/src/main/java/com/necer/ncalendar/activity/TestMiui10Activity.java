@@ -3,9 +3,11 @@ package com.necer.ncalendar.activity;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.necer.MyLog;
 import com.necer.calendar.Miui10Calendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
+import com.necer.listener.OnClickDisableDateListener;
 import com.necer.ncalendar.R;
 
 import java.util.Arrays;
@@ -22,6 +24,8 @@ public class TestMiui10Activity extends BaseActivity {
     TextView tv_year;
     TextView tv_lunar;
     TextView tv_lunar_tg;
+
+    Miui10Calendar miui10Calendar;
 
 
     private final String[] weeks = {"周一", "周二", "周三", "周四", "周五", "周六", "周日",};
@@ -42,7 +46,7 @@ public class TestMiui10Activity extends BaseActivity {
         List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
 
 
-        Miui10Calendar miui10Calendar = findViewById(R.id.miui10Calendar);
+        miui10Calendar = findViewById(R.id.miui10Calendar);
         miui10Calendar.setPointList(pointList);
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
@@ -58,6 +62,13 @@ public class TestMiui10Activity extends BaseActivity {
             @Override
             public void onCalendarStateChanged(boolean isMonthSate) {
 
+            }
+        });
+
+        miui10Calendar.setOnClickDisableDateListener(new OnClickDisableDateListener() {
+            @Override
+            public void onClickDisableDate(NDate nDate) {
+                MyLog.d("nDate::" + nDate.localDate);
             }
         });
     }

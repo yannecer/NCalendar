@@ -4,8 +4,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.necer.calendar.MonthCalendar;
+import com.necer.calendar.WeekCalendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnMonthSelectListener;
+import com.necer.listener.OnWeekSelectListener;
 import com.necer.ncalendar.R;
 
 /**
@@ -15,7 +17,7 @@ public class TestMonthWeekActivity extends BaseActivity {
 
 
     MonthCalendar monthCalendar;
- //   WeekCalendar weekCalendar;
+    WeekCalendar weekCalendar;
 
     TextView tv_date;
 
@@ -28,7 +30,7 @@ public class TestMonthWeekActivity extends BaseActivity {
     protected void onCreatee() {
 
         monthCalendar = findViewById(R.id.monthCalendar);
-     //   weekCalendar = findViewById(R.id.weekCalendar);
+        weekCalendar = findViewById(R.id.weekCalendar);
 
         tv_date = findViewById(R.id.tv_date);
 
@@ -38,6 +40,8 @@ public class TestMonthWeekActivity extends BaseActivity {
       // monthCalendar.setDateInterval("2018-01-01", "2018-12-02");
      //   monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
 
+        weekCalendar.setDateInterval("2018-12-01","2018-12-20");
+
         monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
             @Override
             public void onMonthSelect(NDate date) {
@@ -45,14 +49,13 @@ public class TestMonthWeekActivity extends BaseActivity {
             }
         });
 
-     /*   weekCalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
+        weekCalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
             @Override
             public void onWeekSelect(NDate date) {
 
                 tv_date.setText(date.localDate + "");
             }
         });
-*/
 
     }
 
@@ -60,6 +63,6 @@ public class TestMonthWeekActivity extends BaseActivity {
         //  weekCalendar.toToday();
         // monthCalendar.toToday();
 
-       // weekCalendar.jumpDate("2018-12-31");
+        weekCalendar.jumpDate("2018-01-31");
     }
 }

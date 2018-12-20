@@ -6,7 +6,6 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.necer.MyLog;
 import com.necer.utils.Attrs;
 import com.necer.view.BaseCalendarView;
 
@@ -34,7 +33,6 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
         LocalDate startDate = new LocalDate(attrs.startDateString);
         this.mCount = getIntervalCount(startDate, new LocalDate(attrs.endDateString), attrs.firstDayOfWeek) + 1;
         this.mCurr = getIntervalCount(startDate, new LocalDate(), attrs.firstDayOfWeek);
-
 
         mCalendarViews = new SparseArray<>();
         mInitializeDate = new LocalDate();

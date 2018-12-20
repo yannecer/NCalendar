@@ -13,13 +13,16 @@ import android.widget.FrameLayout;
 
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
+import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
 import com.necer.view.ChildLayout;
+
 import org.joda.time.LocalDate;
+
 import java.util.List;
 
 
@@ -34,6 +37,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     protected int weekHeight;//周日历的高度
     protected int monthHeight;//月日历的高度,是日历整个的高
+
+    protected int childLayoutLayoutTop;//onLayout中，定位的高度，
 
     protected int STATE;//默认月
     private int lastSate;//防止状态监听重复回调
@@ -77,10 +82,12 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         childLayout.setBackgroundColor(attrss.bgChildColor);
 
         setCalenadrState(STATE);
+        childLayoutLayoutTop = STATE == Attrs.WEEK ? weekHeight : monthHeight;
 
         post(new Runnable() {
             @Override
             public void run() {
+
                 monthRect = new Rect(0, 0, monthCalendar.getWidth(), monthCalendar.getHeight());
                 weekRect = new Rect(0, 0, weekCalendar.getWidth(), weekCalendar.getHeight());
 
@@ -140,12 +147,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         //super.onLayout(changed, l, t, r, b); //调用父类的该方法会造成 快速滑动月日历同时快速上滑recyclerview造成月日历的残影
 
-        int monthCalendarTop = 0;
-        int childLayoutTop = monthHeight;
         int measuredWidth = getMeasuredWidth();
         weekCalendar.layout(0, 0, measuredWidth, weekHeight);
-        monthCalendar.layout(0, monthCalendarTop, measuredWidth, monthHeight + monthCalendarTop);
-        childLayout.layout(0, childLayoutTop, measuredWidth, childLayout.getMeasuredHeight() + childLayoutTop);
+        monthCalendar.layout(0, 0, measuredWidth, monthHeight);
+        childLayout.layout(0, childLayoutLayoutTop, measuredWidth, childLayout.getMeasuredHeight() + childLayoutLayoutTop);
     }
 
 
@@ -200,7 +205,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     @Override
     public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw) {
-
 
         if (baseCalendar instanceof MonthCalendar && STATE == Attrs.MONTH) {
             //月日历变化,改变周的选中
@@ -273,7 +277,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
         float monthCalendarY = monthCalendar.getY();
         float childLayoutY = childLayout.getY();
-
 
         if (dy > 0 && !childLayout.isWeekState()) {
             monthCalendar.setY(-getGestureMonthUpOffset(dy) + monthCalendarY);
@@ -392,10 +395,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             return maxOffset;
         }
         return offset;
-    }
-
-    public void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener) {
-        this.onCalendarChangedListener = onCalendarChangedListener;
     }
 
     /**
@@ -521,6 +520,9 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
 
+    /**
+     * 下一页
+     */
     public void toNextPager() {
         if (STATE == Attrs.MONTH) {
             monthCalendar.toNextPager();
@@ -529,12 +531,42 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
+    /**
+     * 上一页
+     */
     public void toLastPager() {
         if (STATE == Attrs.MONTH) {
             monthCalendar.toLastPager();
         } else {
             weekCalendar.toLastPager();
         }
+    }
+
+    /**
+     * 设置日期区间
+     * @param startFormatDate
+     * @param endFormatDate
+     */
+    public void setDateInterval(String startFormatDate, String endFormatDate) {
+        monthCalendar.setDateInterval(startFormatDate,endFormatDate);
+        weekCalendar.setDateInterval(startFormatDate,endFormatDate);
+    }
+
+    /**
+     * 日期、状态回调
+     * @param onCalendarChangedListener
+     */
+    public void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener) {
+        this.onCalendarChangedListener = onCalendarChangedListener;
+    }
+
+    /**
+     * 点击不可用的日期回调
+     * @param onClickDisableDateListener
+     */
+    public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
+        monthCalendar.setOnClickDisableDateListener(onClickDisableDateListener);
+        weekCalendar.setOnClickDisableDateListener(onClickDisableDateListener);
     }
 
 

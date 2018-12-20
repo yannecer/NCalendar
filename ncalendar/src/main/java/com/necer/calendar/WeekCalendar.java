@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.WeekCalendarAdapter;
@@ -73,8 +72,8 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
             onDateChanged(localDate, true);
             onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
             notifyView(localDate, true);
-        } else {
-            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+        } else{
+            onClickDisableDate(localDate);
         }
 
     }

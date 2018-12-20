@@ -4,10 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.entity.NDate;
+import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.utils.Attrs;
@@ -40,6 +43,7 @@ public abstract class BaseCalendar extends ViewPager {
     private List<LocalDate> mPointList;
 
     protected OnYearMonthChangedListener onYearMonthChangedListener;
+    protected OnClickDisableDateListener onClickDisableDateListener;
     //上次回调的年，月
     protected int mLaseYear;
     protected int mLastMonth;
@@ -67,7 +71,7 @@ public abstract class BaseCalendar extends ViewPager {
         mPointList = new ArrayList<>();
         setBackgroundColor(attrs.bgCalendarColor);
 
-        addOnPageChangeListener(new SimpleOnPageChangeListener(){
+        addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(final int position) {
                 post(new Runnable() {
@@ -95,6 +99,14 @@ public abstract class BaseCalendar extends ViewPager {
             throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
         }
 
+        if (startDate.isBefore(new LocalDate("1901-01-01"))) {
+            throw new RuntimeException("startDate必须在1901-01-01之前");
+        }
+
+        if (endDate.isAfter(new LocalDate("2099-12-31"))) {
+            throw new RuntimeException("endDate必须在2099-12-31之后");
+        }
+
       /*  if (startDate.isAfter(initializeDate) || endDate.isBefore(initializeDate)) {
             throw new RuntimeException("日期区间需要包含今天");
         }*/
@@ -117,12 +129,10 @@ public abstract class BaseCalendar extends ViewPager {
         setCurrentItem(currItem);
 
     }
-/*
+
     public void setDateInterval(String startFormatDate, String endFormatDate) {
         attrs.startDateString = startFormatDate;
         attrs.endDateString = endFormatDate;
-
-       // clearOnPageChangeListeners();
 
         post(new Runnable() {
             @Override
@@ -131,7 +141,7 @@ public abstract class BaseCalendar extends ViewPager {
             }
         });
 
-    }*/
+    }
 
 
     private void drawView(int position) {
@@ -183,17 +193,23 @@ public abstract class BaseCalendar extends ViewPager {
 
     //刷新页面
     protected void notifyView(LocalDate currectSelectDate, boolean isDraw) {
-        this.mSelectDate = currectSelectDate;
+
+        if (currectSelectDate.isBefore(startDate)) {
+            this.mSelectDate = startDate;
+        } else if (currectSelectDate.isAfter(endDate)) {
+            this.mSelectDate = endDate;
+        } else {
+            this.mSelectDate = currectSelectDate;
+        }
 
         if (mCurrView != null) {
-            mCurrView.setSelectDate(currectSelectDate, mPointList, isDraw);
+            mCurrView.setSelectDate(mSelectDate, mPointList, isDraw);
         }
-
         if (mLastView != null) {
-            mLastView.setSelectDate(getLastSelectDate(currectSelectDate), mPointList, isDraw);
+            mLastView.setSelectDate(getLastSelectDate(mSelectDate), mPointList, isDraw);
         }
         if (mNextView != null) {
-            mNextView.setSelectDate(getNextSelectDate(currectSelectDate), mPointList, isDraw);
+            mNextView.setSelectDate(getNextSelectDate(mSelectDate), mPointList, isDraw);
         }
     }
 
@@ -276,13 +292,27 @@ public abstract class BaseCalendar extends ViewPager {
         }
     }
 
+    //点击不可用的日期处理
+    protected void onClickDisableDate(LocalDate localDate) {
+        if (onClickDisableDateListener != null) {
+            onClickDisableDateListener.onClickDisableDate(Util.getNDate(localDate));
+        } else {
+            Toast.makeText(getContext(), TextUtils.isEmpty(attrs.disabledString) ? "不可用" : attrs.disabledString, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void setOnYearMonthChangeListener(OnYearMonthChangedListener onYearMonthChangedListener) {
         this.onYearMonthChangedListener = onYearMonthChangedListener;
+    }
+    public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
+        this.onClickDisableDateListener = onClickDisableDateListener;
     }
 
     public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
         this.onDateChangedListener = onDateChangedListener;
     }
+
+
 
 
     /**
@@ -323,7 +353,6 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-
     protected void jumpDate(LocalDate localDate, boolean isDraw) {
         if (mSelectDate != null) {
             mOnClickDate = localDate;
@@ -339,6 +368,7 @@ public abstract class BaseCalendar extends ViewPager {
             //同一月份的跳转回调
             if (mCurrView.isEqualsMonthOrWeek(localDate, mSelectDate)) {
                 onDateChanged(localDate, isDraw);
+                onSelcetDate(Util.getNDate(localDate));
             }
             notifyView(localDate, isDraw);
         }

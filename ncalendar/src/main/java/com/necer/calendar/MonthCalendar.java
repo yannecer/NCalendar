@@ -5,9 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.Toast;
 
-import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
 import com.necer.entity.NDate;
@@ -81,18 +79,13 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
 
     @Override
     public void onClickCurrentMonth(LocalDate localDate) {
-
-        MyLog.d("onClickCurrentMonth:111:" + localDate);
-
         if (isClickDateEnable(localDate)) {
-            MyLog.d("onClickCurrentMonth:22:" + localDate);
-
             onSelcetDate(Util.getNDate(localDate));
             onDateChanged(localDate, true);
             onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
             notifyView(localDate, true);
         } else {
-            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+            onClickDisableDate(localDate);
         }
 
     }
@@ -106,7 +99,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
             setCurrentItem(getCurrentItem() - 1, true);
             notifyView(localDate, true);
         } else {
-            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+            onClickDisableDate(localDate);
         }
     }
 
@@ -119,7 +112,7 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
             setCurrentItem(getCurrentItem() + 1, true);
             notifyView(localDate, true);
         } else {
-            Toast.makeText(getContext(),"不可用",Toast.LENGTH_SHORT).show();
+            onClickDisableDate(localDate);
         }
     }
 

@@ -271,11 +271,14 @@ public class Util {
 
         Lunar lunar = LunarUtil.getLunar(solarYear, solarMonth, solarDay);
 
-        nDate.lunar = lunar;
-        nDate.localDate = localDate;
-        nDate.solarTerm = SolarTermUtil.getSolatName(solarYear, solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "") + solarDay);
-        nDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
-        nDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay);
+        if (solarYear != 1900) {
+            nDate.lunar = lunar;
+            nDate.localDate = localDate;
+            nDate.solarTerm = SolarTermUtil.getSolatName(solarYear, solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "") + solarDay);
+            nDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
+            nDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay);
+
+        }
 
         return nDate;
     }
