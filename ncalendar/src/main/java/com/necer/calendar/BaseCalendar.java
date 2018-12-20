@@ -52,27 +52,41 @@ public abstract class BaseCalendar extends ViewPager {
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
         this.attrs = AttrsUtil.getAttrs(context, attributeSet);
-        this.mContext = context;
-
-        init();
+        init(context);
     }
 
 
     public BaseCalendar(Context context, Attrs attrs) {
         super(context);
         this.attrs = attrs;
-        this.mContext = context;
+        init(context);
+    }
 
-        init();
+    private void init(Context context) {
+        this.mContext = context;
+        mPointList = new ArrayList<>();
+        setBackgroundColor(attrs.bgCalendarColor);
+
+        addOnPageChangeListener(new SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(final int position) {
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        drawView(position);
+                    }
+                });
+            }
+        });
+
+        initDate();
     }
 
 
-    private void init() {
+    private void initDate() {
 
         String startDateString = attrs.startDateString;
         String endDateString = attrs.endDateString;
-
-
         LocalDate initializeDate = new LocalDate();//今天
         try {
             startDate = new LocalDate(startDateString);
@@ -81,59 +95,53 @@ public abstract class BaseCalendar extends ViewPager {
             throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
         }
 
-        if (startDate.isAfter(initializeDate) || endDate.isBefore(initializeDate)) {
+      /*  if (startDate.isAfter(initializeDate) || endDate.isBefore(initializeDate)) {
             throw new RuntimeException("日期区间需要包含今天");
+        }*/
+
+        calendarAdapter = getCalendarAdapter(mContext, attrs);
+        int currItem = calendarAdapter.getCurrItem();
+        int count = calendarAdapter.getCount();
+        setAdapter(calendarAdapter);
+
+        //总数==1时，OnPageChangeListener不回调
+        if (count == 1) {
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    drawView(getCurrentItem());
+                }
+            });
         }
 
-        mPointList = new ArrayList<>();
-        final int currNum = getTwoDateCount(startDate,initializeDate, attrs.firstDayOfWeek);
-        calendarAdapter = getCalendarAdapter(mContext, attrs);
-        setAdapter(calendarAdapter);
-        setBackgroundColor(attrs.bgCalendarColor);
-
-        setOnPageChangeListener(new OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-
-            @Override
-            public void onPageSelected(final int position) {
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        reDraw(position);
-                    }
-                });
-            }
-        });
-
-        setCurrentItem(currNum);
+        setCurrentItem(currItem);
 
     }
-
+/*
     public void setDateInterval(String startFormatDate, String endFormatDate) {
         attrs.startDateString = startFormatDate;
         attrs.endDateString = endFormatDate;
+
+       // clearOnPageChangeListeners();
+
         post(new Runnable() {
             @Override
             public void run() {
-                init();
+                initDate();
             }
         });
 
-    }
+    }*/
 
-    private void reDraw(int position) {
+
+    private void drawView(int position) {
 
         this.mCurrView = calendarAdapter.getBaseCalendarView(position);
         this.mLastView = calendarAdapter.getBaseCalendarView(position - 1);
         this.mNextView = calendarAdapter.getBaseCalendarView(position + 1);
 
         LocalDate initialDate = mCurrView.getInitialDate();
+
         LocalDate localDate;
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
         if (mSelectDate != null) {
@@ -155,7 +163,6 @@ public abstract class BaseCalendar extends ViewPager {
         onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
         //日期回调
         onDateChanged(mSelectDate, isDraw);
-
     }
 
     public void setPointList(List<String> list) {
@@ -177,6 +184,7 @@ public abstract class BaseCalendar extends ViewPager {
     //刷新页面
     protected void notifyView(LocalDate currectSelectDate, boolean isDraw) {
         this.mSelectDate = currectSelectDate;
+
         if (mCurrView != null) {
             mCurrView.setSelectDate(currectSelectDate, mPointList, isDraw);
         }
@@ -234,6 +242,7 @@ public abstract class BaseCalendar extends ViewPager {
 
     /**
      * 年份和月份变化回调,点击和翻页都会回调，不管有没有日期选中
+     *
      * @param year
      * @param month
      */
@@ -247,6 +256,7 @@ public abstract class BaseCalendar extends ViewPager {
 
     /**
      * 点击的日期是否可用
+     *
      * @param localDate
      * @return
      */
@@ -313,7 +323,7 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-    //
+
     protected void jumpDate(LocalDate localDate, boolean isDraw) {
         if (mSelectDate != null) {
             mOnClickDate = localDate;

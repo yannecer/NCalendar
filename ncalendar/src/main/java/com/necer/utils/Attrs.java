@@ -69,7 +69,10 @@ public class Attrs {
     public String startDateString;
     public String endDateString;
 
-    public int disabledColor;//不在可用日期内的颜色
+    public int alphaColor;//不在同一月的颜色透明度
+    public int disabledAlphaColor;//不可用的日期颜色透明度
+
+
 
 
 }

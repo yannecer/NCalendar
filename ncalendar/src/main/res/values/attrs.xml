@@ -29,6 +29,9 @@
         <attr name="calendarHeight" format="dimension" />
         <attr name="duration" format="integer" />
 
+        <attr name="alphaColor" format="integer" />
+        <attr name="disabledAlphaColor" format="integer" />
+
 
         <attr name="isWeekHold" format="boolean" />
         <attr name="isShowHoliday" format="boolean" />

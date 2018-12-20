@@ -92,7 +92,6 @@
         app:todaySolarTextColor="#ff00ff"
         app:selectCircleColor="#00c3aa"
         app:hollowCircleColor="#00c3aa"
-
         android:layout_height="300dp" />
 
     <View
@@ -100,11 +99,11 @@
         android:layout_height="50dp"
         android:background="#cccccc" />
 
-    <com.necer.calendar.WeekCalendar
+ <!--   <com.necer.calendar.WeekCalendar
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
         app:lunarTextColor="#00aa00"
         android:layout_height="50dp" />
-
+-->
 
 </LinearLayout>

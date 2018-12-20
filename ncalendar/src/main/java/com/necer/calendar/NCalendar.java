@@ -19,9 +19,7 @@ import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
 import com.necer.view.ChildLayout;
-
 import org.joda.time.LocalDate;
-
 import java.util.List;
 
 

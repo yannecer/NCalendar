@@ -1,7 +1,6 @@
 package com.necer.utils;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.TypedValue;
 
 import com.necer.entity.Lunar;
@@ -27,6 +26,7 @@ public class Util {
      * @param alpha 透明度，小数
      * @return
      */
+/*
     public static int getAlphaColor(int color, double alpha) {
         int a = (int) Math.round(alpha * 255);
         String hex = Integer.toHexString(a).toUpperCase();
@@ -40,6 +40,7 @@ public class Util {
         }
         return newColor;
     }
+*/
 
 
     /**

@@ -24,10 +24,8 @@ public class AttrsUtil {
         attrs.solarHolidayTextColor = ta.getColor(R.styleable.NCalendar_solarHolidayTextColor, context.getResources().getColor(R.color.solarHolidayTextColor));
         attrs.lunarHolidayTextColor = ta.getColor(R.styleable.NCalendar_lunarHolidayTextColor, context.getResources().getColor(R.color.lunarHolidayTextColor));
         attrs.solarTermTextColor = ta.getColor(R.styleable.NCalendar_solarTermTextColor, context.getResources().getColor(R.color.solarTermTextColor));
-        attrs.disabledColor = ta.getColor(R.styleable.NCalendar_disabledColor, context.getResources().getColor(R.color.disabledColor));
 
         attrs.selectCircleColor = ta.getColor(R.styleable.NCalendar_selectCircleColor, context.getResources().getColor(R.color.selectCircleColor));
-     //   attrs.hintColor = ta.getColor(R.styleable.NCalendar_hintColor, context.getResources().getColor(R.color.hintColor));
         attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, Util.sp2px(context, 18));
         attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, Util.sp2px(context, 10));
         attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, Util.sp2px(context, 15));
@@ -54,11 +52,16 @@ public class AttrsUtil {
         attrs.defaultCalendar = ta.getInt(R.styleable.NCalendar_defaultCalendar, Attrs.MONTH);
         attrs.holidayLocation = ta.getInt(R.styleable.NCalendar_holidayLocation, Attrs.TOP_RIGHT);
 
+        attrs.alphaColor = ta.getInt(R.styleable.NCalendar_alphaColor, 90);
+        attrs.disabledAlphaColor = ta.getInt(R.styleable.NCalendar_disabledAlphaColor, 50);
+
         String startString = ta.getString(R.styleable.NCalendar_startDate);
         String endString = ta.getString(R.styleable.NCalendar_endDate);
 
         attrs.startDateString = TextUtils.isEmpty(startString) ? "1901-01-01" : startString;
         attrs.endDateString = TextUtils.isEmpty(endString) ? "2099-12-31" : endString;
+
+
 
         ta.recycle();
 
