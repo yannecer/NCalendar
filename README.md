@@ -7,7 +7,7 @@
  - 支持设置默认视图，默认周日历或者月日历
  - 支持周状态固定，下拉刷新等
  - 支持设置一周开始的是周一还是周日
- - 日历时间从1901-01-01到2099-12-31
+ - 日历时间从1901-01-01到2099-12-31 可设置区间
  - 支持单独月日历和单独周日历默认不选中
  - 支持农历，节气、法定节假日等
  - 支持添加指示点及设置指示点位置
@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.2.0'
+implementation 'com.necer.ncalendar:ncalendar:3.2.1'
 
 ```
 
@@ -168,7 +168,15 @@ app:defaultCalendar="month"  默认月视图
 ```
 app:isWeekHold="true"  周视图固定，下拉刷新
 ```
+##### 9、设置日期区间 
+```
+app:startDate="2018-01-01" 开始日期
+app:endDate="2018-12-31" 结束日期
 
+或
+
+setDateInterval(startFormatDate, endFormatDate)
+```
 
 ### 支持的属性：
 
@@ -179,13 +187,17 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 |solarHolidayTextColor| color|公历节假日的颜色
 |lunarHolidayTextColor| color|农历节假日的颜色
 |solarTermTextColor| color|节气颜色
-|hintColor| color|不是本月公历日期的颜色
 |selectCircleColor| color|选中圈的颜色
 |holidayColor|color| 法定节休息日颜色
 |workdayColor|color| 法定节调休工作日颜色
 |bgCalendarColor|color| 日历的背景
 |bgChildColor|color| 日历包含子view的背景
 |pointColor| color |小圆点的颜色
+|startDate| string |日期区间开始日期
+|endDate| string |日期区间结束日期
+|alphaColor| integer |不是本月的日期颜色的透明度0-255
+|disabledAlphaColor| integer |日期区间之外的地日颜色的透明度0-255
+|disabledString| string |点击日期区间之外的日期提示语
 |todaySolarTextColor| color|今天不选中的颜色
 |selectCircleRadius| dimension | 选中圈的半径
 |solarTextSize| dimension|公历日期字体大小
@@ -209,6 +221,7 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 
 
 ## 版本更新
+* 3.2.1<br/>设置日期区间
 * 3.2.0<br/>miui10完美了
 * 3.1.5<br/>更正2019年劳动节公休
 * 3.1.4<br/>增加toNextPager()和toLastPager()
