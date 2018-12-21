@@ -190,8 +190,7 @@ setDateInterval(startFormatDate, endFormatDate)
 
 ## 感谢：
 
-项目中日期计算使用  [joda-time](https://github.com/JodaOrg/joda-time)
-农历和节气数据是网上找的工具类，多谢
+项目中日期计算使用  [joda-time](https://github.com/JodaOrg/joda-time)<br/>农历和节气数据是工具类，多谢
 
 
 
