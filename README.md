@@ -7,7 +7,7 @@
  - 支持设置默认视图，默认周日历或者月日历
  - 支持周状态固定，下拉刷新等
  - 支持设置一周开始的是周一还是周日
- - 日历时间从1901-01-01到2099-12-31 可设置区间
+ - 可设置日期区间，默认区间从1901-01-01到2099-12-31 
  - 支持单独月日历和单独周日历默认不选中
  - 支持农历，节气、法定节假日等
  - 支持添加指示点及设置指示点位置
@@ -117,6 +117,9 @@ implementation 'com.necer.ncalendar:ncalendar:3.2.1'
 
 ##### 1、监听
 ```
+
+NCalendar（包含Miui9Calendar、Miui10Calendar和EmuiCalendar）
+OnCalendarChangedListener 日期、月周状态变化回调
 nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date) {
