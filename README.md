@@ -188,11 +188,14 @@ app:endDate="2018-12-31" 结束日期
 setDateInterval(startFormatDate, endFormatDate)
 ```
 
-### 感谢：
-项目中日历计算使用[joda-time](https://github.com/JodaOrg/joda-time)
+## 感谢：
+
+项目中日期计算使用  [joda-time](https://github.com/JodaOrg/joda-time)
+农历和节气数据是网上找的工具类，多谢
 
 
-### 支持的属性：
+
+## 支持的属性：
 
 |Attributes|forma|describe
 |---|---|---|
