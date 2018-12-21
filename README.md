@@ -162,14 +162,12 @@ ncalendar.toMonth();
 ```
 ncalendar.toNextPager();
 ncalendar.toLastPager();
-
 ```
 
 ##### 6、添加指示圆点
 ```
 List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
 ncalendar.setPointList(list);
-
 ```
 ##### 7、默认视图 
 ```
@@ -189,6 +187,10 @@ app:endDate="2018-12-31" 结束日期
 
 setDateInterval(startFormatDate, endFormatDate)
 ```
+
+### 感谢：
+项目中日历计算使用[joda-time](https://github.com/JodaOrg/joda-time)
+
 
 ### 支持的属性：
 
