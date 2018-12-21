@@ -118,8 +118,8 @@ implementation 'com.necer.ncalendar:ncalendar:3.2.1'
 ##### 1、监听
 ```
 
-NCalendar（包含Miui9Calendar、Miui10Calendar和EmuiCalendar）
-OnCalendarChangedListener 日期、月周状态变化回调
+NCalendar（包含Miui9Calendar、Miui10Calendar和EmuiCalendar）OnCalendarChangedListener 日期、月周状态变化回调
+
 nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date) {
