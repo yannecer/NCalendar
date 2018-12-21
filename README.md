@@ -7,7 +7,7 @@
  - 支持设置默认视图，默认周日历或者月日历
  - 支持周状态固定，下拉刷新等
  - 支持设置一周开始的是周一还是周日
- - 日历时间从1901-01-01到2099-12-31
+ - 可设置日期区间，默认区间从1901-01-01到2099-12-31 
  - 支持单独月日历和单独周日历默认不选中
  - 支持农历，节气、法定节假日等
  - 支持添加指示点及设置指示点位置
@@ -23,13 +23,13 @@
 |:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|
 ## 下载demo：
-[下载demo](https://github.com/yannecer/NCalendar/releases/download/3.1.0/app.apk)
+[下载demo](https://github.com/yannecer/NCalendar/releases/download/3.2.1/app.apk)
 
 ## 使用方法
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.2.0'
+implementation 'com.necer.ncalendar:ncalendar:3.2.1'
 
 ```
 
@@ -117,6 +117,9 @@ implementation 'com.necer.ncalendar:ncalendar:3.2.0'
 
 ##### 1、监听
 ```
+
+NCalendar（包含Miui9Calendar、Miui10Calendar和EmuiCalendar）OnCalendarChangedListener 日期、月周状态变化回调
+
 nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date) {
@@ -128,6 +131,15 @@ nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
                //日历状态回调， 月->周 isMonthSate返回false ，反之返回true   
             }
         });
+        
+其他回调
+
+OnCalendarChangedListener         //日期、月周状态变化回调（NCalendar）
+OnClickDisableDateListener        //点击区间之外的日期回调，如果不设置会弹出不可用提示（NCalendar、MonthCalendar、WeekCalendar）
+OnMonthSelectListener             //月日历默认选中时 日期选中回调（MonthCalendar）
+OnWeekSelectListener              //周日历默认选中时 日期选中回调（WeekCalendar）
+OnYearMonthChangedListener        //月日历，周日历默认不选中是翻页回调 年 月 （MonthCalendar、WeekCalendar）
+
 ```
 
 ##### 2、跳转日期
@@ -150,14 +162,12 @@ ncalendar.toMonth();
 ```
 ncalendar.toNextPager();
 ncalendar.toLastPager();
-
 ```
 
 ##### 6、添加指示圆点
 ```
 List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
 ncalendar.setPointList(list);
-
 ```
 ##### 7、默认视图 
 ```
@@ -168,9 +178,23 @@ app:defaultCalendar="month"  默认月视图
 ```
 app:isWeekHold="true"  周视图固定，下拉刷新
 ```
+##### 9、设置日期区间 
+```
+app:startDate="2018-01-01" 开始日期
+app:endDate="2018-12-31" 结束日期
+
+或
+
+setDateInterval(startFormatDate, endFormatDate)
+```
+
+## 感谢：
+
+项目中日期计算使用  [joda-time](https://github.com/JodaOrg/joda-time)<br/>农历和节气数据是工具类，多谢
 
 
-### 支持的属性：
+
+## 支持的属性：
 
 |Attributes|forma|describe
 |---|---|---|
@@ -179,13 +203,17 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 |solarHolidayTextColor| color|公历节假日的颜色
 |lunarHolidayTextColor| color|农历节假日的颜色
 |solarTermTextColor| color|节气颜色
-|hintColor| color|不是本月公历日期的颜色
 |selectCircleColor| color|选中圈的颜色
 |holidayColor|color| 法定节休息日颜色
 |workdayColor|color| 法定节调休工作日颜色
 |bgCalendarColor|color| 日历的背景
 |bgChildColor|color| 日历包含子view的背景
 |pointColor| color |小圆点的颜色
+|startDate| string |日期区间开始日期
+|endDate| string |日期区间结束日期
+|alphaColor| integer |不是本月的日期颜色的透明度0-255
+|disabledAlphaColor| integer |日期区间之外的地日颜色的透明度0-255
+|disabledString| string |点击日期区间之外的日期提示语
 |todaySolarTextColor| color|今天不选中的颜色
 |selectCircleRadius| dimension | 选中圈的半径
 |solarTextSize| dimension|公历日期字体大小
@@ -209,6 +237,7 @@ app:isWeekHold="true"  周视图固定，下拉刷新
 
 
 ## 版本更新
+* 3.2.1<br/>设置日期区间
 * 3.2.0<br/>miui10完美了
 * 3.1.5<br/>更正2019年劳动节公休
 * 3.1.4<br/>增加toNextPager()和toLastPager()
