@@ -131,6 +131,15 @@ nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
                //日历状态回调， 月->周 isMonthSate返回false ，反之返回true   
             }
         });
+        
+其他回调
+
+OnCalendarChangedListener         //日期、月周状态变化回调（NCalendar）
+OnClickDisableDateListener        //点击区间之外的日期回调，如果不设置会弹出不可用提示（NCalendar、MonthCalendar、WeekCalendar）
+OnMonthSelectListener             //月日历默认选中时 日期选中回调（MonthCalendar）
+OnWeekSelectListener              //周日历默认选中时 日期选中回调（WeekCalendar）
+OnYearMonthChangedListener        //月日历，周日历默认不选中是翻页回调 年 月 （MonthCalendar、WeekCalendar）
+
 ```
 
 ##### 2、跳转日期
