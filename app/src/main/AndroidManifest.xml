@@ -38,6 +38,10 @@
             android:name=".activity.TestMonthWeekActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
+        <activity
+            android:name=".activity.TestAddViewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
 
     </application>
 </manifest>

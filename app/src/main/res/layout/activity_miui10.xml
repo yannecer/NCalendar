@@ -9,13 +9,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
-
+        android:layout_height="150dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_centerVertical="true"
             android:orientation="horizontal">
 
             <TextView
@@ -57,75 +56,11 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <com.necer.view.WeekBar
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="日"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="一"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="二"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="三"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="四"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="五"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="六"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-        </LinearLayout>
+            android:textColor="#666666" />
 
     </RelativeLayout>
 
@@ -136,160 +71,174 @@
         android:layout_height="match_parent"
         app:bgCalendarColor="#f5f5f5"
         app:bgChildColor="#F5f5f5"
-        app:holidayColor="#519EDC"
-        app:startDate="2018-01-01"
         app:endDate="2019-12-31"
+        app:holidayColor="#519EDC"
+        app:isShowLunar="false"
         app:lunarHolidayTextColor="#519EDC"
         app:selectCircleColor="#398FE9"
         app:solarHolidayTextColor="#519EDC"
         app:solarTermTextColor="#519EDC"
+        app:startDate="2018-01-01"
         app:todaySolarTextColor="#398FE9">
 
-        <android.support.v4.widget.NestedScrollView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher" />
 
 
-            <LinearLayout
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/bg_miui10"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_lunar"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#333333"
-                    android:textSize="13sp" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bg_miui10"
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
-                <TextView
-                    android:id="@+id/tv_lunar_tg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/tv_lunar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#333333"
+                        android:textSize="13sp" />
 
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="asdfasdfasdf "
-                    android:textColor="#666666"
-                    android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/tv_lunar_tg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
 
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="asdfasdfasdf "
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
 
 
-        </android.support.v4.widget.NestedScrollView>
+                </LinearLayout>
 
+
+            </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
 
     </com.necer.calendar.Miui10Calendar>
 

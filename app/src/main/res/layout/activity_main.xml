@@ -40,12 +40,11 @@
         android:onClick="toMonthWeek"
         android:text="月日历、周日历" />
 
-    <!-- <Button
+     <Button
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:onClick="week"
-         android:text="周日历" />
- -->
+         android:onClick="addView"
+         android:text="添加view" />
     <!--  <Button
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

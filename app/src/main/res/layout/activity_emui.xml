@@ -1,109 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:background="#F29B38"
-        android:layout_height="100dp">
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
 
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal">
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="asdfasdf"
-                android:layout_marginLeft="15dp"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:textStyle="bold"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.necer.view.WeekBar
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:textColor="#ffffff" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="日"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="一"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="二"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="三"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="四"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="五"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="六"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-    </RelativeLayout>
+    </FrameLayout>
 
 
     <com.necer.calendar.EmuiCalendar
@@ -111,31 +38,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:bgCalendarColor="#ffffff"
+        app:bgChildColor="#F5f5f5"
         app:holidayColor="#F29B38"
+        app:lunarHolidayTextColor="#F29B38"
+        app:selectCircleColor="#F29B38"
         app:solarHolidayTextColor="#F29B38"
         app:solarTermTextColor="#F29B38"
-        app:lunarHolidayTextColor="#F29B38"
-        app:todaySolarTextColor="#F29B38"
-        app:selectCircleColor="#F29B38"
-        app:bgChildColor="#F5f5f5">
+        app:todaySolarTextColor="#F29B38">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/tv_lunar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-
                 android:layout_margin="15dp"
                 android:background="#f5f5f5"
-                android:textColor="#333333" />
+                android:textColor="#333333"
+                android:textSize="13sp" />
 
         </android.support.v4.widget.NestedScrollView>
     </com.necer.calendar.EmuiCalendar>
-
-
 
 
 </LinearLayout>

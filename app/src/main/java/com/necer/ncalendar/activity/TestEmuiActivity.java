@@ -17,7 +17,6 @@ import org.joda.time.LocalDate;
 public class TestEmuiActivity extends BaseActivity {
 
 
-
     TextView tv_lunar;
     TextView tv_date;
 
@@ -38,7 +37,16 @@ public class TestEmuiActivity extends BaseActivity {
             @Override
             public void onCalendarDateChanged(NDate date) {
                 tv_date.setText(date.localDate.getYear() + "年" + date.localDate.getMonthOfYear() + "月");
-                tv_lunar.setText((Days.daysBetween(new LocalDate(), date.localDate).getDays() + "天后  ") + "农历" + date.lunar.lunarYearStr + "年 " + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
+                int days = Days.daysBetween(new LocalDate(), date.localDate).getDays();
+                String string ;
+                if (days == 0) {
+                    string = "今天";
+                } else if (days > 0) {
+                    string = days + "天后";
+                } else {
+                    string = -days + "天前";
+                }
+                tv_lunar.setText(string + " 农历" + date.lunar.lunarYearStr + "年 " + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
             }
 
             @Override

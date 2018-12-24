@@ -152,7 +152,7 @@ public abstract class BaseCalendarView extends View {
         mCirclePaint.setStrokeWidth(mAttrs.hollowCircleStroke);
         mCirclePaint.setColor(mAttrs.hollowCircleColor);
         mCirclePaint.setAlpha(noAlphaColor);
-        canvas.drawCircle(centerX, mAttrs.isShowLunar ? centerY : getSolarTexyCenterY(centerY), mAttrs.selectCircleRadius, mCirclePaint);
+        canvas.drawCircle(centerX, mAttrs.isShowLunar ? centerY : getSolarTextCenterY(centerY), mAttrs.selectCircleRadius, mCirclePaint);
     }
 
     //实心圆
@@ -161,7 +161,7 @@ public abstract class BaseCalendarView extends View {
         mCirclePaint.setStrokeWidth(mAttrs.hollowCircleStroke);
         mCirclePaint.setColor(mAttrs.selectCircleColor);
         mCirclePaint.setAlpha(noAlphaColor);
-        canvas.drawCircle(centerX, mAttrs.isShowLunar ? centerY : getSolarTexyCenterY(centerY), mAttrs.selectCircleRadius, mCirclePaint);
+        canvas.drawCircle(centerX, mAttrs.isShowLunar ? centerY : getSolarTextCenterY(centerY), mAttrs.selectCircleRadius, mCirclePaint);
     }
 
     //今天的公历
@@ -190,7 +190,7 @@ public abstract class BaseCalendarView extends View {
             mCirclePaint.setStyle(Paint.Style.FILL);
             mCirclePaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.pointColor);
             mCirclePaint.setAlpha(alphaColor);
-            int solarTexyCenterY = getSolarTexyCenterY(centerY);
+            int solarTexyCenterY = getSolarTextCenterY(centerY);
             canvas.drawCircle(centerX, mAttrs.pointLocation == Attrs.DOWN ? (solarTexyCenterY + mAttrs.pointDistance) : (solarTexyCenterY - mAttrs.pointDistance), mAttrs.pointSize, mCirclePaint);
         }
     }
@@ -240,7 +240,7 @@ public abstract class BaseCalendarView extends View {
     //Holiday的位置
     private int[] getHolidayLocation(int centerX, int centerY) {
         int[] location = new int[2];
-        int solarTexyCenterY = getSolarTexyCenterY(centerY);
+        int solarTexyCenterY = getSolarTextCenterY(centerY);
         switch (mAttrs.holidayLocation) {
             case Attrs.TOP_LEFT:
                 location[0] = (int) (centerX - mAttrs.holidayDistance);
@@ -266,7 +266,7 @@ public abstract class BaseCalendarView extends View {
 
 
     //公历文字的竖直中心y
-    private int getSolarTexyCenterY(int centerY) {
+    private int getSolarTextCenterY(int centerY) {
         mTextPaint.setTextSize(mAttrs.solarTextSize);
         Paint.FontMetricsInt fontMetricsInt = mTextPaint.getFontMetricsInt();
         int ascent = fontMetricsInt.ascent;

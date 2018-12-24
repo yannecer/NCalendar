@@ -2,6 +2,7 @@ package com.necer.utils;
 
 import android.content.Context;
 import android.util.TypedValue;
+import android.view.WindowManager;
 
 import com.necer.entity.Lunar;
 import com.necer.entity.NDate;
@@ -18,6 +19,18 @@ import java.util.List;
  */
 
 public class Util {
+
+
+    /**
+     * 屏幕宽度
+     * @param context
+     * @return
+     */
+    public static int getScreenWith(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        return windowManager.getDefaultDisplay().getWidth();
+    }
+
 
 
     /**
