@@ -31,7 +31,6 @@ public abstract class BaseCalendar extends ViewPager {
 
     private Context mContext;
 
-    private BaseCalendarAdapter calendarAdapter;
     private Attrs attrs;
     protected BaseCalendarView mCurrView;//当前显示的页面
     protected BaseCalendarView mLastView;//当前显示的页面的上一个页面
@@ -48,7 +47,7 @@ public abstract class BaseCalendar extends ViewPager {
     protected int mLaseYear;
     protected int mLastMonth;
 
-    protected LocalDate startDate, endDate;
+    protected LocalDate startDate, endDate , initializeDate;
 
 
     protected OnDateChangedListener onDateChangedListener;
@@ -70,7 +69,6 @@ public abstract class BaseCalendar extends ViewPager {
         this.mContext = context;
         mPointList = new ArrayList<>();
         setBackgroundColor(attrs.bgCalendarColor);
-
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(final int position) {
@@ -83,15 +81,15 @@ public abstract class BaseCalendar extends ViewPager {
             }
         });
 
-        initDate();
+        initializeDate = new LocalDate();
+        initDate(initializeDate);
     }
 
 
-    private void initDate() {
+    private void initDate(LocalDate initializeDate) {
 
         String startDateString = attrs.startDateString;
         String endDateString = attrs.endDateString;
-        LocalDate initializeDate = new LocalDate();//今天
         try {
             startDate = new LocalDate(startDateString);
             endDate = new LocalDate(endDateString);
@@ -99,19 +97,24 @@ public abstract class BaseCalendar extends ViewPager {
             throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
         }
 
+        if (startDate.isAfter(endDate)) {
+            throw new RuntimeException("startDate必须在endDate之前");
+        }
+
         if (startDate.isBefore(new LocalDate("1901-01-01"))) {
-            throw new RuntimeException("startDate必须在1901-01-01之前");
+            throw new RuntimeException("startDate必须在1901-01-01之后");
         }
 
         if (endDate.isAfter(new LocalDate("2099-12-31"))) {
-            throw new RuntimeException("endDate必须在2099-12-31之后");
+            throw new RuntimeException("endDate必须在2099-12-31之前");
         }
+
 
       /*  if (startDate.isAfter(initializeDate) || endDate.isBefore(initializeDate)) {
             throw new RuntimeException("日期区间需要包含今天");
         }*/
 
-        calendarAdapter = getCalendarAdapter(mContext, attrs);
+        BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, attrs, initializeDate);
         int currItem = calendarAdapter.getCurrItem();
         int count = calendarAdapter.getCount();
         setAdapter(calendarAdapter);
@@ -133,22 +136,38 @@ public abstract class BaseCalendar extends ViewPager {
     public void setDateInterval(String startFormatDate, String endFormatDate) {
         attrs.startDateString = startFormatDate;
         attrs.endDateString = endFormatDate;
-
-        post(new Runnable() {
-            @Override
-            public void run() {
-                initDate();
-            }
-        });
-
+        initDate(initializeDate);
     }
 
+    public void setInitializeDate(String formatInitializeDate) {
+        try {
+            initializeDate = new LocalDate(formatInitializeDate);
+        } catch (Exception e) {
+            throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
+        }
+        initDate(initializeDate);
+    }
+
+    public void setDateInterval(String startFormatDate, String endFormatDate, String formatInitializeDate) {
+        attrs.startDateString = startFormatDate;
+        attrs.endDateString = endFormatDate;
+        try {
+            initializeDate = new LocalDate(formatInitializeDate);
+        } catch (Exception e) {
+            throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
+        }
+        initDate(initializeDate);
+    }
 
     private void drawView(int position) {
 
-        this.mCurrView = calendarAdapter.getBaseCalendarView(position);
-        this.mLastView = calendarAdapter.getBaseCalendarView(position - 1);
-        this.mNextView = calendarAdapter.getBaseCalendarView(position + 1);
+        this.mCurrView = findViewWithTag(position);
+        this.mLastView = findViewWithTag(position - 1);
+        this.mNextView = findViewWithTag(position + 1);
+
+        if (mCurrView == null) {
+            return;
+        }
 
         LocalDate initialDate = mCurrView.getInitialDate();
 
@@ -178,7 +197,11 @@ public abstract class BaseCalendar extends ViewPager {
     public void setPointList(List<String> list) {
         mPointList.clear();
         for (int i = 0; i < list.size(); i++) {
-            mPointList.add(new LocalDate(list.get(i)));
+            try {
+                mPointList.add(new LocalDate(list.get(i)));
+            } catch (Exception e) {
+                throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
+            }
         }
         if (mCurrView != null) {
             mCurrView.invalidate();
@@ -214,7 +237,7 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs);
+    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate);
 
 
     /**
@@ -304,6 +327,7 @@ public abstract class BaseCalendar extends ViewPager {
     public void setOnYearMonthChangeListener(OnYearMonthChangedListener onYearMonthChangedListener) {
         this.onYearMonthChangedListener = onYearMonthChangedListener;
     }
+
     public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
         this.onClickDisableDateListener = onClickDisableDateListener;
     }
@@ -311,8 +335,6 @@ public abstract class BaseCalendar extends ViewPager {
     public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
         this.onDateChangedListener = onDateChangedListener;
     }
-
-
 
 
     /**

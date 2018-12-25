@@ -38,10 +38,9 @@ public class TestMonthWeekActivity extends BaseActivity {
         /*app:startDate="2018-12-2"
         app:endDate="2018-12-31"*/
       // monthCalendar.setDateInterval("2018-01-01", "2018-12-02");
-     //   monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
+        monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
 
-        weekCalendar.setDateInterval("2018-12-01","2018-12-20");
-
+        monthCalendar.setInitializeDate("2018-12-11");
         monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
             @Override
             public void onMonthSelect(NDate date) {

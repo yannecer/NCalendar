@@ -34,8 +34,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs) {
-        return new MonthCalendarAdapter(context, attrs, this);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate) {
+        return new MonthCalendarAdapter(context, attrs, initializeDate,this);
     }
 
     public MonthCalendar(Context context, Attrs attrs, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {

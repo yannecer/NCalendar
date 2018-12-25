@@ -2,7 +2,6 @@ package com.necer.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,18 +23,15 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     protected int mCurr;//当前位置
     protected Attrs mAttrs;//属性参数
     protected LocalDate mInitializeDate;//日期初始化，默认是当天
-    protected SparseArray<BaseCalendarView> mCalendarViews;
 
 
-    public BaseCalendarAdapter(Context context, Attrs attrs) {
+    public BaseCalendarAdapter(Context context, Attrs attrs,LocalDate initializeDate) {
         this.mContext = context;
         this.mAttrs = attrs;
         LocalDate startDate = new LocalDate(attrs.startDateString);
         this.mCount = getIntervalCount(startDate, new LocalDate(attrs.endDateString), attrs.firstDayOfWeek) + 1;
         this.mCurr = getIntervalCount(startDate, new LocalDate(), attrs.firstDayOfWeek);
-
-        mCalendarViews = new SparseArray<>();
-        mInitializeDate = new LocalDate();
+        mInitializeDate = initializeDate;
     }
 
     @Override
@@ -53,16 +49,13 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
-        mCalendarViews.remove(position);
     }
 
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-
-
         BaseCalendarView view = getView(position);
-        mCalendarViews.put(position, view);
+        view.setTag(position);
         container.addView(view);
         return view;
     }
@@ -70,11 +63,6 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     protected abstract BaseCalendarView getView(int position);
 
     protected abstract int getIntervalCount(LocalDate startDate, LocalDate endDate, int type);
-
-
-    public BaseCalendarView getBaseCalendarView(int position) {
-        return mCalendarViews.get(position);
-    }
 
     //当前页的位置
     public int getCurrItem() {

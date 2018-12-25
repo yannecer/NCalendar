@@ -19,8 +19,8 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
 
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
-    public MonthCalendarAdapter(Context context, Attrs attrs, OnClickMonthViewListener onClickMonthViewListener) {
-        super(context, attrs);
+    public MonthCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate,OnClickMonthViewListener onClickMonthViewListener) {
+        super(context, attrs,initializeDate);
         this.mOnClickMonthViewListener = onClickMonthViewListener;
     }
 

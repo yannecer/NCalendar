@@ -6,9 +6,9 @@
         <attr name="solarHolidayTextColor" format="color" />
         <attr name="lunarHolidayTextColor" format="color" />
         <attr name="solarTermTextColor" format="color" />
-        <attr name="hintColor" format="color" />
         <attr name="selectCircleColor" format="color" />
         <attr name="todaySolarTextColor" format="color" />
+        <attr name="todaySolarSelectTextColor" format="color" />
         <attr name="solarTextSize" format="dimension" />
         <attr name="lunarTextSize" format="dimension" />
         <attr name="lunarDistance" format="dimension" />

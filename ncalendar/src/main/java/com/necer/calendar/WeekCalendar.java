@@ -29,8 +29,8 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs) {
-        return new WeekCalendarAdapter(context, attrs, this);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate) {
+        return new WeekCalendarAdapter(context, attrs, initializeDate,this);
     }
 
     public WeekCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {

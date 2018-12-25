@@ -19,9 +19,6 @@ public class MainActivity extends AppCompatActivity {
         TextView tvVersion = (TextView) findViewById(R.id.tv_version);
         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
 
-
-
-
     }
 
 
@@ -31,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void miui9(View v) {
         startActivity(new Intent(this, TestMiui9Activity.class));
-
     }
 
     public void emui(View v) {

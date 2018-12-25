@@ -263,7 +263,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
-
     /**
      * 手势滑动的逻辑，做了简单处理，2种状态，都以ChildLayout滑动的状态判断
      * 1、向上滑动未到周状态
@@ -459,14 +458,23 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      *
      * @param formatDate
      */
-    public void jumpDate(String formatDate) {
-
+    public void jumpDate( String formatDate) {
         if (STATE == Attrs.MONTH) {
             monthCalendar.jumpDate(formatDate);
         } else {
             weekCalendar.jumpDate(formatDate);
         }
     }
+
+    /**
+     * 日历初始化的日期
+     * @param formatDate
+     */
+    public void setInitializeDate(String formatDate) {
+        monthCalendar.setInitializeDate(formatDate);
+        weekCalendar.setInitializeDate(formatDate);
+    }
+
 
 
     /**
@@ -544,16 +552,18 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     /**
      * 设置日期区间
+     *
      * @param startFormatDate
      * @param endFormatDate
      */
     public void setDateInterval(String startFormatDate, String endFormatDate) {
-        monthCalendar.setDateInterval(startFormatDate,endFormatDate);
-        weekCalendar.setDateInterval(startFormatDate,endFormatDate);
+        monthCalendar.setDateInterval(startFormatDate, endFormatDate);
+        weekCalendar.setDateInterval(startFormatDate, endFormatDate);
     }
 
     /**
      * 日期、状态回调
+     *
      * @param onCalendarChangedListener
      */
     public void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener) {
@@ -562,6 +572,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     /**
      * 点击不可用的日期回调
+     *
      * @param onClickDisableDateListener
      */
     public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {

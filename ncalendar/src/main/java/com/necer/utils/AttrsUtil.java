@@ -20,6 +20,7 @@ public class AttrsUtil {
 
         attrs.solarTextColor = ta.getColor(R.styleable.NCalendar_solarTextColor, context.getResources().getColor(R.color.solarTextColor));
         attrs.todaySolarTextColor = ta.getColor(R.styleable.NCalendar_todaySolarTextColor, context.getResources().getColor(R.color.todaySolarTextColor));
+        attrs.todaySolarSelectTextColor = ta.getColor(R.styleable.NCalendar_todaySolarSelectTextColor, context.getResources().getColor(R.color.white));
         attrs.lunarTextColor = ta.getColor(R.styleable.NCalendar_lunarTextColor, context.getResources().getColor(R.color.lunarTextColor));
         attrs.solarHolidayTextColor = ta.getColor(R.styleable.NCalendar_solarHolidayTextColor, context.getResources().getColor(R.color.solarHolidayTextColor));
         attrs.lunarHolidayTextColor = ta.getColor(R.styleable.NCalendar_lunarHolidayTextColor, context.getResources().getColor(R.color.lunarHolidayTextColor));

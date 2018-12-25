@@ -1,6 +1,7 @@
 package com.necer.ncalendar.activity;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.necer.MyLog;
@@ -71,5 +72,12 @@ public class TestMiui10Activity extends BaseActivity {
                 MyLog.d("nDate::" + nDate.localDate);
             }
         });
+
+        miui10Calendar.setInitializeDate("2018-12-23");
+    }
+
+
+    public void aaa(View view) {
+        miui10Calendar.jumpDate("2018-10-12");
     }
 }

@@ -73,7 +73,6 @@
         app:bgChildColor="#F5f5f5"
         app:endDate="2019-12-31"
         app:holidayColor="#519EDC"
-        app:isShowLunar="false"
         app:lunarHolidayTextColor="#519EDC"
         app:selectCircleColor="#398FE9"
         app:solarHolidayTextColor="#519EDC"
@@ -82,163 +81,38 @@
         app:todaySolarTextColor="#398FE9">
 
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@mipmap/ic_launcher" />
+            android:layout_height="match_parent">
 
 
-            <android.support.v4.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_miui10"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_lunar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/bg_miui10"
-                    android:orientation="vertical"
-                    android:padding="15dp">
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="13sp" />
 
-                    <TextView
-                        android:id="@+id/tv_lunar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#333333"
-                        android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/tv_lunar_tg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/tv_lunar_tg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="asdfasdfasdf "
-                        android:textColor="#666666"
-                        android:textSize="12sp" />
-
-
-                </LinearLayout>
-
-
-            </android.support.v4.widget.NestedScrollView>
-        </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
     </com.necer.calendar.Miui10Calendar>
 

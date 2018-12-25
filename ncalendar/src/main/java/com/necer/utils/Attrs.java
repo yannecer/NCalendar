@@ -29,11 +29,11 @@ public class Attrs {
 
     public int solarTextColor;
     public int todaySolarTextColor;
+    public int todaySolarSelectTextColor;
     public int lunarTextColor;
     public int solarHolidayTextColor;
     public int lunarHolidayTextColor;
     public int solarTermTextColor;
-  //  public int hintColor;
     public int selectCircleColor;
     public float solarTextSize;
     public float lunarTextSize;

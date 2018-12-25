@@ -167,7 +167,7 @@ public abstract class BaseCalendarView extends View {
     //今天的公历
     private void drawTodaySolar(Canvas canvas, int centerX, int centerY, boolean isSelect, LocalDate date) {
         if (isSelect) {
-            mTextPaint.setColor(mAttrs.bgCalendarColor);
+            mTextPaint.setColor(mAttrs.todaySolarSelectTextColor);
         } else {
             mTextPaint.setColor(mAttrs.todaySolarTextColor);
         }

@@ -17,8 +17,8 @@ import org.joda.time.LocalDate;
 public class WeekCalendarAdapter extends BaseCalendarAdapter {
     private OnClickWeekViewListener mOnClickWeekViewListener;
 
-    public WeekCalendarAdapter(Context context, Attrs attrs, OnClickWeekViewListener onClickWeekViewListener) {
-        super(context, attrs);
+    public WeekCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate, OnClickWeekViewListener onClickWeekViewListener) {
+        super(context, attrs,initializeDate);
         this.mOnClickWeekViewListener = onClickWeekViewListener;
     }
 
