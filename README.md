@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.2.1'
+implementation 'com.necer.ncalendar:ncalendar:3.2.2'
 
 ```
 
@@ -187,6 +187,11 @@ app:endDate="2018-12-31" 结束日期
 
 setDateInterval(startFormatDate, endFormatDate)
 ```
+##### 10、设置初始化日期
+```
+setInitializeDate(formatDate) 
+```
+
 
 ## 感谢：
 
@@ -215,6 +220,7 @@ setDateInterval(startFormatDate, endFormatDate)
 |disabledAlphaColor| integer |日期区间之外的地日颜色的透明度0-255
 |disabledString| string |点击日期区间之外的日期提示语
 |todaySolarTextColor| color|今天不选中的颜色
+|todaySolarSelectTextColor| color|今天选中的颜色
 |selectCircleRadius| dimension | 选中圈的半径
 |solarTextSize| dimension|公历日期字体大小
 |lunarTextSize| dimension|农历日期字体大小
@@ -237,6 +243,7 @@ setDateInterval(startFormatDate, endFormatDate)
 
 
 ## 版本更新
+* 3.2.2<br/>增加设置日历初始化日期的方法
 * 3.2.1<br/>设置日期区间
 * 3.2.0<br/>miui10完美了
 * 3.1.5<br/>更正2019年劳动节公休
