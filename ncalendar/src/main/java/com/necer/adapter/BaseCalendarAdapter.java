@@ -69,6 +69,5 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
         return mCurr;
     }
 
-
 }
 

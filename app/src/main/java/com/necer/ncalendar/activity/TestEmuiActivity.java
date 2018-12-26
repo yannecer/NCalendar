@@ -10,6 +10,9 @@ import com.necer.ncalendar.R;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * Created by necer on 2018/11/12.
@@ -31,8 +34,11 @@ public class TestEmuiActivity extends BaseActivity {
         tv_lunar = findViewById(R.id.tv_lunar);
         tv_date = findViewById(R.id.tv_date);
 
+        List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01", "2018-12-23");
+
 
         EmuiCalendar emuiCalendar = findViewById(R.id.emuiCalendar);
+        emuiCalendar.setPointList(pointList);
         emuiCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date) {

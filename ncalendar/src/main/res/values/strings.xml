@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">calendar</string>
+    <string name="factual_scroll_view">factual_scroll_view</string>
 </resources>

@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:paddingBottom="5dp"
-        android:background="#38AE80">
+        android:background="#38AE80"
+        android:paddingBottom="5dp">
 
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff" />
 
 
     </RelativeLayout>
@@ -65,7 +65,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:tag="@string/factual_scroll_view" />
 
 
     </com.necer.calendar.Miui9Calendar>

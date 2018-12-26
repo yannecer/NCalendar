@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.necer.R;
 import com.necer.listener.OnCalendarStateChangedListener;
 
 /**
@@ -19,7 +21,7 @@ import com.necer.listener.OnCalendarStateChangedListener;
 public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUpdateListener {
 
 
-    protected View targetView;//嵌套滑动的目标view，即RecyclerView等
+    protected View targetView;//实际滑动的view，即RecyclerView等
 
     protected ValueAnimator childLayoutValueAnimator;
     private int monthHeight;
@@ -55,30 +57,38 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         }
         super.addView(child, params);
 
-        targetView = getNestedScrollingChild(child);
+        //通过tag查找，找不到递归查找，再找不到抛异常
+        targetView = findViewWithTag(getResources().getString(R.string.factual_scroll_view));
+        if (targetView == null) {
+            try {
+                traverseView(child);
+            } catch (ViewException e) {
+                e.printStackTrace();
+                targetView = e.getExceptionView();
+            }
+        }
         if (targetView == null) {
             throw new RuntimeException("NCalendar需要实现了NestedScrollingChild2的子类");
         }
     }
 
-    private View getNestedScrollingChild(View view) {
 
+    //递归，异常中断递归
+    private void traverseView(View view) throws ViewException {
         if (view instanceof NestedScrollingChild2) {
-            return view;
+            throw new ViewException(view);
         } else if (view instanceof ViewGroup) {
             int childCount = ((ViewGroup) view).getChildCount();
             for (int i = 0; i < childCount; i++) {
                 View childAt = ((ViewGroup) view).getChildAt(i);
                 if (childAt instanceof NestedScrollingChild2) {
-                    return childAt;
+                    throw new ViewException(childAt);
                 } else {
-                    getNestedScrollingChild(((ViewGroup) view).getChildAt(i));
+                    traverseView(childAt);
                 }
             }
         }
-        return null;
     }
-
 
     @Override
     public void offsetTopAndBottom(int offset) {
@@ -96,7 +106,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         float top = getY();
         float i = animatedValue - top;
         float y = getY();
-       // offsetTopAndBottom(i);
+        // offsetTopAndBottom(i);
         setY(i + y);
     }
 
@@ -123,7 +133,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     }
 
     public boolean isWeekState() {
-       // return getTop() <= weekHeight;
+        // return getTop() <= weekHeight;
         return getY() <= weekHeight;
 
     }
@@ -131,6 +141,17 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
     public int getChildLayoutOffset() {
         return monthHeight - weekHeight;
+    }
+
+
+    public static class ViewException extends Exception {
+        private View view;
+        public ViewException(View view) {
+            this.view = view;
+        }
+        public View getExceptionView() {
+            return view;
+        }
     }
 
 

@@ -116,11 +116,10 @@ public abstract class BaseCalendar extends ViewPager {
 
         BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, attrs, initializeDate);
         int currItem = calendarAdapter.getCurrItem();
-        int count = calendarAdapter.getCount();
         setAdapter(calendarAdapter);
 
-        //总数==1时，OnPageChangeListener不回调
-        if (count == 1) {
+        //当前item为0时，OnPageChangeListener不回调
+        if (currItem == 0) {
             post(new Runnable() {
                 @Override
                 public void run() {
@@ -170,7 +169,6 @@ public abstract class BaseCalendar extends ViewPager {
         }
 
         LocalDate initialDate = mCurrView.getInitialDate();
-
         LocalDate localDate;
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
         if (mSelectDate != null) {
@@ -395,4 +393,5 @@ public abstract class BaseCalendar extends ViewPager {
             notifyView(localDate, isDraw);
         }
     }
+
 }

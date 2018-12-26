@@ -73,6 +73,7 @@
         app:bgChildColor="#F5f5f5"
         app:endDate="2019-12-31"
         app:holidayColor="#519EDC"
+        app:pointLocation="down"
         app:lunarHolidayTextColor="#519EDC"
         app:selectCircleColor="#398FE9"
         app:solarHolidayTextColor="#519EDC"

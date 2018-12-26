@@ -41,6 +41,7 @@
         app:bgChildColor="#F5f5f5"
         app:holidayColor="#F29B38"
         app:isShowLunar="false"
+        app:pointDistance="15dp"
         app:lunarHolidayTextColor="#F29B38"
         app:selectCircleColor="#F29B38"
         app:solarHolidayTextColor="#F29B38"

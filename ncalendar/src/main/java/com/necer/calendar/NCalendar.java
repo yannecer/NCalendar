@@ -20,9 +20,7 @@ import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
 import com.necer.view.ChildLayout;
-
 import org.joda.time.LocalDate;
-
 import java.util.List;
 
 
@@ -250,7 +248,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     @Override
     public void onStopNestedScroll(View target) {
-
         //该方法手指抬起的时候回调，此时根据此刻的位置，自动滑动到相应的状态，
         //如果已经在对应的位置上，则不执行动画，
         if (monthCalendar.isMonthState() && childLayout.isMonthState() && STATE == Attrs.WEEK) {

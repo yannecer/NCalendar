@@ -44,8 +44,7 @@ public class TestMiui10Activity extends BaseActivity {
         tv_lunar = findViewById(R.id.tv_lunar);
         tv_lunar_tg = findViewById(R.id.tv_lunar_tg);
 
-        List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
-
+        List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01", "2018-12-23");
 
         miui10Calendar = findViewById(R.id.miui10Calendar);
         miui10Calendar.setPointList(pointList);
@@ -78,6 +77,7 @@ public class TestMiui10Activity extends BaseActivity {
 
 
     public void aaa(View view) {
-        miui10Calendar.jumpDate("2018-10-12");
+       // miui10Calendar.jumpDate("2018-10-12");
+        miui10Calendar.setVisibility(View.VISIBLE);
     }
 }

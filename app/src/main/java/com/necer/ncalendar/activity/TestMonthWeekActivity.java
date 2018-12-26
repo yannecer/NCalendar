@@ -7,7 +7,6 @@ import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnMonthSelectListener;
-import com.necer.listener.OnWeekSelectListener;
 import com.necer.ncalendar.R;
 
 /**
@@ -37,10 +36,10 @@ public class TestMonthWeekActivity extends BaseActivity {
 
         /*app:startDate="2018-12-2"
         app:endDate="2018-12-31"*/
-      // monthCalendar.setDateInterval("2018-01-01", "2018-12-02");
+     //    monthCalendar.setDateInterval("2018-12-01", "2018-12-31");
         monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
 
-        monthCalendar.setInitializeDate("2018-12-11");
+        // monthCalendar.setInitializeDate("2018-12-11");
         monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
             @Override
             public void onMonthSelect(NDate date) {
@@ -48,13 +47,13 @@ public class TestMonthWeekActivity extends BaseActivity {
             }
         });
 
-        weekCalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
+      /*  weekCalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
             @Override
             public void onWeekSelect(NDate date) {
 
                 tv_date.setText(date.localDate + "");
             }
-        });
+        });*/
 
     }
 
@@ -62,6 +61,7 @@ public class TestMonthWeekActivity extends BaseActivity {
         //  weekCalendar.toToday();
         // monthCalendar.toToday();
 
-        weekCalendar.jumpDate("2018-01-31");
+        //  weekCalendar.jumpDate("2018-01-31");
+        monthCalendar.setVisibility(View.VISIBLE);
     }
 }
