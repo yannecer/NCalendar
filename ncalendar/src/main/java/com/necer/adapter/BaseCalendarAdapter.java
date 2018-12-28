@@ -28,10 +28,11 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     public BaseCalendarAdapter(Context context, Attrs attrs,LocalDate initializeDate) {
         this.mContext = context;
         this.mAttrs = attrs;
+        this.mInitializeDate = initializeDate;
         LocalDate startDate = new LocalDate(attrs.startDateString);
         this.mCount = getIntervalCount(startDate, new LocalDate(attrs.endDateString), attrs.firstDayOfWeek) + 1;
-        this.mCurr = getIntervalCount(startDate, new LocalDate(), attrs.firstDayOfWeek);
-        mInitializeDate = initializeDate;
+        this.mCurr = getIntervalCount(startDate, mInitializeDate, attrs.firstDayOfWeek);
+
     }
 
     @Override

@@ -3,11 +3,17 @@ package com.necer.ncalendar.activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.necer.MyLog;
+import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
 import com.necer.entity.NDate;
+import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthSelectListener;
+import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.ncalendar.R;
+
+import org.joda.time.LocalDate;
 
 /**
  * Created by necer on 2018/11/28.
@@ -44,6 +50,22 @@ public class TestMonthWeekActivity extends BaseActivity {
             @Override
             public void onMonthSelect(NDate date) {
                 tv_date.setText(date.localDate + "");
+
+                MyLog.d("monthCalendar::::1111::::" + date.localDate);
+            }
+        });
+
+        monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
+            @Override
+            public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month) {
+                MyLog.d("monthCalendar::::222::::" + year + ":::" + month);
+            }
+        });
+
+        monthCalendar.setOnDateChangedListener(new OnDateChangedListener() {
+            @Override
+            public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw) {
+                MyLog.d("monthCalendar::::333:::::" + localDate);
             }
         });
 

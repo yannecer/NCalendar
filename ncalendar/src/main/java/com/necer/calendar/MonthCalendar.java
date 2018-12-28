@@ -80,9 +80,9 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickCurrentMonth(LocalDate localDate) {
         if (isClickDateEnable(localDate)) {
-            onSelcetDate(Util.getNDate(localDate));
-            onDateChanged(localDate, true);
-            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+           // onSelcetDate(Util.getNDate(localDate));
+           // onDateChanged(localDate, true);
+           // onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
             notifyView(localDate, true);
         } else {
             onClickDisableDate(localDate);
@@ -93,11 +93,11 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickLastMonth(LocalDate localDate) {
         if (isClickDateEnable(localDate)) {
-            onSelcetDate(Util.getNDate(localDate));
-            onDateChanged(localDate, true);
-            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+           // onSelcetDate(Util.getNDate(localDate));
+          //  onDateChanged(localDate, true);
+          //  onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
             setCurrentItem(getCurrentItem() - 1, true);
-            notifyView(localDate, true);
+           // notifyView(localDate, true);
         } else {
             onClickDisableDate(localDate);
         }
@@ -106,11 +106,11 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     @Override
     public void onClickNextMonth(LocalDate localDate) {
         if (isClickDateEnable(localDate)) {
-            onSelcetDate(Util.getNDate(localDate));
-            onDateChanged(localDate, true);
-            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+           // onSelcetDate(Util.getNDate(localDate));
+           // onDateChanged(localDate, true);
+           // onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
             setCurrentItem(getCurrentItem() + 1, true);
-            notifyView(localDate, true);
+         //   notifyView(localDate, true);
         } else {
             onClickDisableDate(localDate);
         }

@@ -47,7 +47,7 @@ public abstract class BaseCalendar extends ViewPager {
     protected int mLaseYear;
     protected int mLastMonth;
 
-    protected LocalDate startDate, endDate , initializeDate;
+    protected LocalDate startDate, endDate, initializeDate;
 
 
     protected OnDateChangedListener onDateChangedListener;
@@ -169,27 +169,17 @@ public abstract class BaseCalendar extends ViewPager {
         }
 
         LocalDate initialDate = mCurrView.getInitialDate();
-        LocalDate localDate;
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
         if (mSelectDate != null) {
             int currNum = getTwoDateCount(mSelectDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
-            localDate = getDate(mSelectDate, currNum);
+            mSelectDate = getDate(mSelectDate, currNum);
         } else {
-            localDate = initialDate;
+            mSelectDate = initialDate;
         }
 
         //绘制的规则：1、默认选中，每个页面都会有选中。1、默认不选中，但是点击了当前页面的某个日期
         boolean isDraw = attrs.isDefaultSelect || (mSelectDate.equals(mOnClickDate));
-        notifyView(localDate, isDraw);
-
-        //选中回调 ,绘制了才会回到
-        if (isDraw) {
-            onSelcetDate(Util.getNDate(mSelectDate));
-        }
-        //年月回调
-        onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
-        //日期回调
-        onDateChanged(mSelectDate, isDraw);
+        notifyView(mSelectDate, isDraw);
     }
 
     public void setPointList(List<String> list) {
@@ -223,15 +213,36 @@ public abstract class BaseCalendar extends ViewPager {
             this.mSelectDate = currectSelectDate;
         }
 
+        if (mCurrView == null) {
+            mCurrView = findViewWithTag(getCurrentItem());
+        }
         if (mCurrView != null) {
             mCurrView.setSelectDate(mSelectDate, mPointList, isDraw);
+        }
+
+        if (mLastView == null) {
+            mLastView = findViewWithTag(getCurrentItem() - 1);
         }
         if (mLastView != null) {
             mLastView.setSelectDate(getLastSelectDate(mSelectDate), mPointList, isDraw);
         }
+
+        if (mNextView == null) {
+            mNextView = findViewWithTag(getCurrentItem() + 1);
+        }
         if (mNextView != null) {
             mNextView.setSelectDate(getNextSelectDate(mSelectDate), mPointList, isDraw);
         }
+
+
+        //选中回调 ,绘制了才会回到
+        if (isDraw) {
+            onSelcetDate(Util.getNDate(mSelectDate));
+        }
+        //年月回调
+        onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
+        //日期回调
+        onDateChanged(mSelectDate, isDraw);
     }
 
 
@@ -385,11 +396,11 @@ public abstract class BaseCalendar extends ViewPager {
 
             int num = getTwoDateCount(mSelectDate, localDate, attrs.firstDayOfWeek);
             setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
-            //同一月份的跳转回调
+       /*     //同一月份的跳转回调
             if (mCurrView.isEqualsMonthOrWeek(localDate, mSelectDate)) {
                 onDateChanged(localDate, isDraw);
                 onSelcetDate(Util.getNDate(localDate));
-            }
+            }*/
             notifyView(localDate, isDraw);
         }
     }

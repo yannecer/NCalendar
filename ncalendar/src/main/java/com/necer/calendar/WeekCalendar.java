@@ -68,9 +68,9 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     @Override
     public void onClickCurrentWeek(LocalDate localDate) {
         if (isClickDateEnable(localDate)) {
-            onSelcetDate(Util.getNDate(localDate));
-            onDateChanged(localDate, true);
-            onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
+           // onSelcetDate(Util.getNDate(localDate));
+           // onDateChanged(localDate, true);
+           // onYearMonthChanged(localDate.getYear(), localDate.getMonthOfYear());
             notifyView(localDate, true);
         } else{
             onClickDisableDate(localDate);
