@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.2.3'
+implementation 'com.necer.ncalendar:ncalendar:3.2.4'
 
 ```
 
@@ -123,7 +123,7 @@ NCalendar（包含Miui9Calendar、Miui10Calendar和EmuiCalendar）OnCalendarChan
 
 nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarDateChanged(NDate date) {
+            public void onCalendarDateChanged(NDate date，boolean isClick) {
                //日历回调 NDate包含公历、农历、节气、节假日、闰年等信息
             }
                
@@ -244,6 +244,7 @@ setInitializeDate(formatDate)
 
 
 ## 版本更新
+* 3.2.4<br/>修改回调逻辑，区分翻页和点击，修改NestedScrollingChild2为NestedScrollingChild
 * 3.2.3<br/>增加设置滑动view的tag，方便查找NestedScrollingChild2
 * 3.2.2<br/>增加设置日历初始化日期的方法
 * 3.2.1<br/>设置日期区间
