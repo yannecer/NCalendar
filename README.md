@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.2.3'
+implementation 'com.necer.ncalendar:ncalendar:3.2.4'
 
 ```
 
@@ -97,11 +97,11 @@ implementation 'com.necer.ncalendar:ncalendar:3.2.3'
 
 #### 注意
 
-- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild2```的子类，
-如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个```NestedScrollingChild2```
+- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild```的子类，
+如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个```NestedScrollingChild```
 - 如果布局文件中，内部的子view有多个父view，恰好也有实现了```NestedScrollingChild2```的父view，则需要给真实滑动的子view设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
 - 单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中
-
+- 新版的代码已经将NestedScrollingChild2改成了NestedScrollingChild，如果出现滑动异常，则需要给实际滑动的view设置tag（“@string/factual_scroll_view”）
 
 
 
@@ -123,7 +123,7 @@ NCalendar（包含Miui9Calendar、Miui10Calendar和EmuiCalendar）OnCalendarChan
 
 nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarDateChanged(NDate date) {
+            public void onCalendarDateChanged(NDate date，boolean isClick) {
                //日历回调 NDate包含公历、农历、节气、节假日、闰年等信息
             }
                
@@ -244,6 +244,7 @@ setInitializeDate(formatDate)
 
 
 ## 版本更新
+* 3.2.4<br/>修改回调逻辑，区分翻页和点击，修改NestedScrollingChild2为NestedScrollingChild
 * 3.2.3<br/>增加设置滑动view的tag，方便查找NestedScrollingChild2
 * 3.2.2<br/>增加设置日历初始化日期的方法
 * 3.2.1<br/>设置日期区间
