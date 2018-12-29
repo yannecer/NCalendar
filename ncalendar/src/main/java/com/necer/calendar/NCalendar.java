@@ -202,13 +202,13 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @param isDraw       是否绘制 此处选择都绘制，默认不选中，不适用鱼月周切换
      */
     @Override
-    public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw) {
+    public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw,boolean isClick) {
 
         if (baseCalendar instanceof MonthCalendar && STATE == Attrs.MONTH) {
             //月日历变化,改变周的选中
             weekCalendar.jumpDate(localDate, true);
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate));
+                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate),isClick);
             }
 
         } else if (baseCalendar instanceof WeekCalendar && STATE == Attrs.WEEK) {
@@ -223,7 +223,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
                 }
             });
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate));
+                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate),isClick);
             }
         }
     }

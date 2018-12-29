@@ -47,10 +47,13 @@ public class TestMiui10Activity extends BaseActivity {
         List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01", "2018-12-23");
 
         miui10Calendar = findViewById(R.id.miui10Calendar);
+       // miui10Calendar.setDateInterval("2018-11-01","2018-12-30");
+        miui10Calendar.setDateInterval("1901-01-01","2099-12-30");
+
         miui10Calendar.setPointList(pointList);
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarDateChanged(NDate date) {
+            public void onCalendarDateChanged(NDate date,boolean isClick) {
                 tv_year.setText(date.localDate.getYear() + "年");
                 tv_month.setText(date.localDate.getMonthOfYear() + "月");
                 tv_week.setText(weeks[date.localDate.getDayOfWeek() - 1]);
@@ -77,7 +80,7 @@ public class TestMiui10Activity extends BaseActivity {
 
 
     public void aaa(View view) {
-       // miui10Calendar.jumpDate("2018-10-12");
-        miui10Calendar.setVisibility(View.VISIBLE);
+        miui10Calendar.jumpDate("2018-10-12");
+      //  miui10Calendar.setVisibility(View.VISIBLE);
     }
 }

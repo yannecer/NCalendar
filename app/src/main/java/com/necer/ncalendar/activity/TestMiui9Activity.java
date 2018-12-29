@@ -48,7 +48,7 @@ public class TestMiui9Activity extends BaseActivity {
 
         miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarDateChanged(NDate date) {
+            public void onCalendarDateChanged(NDate date,boolean isClick) {
                 MyLog.d("date:::" + date.localDate);
                 MyLog.d("date:::" + date.lunar.lunarYearStr);
                 MyLog.d("date:::" + date.lunar.lunarMonthStr);
@@ -60,6 +60,9 @@ public class TestMiui9Activity extends BaseActivity {
                 tv_year.setText(date.localDate.getYear() + "年");
 
                 tv_lunar.setText(date.lunar.lunarYearStr + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
+
+
+                MyLog.d("isClickisClickisClick:::" + isClick);
 
             }
 

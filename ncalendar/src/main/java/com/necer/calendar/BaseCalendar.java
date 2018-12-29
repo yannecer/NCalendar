@@ -37,17 +37,14 @@ public abstract class BaseCalendar extends ViewPager {
     protected BaseCalendarView mNextView;//当前显示的页面的下一个页面
 
     protected LocalDate mSelectDate;//日历上面点击选中的日期,包含点击选中和翻页选中
-    protected LocalDate mOnClickDate;//专值点击选中的日期
+    protected LocalDate mOnClickDate;//点击选中的日期
 
     private List<LocalDate> mPointList;
 
     protected OnYearMonthChangedListener onYearMonthChangedListener;
     protected OnClickDisableDateListener onClickDisableDateListener;
-    //上次回调的年，月
-    protected int mLaseYear;
-    protected int mLastMonth;
 
-    protected LocalDate startDate, endDate, initializeDate;
+    protected LocalDate startDate, endDate, initializeDate, callBackDate;
 
 
     protected OnDateChangedListener onDateChangedListener;
@@ -81,7 +78,7 @@ public abstract class BaseCalendar extends ViewPager {
             }
         });
 
-        initializeDate = new LocalDate();
+        initializeDate = mSelectDate = new LocalDate();
         initDate(initializeDate);
     }
 
@@ -140,7 +137,7 @@ public abstract class BaseCalendar extends ViewPager {
 
     public void setInitializeDate(String formatInitializeDate) {
         try {
-            initializeDate = new LocalDate(formatInitializeDate);
+            initializeDate = mSelectDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
@@ -151,7 +148,7 @@ public abstract class BaseCalendar extends ViewPager {
         attrs.startDateString = startFormatDate;
         attrs.endDateString = endFormatDate;
         try {
-            initializeDate = new LocalDate(formatInitializeDate);
+            initializeDate = mSelectDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
@@ -164,22 +161,22 @@ public abstract class BaseCalendar extends ViewPager {
         this.mLastView = findViewWithTag(position - 1);
         this.mNextView = findViewWithTag(position + 1);
 
+
         if (mCurrView == null) {
             return;
         }
-
         LocalDate initialDate = mCurrView.getInitialDate();
         //当前页面的初始值和上个页面选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
-        if (mSelectDate != null) {
-            int currNum = getTwoDateCount(mSelectDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
+        int currNum = getTwoDateCount(mSelectDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
+        if (currNum != 0) {
             mSelectDate = getDate(mSelectDate, currNum);
-        } else {
-            mSelectDate = initialDate;
         }
-
+        mSelectDate = getSelectDate(mSelectDate);
         //绘制的规则：1、默认选中，每个页面都会有选中。1、默认不选中，但是点击了当前页面的某个日期
         boolean isDraw = attrs.isDefaultSelect || (mSelectDate.equals(mOnClickDate));
-        notifyView(mSelectDate, isDraw);
+        //翻页回调，会有重复，但是通过callBackDate可避免重复回调
+        callBack(isDraw, false);
+        notifyView(isDraw);
     }
 
     public void setPointList(List<String> list) {
@@ -203,15 +200,7 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     //刷新页面
-    protected void notifyView(LocalDate currectSelectDate, boolean isDraw) {
-
-        if (currectSelectDate.isBefore(startDate)) {
-            this.mSelectDate = startDate;
-        } else if (currectSelectDate.isAfter(endDate)) {
-            this.mSelectDate = endDate;
-        } else {
-            this.mSelectDate = currectSelectDate;
-        }
+    protected void notifyView(boolean isDraw) {
 
         if (mCurrView == null) {
             mCurrView = findViewWithTag(getCurrentItem());
@@ -224,25 +213,62 @@ public abstract class BaseCalendar extends ViewPager {
             mLastView = findViewWithTag(getCurrentItem() - 1);
         }
         if (mLastView != null) {
-            mLastView.setSelectDate(getLastSelectDate(mSelectDate), mPointList, isDraw);
+            mLastView.setSelectDate(getSelectDate(getLastSelectDate(mSelectDate)), mPointList, isDraw);
         }
 
         if (mNextView == null) {
             mNextView = findViewWithTag(getCurrentItem() + 1);
         }
         if (mNextView != null) {
-            mNextView.setSelectDate(getNextSelectDate(mSelectDate), mPointList, isDraw);
+            mNextView.setSelectDate(getSelectDate(getNextSelectDate(mSelectDate)), mPointList, isDraw);
         }
+    }
+
+    //跳转
+    protected void jumpDate(LocalDate localDate, boolean isDraw) {
+        localDate = getSelectDate(localDate);
+        int num = getTwoDateCount(mSelectDate, localDate, attrs.firstDayOfWeek);
+        onClickDate(localDate, num);
+    }
+
+    protected void onClickDate(LocalDate localDate, int indexOffset) {
+        mOnClickDate = localDate;
+        mSelectDate = localDate;
+        //点击回调 先回调，等跳转之后callBackDate值已经变化，不会再重新回调
+        callBack(true, true);
+        if (indexOffset != 0) {
+            setCurrentItem(getCurrentItem() + indexOffset, Math.abs(indexOffset) == 1);
+        } else {
+            notifyView(true);
+        }
+    }
 
 
-        //选中回调 ,绘制了才会回到
-        if (isDraw) {
-            onSelcetDate(Util.getNDate(mSelectDate));
+    //回调
+    private void callBack(boolean isDraw, boolean isClick) {
+
+        if (!mSelectDate.equals(callBackDate)) {
+            //选中回调 ,绘制了才会回到
+            if (isDraw) {
+                onSelcetDate(Util.getNDate(mSelectDate), isClick);
+            }
+            //年月回调
+            onYearMonthChanged(mSelectDate,isClick);
+            //日期回调
+            onDateChanged(mSelectDate, isDraw,isClick);
+            callBackDate = mSelectDate;
         }
-        //年月回调
-        onYearMonthChanged(mSelectDate.getYear(), mSelectDate.getMonthOfYear());
-        //日期回调
-        onDateChanged(mSelectDate, isDraw);
+    }
+
+    //日期边界处理
+    private LocalDate getSelectDate(LocalDate localDate) {
+        if (localDate.isBefore(startDate)) {
+            return startDate;
+        } else if (localDate.isAfter(endDate)) {
+            return endDate;
+        } else {
+            return localDate;
+        }
     }
 
 
@@ -286,19 +312,14 @@ public abstract class BaseCalendar extends ViewPager {
      *
      * @param nDate
      */
-    protected abstract void onSelcetDate(NDate nDate);
+    protected abstract void onSelcetDate(NDate nDate, boolean isClick);
 
     /**
      * 年份和月份变化回调,点击和翻页都会回调，不管有没有日期选中
-     *
-     * @param year
-     * @param month
      */
-    public void onYearMonthChanged(int year, int month) {
-        if (onYearMonthChangedListener != null && (year != mLaseYear || month != mLastMonth)) {
-            mLaseYear = year;
-            mLastMonth = month;
-            onYearMonthChangedListener.onYearMonthChanged(this, year, month);
+    public void onYearMonthChanged(LocalDate localDate,boolean isClick) {
+        if (onYearMonthChangedListener != null) {
+            onYearMonthChangedListener.onYearMonthChanged(this, localDate.getYear(), localDate.getMonthOfYear(),isClick);
         }
     }
 
@@ -318,9 +339,9 @@ public abstract class BaseCalendar extends ViewPager {
      * @param localDate
      * @param isDraw    页面是否选中
      */
-    public void onDateChanged(LocalDate localDate, boolean isDraw) {
+    public void onDateChanged(LocalDate localDate, boolean isDraw,boolean isClick) {
         if (onDateChangedListener != null) {
-            onDateChangedListener.onDateChanged(this, localDate, isDraw);
+            onDateChangedListener.onDateChanged(this, localDate, isDraw, isClick);
         }
     }
 
@@ -368,7 +389,7 @@ public abstract class BaseCalendar extends ViewPager {
      */
     public void jumpDate(String formatDate) {
 
-        LocalDate jumpDate = null;
+        LocalDate jumpDate;
         try {
             jumpDate = new LocalDate(formatDate);
         } catch (Exception e) {
@@ -381,28 +402,6 @@ public abstract class BaseCalendar extends ViewPager {
     //回到今天
     public void toToday() {
         jumpDate(new LocalDate(), true);
-    }
-
-
-    protected void jumpDate(LocalDate localDate, boolean isDraw) {
-        if (mSelectDate != null) {
-            mOnClickDate = localDate;
-
-            if (localDate.isBefore(startDate)) {
-                localDate = startDate;
-            } else if (localDate.isAfter(endDate)) {
-                localDate = endDate;
-            }
-
-            int num = getTwoDateCount(mSelectDate, localDate, attrs.firstDayOfWeek);
-            setCurrentItem(getCurrentItem() + num, Math.abs(num) == 1);
-       /*     //同一月份的跳转回调
-            if (mCurrView.isEqualsMonthOrWeek(localDate, mSelectDate)) {
-                onDateChanged(localDate, isDraw);
-                onSelcetDate(Util.getNDate(localDate));
-            }*/
-            notifyView(localDate, isDraw);
-        }
     }
 
 }

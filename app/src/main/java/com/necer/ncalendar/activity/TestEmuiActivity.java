@@ -41,7 +41,7 @@ public class TestEmuiActivity extends BaseActivity {
         emuiCalendar.setPointList(pointList);
         emuiCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarDateChanged(NDate date) {
+            public void onCalendarDateChanged(NDate date,boolean isClick) {
                 tv_date.setText(date.localDate.getYear() + "年" + date.localDate.getMonthOfYear() + "月");
                 int days = Days.daysBetween(new LocalDate(), date.localDate).getDays();
                 String string ;

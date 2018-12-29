@@ -42,40 +42,38 @@ public class TestMonthWeekActivity extends BaseActivity {
 
         /*app:startDate="2018-12-2"
         app:endDate="2018-12-31"*/
-     //    monthCalendar.setDateInterval("2018-12-01", "2018-12-31");
-        monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
+         monthCalendar.setDateInterval("2018-12-01", "2019-12-31");
+     //   monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
 
-        // monthCalendar.setInitializeDate("2018-12-11");
+         monthCalendar.setInitializeDate("2018-12-11");
+
+
+
+        weekCalendar.setDateInterval("2018-12-01", "2019-12-31");
+
+
+
         monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
             @Override
-            public void onMonthSelect(NDate date) {
-                tv_date.setText(date.localDate + "");
-
-                MyLog.d("monthCalendar::::1111::::" + date.localDate);
-            }
-        });
-
-        monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
-            @Override
-            public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month) {
-                MyLog.d("monthCalendar::::222::::" + year + ":::" + month);
+            public void onMonthSelect(NDate date, boolean isClick) {
+                MyLog.d("onMonthSelect::::::" + date.localDate);
             }
         });
 
         monthCalendar.setOnDateChangedListener(new OnDateChangedListener() {
             @Override
-            public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw) {
-                MyLog.d("monthCalendar::::333:::::" + localDate);
+            public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw, boolean isClick) {
+                MyLog.d("onMonthSelect:::222:::" + baseCalendar);
+
             }
         });
 
-      /*  weekCalendar.setOnWeekSelectListener(new OnWeekSelectListener() {
+        monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
             @Override
-            public void onWeekSelect(NDate date) {
-
-                tv_date.setText(date.localDate + "");
+            public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month, boolean isClick) {
+                MyLog.d("onMonthSelect:::33333:::" + baseCalendar);
             }
-        });*/
+        });
 
     }
 
@@ -84,6 +82,8 @@ public class TestMonthWeekActivity extends BaseActivity {
         // monthCalendar.toToday();
 
         //  weekCalendar.jumpDate("2018-01-31");
-        monthCalendar.setVisibility(View.VISIBLE);
+       // monthCalendar.setVisibility(View.VISIBLE);
+
+        monthCalendar.jumpDate("2019-12-31");
     }
 }
