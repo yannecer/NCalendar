@@ -16,7 +16,7 @@
 
 ## 效果图 
 |miui9|miui10|emui|
-|:---:|:---:|
+|:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|
 
 |日历和子view添加其他view|周固定，下拉刷新|
