@@ -21,7 +21,7 @@
 
 |日历和子view添加其他view|周固定，下拉刷新|
 |:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|
 ## 下载demo：
 [下载demo](https://github.com/yannecer/NCalendar/releases/download/3.2.1/app.apk)
 
