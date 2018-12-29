@@ -5,7 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.view.NestedScrollingChild2;
+import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -75,13 +75,13 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
     //递归，异常中断递归
     private void traverseView(View view) throws ViewException {
-        if (view instanceof NestedScrollingChild2) {
+        if (view instanceof NestedScrollingChild) {
             throw new ViewException(view);
         } else if (view instanceof ViewGroup) {
             int childCount = ((ViewGroup) view).getChildCount();
             for (int i = 0; i < childCount; i++) {
                 View childAt = ((ViewGroup) view).getChildAt(i);
-                if (childAt instanceof NestedScrollingChild2) {
+                if (childAt instanceof NestedScrollingChild) {
                     throw new ViewException(childAt);
                 } else {
                     traverseView(childAt);
