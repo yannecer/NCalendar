@@ -29,7 +29,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.2.4'
+implementation 'com.necer.ncalendar:ncalendar:3.2.5'
 
 ```
 
@@ -244,6 +244,7 @@ setInitializeDate(formatDate)
 
 
 ## 版本更新
+* 3.2.5<br/>调整默认未选中选中日期的逻辑
 * 3.2.4<br/>修改回调逻辑，区分翻页和点击，修改NestedScrollingChild2为NestedScrollingChild
 * 3.2.3<br/>增加设置滑动view的tag，方便查找NestedScrollingChild2
 * 3.2.2<br/>增加设置日历初始化日期的方法
