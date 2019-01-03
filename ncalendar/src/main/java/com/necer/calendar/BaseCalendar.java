@@ -172,11 +172,14 @@ public abstract class BaseCalendar extends ViewPager {
             mSelectDate = getDate(mSelectDate, currNum);
         }
         mSelectDate = getSelectDate(mSelectDate);
+
         //绘制的规则：1、默认选中，每个页面都会有选中。1、默认不选中，但是点击了当前页面的某个日期
-        boolean isDraw = attrs.isDefaultSelect || (mSelectDate.equals(mOnClickDate));
+        //当前页面的回调，绘制
+        boolean isCurrViewDraw = attrs.isDefaultSelect || (mCurrView.contains(mOnClickDate));
         //翻页回调，会有重复，但是通过callBackDate可避免重复回调
-        callBack(isDraw, false);
-        notifyView(isDraw);
+
+        callBack(isCurrViewDraw, false);
+        notifyView();
     }
 
     public void setPointList(List<String> list) {
@@ -200,27 +203,30 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     //刷新页面
-    protected void notifyView(boolean isDraw) {
+    protected void notifyView() {
 
         if (mCurrView == null) {
             mCurrView = findViewWithTag(getCurrentItem());
         }
         if (mCurrView != null) {
-            mCurrView.setSelectDate(mSelectDate, mPointList, isDraw);
+            boolean isDraw = attrs.isDefaultSelect || (mCurrView.contains(mOnClickDate));
+            mCurrView.setSelectDate((mCurrView.contains(mOnClickDate) ? mOnClickDate : mSelectDate), mPointList, isDraw);
         }
 
         if (mLastView == null) {
             mLastView = findViewWithTag(getCurrentItem() - 1);
         }
         if (mLastView != null) {
-            mLastView.setSelectDate(getSelectDate(getLastSelectDate(mSelectDate)), mPointList, isDraw);
+            boolean isDraw = attrs.isDefaultSelect || (mLastView.contains(mOnClickDate));
+            mLastView.setSelectDate(getSelectDate((mLastView.contains(mOnClickDate) ? mOnClickDate : getLastSelectDate(mSelectDate))), mPointList, isDraw);
         }
 
         if (mNextView == null) {
             mNextView = findViewWithTag(getCurrentItem() + 1);
         }
         if (mNextView != null) {
-            mNextView.setSelectDate(getSelectDate(getNextSelectDate(mSelectDate)), mPointList, isDraw);
+            boolean isDraw = attrs.isDefaultSelect || (mNextView.contains(mOnClickDate));
+            mNextView.setSelectDate(getSelectDate((mNextView.contains(mOnClickDate) ? mOnClickDate : getNextSelectDate(mSelectDate))), mPointList, isDraw);
         }
     }
 
@@ -239,7 +245,7 @@ public abstract class BaseCalendar extends ViewPager {
         if (indexOffset != 0) {
             setCurrentItem(getCurrentItem() + indexOffset, Math.abs(indexOffset) == 1);
         } else {
-            notifyView(true);
+            notifyView();
         }
     }
 

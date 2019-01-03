@@ -90,11 +90,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         }
     }
 
-    @Override
-    public void offsetTopAndBottom(int offset) {
-        super.offsetTopAndBottom(offset);
-        invalidate();
-    }
+
 
     public boolean canScrollVertically(int direction) {
         return ViewCompat.canScrollVertically(targetView, direction);

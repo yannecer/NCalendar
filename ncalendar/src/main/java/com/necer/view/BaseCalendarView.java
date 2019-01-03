@@ -12,7 +12,9 @@ import android.view.View;
 import com.necer.entity.NDate;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+
 import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public abstract class BaseCalendarView extends View {
         super(context);
 
         this.mAttrs = attrs;
-        this.mInitialDate = this.mSelectDate =localDate;
+        this.mInitialDate = this.mSelectDate = localDate;
 
         startDate = new LocalDate(attrs.startDateString);
         endDate = new LocalDate(attrs.endDateString);
@@ -77,9 +79,9 @@ public abstract class BaseCalendarView extends View {
                 LocalDate date = nDate.localDate;
 
                 //每个矩形的竖直中心，但不是文字的绘制中心
-               // int centerY = rect.centerY();
+                // int centerY = rect.centerY();
                 //每个日期水平方向的中点 centerX
-               // int centerX = rect.centerX();
+                // int centerX = rect.centerX();
 
                 //在可用区间内的正常绘制，不在可用区间的置本色的透明色
                 if (!(date.isBefore(startDate) || date.isAfter(endDate))) {
@@ -88,7 +90,7 @@ public abstract class BaseCalendarView extends View {
                             drawSolidCircle(canvas, rect);
                             drawTodaySolar(canvas, rect, true, date);
                             drawLunar(canvas, rect, true, noAlphaColor, nDate);
-                            drawPoint(canvas,rect, true, noAlphaColor, date);
+                            drawPoint(canvas, rect, true, noAlphaColor, date);
                             drawHolidays(canvas, rect, true, noAlphaColor, date);
                         } else if (Util.isToday(date) && !date.equals(mSelectDate)) { //当天但选中的不是今天
                             drawTodaySolar(canvas, rect, false, date);
@@ -145,12 +147,12 @@ public abstract class BaseCalendarView extends View {
 
 
     //空心圆
-    private void drawHollowCircle(Canvas canvas,Rect rect) {
+    private void drawHollowCircle(Canvas canvas, Rect rect) {
         mCirclePaint.setStyle(Paint.Style.STROKE);
         mCirclePaint.setStrokeWidth(mAttrs.hollowCircleStroke);
         mCirclePaint.setColor(mAttrs.hollowCircleColor);
         mCirclePaint.setAlpha(noAlphaColor);
-       // canvas.drawCircle(rect.centerX(), mAttrs.isShowLunar ? rect.centerY() : getSolarTextCenterY(rect.centerY()), mAttrs.selectCircleRadius, mCirclePaint);
+        // canvas.drawCircle(rect.centerX(), mAttrs.isShowLunar ? rect.centerY() : getSolarTextCenterY(rect.centerY()), mAttrs.selectCircleRadius, mCirclePaint);
         canvas.drawCircle(rect.centerX(), rect.centerY(), mAttrs.selectCircleRadius, mCirclePaint);
     }
 
@@ -160,13 +162,13 @@ public abstract class BaseCalendarView extends View {
         mCirclePaint.setStrokeWidth(mAttrs.hollowCircleStroke);
         mCirclePaint.setColor(mAttrs.selectCircleColor);
         mCirclePaint.setAlpha(noAlphaColor);
-      //  canvas.drawCircle(rect.centerX(), mAttrs.isShowLunar ? rect.centerY() : getSolarTextCenterY(rect.centerY()), mAttrs.selectCircleRadius, mCirclePaint);
+        //  canvas.drawCircle(rect.centerX(), mAttrs.isShowLunar ? rect.centerY() : getSolarTextCenterY(rect.centerY()), mAttrs.selectCircleRadius, mCirclePaint);
         canvas.drawCircle(rect.centerX(), rect.centerY(), mAttrs.selectCircleRadius, mCirclePaint);
 
     }
 
     //今天的公历
-    private void drawTodaySolar(Canvas canvas,Rect rect , boolean isSelect, LocalDate date) {
+    private void drawTodaySolar(Canvas canvas, Rect rect, boolean isSelect, LocalDate date) {
         if (isSelect) {
             mTextPaint.setColor(mAttrs.todaySolarSelectTextColor);
         } else {
@@ -174,16 +176,16 @@ public abstract class BaseCalendarView extends View {
         }
         mTextPaint.setAlpha(noAlphaColor);
         mTextPaint.setTextSize(mAttrs.solarTextSize);
-      //  canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), rect.centerY(), mTextPaint);
+        //  canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), rect.centerY(), mTextPaint);
         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), mAttrs.isShowLunar ? rect.centerY() : getbaseLineY(rect), mTextPaint);
     }
 
     //绘制公历
-    private void drawOtherSolar(Canvas canvas,Rect rect, int alphaColor, LocalDate date) {
+    private void drawOtherSolar(Canvas canvas, Rect rect, int alphaColor, LocalDate date) {
         mTextPaint.setColor(mAttrs.solarTextColor);
         mTextPaint.setAlpha(alphaColor);
         mTextPaint.setTextSize(mAttrs.solarTextSize);
-      //  canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), rect.centerY(), mTextPaint);
+        //  canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), rect.centerY(), mTextPaint);
         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), mAttrs.isShowLunar ? rect.centerY() : getbaseLineY(rect), mTextPaint);
 
     }
@@ -194,13 +196,13 @@ public abstract class BaseCalendarView extends View {
             mCirclePaint.setStyle(Paint.Style.FILL);
             mCirclePaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.pointColor);
             mCirclePaint.setAlpha(alphaColor);
-          //  int solarTexyCenterY = getSolarTextCenterY(rect.centerY());
+            //  int solarTexyCenterY = getSolarTextCenterY(rect.centerY());
             canvas.drawCircle(rect.centerX(), mAttrs.pointLocation == Attrs.DOWN ? (rect.centerY() + mAttrs.pointDistance) : (rect.centerY() - mAttrs.pointDistance), mAttrs.pointSize, mCirclePaint);
         }
     }
 
     //绘制农历
-    private void drawLunar(Canvas canvas,Rect rec, boolean isTodaySelect, int alphaColor, NDate nDate) {
+    private void drawLunar(Canvas canvas, Rect rec, boolean isTodaySelect, int alphaColor, NDate nDate) {
         if (mAttrs.isShowLunar) {
             //优先顺序 农历节日、节气、公历节日、正常农历日期
             String lunarString;
@@ -225,7 +227,7 @@ public abstract class BaseCalendarView extends View {
 
 
     //绘制节假日
-    private void drawHolidays(Canvas canvas,Rect rect, boolean isTodaySelect, int alphaColor, LocalDate date) {
+    private void drawHolidays(Canvas canvas, Rect rect, boolean isTodaySelect, int alphaColor, LocalDate date) {
         if (mAttrs.isShowHoliday) {
             int[] holidayLocation = getHolidayLocation(rect.centerX(), rect.centerY());
             mTextPaint.setTextSize(mAttrs.holidayTextSize);
@@ -393,5 +395,15 @@ public abstract class BaseCalendarView extends View {
             monthCalendarOffset = rectHeight6 * selectIndex;
         }
         return monthCalendarOffset;
+    }
+
+    public boolean contains(LocalDate localDate) {
+        if (localDate == null) {
+            return false;
+        } else if (isEqualsMonthOrWeek(localDate, mInitialDate)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

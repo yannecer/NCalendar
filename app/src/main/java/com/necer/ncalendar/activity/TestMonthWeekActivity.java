@@ -42,10 +42,11 @@ public class TestMonthWeekActivity extends BaseActivity {
 
         /*app:startDate="2018-12-2"
         app:endDate="2018-12-31"*/
-         monthCalendar.setDateInterval("2018-12-01", "2019-12-31");
+       //  monthCalendar.setDateInterval("2018-12-01", "2019-12-31");
+        monthCalendar.setDateInterval("2018-12-01", "2019-01-12");
      //   monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
 
-         monthCalendar.setInitializeDate("2018-12-11");
+       //  monthCalendar.setInitializeDate("2018-12-11");
 
 
 
