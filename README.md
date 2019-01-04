@@ -25,7 +25,7 @@
 |:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/custom1.png)|
 ## 下载demo：
-[下载demo](https://github.com/yannecer/NCalendar/releases/download/3.2.1/app.apk)
+[下载demo](https://github.com/yannecer/NCalendar/releases/download/3.3.1/app_3.3.1.apk)
 
 ## 使用方法
 
@@ -187,8 +187,11 @@ notifyAllView()
 
 
 ```
+日历绘制类，绘制的所有内容通过这个类完成，继承这个类可实现自定义的日历界面，
+参数中的 rect 是文字位置的矩形对象
+
+
 //绘制今天的日期，绘制选中状态和未选中状态
-//rect 文字位置的矩形对象
 public abstract void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 
 //绘制当前月（周）的日期
@@ -204,6 +207,7 @@ public abstract void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 继承抽象类Painter，分别重写以上几个方法，通过setPainter(painter)即可实现自定义日历界面，
 类Painter中，已实现setPointList(List<LocalDate> localDates)方法，类似地，如果还需要其他标记，
 可以在自定义的Painter中实现，在绘制的时候判断条件绘制不同的内容，最后通过日历的notifyAllView（）方法刷新即可
+
 ```
 
 
