@@ -16,28 +16,26 @@ import com.necer.utils.Util;
 public class CustomPainter extends Painter {
 
     private Paint paint;
-    private int rectDistance;
+    private Context context;
 
     public CustomPainter(Context context) {
+        this.context = context;
         paint = new Paint();
         paint.setTextSize(Util.sp2px(context, 15));
         paint.setTextAlign(Paint.Align.CENTER);
-
-        rectDistance = (int) Util.dp2px(context, 20);
     }
 
 
     @Override
     public void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect) {
 
-        Rect rect1 = new Rect(rect.centerX() - rectDistance, rect.centerY() - rectDistance, rect.centerX() + rectDistance, rect.centerY() + rectDistance);
         if (isSelect) {
             paint.setColor(Color.RED);
-            canvas.drawRect(rect1, paint);
+            canvas.drawRect(getNewRect(context,rect), paint);
             paint.setColor(Color.WHITE);
         } else {
             paint.setColor(Color.LTGRAY);
-            canvas.drawRect(rect1, paint);
+            canvas.drawRect(getNewRect(context,rect), paint);
             paint.setColor(Color.GREEN);
         }
         canvas.drawText(nDate.localDate.getDayOfMonth() + "", rect.centerX(), getBaseLineY(rect), paint);
@@ -54,8 +52,7 @@ public class CustomPainter extends Painter {
     public void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect) {
         if (isSelect) {
             paint.setColor(Color.BLACK);
-            Rect rect1 = new Rect(rect.centerX() - rectDistance, rect.centerY() - rectDistance, rect.centerX() + rectDistance, rect.centerY() + rectDistance);
-            canvas.drawRect(rect1, paint);
+            canvas.drawRect(getNewRect(context,rect), paint);
             paint.setColor(Color.WHITE);
         } else {
             paint.setColor(Color.BLACK);
@@ -76,5 +73,10 @@ public class CustomPainter extends Painter {
         float bottom = fontMetrics.bottom;
         int baseLineY = (int) (rect.centerY() - top / 2 - bottom / 2);
         return baseLineY;
+    }
+
+    private Rect getNewRect(Context context,Rect rect) {
+        int rectDistance = (int) Util.dp2px(context, 20);
+        return new Rect(rect.centerX() - rectDistance, rect.centerY() - rectDistance, rect.centerX() + rectDistance, rect.centerY() + rectDistance);
     }
 }
