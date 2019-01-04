@@ -31,7 +31,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.3.0'
+implementation 'com.necer.ncalendar:ncalendar:3.3.1'
 
 ```
 
@@ -180,7 +180,7 @@ setPainter(painter)
 ```
 自定义的标签等，如果在初始化时设置不需要调用此方法，如果在初始化之后设置，需要调用此方法
 
-notifyAllView（）
+notifyAllView()
 ```
 
 ### Painter
