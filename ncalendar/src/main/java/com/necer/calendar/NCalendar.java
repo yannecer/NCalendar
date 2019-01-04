@@ -586,4 +586,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         weekCalendar.setPainter(painter);
     }
 
+    //刷新页面
+    public void notifyAllView(){
+        monthCalendar.notifyAllView();
+        weekCalendar.notifyAllView();
+    }
+
 }
