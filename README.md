@@ -19,7 +19,7 @@
 |:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|
 
-|周固定，下拉刷新|日历和子view添加其他view|自定义日历界面|
+|周固定，下拉刷新|日历和子view添加其他view|emui|
 |:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![]
 (https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|
