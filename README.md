@@ -31,7 +31,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.3.1'
+implementation 'com.necer.ncalendar:ncalendar:3.3.2'
 
 ```
 
@@ -263,6 +263,7 @@ public abstract void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 版本更新
+* 3.3.2<br/>修复区间最后一天点击不回调
 * 3.3.1<br/>增加自定义绘制类Painter，实现自定义界面
 * 3.2.5<br/>调整默认未选中选中日期的逻辑
 * 3.2.4<br/>修改回调逻辑，区分翻页和点击，修改NestedScrollingChild2为NestedScrollingChild
