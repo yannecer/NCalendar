@@ -11,18 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
-import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
+import com.necer.listener.OnMonthSelectListener;
+import com.necer.listener.OnWeekSelectListener;
 import com.necer.painter.Painter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
-import com.necer.utils.Util;
 import com.necer.view.ChildLayout;
-
-import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ import java.util.List;
 /**
  * Created by necer on 2018/11/12.
  */
-public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, OnCalendarStateChangedListener, OnDateChangedListener, OnMonthAnimatorListener {
+public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, OnCalendarStateChangedListener, OnMonthAnimatorListener, OnMonthSelectListener, OnWeekSelectListener {
 
 
     protected WeekCalendar weekCalendar;
@@ -77,8 +76,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         monthCalendar = new MonthCalendar(context, attrss, duration, this);
         childLayout = new ChildLayout(getContext(), attrs, monthHeight, duration, this);
 
-        monthCalendar.setOnDateChangedListener(this);
-        weekCalendar.setOnDateChangedListener(this);
+        monthCalendar.setOnMonthSelectListener(this);
+        weekCalendar.setOnWeekSelectListener(this);
 
         childLayout.setBackgroundColor(attrss.bgChildColor);
 
@@ -197,26 +196,22 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
 
-    /**
-     * 月日历和周日历的日期变化回调，每次日期变化都会回调，用于不同状态下，设置另一个日历的日期
-     *
-     * @param baseCalendar 日历本身
-     * @param localDate    当前选中的时间
-     * @param isDraw       是否绘制 此处选择都绘制，默认不选中，不适用鱼月周切换
-     */
     @Override
-    public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw,boolean isClick) {
-
-        if (baseCalendar instanceof MonthCalendar && STATE == Attrs.MONTH) {
+    public void onMonthSelect(NDate date, boolean isClick) {
+        if (STATE == Attrs.MONTH) {
             //月日历变化,改变周的选中
-            weekCalendar.jumpDate(localDate, true);
+            weekCalendar.jumpDate(date.localDate, true);
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate),isClick);
+                onCalendarChangedListener.onCalendarDateChanged(date, isClick);
             }
+        }
+    }
 
-        } else if (baseCalendar instanceof WeekCalendar && STATE == Attrs.WEEK) {
+    @Override
+    public void onWeekSelect(NDate date, boolean isClick) {
+        if (STATE == Attrs.WEEK) {
             //周日历变化，改变月的选中
-            monthCalendar.jumpDate(localDate, true);
+            monthCalendar.jumpDate(date.localDate, true);
             post(new Runnable() {
                 @Override
                 public void run() {
@@ -226,10 +221,11 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
                 }
             });
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(Util.getNDate(localDate),isClick);
+                onCalendarChangedListener.onCalendarDateChanged(date, isClick);
             }
         }
     }
+
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
@@ -458,7 +454,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      *
      * @param formatDate
      */
-    public void jumpDate( String formatDate) {
+    public void jumpDate(String formatDate) {
         if (STATE == Attrs.MONTH) {
             monthCalendar.jumpDate(formatDate);
         } else {
@@ -468,13 +464,13 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     /**
      * 日历初始化的日期
+     *
      * @param formatDate
      */
     public void setInitializeDate(String formatDate) {
         monthCalendar.setInitializeDate(formatDate);
         weekCalendar.setInitializeDate(formatDate);
     }
-
 
 
     /**
@@ -587,9 +583,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
     //刷新页面
-    public void notifyAllView(){
+    public void notifyAllView() {
         monthCalendar.notifyAllView();
         weekCalendar.notifyAllView();
     }
+
 
 }

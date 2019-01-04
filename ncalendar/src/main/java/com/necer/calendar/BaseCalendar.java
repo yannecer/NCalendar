@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.entity.NDate;
 import com.necer.listener.OnClickDisableDateListener;
-import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.painter.InnerPainter;
 import com.necer.painter.Painter;
@@ -49,7 +48,6 @@ public abstract class BaseCalendar extends ViewPager {
 
     protected Painter mPainter;
 
-    protected OnDateChangedListener onDateChangedListener;
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -262,12 +260,10 @@ public abstract class BaseCalendar extends ViewPager {
             //选中回调 ,绘制了才会回到
             if (isDraw) {
                 onSelcetDate(Util.getNDate(mSelectDate), isClick);
+                callBackDate = mSelectDate;
             }
             //年月回调
             onYearMonthChanged(mSelectDate, isClick);
-            //日期回调
-            onDateChanged(mSelectDate, isDraw, isClick);
-            callBackDate = mSelectDate;
         }
     }
 
@@ -314,12 +310,14 @@ public abstract class BaseCalendar extends ViewPager {
         return !(localDate.isBefore(startDate) || localDate.isAfter(endDate));
     }
 
+/*
     //任何操作都会回调
     public void onDateChanged(LocalDate localDate, boolean isDraw, boolean isClick) {
         if (onDateChangedListener != null) {
             onDateChangedListener.onDateChanged(this, localDate, isDraw, isClick);
         }
     }
+*/
 
     //点击不可用的日期处理
     protected void onClickDisableDate(LocalDate localDate) {
@@ -337,11 +335,6 @@ public abstract class BaseCalendar extends ViewPager {
     public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
         this.onClickDisableDateListener = onClickDisableDateListener;
     }
-
-    public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
-        this.onDateChangedListener = onDateChangedListener;
-    }
-
 
     //下一页，月日历即是下一月，周日历即是下一周
     public void toNextPager() {

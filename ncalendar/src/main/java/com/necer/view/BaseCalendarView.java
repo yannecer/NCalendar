@@ -28,7 +28,7 @@ public abstract class BaseCalendarView extends View {
     protected List<Rect> mRectList;//点击用的矩形集合
     protected List<NDate> mDateList;//页面的数据集合
     private LocalDate mSelectDate;//点击选中的日期
-    private boolean isDraw;//是否会之这个选中的日期
+    private boolean isDraw;//是否绘制这个选中的日期
 
     public BaseCalendarView(Context context, LocalDate localDate, int weekFirstDayType) {
         super(context);
@@ -59,7 +59,7 @@ public abstract class BaseCalendarView extends View {
                 if (!(date.isBefore(startDate) || date.isAfter(endDate))) {
                     if (isEqualsMonthOrWeek(date, mInitialDate)) {  //当月和上下月的颜色不同
                         if (Util.isToday(date) && date.equals(mSelectDate)) {  //当天且选中的当天
-                            painter.onDrawToday(canvas, rect, nDate, true);
+                            painter.onDrawToday(canvas, rect, nDate, isDraw);
                         } else if (Util.isToday(date) && !date.equals(mSelectDate)) { //当天但选中的不是今天
                             painter.onDrawToday(canvas, rect, nDate, false);
                         } else if (isDraw && date.equals(mSelectDate)) { //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制

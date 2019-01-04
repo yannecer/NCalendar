@@ -3,16 +3,14 @@ package com.necer.ncalendar.activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
 import com.necer.entity.NDate;
-import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.ncalendar.R;
-
-import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +40,7 @@ public class TestMonthWeekActivity extends BaseActivity {
         tv_date = findViewById(R.id.tv_date);
 
 
-        monthCalendar.setDateInterval("2018-12-01", "2019-01-12");
+      //  monthCalendar.setDateInterval("2018-12-01", "2019-01-2");
 
         // monthCalendar.setPainter(new CustomPainter(this));
 
@@ -50,15 +48,12 @@ public class TestMonthWeekActivity extends BaseActivity {
         monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
             @Override
             public void onMonthSelect(NDate date, boolean isClick) {
+
+                MyLog.d("onMonthSelect::::" + date.localDate);
+                MyLog.d("onMonthSelect::222::" + isClick);
             }
         });
 
-        monthCalendar.setOnDateChangedListener(new OnDateChangedListener() {
-            @Override
-            public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw, boolean isClick) {
-
-            }
-        });
 
         monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
             @Override
