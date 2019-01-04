@@ -21,7 +21,7 @@
 
 |周固定，下拉刷新|日历和子view添加其他view|自定义日历界面|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/custom.png)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/custom1.png)|
 ## 下载demo：
 [下载demo](https://github.com/yannecer/NCalendar/releases/download/3.2.1/app.apk)
 
