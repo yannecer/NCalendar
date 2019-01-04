@@ -12,6 +12,8 @@
  - 支持农历，节气、法定节假日等
  - 支持添加指示点及设置指示点位置
  - 支持各种颜色、距离、位置等属性
+ - 支持日历和列表之间添加view
+ - 支持自定义日历页面
 
 
 ## 效果图 
@@ -21,7 +23,7 @@
 
 |周固定，下拉刷新|日历和子view添加其他view|自定义日历界面|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/custom.png)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/custom1.png)|
 ## 下载demo：
 [下载demo](https://github.com/yannecer/NCalendar/releases/download/3.2.1/app.apk)
 
@@ -29,7 +31,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.2.5'
+implementation 'com.necer.ncalendar:ncalendar:3.3.0'
 
 ```
 
@@ -48,30 +50,8 @@ implementation 'com.necer.ncalendar:ncalendar:3.2.5'
             android:layout_height="match_parent" />
     </com.necer.calendar.Miui9Calendar>
     
-    miui10
-    <com.necer.calendar.Miui10Calendar
-        android:id="@+id/miui10Calendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v4.widget.NestedScrollView>  
-    </com.necer.calendar.Miui10Calendar>
-
-    华为 和 365日历
-    <com.necer.calendar.EmuiCalendar
-        android:id="@+id/emuiCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">           
-        </android.support.v4.widget.NestedScrollView>
-    </com.necer.calendar.EmuiCalendar>
-
+    Miui10Calendar EmuiCalendar 用法类似
+    
 ```
 
 #### 单个月日历，单个周日历
@@ -192,6 +172,40 @@ setDateInterval(startFormatDate, endFormatDate)
 ```
 setInitializeDate(formatDate) 
 ```
+##### 11、设置Painter
+```
+setPainter(painter)
+```
+##### 12、刷新页面
+```
+自定义的标签等，如果在初始化时设置不需要调用此方法，如果在初始化之后设置，需要调用此方法
+
+notifyAllView（）
+```
+
+### Painter
+
+
+```
+//绘制今天的日期，绘制选中状态和未选中状态
+//rect 文字位置的矩形对象
+public abstract void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+
+//绘制当前月（周）的日期
+public abstract void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+
+//绘制不是当月的日期，即上一月，下一月，周日历不用实现
+public abstract void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate);
+
+//绘制日期区间之外的日期，方法setDateInterval(startFormatDate, endFormatDate)对应
+public abstract void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
+
+
+继承抽象类Painter，分别重写以上几个方法，通过setPainter(painter)即可实现自定义日历界面，
+类Painter中，已实现setPointList(List<LocalDate> localDates)方法，类似地，如果还需要其他标记，
+可以在自定义的Painter中实现，在绘制的时候判断条件绘制不同的内容，最后通过日历的notifyAllView（）方法刷新即可
+```
+
 
 
 ## 感谢：
