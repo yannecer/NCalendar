@@ -13,6 +13,8 @@ import com.necer.entity.NDate;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnYearMonthChangedListener;
+import com.necer.painter.InnerPainter;
+import com.necer.painter.Painter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
@@ -39,13 +41,13 @@ public abstract class BaseCalendar extends ViewPager {
     protected LocalDate mSelectDate;//日历上面点击选中的日期,包含点击选中和翻页选中
     protected LocalDate mOnClickDate;//点击选中的日期
 
-    private List<LocalDate> mPointList;
 
     protected OnYearMonthChangedListener onYearMonthChangedListener;
     protected OnClickDisableDateListener onClickDisableDateListener;
 
     protected LocalDate startDate, endDate, initializeDate, callBackDate;
 
+    protected Painter mPainter;
 
     protected OnDateChangedListener onDateChangedListener;
 
@@ -64,7 +66,7 @@ public abstract class BaseCalendar extends ViewPager {
 
     private void init(Context context) {
         this.mContext = context;
-        mPointList = new ArrayList<>();
+        mPainter = new InnerPainter(attrs);
         setBackgroundColor(attrs.bgCalendarColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
@@ -93,6 +95,7 @@ public abstract class BaseCalendar extends ViewPager {
         } catch (Exception e) {
             throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
         }
+
 
         if (startDate.isAfter(endDate)) {
             throw new RuntimeException("startDate必须在endDate之前");
@@ -176,30 +179,24 @@ public abstract class BaseCalendar extends ViewPager {
         //绘制的规则：1、默认选中，每个页面都会有选中。1、默认不选中，但是点击了当前页面的某个日期
         //当前页面的回调，绘制
         boolean isCurrViewDraw = attrs.isDefaultSelect || (mCurrView.contains(mOnClickDate));
-        //翻页回调，会有重复，但是通过callBackDate可避免重复回调
 
+        //翻页回调，会有重复，但是通过callBackDate可避免重复回调
         callBack(isCurrViewDraw, false);
         notifyView();
     }
 
     public void setPointList(List<String> list) {
-        mPointList.clear();
+        List<LocalDate> localDates = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             try {
-                mPointList.add(new LocalDate(list.get(i)));
+                localDates.add(new LocalDate(list.get(i)));
             } catch (Exception e) {
                 throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
             }
         }
-        if (mCurrView != null) {
-            mCurrView.invalidate();
-        }
-        if (mLastView != null) {
-            mLastView.invalidate();
-        }
-        if (mNextView != null) {
-            mNextView.invalidate();
-        }
+
+        mPainter.setPointList(localDates);
+        notifyAllView();
     }
 
     //刷新页面
@@ -210,23 +207,31 @@ public abstract class BaseCalendar extends ViewPager {
         }
         if (mCurrView != null) {
             boolean isDraw = attrs.isDefaultSelect || (mCurrView.contains(mOnClickDate));
-            mCurrView.setSelectDate((mCurrView.contains(mOnClickDate) ? mOnClickDate : mSelectDate), mPointList, isDraw);
+            mCurrView.setSelectDate((mCurrView.contains(mOnClickDate) ? mOnClickDate : mSelectDate), isDraw);
         }
-
         if (mLastView == null) {
             mLastView = findViewWithTag(getCurrentItem() - 1);
         }
         if (mLastView != null) {
             boolean isDraw = attrs.isDefaultSelect || (mLastView.contains(mOnClickDate));
-            mLastView.setSelectDate(getSelectDate((mLastView.contains(mOnClickDate) ? mOnClickDate : getLastSelectDate(mSelectDate))), mPointList, isDraw);
+            mLastView.setSelectDate(getSelectDate((mLastView.contains(mOnClickDate) ? mOnClickDate : getLastSelectDate(mSelectDate))), isDraw);
         }
-
         if (mNextView == null) {
             mNextView = findViewWithTag(getCurrentItem() + 1);
         }
         if (mNextView != null) {
             boolean isDraw = attrs.isDefaultSelect || (mNextView.contains(mOnClickDate));
-            mNextView.setSelectDate(getSelectDate((mNextView.contains(mOnClickDate) ? mOnClickDate : getNextSelectDate(mSelectDate))), mPointList, isDraw);
+            mNextView.setSelectDate(getSelectDate((mNextView.contains(mOnClickDate) ? mOnClickDate : getNextSelectDate(mSelectDate))), isDraw);
+        }
+    }
+
+    //刷新所有页面
+    public void notifyAllView() {
+        for (int i = 0; i < getChildCount(); i++) {
+            BaseCalendarView calendarView = (BaseCalendarView) getChildAt(i);
+            if (calendarView != null) {
+                calendarView.invalidate();
+            }
         }
     }
 
@@ -237,6 +242,7 @@ public abstract class BaseCalendar extends ViewPager {
         onClickDate(localDate, num);
     }
 
+    //点击处理
     protected void onClickDate(LocalDate localDate, int indexOffset) {
         mOnClickDate = localDate;
         mSelectDate = localDate;
@@ -252,16 +258,15 @@ public abstract class BaseCalendar extends ViewPager {
 
     //回调
     private void callBack(boolean isDraw, boolean isClick) {
-
         if (!mSelectDate.equals(callBackDate)) {
             //选中回调 ,绘制了才会回到
             if (isDraw) {
                 onSelcetDate(Util.getNDate(mSelectDate), isClick);
             }
             //年月回调
-            onYearMonthChanged(mSelectDate,isClick);
+            onYearMonthChanged(mSelectDate, isClick);
             //日期回调
-            onDateChanged(mSelectDate, isDraw,isClick);
+            onDateChanged(mSelectDate, isDraw, isClick);
             callBackDate = mSelectDate;
         }
     }
@@ -278,74 +283,39 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
+    //回去viewpager的adapter
     protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate);
 
-
-    /**
-     * 日历开始日期和结束日期的相差数量
-     *
-     * @return
-     */
+    //两个日期的相差数量
     protected abstract int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type);
 
-    /**
-     * 相差count之后的的日期
-     *
-     * @param localDate
-     * @param count
-     * @return
-     */
+    //相差count之后的的日期
     protected abstract LocalDate getDate(LocalDate localDate, int count);
 
-    /**
-     * 重绘当前页面时，获取上个月选中的日期
-     *
-     * @return
-     */
+    //重绘当前页面时，获取上个月选中的日期
     protected abstract LocalDate getLastSelectDate(LocalDate currectSelectDate);
 
-
-    /**
-     * 重绘当前页面时，获取下个月选中的日期
-     *
-     * @return
-     */
+    //重绘当前页面时，获取下个月选中的日期
     protected abstract LocalDate getNextSelectDate(LocalDate currectSelectDate);
 
 
-    /**
-     * 日历上面选中的日期，有选中圈的才会回调
-     *
-     * @param nDate
-     */
+    //日历上面选中的日期，有选中圈的才会回调
     protected abstract void onSelcetDate(NDate nDate, boolean isClick);
 
-    /**
-     * 年份和月份变化回调,点击和翻页都会回调，不管有没有日期选中
-     */
-    public void onYearMonthChanged(LocalDate localDate,boolean isClick) {
+    //年份和月份变化回调,点击和翻页都会回调，不管有没有日期选中
+    public void onYearMonthChanged(LocalDate localDate, boolean isClick) {
         if (onYearMonthChangedListener != null) {
-            onYearMonthChangedListener.onYearMonthChanged(this, localDate.getYear(), localDate.getMonthOfYear(),isClick);
+            onYearMonthChangedListener.onYearMonthChanged(this, localDate.getYear(), localDate.getMonthOfYear(), isClick);
         }
     }
 
-    /**
-     * 点击的日期是否可用
-     *
-     * @param localDate
-     * @return
-     */
+    //点击的日期是否可用
     protected boolean isClickDateEnable(LocalDate localDate) {
         return !(localDate.isBefore(startDate) || localDate.isAfter(endDate));
     }
 
-    /**
-     * 任何操作都会回调
-     *
-     * @param localDate
-     * @param isDraw    页面是否选中
-     */
-    public void onDateChanged(LocalDate localDate, boolean isDraw,boolean isClick) {
+    //任何操作都会回调
+    public void onDateChanged(LocalDate localDate, boolean isDraw, boolean isClick) {
         if (onDateChangedListener != null) {
             onDateChangedListener.onDateChanged(this, localDate, isDraw, isClick);
         }
@@ -373,28 +343,19 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-    /**
-     * 下一页，月日历即是下一月，周日历即是下一周
-     */
+    //下一页，月日历即是下一月，周日历即是下一周
     public void toNextPager() {
         setCurrentItem(getCurrentItem() + 1, true);
     }
 
-    /**
-     * 上一页
-     */
+    //上一页
     public void toLastPager() {
         setCurrentItem(getCurrentItem() - 1, true);
     }
 
 
-    /**
-     * 跳转日期
-     *
-     * @param formatDate
-     */
+    //跳转日期
     public void jumpDate(String formatDate) {
-
         LocalDate jumpDate;
         try {
             jumpDate = new LocalDate(formatDate);
@@ -409,5 +370,27 @@ public abstract class BaseCalendar extends ViewPager {
     public void toToday() {
         jumpDate(new LocalDate(), true);
     }
+
+    //获取区间开始日期
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    //获取区间结束日期
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    //设置绘制类
+    public void setPainter(Painter painter) {
+        this.mPainter = painter;
+        notifyAllView();
+    }
+
+    //BaseCalendarView绘制获取mPainter
+    public Painter getPainter() {
+        return mPainter;
+    }
+
 
 }

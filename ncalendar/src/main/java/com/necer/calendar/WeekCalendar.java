@@ -71,9 +71,7 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
         } else{
             onClickDisableDate(localDate);
         }
-
     }
-
 
     public void setOnWeekSelectListener(OnWeekSelectListener onWeekSelectListener) {
         this.onWeekSelectListener = onWeekSelectListener;

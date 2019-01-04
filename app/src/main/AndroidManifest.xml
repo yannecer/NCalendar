@@ -42,6 +42,10 @@
             android:name=".activity.TestAddViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
+        <activity
+            android:name=".activity.CustomCalendarActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
 
     </application>
 </manifest>

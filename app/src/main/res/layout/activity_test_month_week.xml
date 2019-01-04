@@ -25,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:hollowCircleColor="#00c3aa"
-        app:isDefaultSelect="false"
         app:selectCircleColor="#00c3aa"
         app:todaySolarTextColor="#ff00ff" />
 

@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.necer.entity.NDate;
 import com.necer.listener.OnClickMonthViewListener;
-import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 
 import org.joda.time.LocalDate;
@@ -19,10 +18,12 @@ public class MonthView extends BaseCalendarView {
 
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
-    public MonthView(Context context, Attrs attrs, LocalDate localDate, OnClickMonthViewListener onClickMonthViewListener) {
-        super(context,attrs,localDate);
+
+    public MonthView(Context context, LocalDate localDate, int weekFirstDayType,OnClickMonthViewListener onClickMonthViewListener) {
+        super(context, localDate, weekFirstDayType);
         this.mOnClickMonthViewListener = onClickMonthViewListener;
     }
+
 
     @Override
     protected List<NDate> getNCalendar(LocalDate localDate, int type) {

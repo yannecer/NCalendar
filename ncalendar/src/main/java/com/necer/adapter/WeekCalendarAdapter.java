@@ -23,8 +23,8 @@ public class WeekCalendarAdapter extends BaseCalendarAdapter {
     }
 
     @Override
-    protected BaseCalendarView getView(int position) {
-        WeekView weekView = new WeekView(mContext, mAttrs, mInitializeDate.plusDays((position - mCurr) * 7), mOnClickWeekViewListener);
+    protected BaseCalendarView getView(Context context,int weekFirstDayType,LocalDate initializeDate,int curr,int position) {
+        WeekView weekView = new WeekView(context, initializeDate.plusDays((position - curr) * 7), weekFirstDayType, mOnClickWeekViewListener);
         return weekView;
     }
 

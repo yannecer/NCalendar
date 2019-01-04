@@ -19,16 +19,15 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
 
     private OnClickMonthViewListener mOnClickMonthViewListener;
 
-    public MonthCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate,OnClickMonthViewListener onClickMonthViewListener) {
+    public MonthCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate, OnClickMonthViewListener onClickMonthViewListener) {
         super(context, attrs,initializeDate);
         this.mOnClickMonthViewListener = onClickMonthViewListener;
     }
 
     @Override
-    protected BaseCalendarView getView(int position) {
-        int i = position - mCurr;
-        LocalDate date = this.mInitializeDate.plusMonths(i);
-        MonthView monthView = new MonthView(mContext, mAttrs, date, mOnClickMonthViewListener);
+    protected BaseCalendarView getView(Context context,int weekFirstDayType,LocalDate initializeDate,int curr,int position) {
+        LocalDate date = initializeDate.plusMonths(position - curr);
+        MonthView monthView = new MonthView(context, date, weekFirstDayType, mOnClickMonthViewListener);
         return monthView;
     }
 

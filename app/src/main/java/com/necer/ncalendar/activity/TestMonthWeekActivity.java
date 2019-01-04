@@ -3,7 +3,6 @@ package com.necer.ncalendar.activity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
@@ -14,6 +13,9 @@ import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.ncalendar.R;
 
 import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by necer on 2018/11/28.
@@ -40,31 +42,20 @@ public class TestMonthWeekActivity extends BaseActivity {
         tv_date = findViewById(R.id.tv_date);
 
 
-        /*app:startDate="2018-12-2"
-        app:endDate="2018-12-31"*/
-       //  monthCalendar.setDateInterval("2018-12-01", "2019-12-31");
         monthCalendar.setDateInterval("2018-12-01", "2019-01-12");
-     //   monthCalendar.setDateInterval("1901-01-01", "2099-12-31");
 
-       //  monthCalendar.setInitializeDate("2018-12-11");
-
-
-
-        weekCalendar.setDateInterval("2018-12-01", "2019-12-31");
-
+        // monthCalendar.setPainter(new CustomPainter(this));
 
 
         monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
             @Override
             public void onMonthSelect(NDate date, boolean isClick) {
-                MyLog.d("onMonthSelect::::::" + date.localDate);
             }
         });
 
         monthCalendar.setOnDateChangedListener(new OnDateChangedListener() {
             @Override
             public void onDateChanged(BaseCalendar baseCalendar, LocalDate localDate, boolean isDraw, boolean isClick) {
-                MyLog.d("onMonthSelect:::222:::" + baseCalendar);
 
             }
         });
@@ -72,7 +63,6 @@ public class TestMonthWeekActivity extends BaseActivity {
         monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
             @Override
             public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month, boolean isClick) {
-                MyLog.d("onMonthSelect:::33333:::" + baseCalendar);
             }
         });
 
@@ -83,8 +73,23 @@ public class TestMonthWeekActivity extends BaseActivity {
         // monthCalendar.toToday();
 
         //  weekCalendar.jumpDate("2018-01-31");
-       // monthCalendar.setVisibility(View.VISIBLE);
+        // monthCalendar.setVisibility(View.VISIBLE);
 
-        monthCalendar.jumpDate("2019-12-31");
+        //  monthCalendar.jumpDate("2019-12-31");
+
+
+        List<String> list = new ArrayList<>();
+
+        list.add("2018-10-14");
+        list.add("2018-12-18");
+        list.add("2019-01-14");
+        list.add("2019-02-15");
+        list.add("2019-04-15");
+
+
+        monthCalendar.setPointList(list);
+
+     //   monthCalendar.notifyAllView();
+
     }
 }

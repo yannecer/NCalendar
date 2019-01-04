@@ -1,9 +1,11 @@
 package com.necer.view;
+
 import android.content.Context;
+
 import com.necer.entity.NDate;
 import com.necer.listener.OnClickWeekViewListener;
-import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -16,14 +18,14 @@ public class WeekView extends BaseCalendarView {
 
     private OnClickWeekViewListener mOnClickWeekViewListener;
 
-    public WeekView(Context context, Attrs attrs, LocalDate localDate, OnClickWeekViewListener onClickWeekViewListener) {
-        super(context, attrs, localDate);
+    public WeekView(Context context, LocalDate localDate, int weekFirstDayType, OnClickWeekViewListener onClickWeekViewListener) {
+        super(context, localDate, weekFirstDayType);
         this.mOnClickWeekViewListener = onClickWeekViewListener;
     }
 
     @Override
     protected List<NDate> getNCalendar(LocalDate localDate, int type) {
-        return Util.getWeekCalendar(localDate,type);
+        return Util.getWeekCalendar(localDate, type);
     }
 
     @Override

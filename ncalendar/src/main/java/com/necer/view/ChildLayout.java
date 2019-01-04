@@ -22,7 +22,6 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
 
     protected View targetView;//实际滑动的view，即RecyclerView等
-
     protected ValueAnimator childLayoutValueAnimator;
     private int monthHeight;
     private int weekHeight;
@@ -45,7 +44,6 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
                 onCalendarStateChangedListenerr.onCalendarStateChanged(isMonthState());
             }
         });
-
     }
 
 

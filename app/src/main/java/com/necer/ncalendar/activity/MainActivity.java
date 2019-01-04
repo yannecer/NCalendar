@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     public void addView(View view) {
         startActivity(new Intent(this, TestAddViewActivity.class));
     }
+    public void customCalendar(View view) {
+        startActivity(new Intent(this, CustomCalendarActivity.class));
+    }
 
 
 }

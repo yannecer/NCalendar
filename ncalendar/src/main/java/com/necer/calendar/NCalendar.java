@@ -16,11 +16,14 @@ import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnDateChangedListener;
 import com.necer.listener.OnMonthAnimatorListener;
+import com.necer.painter.Painter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
 import com.necer.view.ChildLayout;
+
 import org.joda.time.LocalDate;
+
 import java.util.List;
 
 
@@ -577,5 +580,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         weekCalendar.setOnClickDisableDateListener(onClickDisableDateListener);
     }
 
+    //设置绘制类
+    public void setPainter(Painter painter) {
+        monthCalendar.setPainter(painter);
+        weekCalendar.setPainter(painter);
+    }
 
 }

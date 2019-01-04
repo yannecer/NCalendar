@@ -32,7 +32,6 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
         LocalDate startDate = new LocalDate(attrs.startDateString);
         this.mCount = getIntervalCount(startDate, new LocalDate(attrs.endDateString), attrs.firstDayOfWeek) + 1;
         this.mCurr = getIntervalCount(startDate, mInitializeDate, attrs.firstDayOfWeek);
-
     }
 
     @Override
@@ -55,15 +54,15 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        BaseCalendarView view = getView(position);
+        BaseCalendarView view = getView(mContext, mAttrs.firstDayOfWeek, mInitializeDate, mCurr, position);
         view.setTag(position);
         container.addView(view);
         return view;
     }
 
-    protected abstract BaseCalendarView getView(int position);
+    protected abstract BaseCalendarView getView(Context context,int weekFirstDayType,LocalDate initializeDate,int curr,int position);
 
-    protected abstract int getIntervalCount(LocalDate startDate, LocalDate endDate, int type);
+    protected abstract int getIntervalCount(LocalDate startDate, LocalDate endDate, int weekFirstDayType);
 
     //当前页的位置
     public int getCurrItem() {
