@@ -31,7 +31,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.3.2'
+implementation 'com.necer.ncalendar:ncalendar:3.3.3'
 
 ```
 
@@ -172,7 +172,7 @@ setDateInterval(startFormatDate, endFormatDate)
 ```
 setInitializeDate(formatDate) 
 ```
-##### 11、设置Painter
+##### 11、设置CalendarPainter
 ```
 setPainter(painter)
 ```
@@ -183,13 +183,13 @@ setPainter(painter)
 notifyAllView()
 ```
 
-### Painter
+### CalendarPainter
 
 
 ```
 日历绘制类，绘制的所有内容通过这个类完成，继承这个类可实现自定义的日历界面，
 参数中的 rect 是文字位置的矩形对象
-日历内部内置了一个 InnerPainter ，各个属性也是这个绘制类的，如果自定义 Painter ，则这些属性都不适用
+日历内部内置了一个 InnerPainter ，各个属性也是这个绘制类的，如果自定义 CalendarPainter ，则这些属性都不适用
 
 
 //绘制今天的日期，绘制选中状态和未选中状态
@@ -205,9 +205,9 @@ public abstract void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate
 public abstract void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
-继承抽象类Painter，分别重写以上几个方法，通过setPainter(painter)即可实现自定义日历界面，
-类Painter中，已实现setPointList(List<LocalDate> localDates)方法，类似地，如果还需要其他标记，
-可以在自定义的Painter中实现，在绘制的时候判断条件绘制不同的内容，最后通过日历的notifyAllView（）方法刷新即可
+继承抽象类CalendarPainter，分别重写以上几个方法，通过setPainter(painter)即可实现自定义日历界面，
+类CalendarPainter中，已实现setPointList(List<LocalDate> localDates)方法，类似地，如果还需要其他标记，
+可以在自定义的CalendarPainter中实现，在绘制的时候判断条件绘制不同的内容，最后通过日历的notifyAllView（）方法刷新即可
 
 ```
 
@@ -263,6 +263,7 @@ public abstract void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 版本更新
+* 3.3.3<br/>修复5.0以下崩溃的问题
 * 3.3.2<br/>修复区间最后一天点击不回调
 * 3.3.1<br/>增加自定义绘制类Painter，实现自定义界面
 * 3.2.5<br/>调整默认未选中选中日期的逻辑
