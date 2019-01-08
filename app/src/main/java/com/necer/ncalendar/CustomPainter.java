@@ -7,13 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.necer.entity.NDate;
-import com.necer.painter.Painter;
+import com.necer.painter.CalendarPainter;
 import com.necer.utils.Util;
 
 /**
  * Created by necer on 2019/1/3.
  */
-public class CustomPainter extends Painter {
+public class CustomPainter extends CalendarPainter {
 
     private Paint paint;
     private Context context;

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by necer on 2019/1/3.
  */
-public abstract class Painter {
+public abstract class CalendarPainter {
 
 
     public List<LocalDate> mPointList = new ArrayList<>();

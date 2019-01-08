@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by necer on 2019/1/3.
  */
-public class InnerPainter extends Painter {
+public class InnerPainter extends CalendarPainter {
 
     private Attrs mAttrs;
     protected Paint mTextPaint;

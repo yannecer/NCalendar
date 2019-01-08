@@ -13,7 +13,7 @@ import com.necer.entity.NDate;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.painter.InnerPainter;
-import com.necer.painter.Painter;
+import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
@@ -46,7 +46,7 @@ public abstract class BaseCalendar extends ViewPager {
 
     protected LocalDate startDate, endDate, initializeDate, callBackDate;
 
-    protected Painter mPainter;
+    protected CalendarPainter mPainter;
 
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
@@ -375,13 +375,13 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     //设置绘制类
-    public void setPainter(Painter painter) {
+    public void setPainter(CalendarPainter painter) {
         this.mPainter = painter;
         notifyAllView();
     }
 
     //BaseCalendarView绘制获取mPainter
-    public Painter getPainter() {
+    public CalendarPainter getPainter() {
         return mPainter;
     }
 

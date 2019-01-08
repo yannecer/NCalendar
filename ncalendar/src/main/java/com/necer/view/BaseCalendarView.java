@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.necer.calendar.BaseCalendar;
 import com.necer.entity.NDate;
-import com.necer.painter.Painter;
+import com.necer.painter.CalendarPainter;
 import com.necer.utils.Util;
 
 import org.joda.time.LocalDate;
@@ -44,7 +44,7 @@ public abstract class BaseCalendarView extends View {
         BaseCalendar calendar = (BaseCalendar) getParent();
         LocalDate startDate = calendar.getStartDate();
         LocalDate endDate = calendar.getEndDate();
-        Painter painter = calendar.getPainter();
+        CalendarPainter painter = calendar.getPainter();
 
         mRectList.clear();
 

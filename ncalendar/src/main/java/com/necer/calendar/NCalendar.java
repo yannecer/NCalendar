@@ -18,7 +18,7 @@ import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnWeekSelectListener;
-import com.necer.painter.Painter;
+import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.view.ChildLayout;
@@ -230,6 +230,21 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
         return true;
+    }
+
+    @Override
+    public void onNestedScrollAccepted(View child, View target, int axes) {
+        //super.onNestedScrollAccepted(child, target, axes);
+    }
+
+    @Override
+    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+       // super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+    }
+
+    @Override
+    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
+        return false;
     }
 
 
@@ -577,7 +592,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
     //设置绘制类
-    public void setPainter(Painter painter) {
+    public void setPainter(CalendarPainter painter) {
         monthCalendar.setPainter(painter);
         weekCalendar.setPainter(painter);
     }
