@@ -13,6 +13,7 @@
  - 支持添加指示点及设置指示点位置
  - 支持各种颜色、距离、位置等属性
  - 支持日历和列表之间添加view
+ - 支持替换农历、颜色等
  - 支持自定义日历页面
 
 
@@ -31,7 +32,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.3.3'
+implementation 'com.necer.ncalendar:ncalendar:3.4.1'
 
 ```
 
@@ -145,21 +146,16 @@ ncalendar.toNextPager();
 ncalendar.toLastPager();
 ```
 
-##### 6、添加指示圆点
-```
-List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
-ncalendar.setPointList(list);
-```
-##### 7、默认视图 
+##### 6、默认视图 
 ```
 app:defaultCalendar="week"  默认周视图
 app:defaultCalendar="month"  默认月视图
 ```
-##### 8、周状态固定
+##### 7、周状态固定
 ```
 app:isWeekHold="true"  周视图固定，下拉刷新
 ```
-##### 9、设置日期区间 
+##### 8、设置日期区间 
 ```
 app:startDate="2018-01-01" 开始日期
 app:endDate="2018-12-31" 结束日期
@@ -168,45 +164,80 @@ app:endDate="2018-12-31" 结束日期
 
 setDateInterval(startFormatDate, endFormatDate)
 ```
-##### 10、设置初始化日期
+##### 9、设置初始化日期
 ```
 setInitializeDate(formatDate) 
 ```
-##### 11、设置CalendarPainter
+##### 10、设置CalendarPainter
 ```
 setPainter(painter)
 ```
-##### 12、刷新页面
+##### 11、刷新页面
 ```
 自定义的标签等，如果在初始化时设置不需要调用此方法，如果在初始化之后设置，需要调用此方法
 
 notifyAllView()
+```
+##### 12、添加指示圆点
+```
+此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
+
+List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01");
+InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
+innerPainter.setPointList(pointList);
+
+```
+##### 13、设置法定节假日
+```
+此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
+
+List<String> holidayList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20");
+List<String> holidayList = Arrays.asList("2019-10-01", "2019-11-19", "2019-11-20");
+
+InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
+innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
+
+```
+##### 14、替换农历文字及颜色
+```
+此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
+
+Map<String, String> strMap = new HashMap<>();
+strMap.put("2019-01-25", "测试");
+strMap.put("2019-01-23", "测试1");
+ strMap.put("2019-01-24", "测试2");
+innerPainter.setReplaceLunarStrMap(strMap);
+
+Map<String, Integer> colorMap = new HashMap<>();
+colorMap.put("2019-01-25", Color.RED);
+colorMap.put("2019-01-23", Color.GREEN);
+colorMap.put("2019-01-24", Color.parseColor("#000000"));
+innerPainter.setReplaceLunarColorMap(colorMap);
 ```
 
 ### CalendarPainter
 
 
 ```
-日历绘制类，绘制的所有内容通过这个类完成，继承这个类可实现自定义的日历界面，
+日历绘制接口，绘制的所有内容通过这个接口完成，实现这个类可实现自定义的日历界面，
 参数中的 rect 是文字位置的矩形对象
 日历内部内置了一个 InnerPainter ，各个属性也是这个绘制类的，如果自定义 CalendarPainter ，则这些属性都不适用
-
+InnerPainter 实现了设置圆点、替换农历等方法，还可以实现更多方法，如多选，多标记等，
 
 //绘制今天的日期，绘制选中状态和未选中状态
-public abstract void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 
 //绘制当前月（周）的日期
-public abstract void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 
 //绘制不是当月的日期，即上一月，下一月，周日历不用实现
-public abstract void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate);
+void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate);
 
 //绘制日期区间之外的日期，方法setDateInterval(startFormatDate, endFormatDate)对应
-public abstract void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
+void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
-继承抽象类CalendarPainter，分别重写以上几个方法，通过setPainter(painter)即可实现自定义日历界面，
-类CalendarPainter中，已实现setPointList(List<LocalDate> localDates)方法，类似地，如果还需要其他标记，
+实现接口 CalendarPainter，分别重写以上几个方法，setCalendarPainter(calendarPainter)即可实现自定义日历界面，
 可以在自定义的CalendarPainter中实现，在绘制的时候判断条件绘制不同的内容，最后通过日历的notifyAllView（）方法刷新即可
 
 ```
