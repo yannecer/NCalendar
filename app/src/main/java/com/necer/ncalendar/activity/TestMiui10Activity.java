@@ -65,7 +65,7 @@ public class TestMiui10Activity extends BaseActivity {
 
         Map<String, Integer> colorMap = new HashMap<>();
         colorMap.put("2019-01-25", Color.RED);
-        colorMap.put("2019-01-23", Color.GREEN);
+
         colorMap.put("2019-01-24", Color.parseColor("#000000"));
         innerPainter.setReplaceLunarColorMap(colorMap);
 

@@ -66,7 +66,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
             }
         }
         if (targetView == null) {
-            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild2的子类");
+            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild的子类");
         }
     }
 

@@ -186,7 +186,9 @@ public class InnerPainter implements CalendarPainter {
                 }
             } else {
                 Integer color = mReplaceLunarColorMap.get(nDate.localDate);
-                if (color != null) {
+                if (color == null) {
+                    mTextPaint.setColor(mAttrs.lunarTextColor);
+                } else {
                     mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : color);
                 }
             }
