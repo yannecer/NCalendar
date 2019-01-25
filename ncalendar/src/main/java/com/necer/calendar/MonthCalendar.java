@@ -12,6 +12,7 @@ import com.necer.entity.NDate;
 import com.necer.listener.OnClickMonthViewListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.listener.OnMonthSelectListener;
+import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 
@@ -38,8 +39,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         return new MonthCalendarAdapter(context, attrs, initializeDate,this);
     }
 
-    public MonthCalendar(Context context, Attrs attrs, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
-        super(context, attrs);
+    public MonthCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
+        super(context, attrs,calendarPainter);
         this.onMonthAnimatorListener = onMonthAnimatorListener;
         monthValueAnimator = new ValueAnimator();
         monthValueAnimator.setDuration(duration);

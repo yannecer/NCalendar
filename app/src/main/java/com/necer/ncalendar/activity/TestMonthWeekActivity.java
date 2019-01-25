@@ -10,9 +10,13 @@ import com.necer.calendar.WeekCalendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnYearMonthChangedListener;
+import com.necer.ncalendar.CustomPainter;
 import com.necer.ncalendar.R;
+import com.necer.painter.CalendarPainter;
+import com.necer.painter.InnerPainter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,8 +43,7 @@ public class TestMonthWeekActivity extends BaseActivity {
 
         tv_date = findViewById(R.id.tv_date);
 
-
-      //  monthCalendar.setDateInterval("2018-12-01", "2019-01-2");
+        //  monthCalendar.setDateInterval("2018-12-01", "2019-01-2");
 
         // monthCalendar.setPainter(new CustomPainter(this));
 
@@ -82,7 +85,7 @@ public class TestMonthWeekActivity extends BaseActivity {
         list.add("2019-04-15");
 
 
-        monthCalendar.setPointList(list);
+     //   monthCalendar.setPointList(list);
 
      //   monthCalendar.notifyAllView();
 

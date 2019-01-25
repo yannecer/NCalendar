@@ -1,5 +1,6 @@
 package com.necer.ncalendar.activity;
 
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -10,9 +11,13 @@ import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.ncalendar.R;
+import com.necer.painter.InnerPainter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -47,10 +52,37 @@ public class TestMiui10Activity extends BaseActivity {
         List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01", "2018-12-23");
 
         miui10Calendar = findViewById(R.id.miui10Calendar);
-       // miui10Calendar.setDateInterval("2018-11-01","2018-12-30");
         miui10Calendar.setDateInterval("1901-01-01","2099-12-30");
 
-        miui10Calendar.setPointList(pointList);
+        InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
+        innerPainter.setPointList(pointList);
+
+        Map<String, String> strMap = new HashMap<>();
+        strMap.put("2019-01-25", "测试");
+        strMap.put("2019-01-23", "测试1");
+        strMap.put("2019-01-24", "测试2");
+        innerPainter.setReplaceLunarStrMap(strMap);
+
+        Map<String, Integer> colorMap = new HashMap<>();
+        colorMap.put("2019-01-25", Color.RED);
+        colorMap.put("2019-01-23", Color.GREEN);
+        colorMap.put("2019-01-24", Color.parseColor("#000000"));
+        innerPainter.setReplaceLunarColorMap(colorMap);
+
+
+        List<String> holidayList = new ArrayList<>();
+        holidayList.add("2019-1-20");
+        holidayList.add("2019-1-21");
+        holidayList.add("2019-1-22");
+
+        List<String> workdayList = new ArrayList<>();
+        workdayList.add("2019-1-23");
+        workdayList.add("2019-1-24");
+        workdayList.add("2019-1-25");
+
+       // innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
+
+
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date,boolean isClick) {
@@ -75,7 +107,7 @@ public class TestMiui10Activity extends BaseActivity {
             }
         });
 
-        miui10Calendar.setInitializeDate("2018-12-23");
+        //miui10Calendar.setInitializeDate("2018-12-23");
     }
 
 

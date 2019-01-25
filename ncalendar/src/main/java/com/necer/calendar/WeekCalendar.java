@@ -10,6 +10,7 @@ import com.necer.adapter.WeekCalendarAdapter;
 import com.necer.entity.NDate;
 import com.necer.listener.OnClickWeekViewListener;
 import com.necer.listener.OnWeekSelectListener;
+import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 
@@ -24,17 +25,18 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
 
     private OnWeekSelectListener onWeekSelectListener;
 
-    public WeekCalendar(Context context,Attrs attrs) {
-        super(context,attrs);
+
+    public WeekCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
+        super(context, attributeSet);
+    }
+
+    public WeekCalendar(Context context,Attrs attrs,CalendarPainter calendarPainter) {
+        super(context,attrs,calendarPainter);
     }
 
     @Override
     protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate) {
         return new WeekCalendarAdapter(context, attrs, initializeDate,this);
-    }
-
-    public WeekCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
-        super(context, attributeSet);
     }
 
     @Override

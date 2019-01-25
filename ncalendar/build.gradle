@@ -40,7 +40,7 @@ publish {
     repoName = 'maven'//bintray仓库
     groupId = 'com.necer.ncalendar'//jcenter上的路径
     artifactId = 'ncalendar'//项目名称
-    publishVersion = '3.3.3'//版本号
+    publishVersion = '3.4.0'//版本号
     desc = 'NCalendar'
     website = 'https://github.com/yannecer/NCalendar'
 }

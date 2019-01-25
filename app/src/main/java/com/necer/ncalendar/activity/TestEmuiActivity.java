@@ -6,6 +6,8 @@ import com.necer.calendar.EmuiCalendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.R;
+import com.necer.painter.CalendarPainter;
+import com.necer.painter.InnerPainter;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -38,7 +40,9 @@ public class TestEmuiActivity extends BaseActivity {
 
 
         EmuiCalendar emuiCalendar = findViewById(R.id.emuiCalendar);
-        emuiCalendar.setPointList(pointList);
+        InnerPainter innerPainter = (InnerPainter) emuiCalendar.getCalendarPainter();
+
+        innerPainter.setPointList(pointList);
         emuiCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarDateChanged(NDate date,boolean isClick) {

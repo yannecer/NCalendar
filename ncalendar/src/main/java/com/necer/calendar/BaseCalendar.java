@@ -46,25 +46,26 @@ public abstract class BaseCalendar extends ViewPager {
 
     protected LocalDate startDate, endDate, initializeDate, callBackDate;
 
-    protected CalendarPainter mPainter;
+    protected CalendarPainter mCalendarPainter;
 
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
         this.attrs = AttrsUtil.getAttrs(context, attributeSet);
+        this.mCalendarPainter = new InnerPainter(attrs);
         init(context);
     }
 
 
-    public BaseCalendar(Context context, Attrs attrs) {
+    public BaseCalendar(Context context, Attrs attrs,CalendarPainter calendarPainter) {
         super(context);
         this.attrs = attrs;
+        this.mCalendarPainter = calendarPainter;
         init(context);
     }
 
     private void init(Context context) {
         this.mContext = context;
-        mPainter = new InnerPainter(attrs);
         setBackgroundColor(attrs.bgCalendarColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
@@ -183,20 +184,6 @@ public abstract class BaseCalendar extends ViewPager {
         notifyView();
     }
 
-    public void setPointList(List<String> list) {
-        List<LocalDate> localDates = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            try {
-                localDates.add(new LocalDate(list.get(i)));
-            } catch (Exception e) {
-                throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
-            }
-        }
-
-        mPainter.setPointList(localDates);
-        notifyAllView();
-    }
-
     //刷新页面
     protected void notifyView() {
 
@@ -310,15 +297,6 @@ public abstract class BaseCalendar extends ViewPager {
         return !(localDate.isBefore(startDate) || localDate.isAfter(endDate));
     }
 
-/*
-    //任何操作都会回调
-    public void onDateChanged(LocalDate localDate, boolean isDraw, boolean isClick) {
-        if (onDateChangedListener != null) {
-            onDateChangedListener.onDateChanged(this, localDate, isDraw, isClick);
-        }
-    }
-*/
-
     //点击不可用的日期处理
     protected void onClickDisableDate(LocalDate localDate) {
         if (onClickDisableDateListener != null) {
@@ -375,14 +353,14 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     //设置绘制类
-    public void setPainter(CalendarPainter painter) {
-        this.mPainter = painter;
-        notifyAllView();
+    public void setCalendarPainter(CalendarPainter calendarPainter) {
+        this.mCalendarPainter = calendarPainter;
+       // notifyAllView();
     }
 
-    //BaseCalendarView绘制获取mPainter
-    public CalendarPainter getPainter() {
-        return mPainter;
+    //BaseCalendarView绘制获取mCalendarPainter
+    public CalendarPainter getCalendarPainter() {
+        return mCalendarPainter;
     }
 
 

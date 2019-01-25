@@ -44,7 +44,7 @@ public abstract class BaseCalendarView extends View {
         BaseCalendar calendar = (BaseCalendar) getParent();
         LocalDate startDate = calendar.getStartDate();
         LocalDate endDate = calendar.getEndDate();
-        CalendarPainter painter = calendar.getPainter();
+        CalendarPainter painter = calendar.getCalendarPainter();
 
         mRectList.clear();
 

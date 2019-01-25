@@ -13,10 +13,7 @@ import java.util.List;
 /**
  * Created by necer on 2019/1/3.
  */
-public abstract class CalendarPainter {
-
-
-    public List<LocalDate> mPointList = new ArrayList<>();
+public interface CalendarPainter {
 
 
     /**
@@ -27,7 +24,7 @@ public abstract class CalendarPainter {
      * @param nDate
      * @param isSelect 今天是否被选中
      */
-    public abstract void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+    void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 
 
     /**
@@ -38,7 +35,7 @@ public abstract class CalendarPainter {
      * @param nDate
      * @param isSelect 是否选中
      */
-    public abstract void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+    void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 
     /**
      * 绘制上一月，下一月的日期，周日历不须实现
@@ -47,7 +44,7 @@ public abstract class CalendarPainter {
      * @param rect
      * @param nDate
      */
-    public abstract void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate);
+    void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate);
 
 
     /**
@@ -57,11 +54,8 @@ public abstract class CalendarPainter {
      * @param rect
      * @param nDate
      */
-    public abstract void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
+    void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
-    public void setPointList(List<LocalDate> localDates) {
-        mPointList.clear();
-        mPointList.addAll(localDates);
-    }
+
 }

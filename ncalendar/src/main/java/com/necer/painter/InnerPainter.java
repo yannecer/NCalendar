@@ -1,19 +1,26 @@
 package com.necer.painter;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
+
+import com.necer.MyLog;
 import com.necer.entity.NDate;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+
 import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by necer on 2019/1/3.
  */
-public class InnerPainter extends CalendarPainter {
+public class InnerPainter implements CalendarPainter {
 
     private Attrs mAttrs;
     protected Paint mTextPaint;
@@ -21,8 +28,12 @@ public class InnerPainter extends CalendarPainter {
 
     private int noAlphaColor = 255;
 
-    protected List<String> mHolidayList;
-    protected List<String> mWorkdayList;
+    protected List<LocalDate> mHolidayList;
+    protected List<LocalDate> mWorkdayList;
+
+    private List<LocalDate> mPointList;
+    private Map<LocalDate, String> mReplaceLunarStrMap;
+    private Map<LocalDate, Integer> mReplaceLunarColorMap;
 
 
     public InnerPainter(Attrs attrs) {
@@ -31,8 +42,19 @@ public class InnerPainter extends CalendarPainter {
         mTextPaint = getPaint();
         mCirclePaint = getPaint();
         mPointList = new ArrayList<>();
-        mHolidayList = Util.getHolidayList();
-        mWorkdayList = Util.getWorkdayList();
+        mHolidayList = new ArrayList<>();
+        mWorkdayList = new ArrayList<>();
+        mReplaceLunarStrMap = new HashMap<>();
+        mReplaceLunarColorMap = new HashMap<>();
+
+        List<String> holidayList = Util.getHolidayList();
+        for (int i = 0; i < holidayList.size(); i++) {
+            mHolidayList.add(new LocalDate(holidayList.get(i)));
+        }
+        List<String> workdayList = Util.getWorkdayList();
+        for (int i = 0; i < workdayList.size(); i++) {
+            mWorkdayList.add(new LocalDate(workdayList.get(i)));
+        }
     }
 
 
@@ -93,7 +115,6 @@ public class InnerPainter extends CalendarPainter {
     }
 
 
-
     //空心圆
     private void drawHollowCircle(Canvas canvas, Rect rect) {
         mCirclePaint.setStyle(Paint.Style.STROKE);
@@ -147,20 +168,27 @@ public class InnerPainter extends CalendarPainter {
     //绘制农历
     private void drawLunar(Canvas canvas, Rect rec, boolean isTodaySelect, int alphaColor, NDate nDate) {
         if (mAttrs.isShowLunar) {
-            //优先顺序 农历节日、节气、公历节日、正常农历日期
-            String lunarString;
-            if (!TextUtils.isEmpty(nDate.lunarHoliday)) {
-                mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.lunarHolidayTextColor);
-                lunarString = nDate.lunarHoliday;
-            } else if (!TextUtils.isEmpty(nDate.solarTerm)) {
-                mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.solarTermTextColor);
-                lunarString = nDate.solarTerm;
-            } else if (!TextUtils.isEmpty(nDate.solarHoliday)) {
-                mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.solarHolidayTextColor);
-                lunarString = nDate.solarHoliday;
+            //优先顺序 替换的文字、农历节日、节气、公历节日、正常农历日期
+            String lunarString = mReplaceLunarStrMap.get(nDate.localDate);
+            if (lunarString == null) {
+                if (!TextUtils.isEmpty(nDate.lunarHoliday)) {
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.lunarHolidayTextColor);
+                    lunarString = nDate.lunarHoliday;
+                } else if (!TextUtils.isEmpty(nDate.solarTerm)) {
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.solarTermTextColor);
+                    lunarString = nDate.solarTerm;
+                } else if (!TextUtils.isEmpty(nDate.solarHoliday)) {
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.solarHolidayTextColor);
+                    lunarString = nDate.solarHoliday;
+                } else {
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.lunarTextColor);
+                    lunarString = nDate.lunar.lunarDrawStr;
+                }
             } else {
-                mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.lunarTextColor);
-                lunarString = nDate.lunar.lunarDrawStr;
+                Integer color = mReplaceLunarColorMap.get(nDate.localDate);
+                if (color != null) {
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : color);
+                }
             }
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
             mTextPaint.setAlpha(alphaColor);
@@ -174,11 +202,11 @@ public class InnerPainter extends CalendarPainter {
         if (mAttrs.isShowHoliday) {
             int[] holidayLocation = getHolidayLocation(rect.centerX(), rect.centerY());
             mTextPaint.setTextSize(mAttrs.holidayTextSize);
-            if (mHolidayList.contains(date.toString())) {
+            if (mHolidayList.contains(date)) {
                 mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.holidayColor);
                 mTextPaint.setAlpha(alphaColor);
                 canvas.drawText("休", holidayLocation[0], holidayLocation[1], mTextPaint);
-            } else if (mWorkdayList.contains(date.toString())) {
+            } else if (mWorkdayList.contains(date)) {
                 mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.workdayColor);
                 mTextPaint.setAlpha(alphaColor);
                 canvas.drawText("班", holidayLocation[0], holidayLocation[1], mTextPaint);
@@ -233,5 +261,65 @@ public class InnerPainter extends CalendarPainter {
         return baseLineY;
     }
 
+
+    //设置标记
+    public void setPointList(List<String> list) {
+        List<LocalDate> localDates = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            try {
+                localDates.add(new LocalDate(list.get(i)));
+            } catch (Exception e) {
+                throw new RuntimeException("setPointList的参数需要 yyyy-MM-dd 格式的日期");
+            }
+        }
+        mPointList.clear();
+        mPointList.addAll(localDates);
+    }
+
+    //设置替换农历的文字
+    public void setReplaceLunarStrMap(Map<String, String> replaceLunarStrMap) {
+        Map<LocalDate, String> map = new HashMap<>();
+        for (String key : replaceLunarStrMap.keySet()) {
+            try {
+                map.put(new LocalDate(key), replaceLunarStrMap.get(key));
+            } catch (Exception e) {
+                throw new RuntimeException("setReplaceLunarStrMap的参数需要 yyyy-MM-dd 格式的日期");
+            }
+        }
+        mReplaceLunarStrMap.clear();
+        mReplaceLunarStrMap.putAll(map);
+    }
+
+    //设置替换农历的颜色
+    public void setReplaceLunarColorMap(Map<String, Integer> replaceLunarColorMap) {
+        Map<LocalDate, Integer> map = new HashMap<>();
+        for (String key : replaceLunarColorMap.keySet()) {
+            try {
+                map.put(new LocalDate(key), replaceLunarColorMap.get(key));
+            } catch (Exception e) {
+                throw new RuntimeException("setReplaceLunarColorMap的参数需要 yyyy-MM-dd 格式的日期");
+            }
+        }
+        mReplaceLunarColorMap.clear();
+        mReplaceLunarColorMap.putAll(map);
+    }
+
+
+    //设置法定节假日和补班
+    public void setHolidayAndWorkdayList(List<String> holidayList, List<String> workdayList) {
+        mHolidayList.clear();
+        mWorkdayList.clear();
+        try{
+            for (int i = 0; i < holidayList.size(); i++) {
+                mHolidayList.add(new LocalDate(holidayList.get(i)));
+            }
+            for (int i = 0; i < workdayList.size(); i++) {
+                mWorkdayList.add(new LocalDate(workdayList.get(i)));
+            }
+        }catch (Exception e){
+            throw new RuntimeException("setHolidayAndWorkdayList集合中的参数需要 yyyy-MM-dd 格式的日期");
+        }
+
+    }
 
 }

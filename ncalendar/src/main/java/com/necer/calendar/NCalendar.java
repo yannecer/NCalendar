@@ -19,6 +19,7 @@ import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnWeekSelectListener;
 import com.necer.painter.CalendarPainter;
+import com.necer.painter.InnerPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.view.ChildLayout;
@@ -51,6 +52,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     private boolean isWeekHold;//是否需要周状态定住
 
+    private CalendarPainter calendarPainter;
+
 
     public NCalendar(@NonNull Context context) {
         this(context, null);
@@ -72,8 +75,9 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         weekHeight = monthHeight / 5;
         isWeekHold = attrss.isWeekHold;
 
-        weekCalendar = new WeekCalendar(context, attrss);
-        monthCalendar = new MonthCalendar(context, attrss, duration, this);
+        calendarPainter = new InnerPainter(attrss);
+        weekCalendar = new WeekCalendar(context, attrss,calendarPainter);
+        monthCalendar = new MonthCalendar(context, attrss,calendarPainter, duration, this);
         childLayout = new ChildLayout(getContext(), attrs, monthHeight, duration, this);
 
         monthCalendar.setOnMonthSelectListener(this);
@@ -518,15 +522,13 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
     /**
-     * 设置小圆点
+     * 获取绘制CalendarPainter 强转，设置其他属性
      *
-     * @param pointList
+     * @param
      */
-    public void setPointList(List<String> pointList) {
-        weekCalendar.setPointList(pointList);
-        monthCalendar.setPointList(pointList);
+    public CalendarPainter getCalendarPainter() {
+        return calendarPainter;
     }
-
 
     /**
      * 获取当前日历的状态
@@ -592,9 +594,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
     //设置绘制类
-    public void setPainter(CalendarPainter painter) {
-        monthCalendar.setPainter(painter);
-        weekCalendar.setPainter(painter);
+    public void setCalendarPainter(CalendarPainter calendarPainter) {
+        this.calendarPainter = calendarPainter;
+        monthCalendar.setCalendarPainter(calendarPainter);
+        weekCalendar.setCalendarPainter(calendarPainter);
     }
 
     //刷新页面

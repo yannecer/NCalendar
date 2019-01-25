@@ -13,10 +13,11 @@ import com.necer.utils.Util;
 /**
  * Created by necer on 2019/1/3.
  */
-public class CustomPainter extends CalendarPainter {
+public class CustomPainter implements CalendarPainter {
 
     private Paint paint;
     private Context context;
+
 
     public CustomPainter(Context context) {
         this.context = context;
@@ -58,6 +59,7 @@ public class CustomPainter extends CalendarPainter {
             paint.setColor(Color.BLACK);
         }
         canvas.drawText(nDate.localDate.getDayOfMonth() + "", rect.centerX(), getBaseLineY(rect), paint);
+
     }
 
     @Override
