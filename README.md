@@ -202,6 +202,8 @@ innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
 ```
 此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
 
+InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
+
 Map<String, String> strMap = new HashMap<>();
 strMap.put("2019-01-25", "测试");
 strMap.put("2019-01-23", "测试1");
