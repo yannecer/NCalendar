@@ -170,7 +170,7 @@ setInitializeDate(formatDate)
 ```
 ##### 10、设置CalendarPainter
 ```
-setPainter(painter)
+setCalendarPainter(painter)
 ```
 ##### 11、刷新页面
 ```
@@ -205,7 +205,7 @@ innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
 Map<String, String> strMap = new HashMap<>();
 strMap.put("2019-01-25", "测试");
 strMap.put("2019-01-23", "测试1");
- strMap.put("2019-01-24", "测试2");
+strMap.put("2019-01-24", "测试2");
 innerPainter.setReplaceLunarStrMap(strMap);
 
 Map<String, Integer> colorMap = new HashMap<>();
@@ -294,6 +294,7 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 版本更新
+* 3.4.1<br/>增加替换农历文字、设置法定节假日等方法
 * 3.3.3<br/>修复5.0以下崩溃的问题
 * 3.3.2<br/>修复区间最后一天点击不回调
 * 3.3.1<br/>增加自定义绘制类Painter，实现自定义界面
