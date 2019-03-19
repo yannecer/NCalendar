@@ -66,7 +66,6 @@ public abstract class BaseCalendar extends ViewPager {
 
     private void init(Context context) {
         this.mContext = context;
-        setBackgroundColor(attrs.bgCalendarColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(final int position) {

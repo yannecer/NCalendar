@@ -123,13 +123,11 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
 
     public boolean isMonthState() {
-        return getY() >= monthHeight;
+        return ((int)getY()) >= monthHeight;
     }
 
     public boolean isWeekState() {
-        // return getTop() <= weekHeight;
-        return getY() <= weekHeight;
-
+        return ((int)getY()) <= weekHeight;
     }
 
 

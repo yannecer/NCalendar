@@ -4,6 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.utils.Attrs;
+import com.necer.utils.AttrsUtil;
+
 /**
  * 华为日历
  * Created by necer on 2018/11/14.
@@ -11,6 +14,9 @@ import android.util.AttributeSet;
 public class EmuiCalendar extends NCalendar {
     public EmuiCalendar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        Attrs attrss = AttrsUtil.getAttrs(context, attrs);
+        monthCalendar.setBackgroundColor(attrss.bgEmuiCalendarColor);
+        weekCalendar.setBackgroundColor(attrss.bgEmuiCalendarColor);
     }
 
 

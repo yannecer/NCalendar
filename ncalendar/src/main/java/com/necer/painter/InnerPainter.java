@@ -159,7 +159,7 @@ public class InnerPainter implements CalendarPainter {
     private void drawPoint(Canvas canvas, Rect rect, boolean isTodaySelect, int alphaColor, LocalDate date) {
         if (mPointList != null && mPointList.contains(date)) {
             mCirclePaint.setStyle(Paint.Style.FILL);
-            mCirclePaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.pointColor);
+            mCirclePaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.pointColor);
             mCirclePaint.setAlpha(alphaColor);
             canvas.drawCircle(rect.centerX(), mAttrs.pointLocation == Attrs.DOWN ? (rect.centerY() + mAttrs.pointDistance) : (rect.centerY() - mAttrs.pointDistance), mAttrs.pointSize, mCirclePaint);
         }
@@ -172,16 +172,16 @@ public class InnerPainter implements CalendarPainter {
             String lunarString = mReplaceLunarStrMap.get(nDate.localDate);
             if (lunarString == null) {
                 if (!TextUtils.isEmpty(nDate.lunarHoliday)) {
-                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.lunarHolidayTextColor);
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.lunarHolidayTextColor);
                     lunarString = nDate.lunarHoliday;
                 } else if (!TextUtils.isEmpty(nDate.solarTerm)) {
-                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.solarTermTextColor);
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.solarTermTextColor);
                     lunarString = nDate.solarTerm;
                 } else if (!TextUtils.isEmpty(nDate.solarHoliday)) {
-                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.solarHolidayTextColor);
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.solarHolidayTextColor);
                     lunarString = nDate.solarHoliday;
                 } else {
-                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.lunarTextColor);
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.lunarTextColor);
                     lunarString = nDate.lunar.lunarDrawStr;
                 }
             } else {
@@ -189,7 +189,7 @@ public class InnerPainter implements CalendarPainter {
                 if (color == null) {
                     mTextPaint.setColor(mAttrs.lunarTextColor);
                 } else {
-                    mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : color);
+                    mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : color);
                 }
             }
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
@@ -205,11 +205,11 @@ public class InnerPainter implements CalendarPainter {
             int[] holidayLocation = getHolidayLocation(rect.centerX(), rect.centerY());
             mTextPaint.setTextSize(mAttrs.holidayTextSize);
             if (mHolidayList.contains(date)) {
-                mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.holidayColor);
+                mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.holidayColor);
                 mTextPaint.setAlpha(alphaColor);
                 canvas.drawText("休", holidayLocation[0], holidayLocation[1], mTextPaint);
             } else if (mWorkdayList.contains(date)) {
-                mTextPaint.setColor(isTodaySelect ? mAttrs.bgCalendarColor : mAttrs.workdayColor);
+                mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.workdayColor);
                 mTextPaint.setAlpha(alphaColor);
                 canvas.drawText("班", holidayLocation[0], holidayLocation[1], mTextPaint);
             }

@@ -161,4 +161,11 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
         }
     }
 
+    @Override
+    protected void onAnimationEnd() {
+        super.onAnimationEnd();
+        if (onMonthAnimatorListener != null) {
+            onMonthAnimatorListener.onMonthAnimatorChanged(0);
+        }
+    }
 }

@@ -37,7 +37,6 @@
         android:id="@+id/emuiCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bgCalendarColor="#ffffff"
         app:bgChildColor="#F5f5f5"
         app:holidayColor="#F29B38"
         app:isShowLunar="false"
