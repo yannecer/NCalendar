@@ -80,7 +80,7 @@ implementation 'com.necer.ncalendar:ncalendar:3.4.1'
 
 - NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild```的子类，
 如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个```NestedScrollingChild```
-- 如果布局文件中，内部的子view有多个父view，恰好也有实现了```NestedScrollingChild2```的父view，则需要给真实滑动的子view设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
+- 如果布局文件中，内部的子view有多个父view，恰好也有实现了```NestedScrollingChild```的父view，则需要给真实滑动的子view设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
 - 单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中
 - 新版的代码已经将NestedScrollingChild2改成了NestedScrollingChild，如果出现滑动异常，则需要给实际滑动的view设置tag（“@string/factual_scroll_view”）
 
@@ -170,7 +170,7 @@ setInitializeDate(formatDate)
 ```
 ##### 10、设置CalendarPainter
 ```
-setPainter(painter)
+setCalendarPainter(painter)
 ```
 ##### 11、刷新页面
 ```
@@ -202,10 +202,12 @@ innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
 ```
 此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
 
+InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
+
 Map<String, String> strMap = new HashMap<>();
 strMap.put("2019-01-25", "测试");
 strMap.put("2019-01-23", "测试1");
- strMap.put("2019-01-24", "测试2");
+strMap.put("2019-01-24", "测试2");
 innerPainter.setReplaceLunarStrMap(strMap);
 
 Map<String, Integer> colorMap = new HashMap<>();
@@ -294,6 +296,7 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 版本更新
+* 3.4.1<br/>增加替换农历文字、设置法定节假日等方法
 * 3.3.3<br/>修复5.0以下崩溃的问题
 * 3.3.2<br/>修复区间最后一天点击不回调
 * 3.3.1<br/>增加自定义绘制类Painter，实现自定义界面
