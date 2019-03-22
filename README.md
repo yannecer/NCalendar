@@ -32,7 +32,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.4.1'
+implementation 'com.necer.ncalendar:ncalendar:3.4.2'
 
 ```
 
@@ -264,8 +264,9 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 |selectCircleColor| color|选中圈的颜色
 |holidayColor|color| 法定节休息日颜色
 |workdayColor|color| 法定节调休工作日颜色
-|bgCalendarColor|color| 日历的背景
+|bgEmuiCalendarColor|color| Emui日历的背景
 |bgChildColor|color| 日历包含子view的背景
+|todaySelectContrastColor|color| 今天被选中是其他元素的对比色，比如 农历，圆点等
 |pointColor| color |小圆点的颜色
 |startDate| string |日期区间开始日期
 |endDate| string |日期区间结束日期
@@ -296,6 +297,7 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 版本更新
+* 3.4.2<br/>调整设置日历背景的方法，MIUI日历在xml文件中设置background属性，Emui日历使用用属性bgEmuiCalendarColor
 * 3.4.1<br/>增加替换农历文字、设置法定节假日等方法
 * 3.3.3<br/>修复5.0以下崩溃的问题
 * 3.3.2<br/>修复区间最后一天点击不回调
