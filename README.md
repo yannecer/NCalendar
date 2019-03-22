@@ -32,7 +32,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.4.2'
+implementation 'com.necer.ncalendar:ncalendar:3.4.3'
 
 ```
 
