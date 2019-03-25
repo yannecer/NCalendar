@@ -26,7 +26,7 @@
 |:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/add_view1.png)|![](https://github.com/yannecer/NCalendar/blob/master/app/custom1.png)|
 ## 下载demo：
-[下载demo](https://github.com/yannecer/NCalendar/releases/download/3.3.4/3.3.4.apk)
+[下载demo]https://github.com/yannecer/NCalendar/releases/download/3.4.4/3.4.4.apk)
 
 ## 使用方法
 
