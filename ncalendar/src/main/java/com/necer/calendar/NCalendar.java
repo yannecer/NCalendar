@@ -54,6 +54,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     private boolean isWeekHold;//是否需要周状态定住
 
     private CalendarPainter calendarPainter;
+    private boolean isInflateFinish;//是否加载完成，
 
 
     public NCalendar(@NonNull Context context) {
@@ -77,8 +78,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         isWeekHold = attrss.isWeekHold;
 
         calendarPainter = new InnerPainter(attrss);
-        weekCalendar = new WeekCalendar(context, attrss,calendarPainter);
-        monthCalendar = new MonthCalendar(context, attrss,calendarPainter, duration, this);
+        weekCalendar = new WeekCalendar(context, attrss, calendarPainter);
+        monthCalendar = new MonthCalendar(context, attrss, calendarPainter, duration, this);
         childLayout = new ChildLayout(getContext(), attrs, monthHeight, duration, this);
 
         monthCalendar.setOnMonthSelectListener(this);
@@ -98,6 +99,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
                 monthCalendar.setY(STATE == Attrs.MONTH ? 0 : getMonthYOnWeekState());
                 childLayout.setY(STATE == Attrs.MONTH ? monthHeight : weekHeight);
+
+                isInflateFinish = true;
 
             }
         });
@@ -167,9 +170,11 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         if (state == Attrs.WEEK) {
             STATE = Attrs.WEEK;
             weekCalendar.setVisibility(VISIBLE);
+            monthCalendar.setVisibility(INVISIBLE);
         } else {
             STATE = Attrs.MONTH;
             weekCalendar.setVisibility(INVISIBLE);
+            monthCalendar.setVisibility(VISIBLE);
         }
 
         if (onCalendarChangedListener != null && lastSate != state) {
@@ -242,7 +247,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-       // super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+        // super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
     }
 
     @Override
@@ -327,21 +332,24 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                dowmY = (int) ev.getY();
-                downX = (int) ev.getX();
-                lastY = dowmY;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                int y = (int) ev.getY();
-                int absY = Math.abs(dowmY - y);
-                boolean inCalendar = isInCalendar(downX, dowmY);
-                if (absY > verticalY && inCalendar) {
-                    //onInterceptTouchEvent返回true，触摸事件交给当前的onTouchEvent处理
-                    return true;
-                }
-                break;
+
+        if (isInflateFinish) {
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    dowmY = (int) ev.getY();
+                    downX = (int) ev.getX();
+                    lastY = dowmY;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    int y = (int) ev.getY();
+                    int absY = Math.abs(dowmY - y);
+                    boolean inCalendar = isInCalendar(downX, dowmY);
+                    if (absY > verticalY && inCalendar) {
+                        //onInterceptTouchEvent返回true，触摸事件交给当前的onTouchEvent处理
+                        return true;
+                    }
+                    break;
+            }
         }
         return super.onInterceptTouchEvent(ev);
     }
