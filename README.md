@@ -32,7 +32,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.4.4'
+implementation 'com.necer.ncalendar:ncalendar:3.4.5'
 
 ```
 
@@ -296,7 +296,8 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 
-## 版本更新
+## 更新日志
+* 3.4.5<br/>修复id重复错误
 * 3.4.4<br/>修复未加载完成点击崩溃的问题
 * 3.4.3<br/>五月节假日调整
 * 3.4.2<br/>调整设置日历背景的方法，MIUI日历在xml文件中设置background属性，Emui日历使用用属性bgEmuiCalendarColor
