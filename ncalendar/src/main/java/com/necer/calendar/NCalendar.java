@@ -3,6 +3,7 @@ package com.necer.calendar;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
@@ -612,5 +613,11 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         weekCalendar.notifyAllView();
     }
 
+
+    //id重复
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(null);
+    }
 
 }
