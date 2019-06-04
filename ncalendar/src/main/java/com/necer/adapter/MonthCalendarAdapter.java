@@ -10,6 +10,8 @@ import com.necer.view.MonthView;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 /**
  * Created by necer on 2018/9/11.
  * qq群：127278900
@@ -17,23 +19,21 @@ import org.joda.time.LocalDate;
 public class MonthCalendarAdapter extends BaseCalendarAdapter {
 
 
-    private OnClickMonthViewListener mOnClickMonthViewListener;
 
-    public MonthCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate, OnClickMonthViewListener onClickMonthViewListener) {
-        super(context, attrs,initializeDate);
-        this.mOnClickMonthViewListener = onClickMonthViewListener;
+    public MonthCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
+        super(context, startDate, endDate, initializeDate, firstDayOfWeek);
     }
 
     @Override
-    protected BaseCalendarView getView(Context context,int weekFirstDayType,LocalDate initializeDate,int curr,int position) {
-        LocalDate date = initializeDate.plusMonths(position - curr);
-        MonthView monthView = new MonthView(context, date, weekFirstDayType, mOnClickMonthViewListener);
-        return monthView;
+    protected BaseCalendarView getCalendarView( int position) {
+        LocalDate localDate = mInitializeDate.plusMonths(position - mCurr);
+        List<LocalDate> dateList = Util.getMonthCalendar(localDate, mFirstDayOfWeek);
+        return new MonthView(mContext,localDate,dateList);
     }
+
 
     @Override
     protected int getIntervalCount(LocalDate startDate, LocalDate endDate, int type) {
         return Util.getIntervalMonths(startDate, endDate);
     }
-
 }

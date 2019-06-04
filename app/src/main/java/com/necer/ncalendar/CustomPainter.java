@@ -28,9 +28,9 @@ public class CustomPainter implements CalendarPainter {
 
 
     @Override
-    public void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect) {
+    public void onDrawToday(Canvas canvas, Rect rect, NDate nDate,boolean is) {
 
-        if (isSelect) {
+        if (false) {
             paint.setColor(Color.RED);
             canvas.drawRect(getNewRect(context,rect), paint);
             paint.setColor(Color.WHITE);

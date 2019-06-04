@@ -10,6 +10,8 @@ import com.necer.view.BaseCalendarView;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 /**
  * Created by necer on 2017/8/25.
  * QQ群:127278900
@@ -21,17 +23,17 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     protected Context mContext;
     protected int mCount;//总页数
     protected int mCurr;//当前位置
-    protected Attrs mAttrs;//属性参数
-    protected LocalDate mInitializeDate;//日期初始化，默认是当天
+    protected LocalDate mInitializeDate;
+    protected int mFirstDayOfWeek;
 
 
-    public BaseCalendarAdapter(Context context, Attrs attrs,LocalDate initializeDate) {
+
+    public BaseCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
         this.mContext = context;
-        this.mAttrs = attrs;
         this.mInitializeDate = initializeDate;
-        LocalDate startDate = new LocalDate(attrs.startDateString);
-        this.mCount = getIntervalCount(startDate, new LocalDate(attrs.endDateString), attrs.firstDayOfWeek) + 1;
-        this.mCurr = getIntervalCount(startDate, mInitializeDate, attrs.firstDayOfWeek);
+        this.mCount = getIntervalCount(startDate, endDate, firstDayOfWeek) + 1;
+        this.mCurr = getIntervalCount(startDate, initializeDate, firstDayOfWeek);
+        this.mFirstDayOfWeek = firstDayOfWeek;
     }
 
     @Override
@@ -54,13 +56,15 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        BaseCalendarView view = getView(mContext, mAttrs.firstDayOfWeek, mInitializeDate, mCurr, position);
+
+        BaseCalendarView view = getCalendarView(position);
         view.setTag(position);
         container.addView(view);
         return view;
     }
 
-    protected abstract BaseCalendarView getView(Context context,int weekFirstDayType,LocalDate initializeDate,int curr,int position);
+    protected abstract BaseCalendarView getCalendarView(int position);
+
 
     protected abstract int getIntervalCount(LocalDate startDate, LocalDate endDate, int weekFirstDayType);
 
@@ -68,6 +72,7 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     public int getCurrItem() {
         return mCurr;
     }
+
 
 }
 

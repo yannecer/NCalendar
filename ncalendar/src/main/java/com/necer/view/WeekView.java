@@ -16,21 +16,20 @@ import java.util.List;
  */
 public class WeekView extends BaseCalendarView {
 
-    private OnClickWeekViewListener mOnClickWeekViewListener;
+   // private OnClickWeekViewListener mOnClickWeekViewListener;
 
-    public WeekView(Context context, LocalDate localDate, int weekFirstDayType, OnClickWeekViewListener onClickWeekViewListener) {
-        super(context, localDate, weekFirstDayType);
-        this.mOnClickWeekViewListener = onClickWeekViewListener;
+    public WeekView(Context context,LocalDate initialDate, List<LocalDate> dateList) {
+        super(context,initialDate, dateList);
+
     }
 
     @Override
-    protected List<NDate> getNCalendar(LocalDate localDate, int type) {
-        return Util.getWeekCalendar(localDate, type);
-    }
-
-    @Override
-    protected void onClick(NDate nDate, LocalDate initialDate) {
-        mOnClickWeekViewListener.onClickCurrentWeek(nDate.localDate);
+    protected void onClickDate(LocalDate localDate, LocalDate initialDate) {
+//        if (mOnClickWeekViewListener == null) {
+//            mOnClickWeekViewListener = (OnClickWeekViewListener) mCalendar;
+//        }
+//        mOnClickWeekViewListener.onClickCurrentWeek(nDate);
+        mCalendar.onClickCurrectWeekDate(localDate);
     }
 
     @Override

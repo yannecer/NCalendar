@@ -85,7 +85,7 @@ public class TestMiui10Activity extends BaseActivity {
 
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarDateChanged(NDate date,boolean isClick) {
+            public void onCalendarDateChanged(NDate date) {
                 tv_year.setText(date.localDate.getYear() + "年");
                 tv_month.setText(date.localDate.getMonthOfYear() + "月");
                 tv_week.setText(weeks[date.localDate.getDayOfWeek() - 1]);

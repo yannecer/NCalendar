@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.WeekCalendarAdapter;
 import com.necer.entity.NDate;
@@ -20,7 +21,7 @@ import org.joda.time.LocalDate;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListener {
+public class WeekCalendar extends BaseCalendar{
 
 
     private OnWeekSelectListener onWeekSelectListener;
@@ -35,9 +36,14 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate) {
-        return new WeekCalendarAdapter(context, attrs, initializeDate,this);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
+        return new WeekCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);
     }
+
+//    @Override
+//    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate) {
+//        return new WeekCalendarAdapter(context, attrs.startDateString, initializeDate,this);
+//    }
 
     @Override
     protected int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type) {
@@ -60,21 +66,22 @@ public class WeekCalendar extends BaseCalendar implements OnClickWeekViewListene
     }
 
     @Override
-    protected void onSelcetDate(NDate date,boolean isClick) {
+    protected void onSelcetDate(NDate date) {
+        MyLog.d("onMonthSelectListener:周::" + date.localDate);
         if (onWeekSelectListener != null) {
-            onWeekSelectListener.onWeekSelect(date, isClick);
+            onWeekSelectListener.onWeekSelect(date);
         }
     }
 
-    @Override
-    public void onClickCurrentWeek(LocalDate localDate) {
-        if (isClickDateEnable(localDate)) {
-            onClickDate(localDate,0);
-        } else{
-            onClickDisableDate(localDate);
-        }
-    }
-
+//    @Override
+//    public void onClickCurrentWeek(LocalDate localDate) {
+//        if (isClickDateEnable(localDate)) {
+//            onClickDate(localDate,0);
+//        } else{
+//            onClickDisableDate(localDate);
+//        }
+//    }
+//
     public void setOnWeekSelectListener(OnWeekSelectListener onWeekSelectListener) {
         this.onWeekSelectListener = onWeekSelectListener;
     }

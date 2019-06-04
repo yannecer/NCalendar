@@ -10,22 +10,22 @@ import com.necer.view.WeekView;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 /**
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
 public class WeekCalendarAdapter extends BaseCalendarAdapter {
-    private OnClickWeekViewListener mOnClickWeekViewListener;
-
-    public WeekCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate, OnClickWeekViewListener onClickWeekViewListener) {
-        super(context, attrs,initializeDate);
-        this.mOnClickWeekViewListener = onClickWeekViewListener;
+    public WeekCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
+        super(context, startDate, endDate, initializeDate, firstDayOfWeek);
     }
 
     @Override
-    protected BaseCalendarView getView(Context context,int weekFirstDayType,LocalDate initializeDate,int curr,int position) {
-        WeekView weekView = new WeekView(context, initializeDate.plusDays((position - curr) * 7), weekFirstDayType, mOnClickWeekViewListener);
-        return weekView;
+    protected BaseCalendarView getCalendarView(int position) {
+        LocalDate localDate = mInitializeDate.plusDays((position - mCount) * 7);
+        List<LocalDate> dateList = Util.getWeekCalendar(localDate, mFirstDayOfWeek);
+        return new WeekView(mContext, localDate, dateList);
     }
 
     @Override

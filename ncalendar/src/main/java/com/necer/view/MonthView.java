@@ -16,28 +16,28 @@ import java.util.List;
  */
 public class MonthView extends BaseCalendarView {
 
-    private OnClickMonthViewListener mOnClickMonthViewListener;
+    // private OnClickMonthViewListener mOnClickMonthViewListener;
 
+    public MonthView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
+        super(context, initialDate, dateList);
 
-    public MonthView(Context context, LocalDate localDate, int weekFirstDayType,OnClickMonthViewListener onClickMonthViewListener) {
-        super(context, localDate, weekFirstDayType);
-        this.mOnClickMonthViewListener = onClickMonthViewListener;
     }
 
 
     @Override
-    protected List<NDate> getNCalendar(LocalDate localDate, int type) {
-        return Util.getMonthCalendar(localDate,type);
-    }
-
-    @Override
-    protected void onClick(NDate nDate, LocalDate initialDate) {
-        if (Util.isLastMonth(nDate.localDate, initialDate)) {
-            mOnClickMonthViewListener.onClickLastMonth(nDate.localDate);
-        } else if (Util.isNextMonth(nDate.localDate, initialDate)) {
-            mOnClickMonthViewListener.onClickNextMonth(nDate.localDate);
+    protected void onClickDate(LocalDate localDate, LocalDate initialDate) {
+//        if (mOnClickMonthViewListener == null) {
+//            mOnClickMonthViewListener = (OnClickMonthViewListener) mCalendar;
+//        }
+        if (Util.isLastMonth(localDate, initialDate)) {
+            //mOnClickMonthViewListener.onClickLastMonth(localDate);
+            mCalendar.onClickLastMonthDate(localDate);
+        } else if (Util.isNextMonth(localDate, initialDate)) {
+            // mOnClickMonthViewListener.onClickNextMonth(localDate);
+            mCalendar.onClickNextMonthDate(localDate);
         } else {
-            mOnClickMonthViewListener.onClickCurrentMonth(nDate.localDate);
+            //  mOnClickMonthViewListener.onClickCurrentMonth(localDate);
+            mCalendar.onClickCurrectMonthDate(localDate);
         }
     }
 

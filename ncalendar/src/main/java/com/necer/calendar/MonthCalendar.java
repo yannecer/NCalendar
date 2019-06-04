@@ -6,8 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.adapter.MonthCalendarAdapter;
+import com.necer.adapter.WeekCalendarAdapter;
 import com.necer.entity.NDate;
 import com.necer.listener.OnClickMonthViewListener;
 import com.necer.listener.OnMonthAnimatorListener;
@@ -22,7 +24,7 @@ import org.joda.time.LocalDate;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListener, ValueAnimator.AnimatorUpdateListener {
+public class MonthCalendar extends BaseCalendar implements ValueAnimator.AnimatorUpdateListener {
 
 
     protected ValueAnimator monthValueAnimator;//月日历动画
@@ -35,8 +37,8 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate) {
-        return new MonthCalendarAdapter(context, attrs, initializeDate,this);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
+        return new MonthCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);
     }
 
     public MonthCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
@@ -69,40 +71,42 @@ public class MonthCalendar extends BaseCalendar implements OnClickMonthViewListe
     }
 
     @Override
-    protected void onSelcetDate(NDate nDate,boolean isClick) {
+    protected void onSelcetDate(NDate nDate) {
+
+        MyLog.d("onMonthSelectListener:月::" + nDate.localDate);
         if (onMonthSelectListener != null) {
-            onMonthSelectListener.onMonthSelect(nDate,isClick);
+            onMonthSelectListener.onMonthSelect(nDate);
         }
     }
 
-
-    @Override
-    public void onClickCurrentMonth(LocalDate localDate) {
-        if (isClickDateEnable(localDate)) {
-            onClickDate(localDate,0);
-        } else {
-            onClickDisableDate(localDate);
-        }
-
-    }
-
-    @Override
-    public void onClickLastMonth(LocalDate localDate) {
-        if (isClickDateEnable(localDate)) {
-            onClickDate(localDate,-1);
-        } else {
-            onClickDisableDate(localDate);
-        }
-    }
-
-    @Override
-    public void onClickNextMonth(LocalDate localDate) {
-        if (isClickDateEnable(localDate)) {
-            onClickDate(localDate,1);
-        } else {
-            onClickDisableDate(localDate);
-        }
-    }
+//
+//    @Override
+//    public void onClickCurrentMonth(LocalDate localDate) {
+//        if (isClickDateEnable(localDate)) {
+//            onClickDate(localDate,0);
+//        } else {
+//            onClickDisableDate(localDate);
+//        }
+//
+//    }
+//
+//    @Override
+//    public void onClickLastMonth(LocalDate localDate) {
+//        if (isClickDateEnable(localDate)) {
+//            onClickDate(localDate,-1);
+//        } else {
+//            onClickDisableDate(localDate);
+//        }
+//    }
+//
+//    @Override
+//    public void onClickNextMonth(LocalDate localDate) {
+//        if (isClickDateEnable(localDate)) {
+//            onClickDate(localDate,1);
+//        } else {
+//            onClickDisableDate(localDate);
+//        }
+//    }
 
     public void setOnMonthSelectListener(OnMonthSelectListener onMonthSelectListener) {
         this.onMonthSelectListener = onMonthSelectListener;

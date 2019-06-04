@@ -22,9 +22,8 @@ public interface CalendarPainter {
      * @param canvas
      * @param rect
      * @param nDate
-     * @param isSelect 今天是否被选中
      */
-    void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+    void onDrawToday(Canvas canvas, Rect rect, NDate nDate,boolean isSelect);
 
 
     /**

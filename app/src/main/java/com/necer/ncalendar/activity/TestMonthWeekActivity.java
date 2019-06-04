@@ -37,32 +37,32 @@ public class TestMonthWeekActivity extends BaseActivity {
 
     @Override
     protected void onCreatee() {
-
-        monthCalendar = findViewById(R.id.monthCalendar);
-        weekCalendar = findViewById(R.id.weekCalendar);
-
-        tv_date = findViewById(R.id.tv_date);
-
-        //  monthCalendar.setDateInterval("2018-12-01", "2019-01-2");
-
-        // monthCalendar.setPainter(new CustomPainter(this));
-
-
-        monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
-            @Override
-            public void onMonthSelect(NDate date, boolean isClick) {
-
-                MyLog.d("onMonthSelect::::" + date.localDate);
-                MyLog.d("onMonthSelect::222::" + isClick);
-            }
-        });
-
-
-        monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
-            @Override
-            public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month, boolean isClick) {
-            }
-        });
+//
+//        monthCalendar = findViewById(R.id.monthCalendar);
+//        weekCalendar = findViewById(R.id.weekCalendar);
+//
+//        tv_date = findViewById(R.id.tv_date);
+//
+//        //  monthCalendar.setDateInterval("2018-12-01", "2019-01-2");
+//
+//        // monthCalendar.setPainter(new CustomPainter(this));
+//
+//
+//        monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
+//            @Override
+//            public void onMonthSelect(NDate date) {
+//
+//                MyLog.d("onMonthSelect::::" + date.localDate);
+//                MyLog.d("onMonthSelect::222::" );
+//            }
+//        });
+//
+//
+//        monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
+//            @Override
+//            public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month, boolean isClick) {
+//            }
+//        });
 
     }
 
@@ -75,14 +75,14 @@ public class TestMonthWeekActivity extends BaseActivity {
 
         //  monthCalendar.jumpDate("2019-12-31");
 
-
-        List<String> list = new ArrayList<>();
-
-        list.add("2018-10-14");
-        list.add("2018-12-18");
-        list.add("2019-01-14");
-        list.add("2019-02-15");
-        list.add("2019-04-15");
+//
+//        List<String> list = new ArrayList<>();
+//
+//        list.add("2018-10-14");
+//        list.add("2018-12-18");
+//        list.add("2019-01-14");
+//        list.add("2019-02-15");
+//        list.add("2019-04-15");
 
 
      //   monthCalendar.setPointList(list);

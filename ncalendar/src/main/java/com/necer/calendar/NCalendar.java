@@ -206,18 +206,18 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
 
     @Override
-    public void onMonthSelect(NDate date, boolean isClick) {
+    public void onMonthSelect(NDate date) {
         if (STATE == Attrs.MONTH) {
             //月日历变化,改变周的选中
             weekCalendar.jumpDate(date.localDate, true);
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(date, isClick);
+                onCalendarChangedListener.onCalendarDateChanged(date);
             }
         }
     }
 
     @Override
-    public void onWeekSelect(NDate date, boolean isClick) {
+    public void onWeekSelect(NDate date) {
         if (STATE == Attrs.WEEK) {
             //周日历变化，改变月的选中
             monthCalendar.jumpDate(date.localDate, true);
@@ -230,7 +230,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
                 }
             });
             if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(date, isClick);
+                onCalendarChangedListener.onCalendarDateChanged(date);
             }
         }
     }

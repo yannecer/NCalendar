@@ -163,7 +163,7 @@ public class Util {
      * @param type      300，周日，301周一
      * @return
      */
-    public static List<NDate> getMonthCalendar(LocalDate localDate, int type) {
+    public static List<LocalDate> getMonthCalendar(LocalDate localDate, int type) {
 
         LocalDate lastMonthDate = localDate.plusMonths(-1);//上个月
         LocalDate nextMonthDate = localDate.plusMonths(1);//下个月
@@ -173,7 +173,7 @@ public class Util {
         int firstDayOfWeek = new LocalDate(localDate.getYear(), localDate.getMonthOfYear(), 1).getDayOfWeek();//当月第一天周几
         int endDayOfWeek = new LocalDate(localDate.getYear(), localDate.getMonthOfYear(), days).getDayOfWeek();//当月最后一天周几
 
-        List<NDate> dateList = new ArrayList<>();
+        List<LocalDate> dateList = new ArrayList<>();
 
 
         //周一开始的
@@ -182,15 +182,15 @@ public class Util {
             //周一开始的
             for (int i = 0; i < firstDayOfWeek - 1; i++) {
                 LocalDate date = new LocalDate(lastMonthDate.getYear(), lastMonthDate.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 2));
-                dateList.add(getNDate(date));
+                dateList.add(date);
             }
             for (int i = 0; i < days; i++) {
                 LocalDate date = new LocalDate(localDate.getYear(), localDate.getMonthOfYear(), i + 1);
-                dateList.add(getNDate(date));
+                dateList.add(date);
             }
             for (int i = 0; i < 7 - endDayOfWeek; i++) {
                 LocalDate date = new LocalDate(nextMonthDate.getYear(), nextMonthDate.getMonthOfYear(), i + 1);
-                dateList.add(getNDate(date));
+                dateList.add(date);
             }
 
         } else {
@@ -198,13 +198,13 @@ public class Util {
             if (firstDayOfWeek != 7) {
                 for (int i = 0; i < firstDayOfWeek; i++) {
                     LocalDate date = new LocalDate(lastMonthDate.getYear(), lastMonthDate.getMonthOfYear(), lastMonthDays - (firstDayOfWeek - i - 1));
-                    dateList.add(getNDate(date));
+                    dateList.add(date);
                 }
             }
             //当月
             for (int i = 0; i < days; i++) {
                 LocalDate date = new LocalDate(localDate.getYear(), localDate.getMonthOfYear(), i + 1);
-                dateList.add(getNDate(date));
+                dateList.add(date);
             }
             //下个月
             if (endDayOfWeek == 7) {
@@ -212,7 +212,7 @@ public class Util {
             }
             for (int i = 0; i < 6 - endDayOfWeek; i++) {
                 LocalDate date = new LocalDate(nextMonthDate.getYear(), nextMonthDate.getMonthOfYear(), i + 1);
-                dateList.add(getNDate(date));
+                dateList.add(date);
             }
         }
 
@@ -220,7 +220,7 @@ public class Util {
         if (dateList.size() == 28) {
             for (int i = 0; i < 7; i++) {
                 LocalDate date = new LocalDate(nextMonthDate.getYear(), nextMonthDate.getMonthOfYear(), i + 1);
-                dateList.add(getNDate(date));
+                dateList.add(date);
             }
         }
         return dateList;
@@ -234,8 +234,8 @@ public class Util {
      * @param localDate
      * @return
      */
-    public static List<NDate> getWeekCalendar(LocalDate localDate, int type) {
-        List<NDate> dateList = new ArrayList<>();
+    public static List<LocalDate> getWeekCalendar(LocalDate localDate, int type) {
+        List<LocalDate> dateList = new ArrayList<>();
 
         if (type == Attrs.MONDAY) {
             localDate = getMonFirstDayOfWeek(localDate);
@@ -245,7 +245,7 @@ public class Util {
 
         for (int i = 0; i < 7; i++) {
             LocalDate date = localDate.plusDays(i);
-            dateList.add(getNDate(date));
+            dateList.add(date);
         }
         return dateList;
     }
