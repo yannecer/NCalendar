@@ -76,8 +76,8 @@ public class TestMiui9Activity extends BaseActivity {
         tv_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                miui9Calendar.toToday();
-
+             //   miui9Calendar.toToday();
+                miui9Calendar.jumpDate("2019-10-10");
             }
         });
 
