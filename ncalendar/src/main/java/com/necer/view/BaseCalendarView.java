@@ -58,6 +58,10 @@ public abstract class BaseCalendarView extends View {
       //  mSelectListDate = new ArrayList<>();
         mRectList = new ArrayList<>();
         mLineNum = mDateList.size() / 7;//天数/7
+
+
+
+
     }
 
 
@@ -94,7 +98,12 @@ public abstract class BaseCalendarView extends View {
                             calendarPainter.onDrawCurrentMonthOrWeek(canvas, rect, Util.getNDate(date), false);
                         }
                     } else {  //不是当月的日历
-                        calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date));
+                        if (mSelectListDate.contains(date)) {
+                            calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date),true);
+                        } else {
+                            calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date),false);
+                        }
+
                     }
                 } else { //日期区间之外的日期
                     calendarPainter.onDrawDisableDate(canvas, rect, Util.getNDate(date));

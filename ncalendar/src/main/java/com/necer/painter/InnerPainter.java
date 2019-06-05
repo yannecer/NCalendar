@@ -107,11 +107,21 @@ public class InnerPainter implements CalendarPainter {
     }
 
     @Override
-    public void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate) {
-        drawOtherSolar(canvas, rect, mAttrs.alphaColor, nDate.localDate);
-        drawLunar(canvas, rect, false, mAttrs.alphaColor, nDate);
-        drawPoint(canvas, rect, false, mAttrs.alphaColor, nDate.localDate);
-        drawHolidays(canvas, rect, false, mAttrs.alphaColor, nDate.localDate);
+    public void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate,boolean isSelect) {
+
+        if (isSelect) {
+            drawHollowCircle(canvas, rect);
+            drawOtherSolar(canvas, rect, mAttrs.alphaColor, nDate.localDate);
+            drawLunar(canvas, rect, false, mAttrs.alphaColor, nDate);
+            drawPoint(canvas, rect, false, mAttrs.alphaColor, nDate.localDate);
+            drawHolidays(canvas, rect, false, mAttrs.alphaColor, nDate.localDate);
+        } else {
+            drawOtherSolar(canvas, rect, mAttrs.alphaColor, nDate.localDate);
+            drawLunar(canvas, rect, false, mAttrs.alphaColor, nDate);
+            drawPoint(canvas, rect, false, mAttrs.alphaColor, nDate.localDate);
+            drawHolidays(canvas, rect, false, mAttrs.alphaColor, nDate.localDate);
+        }
+
     }
 
 

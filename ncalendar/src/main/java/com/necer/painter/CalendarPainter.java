@@ -43,7 +43,7 @@ public interface CalendarPainter {
      * @param rect
      * @param nDate
      */
-    void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate);
+    void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate,boolean isSelect);
 
 
     /**

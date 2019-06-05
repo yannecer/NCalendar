@@ -63,7 +63,7 @@ public class CustomPainter implements CalendarPainter {
     }
 
     @Override
-    public void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate) {
+    public void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate,boolean isSelect) {
         paint.setColor(Color.LTGRAY);
         canvas.drawText(nDate.localDate.getDayOfMonth() + "", rect.centerX(), getBaseLineY(rect), paint);
     }

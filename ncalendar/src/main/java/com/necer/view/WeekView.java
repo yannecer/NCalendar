@@ -16,24 +16,18 @@ import java.util.List;
  */
 public class WeekView extends BaseCalendarView {
 
-   // private OnClickWeekViewListener mOnClickWeekViewListener;
 
     public WeekView(Context context,LocalDate initialDate, List<LocalDate> dateList) {
         super(context,initialDate, dateList);
-
     }
 
     @Override
     protected void onClickDate(LocalDate localDate, LocalDate initialDate) {
-//        if (mOnClickWeekViewListener == null) {
-//            mOnClickWeekViewListener = (OnClickWeekViewListener) mCalendar;
-//        }
-//        mOnClickWeekViewListener.onClickCurrentWeek(nDate);
-        mCalendar.onClickCurrectWeekDate(localDate);
+        mCalendar.onClickCurrectMonthOrWeekDate(localDate);
     }
 
     @Override
     public boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
-        return mDateList.contains(new NDate(date));
+        return mDateList.contains(date);
     }
 }

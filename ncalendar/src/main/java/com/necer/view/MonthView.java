@@ -15,29 +15,18 @@ import java.util.List;
  * qq群：127278900
  */
 public class MonthView extends BaseCalendarView {
-
-    // private OnClickMonthViewListener mOnClickMonthViewListener;
-
     public MonthView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
         super(context, initialDate, dateList);
 
     }
-
-
     @Override
     protected void onClickDate(LocalDate localDate, LocalDate initialDate) {
-//        if (mOnClickMonthViewListener == null) {
-//            mOnClickMonthViewListener = (OnClickMonthViewListener) mCalendar;
-//        }
         if (Util.isLastMonth(localDate, initialDate)) {
-            //mOnClickMonthViewListener.onClickLastMonth(localDate);
             mCalendar.onClickLastMonthDate(localDate);
         } else if (Util.isNextMonth(localDate, initialDate)) {
-            // mOnClickMonthViewListener.onClickNextMonth(localDate);
             mCalendar.onClickNextMonthDate(localDate);
         } else {
-            //  mOnClickMonthViewListener.onClickCurrentMonth(localDate);
-            mCalendar.onClickCurrectMonthDate(localDate);
+            mCalendar.onClickCurrectMonthOrWeekDate(localDate);
         }
     }
 
