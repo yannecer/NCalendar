@@ -7,7 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.necer.MyLog;
 import com.necer.ncalendar.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +22,17 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tvVersion = (TextView) findViewById(R.id.tv_version);
         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
+
+
+        List<String> list = new ArrayList<>();
+
+        list.add("aaa");
+        list.add("aaa");
+        list.add("aaa");
+        list.add("aaa");
+
+        MyLog.d("list:::"+list.size());
+
 
     }
 

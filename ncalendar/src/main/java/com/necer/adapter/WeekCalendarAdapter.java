@@ -2,6 +2,7 @@ package com.necer.adapter;
 
 import android.content.Context;
 
+import com.necer.MyLog;
 import com.necer.listener.OnClickWeekViewListener;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
@@ -23,13 +24,23 @@ public class WeekCalendarAdapter extends BaseCalendarAdapter {
 
     @Override
     protected BaseCalendarView getCalendarView(int position) {
-        LocalDate localDate = mInitializeDate.plusDays((position - mCount) * 7);
+        LocalDate localDate = mInitializeDate.plusDays((position - mCurr) * 7);
         List<LocalDate> dateList = Util.getWeekCalendar(localDate, mFirstDayOfWeek);
+
+        MyLog.d("localDate:::" + mInitializeDate);
+        MyLog.d("localDate:::" + localDate);
+        MyLog.d("localDate:::" + dateList);
+
         return new WeekView(mContext, localDate, dateList);
     }
 
     @Override
     protected int getIntervalCount(LocalDate startDate, LocalDate endDate, int type) {
+
+        MyLog.d("startDate::::111:::" + startDate);
+        MyLog.d("startDate::::333:::" + endDate);
+
+
         return Util.getIntervalWeek(startDate, endDate, type);
     }
 }

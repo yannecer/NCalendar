@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.necer.MyLog;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
+import com.necer.listener.OnDateChangeListener;
 import com.necer.listener.OnMonthAnimatorListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnWeekSelectListener;
@@ -26,13 +28,15 @@ import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.view.ChildLayout;
 
+import org.joda.time.LocalDate;
+
 import java.util.List;
 
 
 /**
  * Created by necer on 2018/11/12.
  */
-public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, OnCalendarStateChangedListener, OnMonthAnimatorListener, OnMonthSelectListener, OnWeekSelectListener {
+public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, OnCalendarStateChangedListener, OnMonthAnimatorListener {
 
 
     protected WeekCalendar weekCalendar;
@@ -83,8 +87,11 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         monthCalendar = new MonthCalendar(context, attrss, calendarPainter, duration, this);
         childLayout = new ChildLayout(getContext(), attrs, monthHeight, duration, this);
 
-        monthCalendar.setOnMonthSelectListener(this);
-        weekCalendar.setOnWeekSelectListener(this);
+      //  monthCalendar.setOnMonthSelectListener(this);
+      //  weekCalendar.setOnWeekSelectListener(this);
+        monthCalendar.setOnDateChangeListener(onDateChangeListener);
+        weekCalendar.setOnDateChangeListener(onDateChangeListener);
+
 
         childLayout.setBackgroundColor(attrss.bgChildColor);
 
@@ -106,6 +113,41 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             }
         });
     }
+
+
+    private OnDateChangeListener onDateChangeListener = new OnDateChangeListener() {
+        @Override
+        public void onDateChange(BaseCalendar baseCalendar, LocalDate localDate,List<LocalDate> dateList) {
+
+            MyLog.d("baseCalendar:1111::" + baseCalendar);
+            MyLog.d("baseCalendar:2222::" + localDate);
+
+            if (baseCalendar == monthCalendar && STATE == Attrs.MONTH) {
+                //月日历变化,改变周的选中
+                weekCalendar.jump(localDate);
+                weekCalendar.setSelectDateList(dateList);
+                if (onCalendarChangedListener != null) {
+                    //onCalendarChangedListener.onCalendarDateChanged(date);
+                }
+            } else if (baseCalendar == weekCalendar && STATE == Attrs.WEEK) {
+                //周日历变化，改变月的选中
+                monthCalendar.jump(localDate);
+                monthCalendar.setSelectDateList(dateList);
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //此时需要根据月日历的选中日期调整Y值
+                        // post是因为在前面得到当前view是再post中完成，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
+                        monthCalendar.setY(getMonthYOnWeekState());
+                    }
+                });
+                if (onCalendarChangedListener != null) {
+                    //onCalendarChangedListener.onCalendarDateChanged(date);
+                }
+            }
+
+        }
+    };
 
     /**
      * 根据ChildLayout的自动滑动结束的状态来设置月周日历的状态
@@ -204,36 +246,36 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
-
-    @Override
-    public void onMonthSelect(NDate date) {
-        if (STATE == Attrs.MONTH) {
-            //月日历变化,改变周的选中
-            weekCalendar.jumpDate(date.localDate, true);
-            if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(date);
-            }
-        }
-    }
-
-    @Override
-    public void onWeekSelect(NDate date) {
-        if (STATE == Attrs.WEEK) {
-            //周日历变化，改变月的选中
-            monthCalendar.jumpDate(date.localDate, true);
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    //此时需要根据月日历的选中日期调整Y值
-                    // post是因为在前面得到当前view是再post中完成，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
-                    monthCalendar.setY(getMonthYOnWeekState());
-                }
-            });
-            if (onCalendarChangedListener != null) {
-                onCalendarChangedListener.onCalendarDateChanged(date);
-            }
-        }
-    }
+//
+//    @Override
+//    public void onMonthSelect(NDate date) {
+//        if (STATE == Attrs.MONTH) {
+//            //月日历变化,改变周的选中
+//            weekCalendar.jumpDate(date.localDate, true);
+//            if (onCalendarChangedListener != null) {
+//                onCalendarChangedListener.onCalendarDateChanged(date);
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void onWeekSelect(NDate date) {
+//        if (STATE == Attrs.WEEK) {
+//            //周日历变化，改变月的选中
+//            monthCalendar.jumpDate(date.localDate, true);
+//            post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    //此时需要根据月日历的选中日期调整Y值
+//                    // post是因为在前面得到当前view是再post中完成，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
+//                    monthCalendar.setY(getMonthYOnWeekState());
+//                }
+//            });
+//            if (onCalendarChangedListener != null) {
+//                onCalendarChangedListener.onCalendarDateChanged(date);
+//            }
+//        }
+//    }
 
 
     @Override

@@ -17,6 +17,7 @@ import com.necer.listener.OnMonthSelectListener;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+import com.necer.view.BaseCalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -114,8 +115,10 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
 
 
     public int getMonthCalendarOffset() {
-        if (mCurrView != null) {
-            return mCurrView.getMonthCalendarOffset();
+
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            return currectCalendarView.getMonthCalendarOffset();
         }
         return 0;
     }

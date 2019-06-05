@@ -38,8 +38,8 @@ public class TestMonthWeekActivity extends BaseActivity {
     @Override
     protected void onCreatee() {
 //
-        monthCalendar = findViewById(R.id.monthCalendar);
-        weekCalendar = findViewById(R.id.weekCalendar);
+     //   monthCalendar = findViewById(R.id.monthCalendar);
+       // weekCalendar = findViewById(R.id.weekCalendar);
 //
 //        tv_date = findViewById(R.id.tv_date);
 //
@@ -69,7 +69,7 @@ public class TestMonthWeekActivity extends BaseActivity {
     public void toToday(View view) {
 
 
-        monthCalendar.jump("2019-01-10");
+      //  monthCalendar.jump("2019-01-10");
 
 
 

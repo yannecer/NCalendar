@@ -202,7 +202,7 @@ public abstract class BaseCalendarView extends View {
     public int getMonthCalendarOffset() {
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
-        int selectIndex = mSelectListDate.size() == 0 ? 0 : mDateList.indexOf(mSelectListDate.get(0)) / 7;
+        int selectIndex = (mSelectListDate == null || mSelectListDate.size() == 0) ? 0 : mDateList.indexOf(mSelectListDate.get(0)) / 7;
         if (mLineNum == 5) {
             //5行的月份
             monthCalendarOffset = getMeasuredHeight() / 5 * selectIndex;
@@ -225,4 +225,5 @@ public abstract class BaseCalendarView extends View {
             return false;
         }
     }
+
 }

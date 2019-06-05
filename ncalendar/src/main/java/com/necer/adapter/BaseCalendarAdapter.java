@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.necer.MyLog;
 import com.necer.utils.Attrs;
 import com.necer.view.BaseCalendarView;
 
