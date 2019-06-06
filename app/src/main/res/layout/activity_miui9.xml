@@ -57,6 +57,7 @@
     <com.necer.calendar.Miui9Calendar
         android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
+        android:background="#00000000"
         android:layout_height="match_parent"
         app:calendarHeight="300dp"
         app:defaultCalendar="week">

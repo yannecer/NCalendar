@@ -36,7 +36,6 @@ public abstract class BaseCalendar extends ViewPager {
     private Context mContext;
 
     private Attrs attrs;
-   // protected BaseCalendarView mCurrView;//当前显示的页面
 
     //这两个不能同时为真
     private boolean isDefaultSelect = false; //默认选中 不能多选
@@ -50,7 +49,7 @@ public abstract class BaseCalendar extends ViewPager {
 
     protected CalendarPainter mCalendarPainter;
 
-    private List<LocalDate> mSelectDateList;
+    private List<LocalDate> mAllSelectDateList;
 
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
@@ -70,8 +69,8 @@ public abstract class BaseCalendar extends ViewPager {
 
     private void init(Context context) {
         this.mContext = context;
-        mSelectDateList = new ArrayList<>();
-        mSelectDateList.add(new LocalDate());
+        mAllSelectDateList = new ArrayList<>();
+        mAllSelectDateList.add(new LocalDate());
 
         post(new Runnable() {
             @Override
@@ -158,6 +157,8 @@ public abstract class BaseCalendar extends ViewPager {
         initDate(initializeDate);
     }
 
+
+
     private void drawView(int position) {
         BaseCalendarView currectCalendarView = findViewWithTag(position);
         if (currectCalendarView == null) {
@@ -166,14 +167,15 @@ public abstract class BaseCalendar extends ViewPager {
 
         if (isDefaultSelect) {//默认选中，只有一种情况 单选
             LocalDate initialDate = currectCalendarView.getInitialDate();//当前页面初始化的日期
-            LocalDate lastDate = mSelectDateList.get(0);//上个页面选中的日期
+            LocalDate lastDate = mAllSelectDateList.get(0);//上个页面选中的日期
             //当前面页面的初始值和上个页选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
             int currNum = getTwoDateCount(lastDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
             LocalDate localDate = getDate(lastDate, currNum);
-            mSelectDateList.clear();
-            mSelectDateList.add(localDate);
+            mAllSelectDateList.clear();
+            mAllSelectDateList.add(localDate);
             currectCalendarView.invalidate();
         } else {//不默认选中，分为两种情况，1、单选 2、多选  这两种情况只需要绘制页面
+
             currectCalendarView.invalidate();
         }
 
@@ -211,8 +213,8 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-    public List<LocalDate> getSelectDateList() {
-        return mSelectDateList;
+    public List<LocalDate> getAllSelectDateList() {
+        return mAllSelectDateList;
     }
 
     //回去viewpager的adapter
@@ -283,7 +285,7 @@ public abstract class BaseCalendar extends ViewPager {
             throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
         }
 
-        jump(jumpDate);
+        jump(jumpDate,true);
     }
 
     //回到今天
@@ -316,48 +318,60 @@ public abstract class BaseCalendar extends ViewPager {
     public void onClickCurrectMonthOrWeekDate(LocalDate localDate) {
         if (isMultiple) {
             //多选  集合不包含就添加，包含就移除
-            if (!mSelectDateList.contains(localDate)) {
-                mSelectDateList.add(localDate);
+            if (!mAllSelectDateList.contains(localDate)) {
+                mAllSelectDateList.add(localDate);
             } else {
-                mSelectDateList.remove(localDate);
+                mAllSelectDateList.remove(localDate);
             }
             notifyAllView();
             //当前页面选中改变，需要回调
-            callBack();
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    callBack();
+                }
+            });
         } else {
             //单选  集合中有且只有一个元素 ，不包含就清空集合添加，包含该元素不做处理，因为前面已经绘制
-            if (!mSelectDateList.contains(localDate)) {
-                mSelectDateList.clear();
-                mSelectDateList.add(localDate);
+            if (!mAllSelectDateList.contains(localDate)) {
+                mAllSelectDateList.clear();
+                mAllSelectDateList.add(localDate);
                 notifyAllView();
                 //当前页面选中改变，需要回调
-                callBack();
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack();
+                    }
+                });
+
             }
         }
     }
 
     public void onClickLastMonthDate(LocalDate localDate) {
-        jump(localDate);
+        jump(localDate,true);
     }
 
 
     public void onClickNextMonthDate(LocalDate localDate) {
-        jump(localDate);
+        jump(localDate,true);
     }
 
-    public void jump(LocalDate localDate) {
+
+    public void jump(LocalDate localDate,boolean isDraw) {
         BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         int indexOffset = getTwoDateCount(localDate, currectCalendarView.getInitialDate(), attrs.firstDayOfWeek);//得出两个页面相差几个
         if (isMultiple) {
             //多选  点击的日期不清除，只翻页，如果需要清除，等到翻页之后再次点击
-            if (!mSelectDateList.contains(localDate)) {
-                mSelectDateList.add(localDate);
+            if (!mAllSelectDateList.contains(localDate) && isDraw) {
+                mAllSelectDateList.add(localDate);
             }
         } else {
             //单选
-            if (!mSelectDateList.contains(localDate)) {
-                mSelectDateList.clear();
-                mSelectDateList.add(localDate);
+            if (!mAllSelectDateList.contains(localDate)&& isDraw) {
+                mAllSelectDateList.clear();
+                mAllSelectDateList.add(localDate);
             }
         }
         setCurrentItem(getCurrentItem() - indexOffset, Math.abs(indexOffset) == 1);
@@ -367,11 +381,11 @@ public abstract class BaseCalendar extends ViewPager {
         BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         LocalDate initialDate = currectCalendarView.getInitialDate();
         if (onCalendarChangeListener != null) {
-            onCalendarChangeListener.onCalendarChange(this, initialDate.getYear(), initialDate.getMonthOfYear(), mSelectDateList);
+            onCalendarChangeListener.onCalendarChange(this, initialDate.getYear(), initialDate.getMonthOfYear(), currectCalendarView.getCurrentSelectDateList(),mAllSelectDateList);
         }
 
         if (onDateChangeListener != null) {
-            onDateChangeListener.onDateChange(this, mSelectDateList.size() == 0 ? new LocalDate(initialDate.getYear(), initialDate.getMonthOfYear(), 1) : mSelectDateList.get(0), mSelectDateList);
+            onDateChangeListener.onDateChange(this,currectCalendarView.getPivot(), mAllSelectDateList);
         }
 
 
@@ -379,11 +393,12 @@ public abstract class BaseCalendar extends ViewPager {
      //   MyLog.d("initialDate:2222::"+initialDate);
 
 
+
     }
 
     public void setSelectDateList(List<LocalDate> dateList) {
-        mSelectDateList.clear();
-        mSelectDateList.addAll(dateList);
+        mAllSelectDateList.clear();
+        mAllSelectDateList.addAll(dateList);
         notifyAllView();
     }
 

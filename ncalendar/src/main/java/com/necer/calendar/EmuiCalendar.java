@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 
+import org.joda.time.LocalDate;
+
 /**
  * 华为日历
  * Created by necer on 2018/11/14.
@@ -33,7 +35,7 @@ public class EmuiCalendar extends NCalendar {
     }
 
     @Override
-    protected float getMonthYOnWeekState() {
+    protected float getMonthYOnWeekState(LocalDate localDate) {
         return weekHeight - monthHeight;
     }
 

@@ -35,11 +35,11 @@
         android:layout_height="50dp"
         android:background="#cccccc" />
 
-    <com.necer.calendar.WeekCalendar
-        android:id="@+id/weekCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:disabledString="试试"
-        app:lunarTextColor="#00aa00" />
+    <!--<com.necer.calendar.WeekCalendar-->
+        <!--android:id="@+id/weekCalendar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--app:disabledString="试试"-->
+        <!--app:lunarTextColor="#00aa00" />-->
 
 </LinearLayout>

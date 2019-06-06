@@ -21,6 +21,8 @@ import com.necer.view.BaseCalendarView;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 /**
  * Created by necer on 2018/9/11.
  * qq群：127278900
@@ -43,7 +45,7 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
     }
 
     public MonthCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
-        super(context, attrs,calendarPainter);
+        super(context, attrs, calendarPainter);
         this.onMonthAnimatorListener = onMonthAnimatorListener;
         monthValueAnimator = new ValueAnimator();
         monthValueAnimator.setDuration(duration);
@@ -113,14 +115,35 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
         this.onMonthSelectListener = onMonthSelectListener;
     }
 
+    public void setLocation(LocalDate localDate) {
+        int monthCalendarOffset = getMonthCalendarOffset(localDate);
+        setY(-monthCalendarOffset);
+    }
+
+
+    public int getMonthCalendarOffset(LocalDate localDate) {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            return currectCalendarView.getMonthCalendarOffset(localDate);
+        }
+        return 0;
+    }
+
+    public LocalDate getPivot() {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        return currectCalendarView.getPivot();
+    }
 
     public int getMonthCalendarOffset() {
 
         BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         if (currectCalendarView != null) {
+
             return currectCalendarView.getMonthCalendarOffset();
         }
+
         return 0;
+
     }
 
     public void autoToMonth() {

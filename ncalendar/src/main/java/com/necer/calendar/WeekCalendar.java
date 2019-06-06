@@ -14,6 +14,7 @@ import com.necer.listener.OnWeekSelectListener;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
+import com.necer.view.BaseCalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -73,16 +74,12 @@ public class WeekCalendar extends BaseCalendar{
         }
     }
 
-//    @Override
-//    public void onClickCurrentWeek(LocalDate localDate) {
-//        if (isClickDateEnable(localDate)) {
-//            onClickDate(localDate,0);
-//        } else{
-//            onClickDisableDate(localDate);
-//        }
-//    }
-//
     public void setOnWeekSelectListener(OnWeekSelectListener onWeekSelectListener) {
         this.onWeekSelectListener = onWeekSelectListener;
+    }
+
+    public LocalDate getPivot() {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        return currectCalendarView.getPivot();
     }
 }

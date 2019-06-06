@@ -8,12 +8,16 @@ import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
 import com.necer.entity.NDate;
+import com.necer.listener.OnCalendarChangeListener;
+import com.necer.listener.OnDateChangeListener;
 import com.necer.listener.OnMonthSelectListener;
 import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.ncalendar.CustomPainter;
 import com.necer.ncalendar.R;
 import com.necer.painter.CalendarPainter;
 import com.necer.painter.InnerPainter;
+
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,39 +42,27 @@ public class TestMonthWeekActivity extends BaseActivity {
     @Override
     protected void onCreatee() {
 //
-     //   monthCalendar = findViewById(R.id.monthCalendar);
-       // weekCalendar = findViewById(R.id.weekCalendar);
-//
-//        tv_date = findViewById(R.id.tv_date);
-//
-//        //  monthCalendar.setDateInterval("2018-12-01", "2019-01-2");
-//
-//        // monthCalendar.setPainter(new CustomPainter(this));
-//
-//
-//        monthCalendar.setOnMonthSelectListener(new OnMonthSelectListener() {
-//            @Override
-//            public void onMonthSelect(NDate date) {
-//
-//                MyLog.d("onMonthSelect::::" + date.localDate);
-//                MyLog.d("onMonthSelect::222::" );
-//            }
-//        });
-//
-//
-//        monthCalendar.setOnYearMonthChangeListener(new OnYearMonthChangedListener() {
-//            @Override
-//            public void onYearMonthChanged(BaseCalendar baseCalendar, int year, int month, boolean isClick) {
-//            }
-//        });
+        monthCalendar = findViewById(R.id.monthCalendar);
+        // weekCalendar = findViewById(R.id.weekCalendar);
+
+
+        monthCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
+            @Override
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currentSelectDateList, List<LocalDate> allSelectDateList) {
+                MyLog.d("onCalendarChange:11::" + year);
+                MyLog.d("onCalendarChange:22::" + month);
+                MyLog.d("onCalendarChange:33::" + currentSelectDateList);
+                MyLog.d("onCalendarChange:44::" + allSelectDateList);
+            }
+        });
+
 
     }
 
     public void toToday(View view) {
+        monthCalendar.jump(new LocalDate("2018-10-10"),false);
 
-
-      //  monthCalendar.jump("2019-01-10");
-
+        //  monthCalendar.jump("2019-01-10");
 
 
         //  weekCalendar.toToday();
@@ -91,9 +83,9 @@ public class TestMonthWeekActivity extends BaseActivity {
 //        list.add("2019-04-15");
 
 
-     //   monthCalendar.setPointList(list);
+        //   monthCalendar.setPointList(list);
 
-     //   monthCalendar.notifyAllView();
+        //   monthCalendar.notifyAllView();
 
     }
 }

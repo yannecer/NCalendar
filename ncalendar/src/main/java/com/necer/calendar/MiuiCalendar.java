@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 
 import com.necer.MyLog;
 
+import org.joda.time.LocalDate;
+
 
 /**
  * Created by necer on 2018/11/15.
@@ -31,8 +33,12 @@ public abstract class MiuiCalendar extends NCalendar{
     }
 
     @Override
-    protected float getMonthYOnWeekState() {
-        return -monthCalendar.getMonthCalendarOffset();
+    protected float getMonthYOnWeekState(LocalDate localDate) {
+
+
+
+
+        return -monthCalendar.getMonthCalendarOffset(localDate);
     }
 
     @Override

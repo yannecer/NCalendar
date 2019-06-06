@@ -43,13 +43,17 @@ public abstract class BaseCalendarView extends View {
      */
 
 
+    private LocalDate pivot;//支点数据  默认是第一个数据
+
     private int mLineNum;//行数
     protected LocalDate mInitialDate;//由mInitialDate和周开始的第一天 算出当前页面的数据
     protected List<Rect> mRectList;//点击用的矩形集合
     protected List<LocalDate> mDateList;//页面的数据集合
 
-    private List<LocalDate> mSelectListDate;//当前页面选中的日期
+    private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
     protected BaseCalendar mCalendar;
+
+    private List<LocalDate> mCurrentSelectDateList;//当前月份选中的日期
 
     public BaseCalendarView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
         super(context);
@@ -59,8 +63,10 @@ public abstract class BaseCalendarView extends View {
         mRectList = new ArrayList<>();
         mLineNum = mDateList.size() / 7;//天数/7
 
+        mCurrentSelectDateList = new ArrayList<>();
 
 
+        pivot = mDateList.get(0);
 
     }
 
@@ -70,7 +76,7 @@ public abstract class BaseCalendarView extends View {
 
         if (mCalendar == null) {
             mCalendar = (BaseCalendar) getParent();
-            mSelectListDate = mCalendar.getSelectDateList();
+            mAllSelectListDate = mCalendar.getAllSelectDateList();
         }
 
         LocalDate startDate = mCalendar.getStartDate();
@@ -78,6 +84,7 @@ public abstract class BaseCalendarView extends View {
         CalendarPainter calendarPainter = mCalendar.getCalendarPainter();
 
         mRectList.clear();
+        mCurrentSelectDateList.clear();
 
         for (int i = 0; i < mLineNum; i++) {
             for (int j = 0; j < 7; j++) {
@@ -88,17 +95,19 @@ public abstract class BaseCalendarView extends View {
                 //在可用区间内的正常绘制，
                 if (!(date.isBefore(startDate) || date.isAfter(endDate))) {
                     if (isEqualsMonthOrWeek(date, mInitialDate)) {  //当月和上下月的颜色不同
-                        if (Util.isToday(date) && mSelectListDate.contains(date)) {  //当天且选中的当天
+                        if (Util.isToday(date) && mAllSelectListDate.contains(date)) {  //当天且选中的当天
+                            mCurrentSelectDateList.add(date);
                             calendarPainter.onDrawToday(canvas, rect, Util.getNDate(date),true);
-                        } else if (Util.isToday(date) && !mSelectListDate.contains(date)) { //当天但选中的不是今天
+                        } else if (Util.isToday(date) && !mAllSelectListDate.contains(date)) { //当天但选中的不是今天
                             calendarPainter.onDrawToday(canvas, rect, Util.getNDate(date),false);
-                        } else if (mSelectListDate.contains(date)) { //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
+                        } else if (mAllSelectListDate.contains(date)) { //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
+                            mCurrentSelectDateList.add(date);
                             calendarPainter.onDrawCurrentMonthOrWeek(canvas, rect, Util.getNDate(date), true);
                         } else { //当月其他的日历绘制
                             calendarPainter.onDrawCurrentMonthOrWeek(canvas, rect, Util.getNDate(date), false);
                         }
                     } else {  //不是当月的日历
-                        if (mSelectListDate.contains(date)) {
+                        if (mAllSelectListDate.contains(date)) {
                             calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date),true);
                         } else {
                             calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date),false);
@@ -110,6 +119,9 @@ public abstract class BaseCalendarView extends View {
                 }
             }
         }
+
+
+        MyLog.d("mCurrentSelectDateList::" + mCurrentSelectDateList);
     }
 
     //获取每个元素矩形
@@ -176,33 +188,16 @@ public abstract class BaseCalendarView extends View {
     });
 
 
-    //设置选中的日期 并绘制
-//    public void setMultipleSelectDateList(List<LocalDate> selectListDate) {
-//        mSelectListDate.clear();
-//        for (int i = 0; i < selectListDate.size(); i++) {
-//            if (isEqualsMonthOrWeek(mInitialDate, selectListDate.get(i))) {
-//                mSelectListDate.add(selectListDate.get(i));
-//            }
-//        }
-//        invalidate();
-//    }
-//
-//    public List<LocalDate> getSelectDateList() {
-//        return mSelectListDate;
-//
-//    }
-
-//    public void setSelectDate(LocalDate localDate) {
-//        mSelectListDate.clear();
-//        mSelectListDate.add(localDate);
-//        invalidate();
-//    }
-
     //选中的日期到顶部的距离
-    public int getMonthCalendarOffset() {
+    public int getMonthCalendarOffset(LocalDate localDate) {
+
+        MyLog.d("getMonthCalendarOffset::2222:" + pivot);
+
+        this.pivot = localDate;
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
-        int selectIndex = (mSelectListDate == null || mSelectListDate.size() == 0) ? 0 : mDateList.indexOf(mSelectListDate.get(0)) / 7;
+     //   int selectIndex = mCurrentSelectDateList.size() == 0 ? 0 : mDateList.indexOf(mCurrentSelectDateList.get(0)) / 7;
+        int selectIndex = mDateList.indexOf(localDate)/7;
         if (mLineNum == 5) {
             //5行的月份
             monthCalendarOffset = getMeasuredHeight() / 5 * selectIndex;
@@ -212,6 +207,25 @@ public abstract class BaseCalendarView extends View {
             monthCalendarOffset = rectHeight6 * selectIndex;
         }
         return monthCalendarOffset;
+    }
+
+
+
+    public int getMonthCalendarOffset() {
+
+
+        MyLog.d("getMonthCalendarOffset::1111:" + pivot);
+
+        return getMonthCalendarOffset(mCurrentSelectDateList.size()==0?pivot:mCurrentSelectDateList.get(0));
+    }
+
+
+    public List<LocalDate> getCurrentSelectDateList() {
+        return mCurrentSelectDateList;
+    }
+
+    public LocalDate getPivot() {
+        return mCurrentSelectDateList.size()==0?pivot:mCurrentSelectDateList.get(0);
     }
 
 
