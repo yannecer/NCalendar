@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Created by necer on 2018/11/12.
  */
-public abstract class NCalendar extends FrameLayout implements NestedScrollingParent,  OnMonthAnimatorListener, ValueAnimator.AnimatorUpdateListener {
+public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener {
 
 
     protected WeekCalendar weekCalendar;
@@ -400,18 +400,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
 
-    /**
-     * 月日历执行自动滑动动画的回调
-     * 用来控制周日历的显示还是隐藏
-     *
-     * @param offset
-     */
-    @Override
-    public void onMonthAnimatorChanged(int offset) {
-        onSetWeekVisible(offset);
-
-    }
-
     private int dowmY;
     private int downX;
     private int lastY;//上次的y
@@ -611,7 +599,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     public void toMonth() {
         if (STATE == Attrs.WEEK) {
-            onAutoToMonthState();
+            onAutoToMonthState2();
         }
     }
 
@@ -711,7 +699,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
 
-
+        onSetWeekVisible(0);
 
         if (animation == monthValueAnimator) {
             float animatedValue = (float) animation.getAnimatedValue();
@@ -741,6 +729,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         @Override
         public void onAnimationEnd(Animator animation) {
             super.onAnimationEnd(animation);
+
+
 
 
             if (animation == monthValueAnimator) {
