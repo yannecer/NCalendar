@@ -82,4 +82,9 @@ public class WeekCalendar extends BaseCalendar{
         BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         return currectCalendarView.getPivot();
     }
+
+    public LocalDate getFirstDate() {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        return currectCalendarView.getFirstDate();
+    }
 }

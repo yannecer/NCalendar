@@ -28,6 +28,13 @@ public abstract class MiuiCalendar extends NCalendar{
 
     @Override
     protected void onAutoToWeekState() {
+
+
+
+
+
+
+
         monthCalendar.autoToMIUIWeek();
         childLayout.autoToWeek();
     }

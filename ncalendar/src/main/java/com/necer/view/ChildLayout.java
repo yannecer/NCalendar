@@ -22,28 +22,28 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
 
 
     protected View targetView;//实际滑动的view，即RecyclerView等
-    protected ValueAnimator childLayoutValueAnimator;
+   // protected ValueAnimator childLayoutValueAnimator;
     private int monthHeight;
     private int weekHeight;
-    private OnCalendarStateChangedListener onCalendarStateChangedListenerr;
+  //  private OnCalendarStateChangedListener onCalendarStateChangedListenerr;
 
 
-    public ChildLayout(@NonNull Context context, AttributeSet attrs, int monthHeight, int duration, OnCalendarStateChangedListener onCalendarStateChangedListener) {
+    public ChildLayout(@NonNull Context context, AttributeSet attrs, int monthHeight) {
         super(context, attrs);
         this.monthHeight = monthHeight;
         this.weekHeight = monthHeight / 5;
 
-        this.onCalendarStateChangedListenerr = onCalendarStateChangedListener;
-        childLayoutValueAnimator = new ValueAnimator();
-        childLayoutValueAnimator.setDuration(duration);
-        childLayoutValueAnimator.addUpdateListener(this);
-        childLayoutValueAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                onCalendarStateChangedListenerr.onCalendarStateChanged(isMonthState());
-            }
-        });
+//        this.onCalendarStateChangedListenerr = onCalendarStateChangedListener;
+//        childLayoutValueAnimator = new ValueAnimator();
+//        childLayoutValueAnimator.setDuration(duration);
+//        childLayoutValueAnimator.addUpdateListener(this);
+//        childLayoutValueAnimator.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                super.onAnimationEnd(animation);
+//                onCalendarStateChangedListenerr.onCalendarStateChanged(isMonthState());
+//            }
+//        });
     }
 
 
@@ -108,8 +108,8 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     public void autoToMonth() {
         float start = getY();
         int end = monthHeight;
-        childLayoutValueAnimator.setFloatValues(start, end);
-        childLayoutValueAnimator.start();
+ //       childLayoutValueAnimator.setFloatValues(start, end);
+    //    childLayoutValueAnimator.start();
 
     }
 
@@ -117,8 +117,8 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
     public void autoToWeek() {
         float start = getY();
         int end = weekHeight;
-        childLayoutValueAnimator.setFloatValues(start, end);
-        childLayoutValueAnimator.start();
+       // childLayoutValueAnimator.setFloatValues(start, end);
+      //  childLayoutValueAnimator.start();
     }
 
 

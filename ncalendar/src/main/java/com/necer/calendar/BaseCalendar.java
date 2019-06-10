@@ -82,9 +82,7 @@ public abstract class BaseCalendar extends ViewPager {
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(final int position) {
-
                 drawView(position);
-
             }
         });
 
@@ -156,7 +154,6 @@ public abstract class BaseCalendar extends ViewPager {
         }
         initDate(initializeDate);
     }
-
 
 
     private void drawView(int position) {
@@ -285,7 +282,7 @@ public abstract class BaseCalendar extends ViewPager {
             throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
         }
 
-        jump(jumpDate,true);
+        jump(jumpDate, true);
     }
 
     //回到今天
@@ -325,12 +322,7 @@ public abstract class BaseCalendar extends ViewPager {
             }
             notifyAllView();
             //当前页面选中改变，需要回调
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    callBack();
-                }
-            });
+            callBack();
         } else {
             //单选  集合中有且只有一个元素 ，不包含就清空集合添加，包含该元素不做处理，因为前面已经绘制
             if (!mAllSelectDateList.contains(localDate)) {
@@ -338,28 +330,23 @@ public abstract class BaseCalendar extends ViewPager {
                 mAllSelectDateList.add(localDate);
                 notifyAllView();
                 //当前页面选中改变，需要回调
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callBack();
-                    }
-                });
+                callBack();
 
             }
         }
     }
 
     public void onClickLastMonthDate(LocalDate localDate) {
-        jump(localDate,true);
+        jump(localDate, true);
     }
 
 
     public void onClickNextMonthDate(LocalDate localDate) {
-        jump(localDate,true);
+        jump(localDate, true);
     }
 
 
-    public void jump(LocalDate localDate,boolean isDraw) {
+    public void jump(LocalDate localDate, boolean isDraw) {
         BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         int indexOffset = getTwoDateCount(localDate, currectCalendarView.getInitialDate(), attrs.firstDayOfWeek);//得出两个页面相差几个
         if (isMultiple) {
@@ -369,7 +356,7 @@ public abstract class BaseCalendar extends ViewPager {
             }
         } else {
             //单选
-            if (!mAllSelectDateList.contains(localDate)&& isDraw) {
+            if (!mAllSelectDateList.contains(localDate) && isDraw) {
                 mAllSelectDateList.clear();
                 mAllSelectDateList.add(localDate);
             }
@@ -378,22 +365,21 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     private void callBack() {
-        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
-        LocalDate initialDate = currectCalendarView.getInitialDate();
-        if (onCalendarChangeListener != null) {
-            onCalendarChangeListener.onCalendarChange(this, initialDate.getYear(), initialDate.getMonthOfYear(), currectCalendarView.getCurrentSelectDateList(),mAllSelectDateList);
-        }
 
-        if (onDateChangeListener != null) {
-            onDateChangeListener.onDateChange(this,currectCalendarView.getPivot(), mAllSelectDateList);
-        }
+        post(new Runnable() {
+            @Override
+            public void run() {
+                BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+                LocalDate initialDate = currectCalendarView.getInitialDate();
+                if (onCalendarChangeListener != null) {
+                    onCalendarChangeListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currectCalendarView.getCurrentSelectDateList(), mAllSelectDateList);
+                }
 
-
-        MyLog.d("initialDate:11111::"+initialDate);
-     //   MyLog.d("initialDate:2222::"+initialDate);
-
-
-
+                if (onDateChangeListener != null) {
+                    onDateChangeListener.onDateChange(BaseCalendar.this, currectCalendarView.getPivot(), mAllSelectDateList);
+                }
+            }
+        });
     }
 
     public void setSelectDateList(List<LocalDate> dateList) {
@@ -401,7 +387,6 @@ public abstract class BaseCalendar extends ViewPager {
         mAllSelectDateList.addAll(dateList);
         notifyAllView();
     }
-
 
 
     private OnCalendarChangeListener onCalendarChangeListener;

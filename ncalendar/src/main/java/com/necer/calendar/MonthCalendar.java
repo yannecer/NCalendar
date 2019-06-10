@@ -30,9 +30,9 @@ import java.util.List;
 public class MonthCalendar extends BaseCalendar implements ValueAnimator.AnimatorUpdateListener {
 
 
-    protected ValueAnimator monthValueAnimator;//月日历动画
+    //protected ValueAnimator monthValueAnimator;//月日历动画
     private OnMonthSelectListener onMonthSelectListener;
-    private OnMonthAnimatorListener onMonthAnimatorListener;
+   // private OnMonthAnimatorListener onMonthAnimatorListener;
 
 
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
@@ -44,12 +44,8 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
         return new MonthCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);
     }
 
-    public MonthCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter, int duration, OnMonthAnimatorListener onMonthAnimatorListener) {
+    public MonthCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter) {
         super(context, attrs, calendarPainter);
-        this.onMonthAnimatorListener = onMonthAnimatorListener;
-        monthValueAnimator = new ValueAnimator();
-        monthValueAnimator.setDuration(duration);
-        monthValueAnimator.addUpdateListener(this);
     }
 
     @Override
@@ -149,23 +145,27 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
     public void autoToMonth() {
         float top = getY();//起始位置
         int end = 0;
-        monthValueAnimator.setFloatValues(top, end);
-        monthValueAnimator.start();
+     //   monthValueAnimator.setFloatValues(top, end);
+     //   monthValueAnimator.start();
     }
 
 
     public void autoToMIUIWeek() {
         float top = getY();//起始位置
+
+
+
+
         int end = -getMonthCalendarOffset(); //结束位置
-        monthValueAnimator.setFloatValues(top, end);
-        monthValueAnimator.start();
+       // monthValueAnimator.setFloatValues(top, end);
+      //  monthValueAnimator.start();
     }
 
     public void autoToEMUIWeek() {
         float top = getY();//起始位置
         int end = -getHeight() * 4 / 5; //结束位置
-        monthValueAnimator.setFloatValues(top, end);
-        monthValueAnimator.start();
+        //monthValueAnimator.setFloatValues(top, end);
+       // monthValueAnimator.start();
     }
 
 
@@ -185,17 +185,17 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
         float y = getY();
         setY(i + y);
 
-        if (onMonthAnimatorListener != null) {
-            //回调遵循>0向上，<0向下
-            onMonthAnimatorListener.onMonthAnimatorChanged((int) -i);
-        }
+//        if (onMonthAnimatorListener != null) {
+//            //回调遵循>0向上，<0向下
+//            onMonthAnimatorListener.onMonthAnimatorChanged((int) -i);
+//        }
     }
 
     @Override
     protected void onAnimationEnd() {
         super.onAnimationEnd();
-        if (onMonthAnimatorListener != null) {
-            onMonthAnimatorListener.onMonthAnimatorChanged(0);
-        }
+//        if (onMonthAnimatorListener != null) {
+//            onMonthAnimatorListener.onMonthAnimatorChanged(0);
+//        }
     }
 }

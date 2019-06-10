@@ -27,7 +27,7 @@ public abstract class BaseCalendarView extends View {
 
     /** 新需求
      * 1、支持多选，选中的第一个为中心切换
-     * 2、支持不选中月周切换
+     * 2、支持不选中月周切换/
      * 3、支持viewpager滑动
      * 4、自定义简单化 比如绘制单个的日期，可用，不可用，选中不选中，逻辑部分不对外
      * 5、支持滑动默认选中第一天
@@ -44,7 +44,6 @@ public abstract class BaseCalendarView extends View {
      */
 
 
-    private LocalDate pivot;//支点数据  默认是第一个数据
 
     private int mLineNum;//行数
     protected LocalDate mInitialDate;//由mInitialDate和周开始的第一天 算出当前页面的数据
@@ -67,7 +66,6 @@ public abstract class BaseCalendarView extends View {
         mCurrentSelectDateList = new ArrayList<>();
 
 
-        pivot = mDateList.get(0);
 
     }
 
@@ -192,9 +190,7 @@ public abstract class BaseCalendarView extends View {
     //选中的日期到顶部的距离
     public int getMonthCalendarOffset(LocalDate localDate) {
 
-        MyLog.d("getMonthCalendarOffset::2222:" + pivot);
 
-        this.pivot = localDate;
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
      //   int selectIndex = mCurrentSelectDateList.size() == 0 ? 0 : mDateList.indexOf(mCurrentSelectDateList.get(0)) / 7;
@@ -211,13 +207,24 @@ public abstract class BaseCalendarView extends View {
     }
 
 
+    public LocalDate getFirstDate() {
+        return mDateList.get(0);
+    }
+
+    public LocalDate getPivot() {
+
+        MyLog.d("mCurrentSelectDateListmCurrentSelectDateListmCurrentSelectDateList::" + mCurrentSelectDateList.size());
+
+        return mCurrentSelectDateList.size() == 0 ? mDateList.get(0) : mCurrentSelectDateList.get(0);
+    }
 
     public int getMonthCalendarOffset() {
+        if (mCurrentSelectDateList.size() == 0) {
+            return getMonthCalendarOffset(mDateList.get(0));
+        } else {
+            return getMonthCalendarOffset(mCurrentSelectDateList.get(0));
+        }
 
-
-        MyLog.d("getMonthCalendarOffset::1111:" + pivot);
-
-        return getMonthCalendarOffset(mCurrentSelectDateList.size()==0?pivot:mCurrentSelectDateList.get(0));
     }
 
 
@@ -225,9 +232,6 @@ public abstract class BaseCalendarView extends View {
         return mCurrentSelectDateList;
     }
 
-    public LocalDate getPivot() {
-        return mCurrentSelectDateList.size()==0?pivot:mCurrentSelectDateList.get(0);
-    }
 
 
     //是否是当月日期
