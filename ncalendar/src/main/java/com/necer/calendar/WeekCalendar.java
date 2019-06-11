@@ -41,10 +41,6 @@ public class WeekCalendar extends BaseCalendar{
         return new WeekCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);
     }
 
-//    @Override
-//    protected BaseCalendarAdapter getCalendarAdapter(Context context, Attrs attrs, LocalDate initializeDate) {
-//        return new WeekCalendarAdapter(context, attrs.startDateString, initializeDate,this);
-//    }
 
     @Override
     protected int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type) {
@@ -68,7 +64,6 @@ public class WeekCalendar extends BaseCalendar{
 
     @Override
     protected void onSelcetDate(NDate date) {
-        MyLog.d("onMonthSelectListener:周::" + date.localDate);
         if (onWeekSelectListener != null) {
             onWeekSelectListener.onWeekSelect(date);
         }
@@ -76,11 +71,6 @@ public class WeekCalendar extends BaseCalendar{
 
     public void setOnWeekSelectListener(OnWeekSelectListener onWeekSelectListener) {
         this.onWeekSelectListener = onWeekSelectListener;
-    }
-
-    public LocalDate getPivot() {
-        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
-        return currectCalendarView.getPivot();
     }
 
     public LocalDate getFirstDate() {

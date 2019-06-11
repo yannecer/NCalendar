@@ -30,10 +30,7 @@ import java.util.List;
 public class MonthCalendar extends BaseCalendar implements ValueAnimator.AnimatorUpdateListener {
 
 
-    //protected ValueAnimator monthValueAnimator;//月日历动画
     private OnMonthSelectListener onMonthSelectListener;
-   // private OnMonthAnimatorListener onMonthAnimatorListener;
-
 
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -71,50 +68,19 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
 
     @Override
     protected void onSelcetDate(NDate nDate) {
-
-        MyLog.d("onMonthSelectListener:月::" + nDate.localDate);
         if (onMonthSelectListener != null) {
             onMonthSelectListener.onMonthSelect(nDate);
         }
     }
 
-//
-//    @Override
-//    public void onClickCurrentMonth(LocalDate localDate) {
-//        if (isClickDateEnable(localDate)) {
-//            onClickDate(localDate,0);
-//        } else {
-//            onClickDisableDate(localDate);
-//        }
-//
-//    }
-//
-//    @Override
-//    public void onClickLastMonth(LocalDate localDate) {
-//        if (isClickDateEnable(localDate)) {
-//            onClickDate(localDate,-1);
-//        } else {
-//            onClickDisableDate(localDate);
-//        }
-//    }
-//
-//    @Override
-//    public void onClickNextMonth(LocalDate localDate) {
-//        if (isClickDateEnable(localDate)) {
-//            onClickDate(localDate,1);
-//        } else {
-//            onClickDisableDate(localDate);
-//        }
-//    }
-
     public void setOnMonthSelectListener(OnMonthSelectListener onMonthSelectListener) {
         this.onMonthSelectListener = onMonthSelectListener;
     }
 
-    public void setLocation(LocalDate localDate) {
-        int monthCalendarOffset = getMonthCalendarOffset(localDate);
-        setY(-monthCalendarOffset);
-    }
+//    public void setLocation(LocalDate localDate) {
+//        int monthCalendarOffset = getMonthCalendarOffset(localDate);
+//        setY(-monthCalendarOffset);
+//    }
 
 
     public int getMonthCalendarOffset(LocalDate localDate) {
@@ -125,16 +91,14 @@ public class MonthCalendar extends BaseCalendar implements ValueAnimator.Animato
         return 0;
     }
 
-    public LocalDate getPivot() {
+    public LocalDate getPivotDate() {
         BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
-        return currectCalendarView.getPivot();
+        return currectCalendarView.getPivotDate();
     }
 
     public int getMonthCalendarOffset() {
-
         BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         if (currectCalendarView != null) {
-
             return currectCalendarView.getMonthCalendarOffset();
         }
 

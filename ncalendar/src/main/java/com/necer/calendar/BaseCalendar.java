@@ -13,7 +13,7 @@ import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangeListener;
 import com.necer.listener.OnClickDisableDateListener;
-import com.necer.listener.OnDateChangeListener;
+import com.necer.listener.OnMWDateChangeListener;
 import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.painter.InnerPainter;
 import com.necer.painter.CalendarPainter;
@@ -71,6 +71,9 @@ public abstract class BaseCalendar extends ViewPager {
         this.mContext = context;
         mAllSelectDateList = new ArrayList<>();
         mAllSelectDateList.add(new LocalDate());
+
+        isDefaultSelect = attrs.isDefaultSelect;
+        isMultiple = isDefaultSelect ? false : attrs.isMultiple;//当默认选择时，不能多选
 
         post(new Runnable() {
             @Override
@@ -375,8 +378,8 @@ public abstract class BaseCalendar extends ViewPager {
                     onCalendarChangeListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currectCalendarView.getCurrentSelectDateList(), mAllSelectDateList);
                 }
 
-                if (onDateChangeListener != null) {
-                    onDateChangeListener.onDateChange(BaseCalendar.this, currectCalendarView.getPivot(), mAllSelectDateList);
+                if (onMWDateChangeListener != null) {
+                    onMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
                 }
             }
         });
@@ -390,15 +393,15 @@ public abstract class BaseCalendar extends ViewPager {
 
 
     private OnCalendarChangeListener onCalendarChangeListener;
-    private OnDateChangeListener onDateChangeListener;
+    private OnMWDateChangeListener onMWDateChangeListener;
 
 
     public void setOnCalendarChangeListener(OnCalendarChangeListener onCalendarChangeListener) {
         this.onCalendarChangeListener = onCalendarChangeListener;
     }
 
-    public void setOnDateChangeListener(OnDateChangeListener onDateChangeListener) {
-        this.onDateChangeListener = onDateChangeListener;
+    public void setOnDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
+        this.onMWDateChangeListener = onMWDateChangeListener;
     }
 
 }

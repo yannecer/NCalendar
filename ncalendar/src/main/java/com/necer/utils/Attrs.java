@@ -65,6 +65,7 @@ public class Attrs {
     public int bgEmuiCalendarColor;//华为日历的背景
     public int bgChildColor;//子view的背景
     public boolean isDefaultSelect;//是否默认选中
+    public boolean isMultiple;//是否多选
 
     public String startDateString;
     public String endDateString;

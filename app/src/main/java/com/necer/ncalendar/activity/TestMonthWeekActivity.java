@@ -7,20 +7,11 @@ import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
-import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangeListener;
-import com.necer.listener.OnDateChangeListener;
-import com.necer.listener.OnMonthSelectListener;
-import com.necer.listener.OnYearMonthChangedListener;
-import com.necer.ncalendar.CustomPainter;
 import com.necer.ncalendar.R;
-import com.necer.painter.CalendarPainter;
-import com.necer.painter.InnerPainter;
 
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
