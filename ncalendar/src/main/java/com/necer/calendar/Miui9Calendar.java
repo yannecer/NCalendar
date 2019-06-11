@@ -17,6 +17,8 @@ public class Miui9Calendar extends MiuiCalendar {
         super(context, attrs);
     }
 
+
+
     @Override
     protected float getGestureMonthUpOffset(int dy) {
 

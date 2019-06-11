@@ -2,10 +2,6 @@ package com.necer.view;
 
 import android.content.Context;
 
-import com.necer.entity.NDate;
-import com.necer.listener.OnClickWeekViewListener;
-import com.necer.utils.Util;
-
 import org.joda.time.LocalDate;
 
 import java.util.List;

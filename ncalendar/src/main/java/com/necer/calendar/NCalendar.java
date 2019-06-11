@@ -208,14 +208,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     private void onAutoToWeekState2() {
 
         float top = monthCalendar.getY();//起始位置
-        int end;
-        if (STATE == Attrs.MONTH) {
-            //月  月日历有选中则选中为 中心点，如果没有选中则第一行
-            end = -monthCalendar.getPivotDistanceFromTop(); //结束位置
-        } else {
-            //周的情况，按照周的第一个数据为中心点
-            end = -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
-        }
+        float end = getAutoWeekEndY();
+
         monthValueAnimator.setFloatValues(top, end);
         monthValueAnimator.start();
 
@@ -239,6 +233,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         childLayoutValueAnimator.start();
     }
 
+
+    protected abstract float getAutoWeekEndY();
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
@@ -413,12 +409,12 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     /**
      * 自动回到月的状态 包括月日历和chilayout
      */
-    protected abstract void onAutoToMonthState();
+    //  protected abstract void onAutoToMonthState();
 
     /**
      * 自动回到周的状态 包括月日历和chilayout
      */
-    protected abstract void onAutoToWeekState();
+    // protected abstract void onAutoToWeekState();
 
     /**
      * 设置weekCalendar的显示隐藏，该方法会在手势滑动和自动滑动的的时候一直回调
@@ -507,7 +503,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      */
     public void toWeek() {
         if (STATE == Attrs.MONTH) {
-            onAutoToWeekState();
+            //  onAutoToWeekState();
         }
     }
 
@@ -623,19 +619,14 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             float top = monthCalendar.getY();
             float i = animatedValue - top;
             float y = monthCalendar.getY();
-
             monthCalendar.setY(i + y);
         } else if (animation == childLayoutValueAnimator) {
-
             float animatedValue = (float) animation.getAnimatedValue();
             float top = childLayout.getY();
             float i = animatedValue - top;
             float y = childLayout.getY();
             childLayout.setY(i + y);
-
         }
-
-
     }
 
 
@@ -643,9 +634,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         @Override
         public void onAnimationEnd(Animator animation) {
             super.onAnimationEnd(animation);
-            if (animation == monthValueAnimator) {
-
-            } else if (animation == childLayoutValueAnimator) {
+            if (animation == childLayoutValueAnimator) {
                 setCalenadrState();
             }
         }
@@ -664,7 +653,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             //重新设置周的显示
             LocalDate pivot = monthCalendar.getPivotDate();
             weekCalendar.jump(pivot, false);
-
         }
     }
 

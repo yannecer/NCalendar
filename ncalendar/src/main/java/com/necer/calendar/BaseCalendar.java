@@ -7,14 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.Toast;
-
-import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
-import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangeListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnMWDateChangeListener;
-import com.necer.listener.OnYearMonthChangedListener;
 import com.necer.painter.InnerPainter;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
@@ -42,7 +38,6 @@ public abstract class BaseCalendar extends ViewPager {
     private boolean isMultiple ;  // 多选情况下 不能默认选中
 
 
-    protected OnYearMonthChangedListener onYearMonthChangedListener;
     protected OnClickDisableDateListener onClickDisableDateListener;
 
     protected LocalDate startDate, endDate, initializeDate;
@@ -73,8 +68,8 @@ public abstract class BaseCalendar extends ViewPager {
         mAllSelectDateList.add(new LocalDate());
         initializeDate = new LocalDate();
 
-        isDefaultSelect = attrs.isDefaultSelect;
-        isMultiple = isDefaultSelect ? false : attrs.isMultiple;//当默认选择时，不能多选
+        isMultiple = attrs.isMultiple;
+        isDefaultSelect = isMultiple ? false : attrs.isDefaultSelect;//当多选时，不能默认选中
 
         post(new Runnable() {
             @Override
@@ -219,22 +214,6 @@ public abstract class BaseCalendar extends ViewPager {
     //相差count之后的的日期
     protected abstract LocalDate getDate(LocalDate localDate, int count);
 
-    //重绘当前页面时，获取上个月选中的日期
-    protected abstract LocalDate getLastSelectDate(LocalDate currectSelectDate);
-
-    //重绘当前页面时，获取下个月选中的日期
-    protected abstract LocalDate getNextSelectDate(LocalDate currectSelectDate);
-
-
-    //日历上面选中的日期，有选中圈的才会回调
-    protected abstract void onSelcetDate(NDate nDate);
-
-    //年份和月份变化回调,点击和翻页都会回调，不管有没有日期选中
-    public void onYearMonthChanged(LocalDate localDate, boolean isClick) {
-        if (onYearMonthChangedListener != null) {
-            onYearMonthChangedListener.onYearMonthChanged(this, localDate.getYear(), localDate.getMonthOfYear(), isClick);
-        }
-    }
 
     //点击的日期是否可用
     protected boolean isClickDateEnable(LocalDate localDate) {
@@ -250,9 +229,6 @@ public abstract class BaseCalendar extends ViewPager {
         }
     }
 
-    public void setOnYearMonthChangeListener(OnYearMonthChangedListener onYearMonthChangedListener) {
-        this.onYearMonthChangedListener = onYearMonthChangedListener;
-    }
 
     public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
         this.onClickDisableDateListener = onClickDisableDateListener;

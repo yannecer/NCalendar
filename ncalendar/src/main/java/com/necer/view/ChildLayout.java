@@ -18,7 +18,7 @@ import com.necer.listener.OnCalendarStateChangedListener;
 /**
  * Created by necer on 2018/11/9.
  */
-public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUpdateListener {
+public class ChildLayout extends FrameLayout {
 
 
     protected View targetView;//实际滑动的view，即RecyclerView等
@@ -94,32 +94,7 @@ public class ChildLayout extends FrameLayout implements ValueAnimator.AnimatorUp
         return ViewCompat.canScrollVertically(targetView, direction);
     }
 
-    @Override
-    public void onAnimationUpdate(ValueAnimator animation) {
-        float animatedValue = (float) animation.getAnimatedValue();
-        float top = getY();
-        float i = animatedValue - top;
-        float y = getY();
-        // offsetTopAndBottom(i);
-        setY(i + y);
-    }
 
-
-    public void autoToMonth() {
-        float start = getY();
-        int end = monthHeight;
- //       childLayoutValueAnimator.setFloatValues(start, end);
-    //    childLayoutValueAnimator.start();
-
-    }
-
-
-    public void autoToWeek() {
-        float start = getY();
-        int end = weekHeight;
-       // childLayoutValueAnimator.setFloatValues(start, end);
-      //  childLayoutValueAnimator.start();
-    }
 
 
     public boolean isMonthState() {

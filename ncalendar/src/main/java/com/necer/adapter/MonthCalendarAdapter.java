@@ -2,8 +2,6 @@ package com.necer.adapter;
 
 import android.content.Context;
 
-import com.necer.listener.OnClickMonthViewListener;
-import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
 import com.necer.view.MonthView;

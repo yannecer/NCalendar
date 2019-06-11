@@ -43,26 +43,26 @@ public class TestEmuiActivity extends BaseActivity {
         InnerPainter innerPainter = (InnerPainter) emuiCalendar.getCalendarPainter();
 
         innerPainter.setPointList(pointList);
-        emuiCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
-            @Override
-            public void onCalendarDateChanged(NDate date) {
-                tv_date.setText(date.localDate.getYear() + "年" + date.localDate.getMonthOfYear() + "月");
-                int days = Days.daysBetween(new LocalDate(), date.localDate).getDays();
-                String string ;
-                if (days == 0) {
-                    string = "今天";
-                } else if (days > 0) {
-                    string = days + "天后";
-                } else {
-                    string = -days + "天前";
-                }
-                tv_lunar.setText(string + " 农历" + date.lunar.lunarYearStr + "年 " + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
-            }
-
-            @Override
-            public void onCalendarStateChanged(boolean isMonthSate) {
-
-            }
-        });
+//        emuiCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+//            @Override
+//            public void onCalendarDateChanged(NDate date) {
+//                tv_date.setText(date.localDate.getYear() + "年" + date.localDate.getMonthOfYear() + "月");
+//                int days = Days.daysBetween(new LocalDate(), date.localDate).getDays();
+//                String string ;
+//                if (days == 0) {
+//                    string = "今天";
+//                } else if (days > 0) {
+//                    string = days + "天后";
+//                } else {
+//                    string = -days + "天前";
+//                }
+//                tv_lunar.setText(string + " 农历" + date.lunar.lunarYearStr + "年 " + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
+//            }
+//
+//            @Override
+//            public void onCalendarStateChanged(boolean isMonthSate) {
+//
+//            }
+//        });
     }
 }

@@ -1,4 +1,5 @@
 package com.necer.calendar;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,18 +22,11 @@ public class EmuiCalendar extends NCalendar {
         weekCalendar.setBackgroundColor(attrss.bgEmuiCalendarColor);
     }
 
-
     @Override
-    protected void onAutoToMonthState() {
-        monthCalendar.autoToMonth();
-        childLayout.autoToMonth();
+    protected float getAutoWeekEndY() {
+        return -monthHeight * 4 / 5;
     }
 
-    @Override
-    protected void onAutoToWeekState() {
-        monthCalendar.autoToEMUIWeek();
-        childLayout.autoToWeek();
-    }
 
     @Override
     protected float getMonthYOnWeekState(LocalDate localDate) {
@@ -47,11 +41,13 @@ public class EmuiCalendar extends NCalendar {
     protected float getGestureMonthDownOffset(int dy) {
         return getGestureChildDownOffset(dy);
     }
+
     @Override
     protected float getGestureChildDownOffset(int dy) {
         float maxOffset = monthHeight - childLayout.getY();
         return getOffset(Math.abs(dy), maxOffset);
     }
+
     @Override
     protected float getGestureChildUpOffset(int dy) {
         float maxOffset = childLayout.getY() - weekHeight;
@@ -61,11 +57,12 @@ public class EmuiCalendar extends NCalendar {
 
     @Override
     protected void onSetWeekVisible(int dy) {
-
-        if (monthCalendar.isWeekState() && dy>0) {
+        monthCalendar.setVisibility(VISIBLE);
+        if (monthCalendar.isWeekState() && dy > 0) {
             weekCalendar.setVisibility(VISIBLE);
-        } else if (monthCalendar.getY() >= -monthCalendar.getPivotDistanceFromTop() && dy < 0) {
+        } else if (monthCalendar.getY() >= -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) && dy < 0) {
             weekCalendar.setVisibility(INVISIBLE);
+
         }
     }
 

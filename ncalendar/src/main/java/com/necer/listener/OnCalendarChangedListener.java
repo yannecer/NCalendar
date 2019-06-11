@@ -6,8 +6,8 @@ import com.necer.entity.NDate;
  */
 
 public interface OnCalendarChangedListener {
-    void onCalendarDateChanged(NDate date);
 
-    void onCalendarStateChanged(boolean isMonthSate);
+    //void
+
 
 }

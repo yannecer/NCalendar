@@ -46,31 +46,31 @@ public class TestMiui9Activity extends BaseActivity {
         recyclerView.setAdapter(aaAdapter);
 
 
-        miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
-            @Override
-            public void onCalendarDateChanged(NDate date) {
-                MyLog.d("date:::" + date.localDate);
-                MyLog.d("date:::" + date.lunar.lunarYearStr);
-                MyLog.d("date:::" + date.lunar.lunarMonthStr);
-                MyLog.d("date:::" + date.lunar.lunarDayStr);
-                MyLog.d("date:::" + date.lunar.isLeap);
-                MyLog.d("date:::" + date.lunar.leapMonth);
-
-                tv_month.setText(date.localDate.getMonthOfYear() + "月");
-                tv_year.setText(date.localDate.getYear() + "年");
-
-                tv_lunar.setText(date.lunar.lunarYearStr + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
-
-
-                MyLog.d("isClickisClickisClick:::" );
-
-            }
-
-            @Override
-            public void onCalendarStateChanged(boolean isMonthSate) {
-                MyLog.d("OnCalendarChangedListener:::" + isMonthSate);
-            }
-        });
+//        miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+//            @Override
+//            public void onCalendarDateChanged(NDate date) {
+//                MyLog.d("date:::" + date.localDate);
+//                MyLog.d("date:::" + date.lunar.lunarYearStr);
+//                MyLog.d("date:::" + date.lunar.lunarMonthStr);
+//                MyLog.d("date:::" + date.lunar.lunarDayStr);
+//                MyLog.d("date:::" + date.lunar.isLeap);
+//                MyLog.d("date:::" + date.lunar.leapMonth);
+//
+//                tv_month.setText(date.localDate.getMonthOfYear() + "月");
+//                tv_year.setText(date.localDate.getYear() + "年");
+//
+//                tv_lunar.setText(date.lunar.lunarYearStr + date.lunar.lunarMonthStr + date.lunar.lunarDayStr);
+//
+//
+//                MyLog.d("isClickisClickisClick:::" );
+//
+//            }
+//
+//            @Override
+//            public void onCalendarStateChanged(boolean isMonthSate) {
+//                MyLog.d("OnCalendarChangedListener:::" + isMonthSate);
+//            }
+//        });
 
 
         tv_month.setOnClickListener(new View.OnClickListener() {

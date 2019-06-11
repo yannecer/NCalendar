@@ -3,8 +3,6 @@ package com.necer.adapter;
 import android.content.Context;
 
 import com.necer.MyLog;
-import com.necer.listener.OnClickWeekViewListener;
-import com.necer.utils.Attrs;
 import com.necer.utils.Util;
 import com.necer.view.BaseCalendarView;
 import com.necer.view.WeekView;

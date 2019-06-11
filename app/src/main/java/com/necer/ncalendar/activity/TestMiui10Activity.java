@@ -83,29 +83,29 @@ public class TestMiui10Activity extends BaseActivity {
        // innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
 
 
-        miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
-            @Override
-            public void onCalendarDateChanged(NDate date) {
-                tv_year.setText(date.localDate.getYear() + "年");
-                tv_month.setText(date.localDate.getMonthOfYear() + "月");
-                tv_week.setText(weeks[date.localDate.getDayOfWeek() - 1]);
-                tv_lunar.setText("农历" + date.lunar.lunarYearStr + "年 ");
-                tv_lunar_tg.setText(date.lunar.lunarMonthStr + date.lunar.lunarDayStr + (TextUtils.isEmpty(date.lunarHoliday) ? "" : (" | " + date.lunarHoliday)) + (TextUtils.isEmpty(date.solarHoliday) ? "" : (" | " + date.solarHoliday)));
-
-            }
-
-            @Override
-            public void onCalendarStateChanged(boolean isMonthSate) {
-
-            }
-        });
-
-        miui10Calendar.setOnClickDisableDateListener(new OnClickDisableDateListener() {
-            @Override
-            public void onClickDisableDate(NDate nDate) {
-                MyLog.d("nDate::" + nDate.localDate);
-            }
-        });
+//        miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+//            @Override
+//            public void onCalendarDateChanged(NDate date) {
+//                tv_year.setText(date.localDate.getYear() + "年");
+//                tv_month.setText(date.localDate.getMonthOfYear() + "月");
+//                tv_week.setText(weeks[date.localDate.getDayOfWeek() - 1]);
+//                tv_lunar.setText("农历" + date.lunar.lunarYearStr + "年 ");
+//                tv_lunar_tg.setText(date.lunar.lunarMonthStr + date.lunar.lunarDayStr + (TextUtils.isEmpty(date.lunarHoliday) ? "" : (" | " + date.lunarHoliday)) + (TextUtils.isEmpty(date.solarHoliday) ? "" : (" | " + date.solarHoliday)));
+//
+//            }
+//
+//            @Override
+//            public void onCalendarStateChanged(boolean isMonthSate) {
+//
+//            }
+//        });
+//
+//        miui10Calendar.setOnClickDisableDateListener(new OnClickDisableDateListener() {
+//            @Override
+//            public void onClickDisableDate(NDate nDate) {
+//                MyLog.d("nDate::" + nDate.localDate);
+//            }
+//        });
 
         //miui10Calendar.setInitializeDate("2018-12-23");
     }
