@@ -10,7 +10,7 @@ import java.util.List;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public class WeekView extends BaseCalendarView {
+public class WeekView extends CalendarView {
 
 
     public WeekView(Context context,LocalDate initialDate, List<LocalDate> dateList) {

@@ -1,5 +1,8 @@
 package com.necer.listener;
-import com.necer.entity.NDate;
+
+import com.necer.calendar.BaseCalendar;
+
+import org.joda.time.LocalDate;
 
 /**
  * Created by necer on 2017/7/4.
@@ -7,7 +10,6 @@ import com.necer.entity.NDate;
 
 public interface OnCalendarChangedListener {
 
-    //void
-
+    void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate);
 
 }

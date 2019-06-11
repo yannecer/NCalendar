@@ -12,7 +12,7 @@ import java.util.List;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public class MonthView extends BaseCalendarView {
+public class MonthView extends CalendarView {
     public MonthView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
         super(context, initialDate, dateList);
 

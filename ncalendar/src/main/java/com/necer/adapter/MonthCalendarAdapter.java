@@ -3,7 +3,7 @@ package com.necer.adapter;
 import android.content.Context;
 
 import com.necer.utils.Util;
-import com.necer.view.BaseCalendarView;
+import com.necer.view.CalendarView;
 import com.necer.view.MonthView;
 
 import org.joda.time.LocalDate;
@@ -23,7 +23,7 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
     }
 
     @Override
-    protected BaseCalendarView getCalendarView( int position) {
+    protected CalendarView getCalendarView(int position) {
         LocalDate localDate = mInitializeDate.plusMonths(position - mCurr);
         List<LocalDate> dateList = Util.getMonthCalendar(localDate, mFirstDayOfWeek);
         return new MonthView(mContext,localDate,dateList);

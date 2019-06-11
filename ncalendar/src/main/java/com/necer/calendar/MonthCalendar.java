@@ -41,7 +41,7 @@ public class MonthCalendar extends BaseCalendar {
     }
 
     @Override
-    protected LocalDate getDate(LocalDate localDate, int count) {
+    protected LocalDate getIntervalDate(LocalDate localDate, int count) {
         LocalDate date = localDate.plusMonths(count);
         return date;
     }

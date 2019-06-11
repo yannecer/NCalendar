@@ -7,7 +7,6 @@ import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
-import com.necer.listener.OnCalendarChangeListener;
 import com.necer.ncalendar.R;
 
 import org.joda.time.LocalDate;
@@ -37,15 +36,6 @@ public class TestMonthWeekActivity extends BaseActivity {
         // weekCalendar = findViewById(R.id.weekCalendar);
 
 
-        monthCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
-            @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currentSelectDateList, List<LocalDate> allSelectDateList) {
-                MyLog.d("onCalendarChange:11::" + year);
-                MyLog.d("onCalendarChange:22::" + month);
-                MyLog.d("onCalendarChange:33::" + currentSelectDateList);
-                MyLog.d("onCalendarChange:44::" + allSelectDateList);
-            }
-        });
 
 
     }

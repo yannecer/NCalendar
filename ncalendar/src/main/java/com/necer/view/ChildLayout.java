@@ -20,32 +20,16 @@ import com.necer.listener.OnCalendarStateChangedListener;
  */
 public class ChildLayout extends FrameLayout {
 
-
     protected View targetView;//实际滑动的view，即RecyclerView等
-   // protected ValueAnimator childLayoutValueAnimator;
     private int monthHeight;
     private int weekHeight;
-  //  private OnCalendarStateChangedListener onCalendarStateChangedListenerr;
 
 
     public ChildLayout(@NonNull Context context, AttributeSet attrs, int monthHeight) {
         super(context, attrs);
         this.monthHeight = monthHeight;
         this.weekHeight = monthHeight / 5;
-
-//        this.onCalendarStateChangedListenerr = onCalendarStateChangedListener;
-//        childLayoutValueAnimator = new ValueAnimator();
-//        childLayoutValueAnimator.setDuration(duration);
-//        childLayoutValueAnimator.addUpdateListener(this);
-//        childLayoutValueAnimator.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                super.onAnimationEnd(animation);
-//                onCalendarStateChangedListenerr.onCalendarStateChanged(isMonthState());
-//            }
-//        });
     }
-
 
     @Override
     public void addView(View child, ViewGroup.LayoutParams params) {
@@ -89,20 +73,17 @@ public class ChildLayout extends FrameLayout {
     }
 
 
-
     public boolean canScrollVertically(int direction) {
         return ViewCompat.canScrollVertically(targetView, direction);
     }
 
 
-
-
     public boolean isMonthState() {
-        return ((int)getY()) >= monthHeight;
+        return ((int) getY()) >= monthHeight;
     }
 
     public boolean isWeekState() {
-        return ((int)getY()) <= weekHeight;
+        return ((int) getY()) <= weekHeight;
     }
 
 
@@ -113,9 +94,11 @@ public class ChildLayout extends FrameLayout {
 
     public static class ViewException extends Exception {
         private View view;
+
         public ViewException(View view) {
             this.view = view;
         }
+
         public View getExceptionView() {
             return view;
         }

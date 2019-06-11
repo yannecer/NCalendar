@@ -5,13 +5,9 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.necer.MyLog;
-import com.necer.utils.Attrs;
-import com.necer.view.BaseCalendarView;
+import com.necer.view.CalendarView;
 
 import org.joda.time.LocalDate;
-
-import java.util.List;
 
 /**
  * Created by necer on 2017/8/25.
@@ -58,13 +54,13 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        BaseCalendarView view = getCalendarView(position);
+        CalendarView view = getCalendarView(position);
         view.setTag(position);
         container.addView(view);
         return view;
     }
 
-    protected abstract BaseCalendarView getCalendarView(int position);
+    protected abstract CalendarView getCalendarView(int position);
 
 
     protected abstract int getIntervalCount(LocalDate startDate, LocalDate endDate, int weekFirstDayType);

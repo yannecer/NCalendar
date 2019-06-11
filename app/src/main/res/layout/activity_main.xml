@@ -4,76 +4,99 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--
-        -->
 
-    <Button
-        android:id="@+id/bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="miui9"
-        android:text="miui9" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="testMonth"
+            android:text="月日历" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="miui10"
-        android:text="miui10" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="emui"
-        android:text="emui" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="toHoldWeek"
-        android:text="周日历hold" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="toMonthWeek"
-        android:text="月日历、周日历" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="addView"
-        android:text="日历和子view之间添加view" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="customCalendar"
-        android:text="自定义日历" />
-
- <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="test"
-        android:text="test" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="testWeek"
+            android:text="周日历" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="注意：1单纯的周日历和月日历使用方法完全相同
-2：单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都有选中日期，这样才能体现出月周切换日期无缝切换的特点， 该日历不支持月周切换的不选中设置"
-        android:textSize="12sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="版本"
-        android:textSize="12sp" />
+
+    <!--&lt;!&ndash;-->
+    <!--&ndash;&gt;-->
+
+    <!--<Button-->
+    <!--android:id="@+id/bt"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:onClick="miui9"-->
+    <!--android:text="miui9" />-->
+
+
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:onClick="miui10"-->
+    <!--android:text="miui10" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:onClick="emui"-->
+    <!--android:text="emui" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:onClick="toHoldWeek"-->
+    <!--android:text="周日历hold" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:onClick="toMonthWeek"-->
+    <!--android:text="月日历、周日历" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:onClick="addView"-->
+    <!--android:text="日历和子view之间添加view" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:onClick="customCalendar"-->
+    <!--android:text="自定义日历" />-->
+
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:onClick="test"-->
+    <!--android:text="test" />-->
+
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="15dp"-->
+    <!--android:text="注意：1单纯的周日历和月日历使用方法完全相同-->
+    <!--2：单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都有选中日期，这样才能体现出月周切换日期无缝切换的特点， 该日历不支持月周切换的不选中设置"-->
+    <!--android:textSize="12sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_version"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="15dp"-->
+    <!--android:text="版本"-->
+    <!--android:textSize="12sp" />-->
 
 
 </LinearLayout>

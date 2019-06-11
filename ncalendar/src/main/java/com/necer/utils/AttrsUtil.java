@@ -36,6 +36,7 @@ public class AttrsUtil {
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
         attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
         attrs.isMultiple = ta.getBoolean(R.styleable.NCalendar_isMultiple, false);
+        attrs.isDefaultSelectFitst = ta.getBoolean(R.styleable.NCalendar_isDefaultSelectFitst, false);
         attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, Util.dp2px(context, 2));
         attrs.pointDistance = ta.getDimension(R.styleable.NCalendar_pointDistance, Util.dp2px(context, 18));
         attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, context.getResources().getColor(R.color.pointColor));

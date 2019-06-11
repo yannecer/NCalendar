@@ -7,9 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
-import com.necer.entity.NDate;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Util;
 
@@ -22,7 +20,7 @@ import java.util.List;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public abstract class BaseCalendarView extends View {
+public abstract class CalendarView extends View {
 
 
     /** 新需求
@@ -54,7 +52,7 @@ public abstract class BaseCalendarView extends View {
 
     private List<LocalDate> mCurrentSelectDateList;//当前月份选中的日期
 
-    public BaseCalendarView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
+    public CalendarView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
         super(context);
         this.mInitialDate = initialDate;
         this.mDateList = dateList;
@@ -106,7 +104,6 @@ public abstract class BaseCalendarView extends View {
                         } else {
                             calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date), false);
                         }
-
                     }
                 } else { //日期区间之外的日期
                     calendarPainter.onDrawDisableDate(canvas, rect, Util.getNDate(date));

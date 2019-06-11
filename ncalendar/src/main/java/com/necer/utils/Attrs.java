@@ -66,6 +66,7 @@ public class Attrs {
     public int bgChildColor;//子view的背景
     public boolean isDefaultSelect;//是否默认选中
     public boolean isMultiple;//是否多选
+    public boolean isDefaultSelectFitst;//翻页默认选中当月1号
 
     public String startDateString;
     public String endDateString;
