@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
+import com.necer.MyLog;
 import com.necer.entity.Lunar;
 import com.necer.entity.NDate;
 
@@ -118,9 +119,12 @@ public class Util {
      * @return
      */
     public static int getIntervalMonths(LocalDate date1, LocalDate date2) {
+
+        MyLog.d("qqqqq:::111::+" + date1);
+        MyLog.d("qqqqq:::222::+" + date2);
+
         date1 = date1.withDayOfMonth(1);
         date2 = date2.withDayOfMonth(1);
-
         return Months.monthsBetween(date1, date2).getMonths();
     }
 

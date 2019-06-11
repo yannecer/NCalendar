@@ -20,21 +20,15 @@ public class Miui9Calendar extends MiuiCalendar {
     @Override
     protected float getGestureMonthUpOffset(int dy) {
 
-
         float maxOffset;
 
         if (STATE == Attrs.MONTH) {
             //月  月日历有选中则选中为 中心点，如果没有选中则第一行
-            maxOffset = monthCalendar.getMonthCalendarOffset()- Math.abs(monthCalendar.getY()); //结束位置
+            maxOffset = monthCalendar.getPivotDistanceFromTop() - Math.abs(monthCalendar.getY()); //结束位置
         } else {
             //周的情况，按照周的第一个数据为中心点
-            maxOffset = monthCalendar.getMonthCalendarOffset(weekCalendar.getFirstDate())- Math.abs(monthCalendar.getY());
+            maxOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) - Math.abs(monthCalendar.getY());
         }
-
-
-
-
-     //   float maxOffset = monthCalendar.getMonthCalendarOffset() - Math.abs(monthCalendar.getY());
         return getOffset(dy, maxOffset);
     }
 
@@ -49,7 +43,6 @@ public class Miui9Calendar extends MiuiCalendar {
         float maxOffset = monthHeight - childLayout.getY();
         return getOffset(Math.abs(dy), maxOffset);
     }
-
 
 
     @Override

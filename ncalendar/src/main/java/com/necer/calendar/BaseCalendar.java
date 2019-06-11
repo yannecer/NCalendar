@@ -38,8 +38,8 @@ public abstract class BaseCalendar extends ViewPager {
     private Attrs attrs;
 
     //这两个不能同时为真
-    private boolean isDefaultSelect = false; //默认选中 不能多选
-    private boolean isMultiple = true;  // 多选情况下 不能默认选中
+    private boolean isDefaultSelect ; //默认选中 不能多选
+    private boolean isMultiple ;  // 多选情况下 不能默认选中
 
 
     protected OnYearMonthChangedListener onYearMonthChangedListener;
@@ -71,6 +71,7 @@ public abstract class BaseCalendar extends ViewPager {
         this.mContext = context;
         mAllSelectDateList = new ArrayList<>();
         mAllSelectDateList.add(new LocalDate());
+        initializeDate = new LocalDate();
 
         isDefaultSelect = attrs.isDefaultSelect;
         isMultiple = isDefaultSelect ? false : attrs.isMultiple;//当默认选择时，不能多选
@@ -89,7 +90,7 @@ public abstract class BaseCalendar extends ViewPager {
             }
         });
 
-        initDate(new LocalDate());
+        initDate(initializeDate);
     }
 
 
@@ -122,11 +123,10 @@ public abstract class BaseCalendar extends ViewPager {
             throw new RuntimeException("日期区间需要包含今天");
         }*/
 
+
         BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, startDate, endDate, initializeDate, attrs.firstDayOfWeek);
         int currItem = calendarAdapter.getCurrItem();
         setAdapter(calendarAdapter);
-
-        MyLog.d("currItem:::::" + currItem);
 
         setCurrentItem(currItem);
 
@@ -192,13 +192,6 @@ public abstract class BaseCalendar extends ViewPager {
             }
         }
     }
-
-    //跳转
-//    protected void jumpDate(LocalDate localDate, boolean isDraw) {
-////        localDate = getSelectDate(localDate);
-////        int num = getTwoDateCount(mSelectDate, localDate, attrs.firstDayOfWeek);
-////        onClickDate(localDate, num);
-//    }
 
 
     //日期边界处理
@@ -402,6 +395,41 @@ public abstract class BaseCalendar extends ViewPager {
 
     public void setOnDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
         this.onMWDateChangeListener = onMWDateChangeListener;
+    }
+
+
+    public LocalDate getFirstDate() {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            return currectCalendarView.getFirstDate();
+        }
+        return null;
+    }
+
+
+    public LocalDate getPivotDate() {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            return currectCalendarView.getPivotDate();
+        }
+        return null;
+    }
+
+
+    public int getDistanceFromTop(LocalDate localDate) {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            return currectCalendarView.getDistanceFromTop(localDate);
+        }
+        return 0;
+    }
+
+    public int getPivotDistanceFromTop() {
+        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            return currectCalendarView.getPivotDistanceFromTop();
+        }
+        return 0;
     }
 
 }

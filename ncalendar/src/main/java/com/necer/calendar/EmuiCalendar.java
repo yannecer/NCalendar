@@ -64,7 +64,7 @@ public class EmuiCalendar extends NCalendar {
 
         if (monthCalendar.isWeekState() && dy>0) {
             weekCalendar.setVisibility(VISIBLE);
-        } else if (monthCalendar.getY() >= -monthCalendar.getMonthCalendarOffset() && dy < 0) {
+        } else if (monthCalendar.getY() >= -monthCalendar.getPivotDistanceFromTop() && dy < 0) {
             weekCalendar.setVisibility(INVISIBLE);
         }
     }

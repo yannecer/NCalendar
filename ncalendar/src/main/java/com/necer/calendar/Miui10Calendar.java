@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.utils.Attrs;
+
 
 /**
  * Created by necer on 2018/11/12.
@@ -24,8 +26,18 @@ public class Miui10Calendar extends MiuiCalendar {
     @Override
     protected float getGestureMonthUpOffset(int dy) {
 
-        float maxOffset = monthCalendar.getMonthCalendarOffset() - Math.abs(monthCalendar.getY());
-        float monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
+
+        float maxOffset;
+        float monthCalendarOffset;
+
+        if (STATE == Attrs.MONTH) {
+            maxOffset = monthCalendar.getPivotDistanceFromTop() - Math.abs(monthCalendar.getY());
+            monthCalendarOffset = monthCalendar.getPivotDistanceFromTop();
+        } else {
+            maxOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) - Math.abs(monthCalendar.getY());
+            monthCalendarOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
+        }
+
         float childLayoutOffset = childLayout.getChildLayoutOffset();
 
         float offset = ((monthCalendarOffset * dy) / childLayoutOffset);
@@ -39,7 +51,14 @@ public class Miui10Calendar extends MiuiCalendar {
     @Override
     protected float getGestureMonthDownOffset(int dy) {
         float maxOffset = Math.abs(monthCalendar.getY());
-        float monthCalendarOffset = monthCalendar.getMonthCalendarOffset();
+
+        float monthCalendarOffset;
+        if (STATE == Attrs.MONTH) {
+            monthCalendarOffset = monthCalendar.getPivotDistanceFromTop();
+        } else {
+            monthCalendarOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
+        }
+
         float childLayoutOffset = childLayout.getChildLayoutOffset();
         float offset = ((monthCalendarOffset * dy) / childLayoutOffset);
         return getOffset(Math.abs(offset), maxOffset);

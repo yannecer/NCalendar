@@ -73,8 +73,5 @@ public class WeekCalendar extends BaseCalendar{
         this.onWeekSelectListener = onWeekSelectListener;
     }
 
-    public LocalDate getFirstDate() {
-        BaseCalendarView currectCalendarView = findViewWithTag(getCurrentItem());
-        return currectCalendarView.getFirstDate();
-    }
+
 }

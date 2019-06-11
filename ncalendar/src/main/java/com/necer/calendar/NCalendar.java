@@ -131,16 +131,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
                 //月日历变化,改变周的选中
                 weekCalendar.jump(localDate, false);
                 weekCalendar.setSelectDateList(dateList);
-
-                MyLog.d("月状态：：：：" + localDate);
-
             } else if (baseCalendar == weekCalendar && STATE == Attrs.WEEK) {
                 //周日历变化，改变月的选中
                 monthCalendar.jump(localDate, false);
-
-                MyLog.d("周状态：：：：" + localDate);
                 monthCalendar.setSelectDateList(dateList);
-
                 monthCalendar.post(new Runnable() {
                     @Override
                     public void run() {
@@ -177,7 +171,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         ViewGroup.LayoutParams childLayoutLayoutParams = childLayout.getLayoutParams();
         childLayoutLayoutParams.height = getMeasuredHeight() - weekHeight;
-
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -218,10 +211,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         int end;
         if (STATE == Attrs.MONTH) {
             //月  月日历有选中则选中为 中心点，如果没有选中则第一行
-            end = -monthCalendar.getMonthCalendarOffset(); //结束位置
+            end = -monthCalendar.getPivotDistanceFromTop(); //结束位置
         } else {
             //周的情况，按照周的第一个数据为中心点
-            end = -monthCalendar.getMonthCalendarOffset(weekCalendar.getFirstDate());
+            end = -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
         }
         monthValueAnimator.setFloatValues(top, end);
         monthValueAnimator.start();
@@ -245,38 +238,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         childLayoutValueAnimator.setFloatValues(start, end1);
         childLayoutValueAnimator.start();
     }
-
-
-//
-//    @Override
-//    public void onMonthSelect(NDate date) {
-//        if (STATE == Attrs.MONTH) {
-//            //月日历变化,改变周的选中
-//            weekCalendar.jumpDate(date.localDate, true);
-//            if (onCalendarChangedListener != null) {
-//                onCalendarChangedListener.onCalendarDateChanged(date);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void onWeekSelect(NDate date) {
-//        if (STATE == Attrs.WEEK) {
-//            //周日历变化，改变月的选中
-//            monthCalendar.jumpDate(date.localDate, true);
-//            post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    //此时需要根据月日历的选中日期调整Y值
-//                    // post是因为在前面得到当前view是再post中完成，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
-//                    monthCalendar.setY(getMonthYOnWeekState());
-//                }
-//            });
-//            if (onCalendarChangedListener != null) {
-//                onCalendarChangedListener.onCalendarDateChanged(date);
-//            }
-//        }
-//    }
 
 
     @Override

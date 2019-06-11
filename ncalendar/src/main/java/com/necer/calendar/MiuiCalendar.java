@@ -45,7 +45,7 @@ public abstract class MiuiCalendar extends NCalendar{
 
 
 
-        return -monthCalendar.getMonthCalendarOffset(localDate);
+        return -monthCalendar.getDistanceFromTop(localDate);
     }
 
     @Override

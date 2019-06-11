@@ -29,7 +29,7 @@ public abstract class BaseCalendarView extends View {
      * 1、支持多选，选中的第一个为中心切换
      * 2、支持不选中月周切换/
      * 3、支持viewpager滑动
-     * 4、自定义简单化 比如绘制单个的日期，可用，不可用，选中不选中，逻辑部分不对外
+     * 4、自定义简单化 比如绘制单个的日期，可用，不可用，选中不选中，逻辑部分不对外   可以设计adapter，只需要重写每一个方法完成自定义
      * 5、支持滑动默认选中第一天
      * 6、不选中支持月周切换
      */
@@ -58,13 +58,10 @@ public abstract class BaseCalendarView extends View {
         super(context);
         this.mInitialDate = initialDate;
         this.mDateList = dateList;
-        //  mSelectListDate = new ArrayList<>();
         mRectList = new ArrayList<>();
         mLineNum = mDateList.size() / 7;//天数/7
 
         mCurrentSelectDateList = new ArrayList<>();
-
-
     }
 
 
@@ -117,8 +114,6 @@ public abstract class BaseCalendarView extends View {
             }
         }
 
-
-        MyLog.d("mCurrentSelectDateList::" + mCurrentSelectDateList);
     }
 
     //获取每个元素矩形
@@ -186,18 +181,14 @@ public abstract class BaseCalendarView extends View {
 
 
     //选中的日期到顶部的距离
-    public int getMonthCalendarOffset(LocalDate localDate) {
-
-
+    public int getDistanceFromTop(LocalDate localDate) {
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
-        //   int selectIndex = mCurrentSelectDateList.size() == 0 ? 0 : mDateList.indexOf(mCurrentSelectDateList.get(0)) / 7;
         int selectIndex = mDateList.indexOf(localDate) / 7;
         if (mLineNum == 5) {
             //5行的月份
             monthCalendarOffset = getMeasuredHeight() / 5 * selectIndex;
         } else {
-            // int rectHeight5 = getMeasuredHeight() / 5;
             int rectHeight6 = (getMeasuredHeight() / 5) * 4 / 5;
             monthCalendarOffset = rectHeight6 * selectIndex;
         }
@@ -214,11 +205,13 @@ public abstract class BaseCalendarView extends View {
         return mCurrentSelectDateList.size() == 0 ? mDateList.get(0) : mCurrentSelectDateList.get(0);
     }
 
-    public int getMonthCalendarOffset() {
+
+    //获取中心点到顶部的距离
+    public int getPivotDistanceFromTop() {
         if (mCurrentSelectDateList.size() == 0) {
-            return getMonthCalendarOffset(mDateList.get(0));
+            return getDistanceFromTop(mDateList.get(0));
         } else {
-            return getMonthCalendarOffset(mCurrentSelectDateList.get(0));
+            return getDistanceFromTop(mCurrentSelectDateList.get(0));
         }
     }
 
