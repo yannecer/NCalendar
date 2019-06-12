@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         app:isDefaultSelect="true"
         app:isDefaultSelectFitst="true"
+        app:isMultiple="true"
         android:layout_height="300dp" />
 
 

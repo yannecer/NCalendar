@@ -23,7 +23,8 @@ import java.util.List;
 public abstract class CalendarView extends View {
 
 
-    /** 新需求
+    /**
+     * 新需求
      * 1、支持多选，选中的第一个为中心切换
      * 2、支持不选中月周切换/
      * 3、支持viewpager滑动
@@ -32,24 +33,12 @@ public abstract class CalendarView extends View {
      * 6、不选中支持月周切换
      */
 
-    /***
-     * 思路  BaseCalendarView中没有选中日期，全部的日期都在BaseCalendar中统一管理，再根据条件传过来，可实现默认选中第一个 和跳转的管理
-     *
-     * 选中日期在 BaseCalendar 中用list统一管理
-     *
-     * 从父类中获取属性，不再传递
-     *
-     */
-
-
     private int mLineNum;//行数
-    protected LocalDate mInitialDate;//由mInitialDate和周开始的第一天 算出当前页面的数据
+    protected LocalDate mInitialDate;//当前页面的初始化日期
     protected List<Rect> mRectList;//点击用的矩形集合
     protected List<LocalDate> mDateList;//页面的数据集合
-
     private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
     protected BaseCalendar mCalendar;
-
     private List<LocalDate> mCurrentSelectDateList;//当前月份选中的日期
 
     public CalendarView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
@@ -58,7 +47,6 @@ public abstract class CalendarView extends View {
         this.mDateList = dateList;
         mRectList = new ArrayList<>();
         mLineNum = mDateList.size() / 7;//天数/7
-
         mCurrentSelectDateList = new ArrayList<>();
     }
 
@@ -83,7 +71,6 @@ public abstract class CalendarView extends View {
                 Rect rect = getRect(i, j);
                 mRectList.add(rect);
                 LocalDate date = mDateList.get(i * 7 + j);
-
                 //在可用区间内的正常绘制，
                 if (!(date.isBefore(startDate) || date.isAfter(endDate))) {
                     if (isEqualsMonthOrWeek(date, mInitialDate)) {  //当月和上下月的颜色不同
@@ -133,19 +120,6 @@ public abstract class CalendarView extends View {
     }
 
 
-    /**
-     * 点击事件
-     *
-     * @param clickNData  点击的date
-     * @param initialDate 初始化当前页面的date
-     */
-    protected abstract void onClickDate(LocalDate clickNData, LocalDate initialDate);
-
-
-    //初始化的日期和绘制的日期是否是同月，周都相同
-    public abstract boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate);
-
-
     //获取当前页面的初始化日期
     public LocalDate getInitialDate() {
         return mInitialDate;
@@ -168,7 +142,7 @@ public abstract class CalendarView extends View {
                 Rect rect = mRectList.get(i);
                 if (rect.contains((int) e.getX(), (int) e.getY())) {
                     LocalDate clickDate = mDateList.get(i);
-                    onClickDate(clickDate, mInitialDate);
+                    dealClickDate(clickDate);
                     break;
                 }
             }
@@ -193,9 +167,6 @@ public abstract class CalendarView extends View {
     }
 
 
-    //周或者月的第一天
-    public abstract LocalDate getFirstDate();
-
     //获取折叠的中心点 如果有当前页面有选中 返回选中的日期，如果没有选中就返回当前页面第一个日期
     public LocalDate getPivotDate() {
         return mCurrentSelectDateList.size() == 0 ? mDateList.get(0) : mCurrentSelectDateList.get(0);
@@ -217,15 +188,13 @@ public abstract class CalendarView extends View {
     }
 
 
-    //是否是当月日期
-    public boolean contains(LocalDate localDate) {
-        if (localDate == null) {
-            return false;
-        } else if (isEqualsMonthOrWeek(localDate, mInitialDate)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //处理当前页面的点击事件
+    protected abstract void dealClickDate(LocalDate clickDate);
+
+    //初始化的日期和绘制的日期是否是同月，周都相同
+    protected abstract boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate);
+
+    //周或者月的第一天
+    protected abstract LocalDate getFirstDate();
 
 }

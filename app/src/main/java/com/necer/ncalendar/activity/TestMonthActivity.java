@@ -1,20 +1,16 @@
 package com.necer.ncalendar.activity;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-
 import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
-
 import org.joda.time.LocalDate;
-
 import java.util.List;
 
 public class TestMonthActivity extends AppCompatActivity {

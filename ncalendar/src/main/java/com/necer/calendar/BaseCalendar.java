@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.necer.MyLog;
@@ -19,11 +18,8 @@ import com.necer.painter.InnerPainter;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
-import com.necer.utils.Util;
 import com.necer.view.CalendarView;
-
 import org.joda.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +30,21 @@ import java.util.List;
 public abstract class BaseCalendar extends ViewPager {
 
     private Context mContext;
-
-    private Attrs attrs;
+    private Attrs mAttrs;
 
     //这两个不能同时为真
-    private boolean isDefaultSelect; //默认选中 不能多选
-    private boolean isMultiple;  // 多选情况下 不能默认选中
+    private boolean mIsDefaultSelect; //默认选中 不能多选
+    private boolean mIsMultiple;  // 多选情况下 不能默认选中
 
-    private boolean isJumpClick;//这个只在默认选中时有用
-    private boolean isDefaultSelectFitst;
+    private boolean mIsJumpClick;//是否是点击上月、下月或跳转，这个只在默认选中时有用
+    private boolean mIsDefaultSelectFitst;//默认选择时，翻页选中第一个日期
 
-    protected OnClickDisableDateListener onClickDisableDateListener;
+    protected OnClickDisableDateListener mOnClickDisableDateListener;//点击区间之外的日期回调
+    private OnMWDateChangeListener mOnMWDateChangeListener;//月周切换是折叠中心的回调
+    private OnCalendarChangedListener mOnCalendarChangedListener;//单选时回调，当前页面无选中返回null
+    private OnCalendarMultipleChangedListener mOnCalendarMultipleChangedListener;//多选时回调
 
-    protected LocalDate startDate, endDate, initializeDate;
+    protected LocalDate mStartDate, mEndDate, mInitializeDate;
 
     protected CalendarPainter mCalendarPainter;
 
@@ -55,15 +53,15 @@ public abstract class BaseCalendar extends ViewPager {
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
-        this.attrs = AttrsUtil.getAttrs(context, attributeSet);
-        this.mCalendarPainter = new InnerPainter(attrs);
+        this.mAttrs = AttrsUtil.getAttrs(context, attributeSet);
+        this.mCalendarPainter = new InnerPainter(mAttrs);
         init(context);
     }
 
 
     public BaseCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter) {
         super(context);
-        this.attrs = attrs;
+        this.mAttrs = attrs;
         this.mCalendarPainter = calendarPainter;
         init(context);
     }
@@ -71,11 +69,11 @@ public abstract class BaseCalendar extends ViewPager {
     private void init(Context context) {
         this.mContext = context;
         mAllSelectDateList = new ArrayList<>();
-        initializeDate = new LocalDate();
+        mInitializeDate = new LocalDate();
 
-        isMultiple = attrs.isMultiple;
-        isDefaultSelect = isMultiple ? false : attrs.isDefaultSelect;//当多选时，不能默认选中
-        isDefaultSelectFitst = attrs.isDefaultSelectFitst;
+        mIsMultiple = mAttrs.isMultiple;
+        mIsDefaultSelect = mIsMultiple ? false : mAttrs.isDefaultSelect;//当多选时，不能默认选中
+        mIsDefaultSelectFitst = mAttrs.isDefaultSelectFitst;
 
         post(new Runnable() {
             @Override
@@ -97,30 +95,30 @@ public abstract class BaseCalendar extends ViewPager {
 
     private void initDate() {
 
-        if (isDefaultSelect) {
+        if (mIsDefaultSelect) {
             mAllSelectDateList.clear();
-            mAllSelectDateList.add(initializeDate);
+            mAllSelectDateList.add(mInitializeDate);
         }
 
-        String startDateString = attrs.startDateString;
-        String endDateString = attrs.endDateString;
+        String startDateString = mAttrs.startDateString;
+        String endDateString = mAttrs.endDateString;
         try {
-            startDate = new LocalDate(startDateString);
-            endDate = new LocalDate(endDateString);
+            mStartDate = new LocalDate(startDateString);
+            mEndDate = new LocalDate(endDateString);
         } catch (Exception e) {
             throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
         }
 
 
-        if (startDate.isAfter(endDate)) {
+        if (mStartDate.isAfter(mEndDate)) {
             throw new RuntimeException("startDate必须在endDate之前");
         }
 
-        if (startDate.isBefore(new LocalDate("1901-01-01"))) {
+        if (mStartDate.isBefore(new LocalDate("1901-01-01"))) {
             throw new RuntimeException("startDate必须在1901-01-01之后");
         }
 
-        if (endDate.isAfter(new LocalDate("2099-12-31"))) {
+        if (mEndDate.isAfter(new LocalDate("2099-12-31"))) {
             throw new RuntimeException("endDate必须在2099-12-31之前");
         }
 
@@ -130,23 +128,21 @@ public abstract class BaseCalendar extends ViewPager {
         }*/
 
 
-        BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, startDate, endDate, initializeDate, attrs.firstDayOfWeek);
+        BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, mStartDate, mEndDate, mInitializeDate, mAttrs.firstDayOfWeek);
         int currItem = calendarAdapter.getCurrItem();
         setAdapter(calendarAdapter);
-
         setCurrentItem(currItem);
-
     }
 
     public void setDateInterval(String startFormatDate, String endFormatDate) {
-        attrs.startDateString = startFormatDate;
-        attrs.endDateString = endFormatDate;
+        mAttrs.startDateString = startFormatDate;
+        mAttrs.endDateString = endFormatDate;
         initDate();
     }
 
     public void setInitializeDate(String formatInitializeDate) {
         try {
-            initializeDate = new LocalDate(formatInitializeDate);
+            mInitializeDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
@@ -154,10 +150,10 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     public void setDateInterval(String startFormatDate, String endFormatDate, String formatInitializeDate) {
-        attrs.startDateString = startFormatDate;
-        attrs.endDateString = endFormatDate;
+        mAttrs.startDateString = startFormatDate;
+        mAttrs.endDateString = endFormatDate;
         try {
-            initializeDate = new LocalDate(formatInitializeDate);
+            mInitializeDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
@@ -171,15 +167,15 @@ public abstract class BaseCalendar extends ViewPager {
             return;
         }
 
-        if (isDefaultSelect) {//默认选中，只有一种情况 单选
+        if (mIsDefaultSelect) {//默认选中，只有一种情况 单选
             LocalDate initialDate = currectCalendarView.getInitialDate();//当前页面初始化的日期
             LocalDate lastDate = mAllSelectDateList.get(0);//上个页面选中的日期
             //当前面页面的初始值和上个页选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
-            int currNum = getTwoDateCount(lastDate, initialDate, attrs.firstDayOfWeek);//得出两个页面相差几个
+            int currNum = getTwoDateCount(lastDate, initialDate, mAttrs.firstDayOfWeek);//得出两个页面相差几个
             LocalDate tempLocalDate = getIntervalDate(lastDate, currNum);
 
             LocalDate currectDate; //当前页面选中的日期
-            if (isDefaultSelectFitst && !isJumpClick && !tempLocalDate.equals(new LocalDate())) {
+            if (mIsDefaultSelectFitst && !mIsJumpClick && !tempLocalDate.equals(new LocalDate())) {
                 //默认选中第一个 且 不是点击或跳转 且 不等于今天（为了第一次进来日历选中的是今天）
                 currectDate = getFirstDate();
             } else {
@@ -188,7 +184,7 @@ public abstract class BaseCalendar extends ViewPager {
 
             currectDate = getAvailableDate(currectDate);
 
-            isJumpClick = false;
+            mIsJumpClick = false;
 
             mAllSelectDateList.clear();
             mAllSelectDateList.add(currectDate);
@@ -202,112 +198,6 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-    //刷新所有页面
-    public void notifyAllView() {
-        for (int i = 0; i < getChildCount(); i++) {
-            CalendarView calendarView = (CalendarView) getChildAt(i);
-            if (calendarView != null) {
-                calendarView.invalidate();
-            }
-        }
-    }
-
-
-    //日期边界处理
-    private LocalDate getAvailableDate(LocalDate localDate) {
-        if (localDate.isBefore(startDate)) {
-            return startDate;
-        } else if (localDate.isAfter(endDate)) {
-            return endDate;
-        } else {
-            return localDate;
-        }
-    }
-
-
-    public List<LocalDate> getAllSelectDateList() {
-        return mAllSelectDateList;
-    }
-
-    //回去viewpager的adapter
-    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek);
-
-    //两个日期的相差数量
-    protected abstract int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type);
-
-    //相差count之后的的日期
-    protected abstract LocalDate getIntervalDate(LocalDate localDate, int count);
-
-
-    //点击的日期是否可用
-    protected boolean isAvailable(LocalDate localDate) {
-        return !localDate.isBefore(startDate) && !localDate.isAfter(endDate);
-    }
-
-    //点击不可用的日期处理
-    private void clickDisableDate(LocalDate localDate) {
-        if (onClickDisableDateListener != null) {
-            onClickDisableDateListener.onClickDisableDate(Util.getNDate(localDate));
-        } else {
-            Toast.makeText(getContext(), TextUtils.isEmpty(attrs.disabledString) ? "日期超出许可范围" : attrs.disabledString, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
-        this.onClickDisableDateListener = onClickDisableDateListener;
-    }
-
-    //下一页，月日历即是下一月，周日历即是下一周
-    public void toNextPager() {
-        setCurrentItem(getCurrentItem() + 1, true);
-    }
-
-    //上一页
-    public void toLastPager() {
-        setCurrentItem(getCurrentItem() - 1, true);
-    }
-
-
-    //跳转日期
-    public void jumpDate(String formatDate) {
-        LocalDate jumpDate;
-        try {
-            jumpDate = new LocalDate(formatDate);
-        } catch (Exception e) {
-            throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
-        }
-
-        jump(jumpDate, true);
-    }
-
-    //回到今天
-    public void toToday() {
-        jump(new LocalDate(), true);
-    }
-
-    //获取区间开始日期
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    //获取区间结束日期
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    //设置绘制类
-    public void setCalendarPainter(CalendarPainter calendarPainter) {
-        this.mCalendarPainter = calendarPainter;
-        notifyAllView();
-    }
-
-    //BaseCalendarView绘制获取mCalendarPainter
-    public CalendarPainter getCalendarPainter() {
-        return mCalendarPainter;
-    }
-
-
     public void onClickCurrectMonthOrWeekDate(LocalDate localDate) {
 
         //判断日期是否合法
@@ -316,7 +206,7 @@ public abstract class BaseCalendar extends ViewPager {
             return;
         }
 
-        if (isMultiple) {
+        if (mIsMultiple) {
             //多选  集合不包含就添加，包含就移除
             if (!mAllSelectDateList.contains(localDate)) {
                 mAllSelectDateList.add(localDate);
@@ -356,10 +246,10 @@ public abstract class BaseCalendar extends ViewPager {
             return;
         }
 
-        isJumpClick = true;
+        mIsJumpClick = true;
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
-        int indexOffset = getTwoDateCount(localDate, currectCalendarView.getInitialDate(), attrs.firstDayOfWeek);//得出两个页面相差几个
-        if (isMultiple) {
+        int indexOffset = getTwoDateCount(localDate, currectCalendarView.getInitialDate(), mAttrs.firstDayOfWeek);//得出两个页面相差几个
+        if (mIsMultiple) {
             //多选  点击的日期不清除，只翻页，如果需要清除，等到翻页之后再次点击
             if (!mAllSelectDateList.contains(localDate) && isDraw) {
                 mAllSelectDateList.add(localDate);
@@ -380,7 +270,6 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     private void callBack() {
-
         post(new Runnable() {
             @Override
             public void run() {
@@ -388,22 +277,122 @@ public abstract class BaseCalendar extends ViewPager {
                 LocalDate initialDate = currectCalendarView.getInitialDate();
                 List<LocalDate> currentSelectDateList = currectCalendarView.getCurrentSelectDateList();
 
-                if (onMWDateChangeListener != null) {
-                    onMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
+                if (mOnMWDateChangeListener != null) {
+                    mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
                 }
 
-                if (onCalendarChangedListener != null && !isMultiple) {
+                if (mOnCalendarChangedListener != null && !mIsMultiple) {
                     //单选
-                    onCalendarChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
+                    mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
                 }
 
-                if (onCalendarMultipleChangedListener != null && isMultiple) {
-                    onCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
+                if (mOnCalendarMultipleChangedListener != null && mIsMultiple) {
+                    //多选
+                    mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
                 }
             }
         });
     }
 
+
+    //刷新所有页面
+    public void notifyAllView() {
+        for (int i = 0; i < getChildCount(); i++) {
+            CalendarView calendarView = (CalendarView) getChildAt(i);
+            if (calendarView != null) {
+                calendarView.invalidate();
+            }
+        }
+    }
+
+
+    //日期边界处理
+    private LocalDate getAvailableDate(LocalDate localDate) {
+        if (localDate.isBefore(mStartDate)) {
+            return mStartDate;
+        } else if (localDate.isAfter(mEndDate)) {
+            return mEndDate;
+        } else {
+            return localDate;
+        }
+    }
+
+
+    public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
+        this.mOnClickDisableDateListener = onClickDisableDateListener;
+    }
+
+    //点击不可用的日期处理
+    private void clickDisableDate(LocalDate localDate) {
+        if (mOnClickDisableDateListener != null) {
+            mOnClickDisableDateListener.onClickDisableDate(localDate);
+        } else {
+            Toast.makeText(getContext(), TextUtils.isEmpty(mAttrs.disabledString) ? "日期超出许可范围" : mAttrs.disabledString, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //下一页，月日历即是下一月，周日历即是下一周
+    public void toNextPager() {
+        setCurrentItem(getCurrentItem() + 1, true);
+    }
+
+    //上一页
+    public void toLastPager() {
+        setCurrentItem(getCurrentItem() - 1, true);
+    }
+
+    //回到今天
+    public void toToday() {
+        jump(new LocalDate(), true);
+    }
+
+
+    //跳转日期
+    public void jumpDate(String formatDate) {
+        LocalDate jumpDate;
+        try {
+            jumpDate = new LocalDate(formatDate);
+        } catch (Exception e) {
+            throw new RuntimeException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
+        }
+
+        jump(jumpDate, true);
+    }
+
+
+    public List<LocalDate> getAllSelectDateList() {
+        return mAllSelectDateList;
+    }
+
+    //点击的日期是否可用
+    protected boolean isAvailable(LocalDate localDate) {
+        return !localDate.isBefore(mStartDate) && !localDate.isAfter(mEndDate);
+    }
+
+    //获取区间开始日期
+    public LocalDate getStartDate() {
+        return mStartDate;
+    }
+
+    //获取区间结束日期
+    public LocalDate getEndDate() {
+        return mEndDate;
+    }
+
+    //设置绘制类
+    public void setCalendarPainter(CalendarPainter calendarPainter) {
+        this.mCalendarPainter = calendarPainter;
+        notifyAllView();
+    }
+
+    //BaseCalendarView绘制获取mCalendarPainter
+    public CalendarPainter getCalendarPainter() {
+        return mCalendarPainter;
+    }
+
+
+    //月周切换时交换数据，保证月日历和周日历有相同的选中日期
     public void setSelectDateList(List<LocalDate> dateList) {
         mAllSelectDateList.clear();
         mAllSelectDateList.addAll(dateList);
@@ -411,22 +400,19 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-    private OnMWDateChangeListener onMWDateChangeListener;//月周切换是折叠中心的回调
-    private OnCalendarChangedListener onCalendarChangedListener;//单选时回调，当前页面无选中返回null
-    private OnCalendarMultipleChangedListener onCalendarMultipleChangedListener;//多选时回调
-
     public void setOnDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
-        this.onMWDateChangeListener = onMWDateChangeListener;
+        this.mOnMWDateChangeListener = onMWDateChangeListener;
     }
 
     public void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener) {
-        this.onCalendarChangedListener = onCalendarChangedListener;
+        this.mOnCalendarChangedListener = onCalendarChangedListener;
     }
 
     public void setOnCalendarMultipleChangedListener(OnCalendarMultipleChangedListener onCalendarMultipleChangedListener) {
-        this.onCalendarMultipleChangedListener = onCalendarMultipleChangedListener;
+        this.mOnCalendarMultipleChangedListener = onCalendarMultipleChangedListener;
     }
 
+    //获取当前月，当前周的第一个日期
     public LocalDate getFirstDate() {
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         if (currectCalendarView != null) {
@@ -436,6 +422,7 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
+    //获取PivotDate
     public LocalDate getPivotDate() {
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         if (currectCalendarView != null) {
@@ -445,6 +432,7 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
+    //localDate到顶部的距离
     public int getDistanceFromTop(LocalDate localDate) {
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         if (currectCalendarView != null) {
@@ -453,6 +441,8 @@ public abstract class BaseCalendar extends ViewPager {
         return 0;
     }
 
+
+    //PivotDate到顶部的距离
     public int getPivotDistanceFromTop() {
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         if (currectCalendarView != null) {
@@ -460,5 +450,16 @@ public abstract class BaseCalendar extends ViewPager {
         }
         return 0;
     }
+
+
+    //回去viewpager的adapter
+    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek);
+
+    //两个日期的相差数量
+    protected abstract int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type);
+
+    //相差count之后的的日期
+    protected abstract LocalDate getIntervalDate(LocalDate localDate, int count);
+
 
 }

@@ -24,17 +24,11 @@ public class WeekCalendarAdapter extends BaseCalendarAdapter {
     protected CalendarView getCalendarView(int position) {
         LocalDate localDate = mInitializeDate.plusDays((position - mCurr) * 7);
         List<LocalDate> dateList = Util.getWeekCalendar(localDate, mFirstDayOfWeek);
-
         return new WeekView(mContext, localDate, dateList);
     }
 
     @Override
     protected int getIntervalCount(LocalDate startDate, LocalDate endDate, int type) {
-
-        MyLog.d("startDate::::111:::" + startDate);
-        MyLog.d("startDate::::333:::" + endDate);
-
-
         return Util.getIntervalWeek(startDate, endDate, type);
     }
 }

@@ -1,8 +1,5 @@
 package com.necer.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.NestedScrollingChild;
@@ -13,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.necer.R;
-import com.necer.listener.OnCalendarStateChangedListener;
 
 /**
  * Created by necer on 2018/11/9.
