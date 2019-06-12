@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
+import com.necer.calendar.WeekCalendar;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
@@ -17,26 +18,26 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
-public class TestMonthActivity extends AppCompatActivity {
+public class TestWeekActivity extends AppCompatActivity {
 
 
     private TextView tv_result;
-    private MonthCalendar monthCalendar;
+    private WeekCalendar weekCalendar;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_month);
+        setContentView(R.layout.activity_week);
 
         tv_result = findViewById(R.id.tv_result);
 
 
-        monthCalendar = findViewById(R.id.monthCalendar);
+        weekCalendar = findViewById(R.id.weekCalendar);
 
-        monthCalendar.setDateInterval("2018-10-1","2019-10-10");
+      //  weekCalendar.setDateInterval("2018-10-1","2019-10-10");
 
-        monthCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+        weekCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
@@ -45,7 +46,7 @@ public class TestMonthActivity extends AppCompatActivity {
             }
         });
 
-        monthCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
+        weekCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
 
@@ -59,27 +60,27 @@ public class TestMonthActivity extends AppCompatActivity {
     }
 
     public void lastMonth(View view) {
-        monthCalendar.toLastPager();
+        weekCalendar.toLastPager();
     }
 
     public void nextMonth(View view) {
-        monthCalendar.toNextPager();
+        weekCalendar.toNextPager();
     }
 
     public void jump_2018_10_10(View view) {
-        monthCalendar.jumpDate("2018-10-10");
+        weekCalendar.jumpDate("2018-10-10");
     }
 
     public void jump_2019_10_10(View view) {
-        monthCalendar.jumpDate("2019-10-10");
+        weekCalendar.jumpDate("2019-10-10");
     }
 
     public void jump_2019_6_10(View view) {
-        monthCalendar.jumpDate("2019-6-10");
+        weekCalendar.jumpDate("2019-6-10");
     }
 
 
     public void today(View view) {
-        monthCalendar.toToday();
+        weekCalendar.toToday();
     }
 }

@@ -75,9 +75,6 @@ public abstract class BaseCalendar extends ViewPager {
 
         isMultiple = attrs.isMultiple;
         isDefaultSelect = isMultiple ? false : attrs.isDefaultSelect;//当多选时，不能默认选中
-        if (isDefaultSelect) {
-            mAllSelectDateList.add(new LocalDate());
-        }
         isDefaultSelectFitst = attrs.isDefaultSelectFitst;
 
         post(new Runnable() {
@@ -94,11 +91,16 @@ public abstract class BaseCalendar extends ViewPager {
             }
         });
 
-        initDate(initializeDate);
+        initDate();
     }
 
 
-    private void initDate(LocalDate initializeDate) {
+    private void initDate() {
+
+        if (isDefaultSelect) {
+            mAllSelectDateList.clear();
+            mAllSelectDateList.add(initializeDate);
+        }
 
         String startDateString = attrs.startDateString;
         String endDateString = attrs.endDateString;
@@ -139,7 +141,7 @@ public abstract class BaseCalendar extends ViewPager {
     public void setDateInterval(String startFormatDate, String endFormatDate) {
         attrs.startDateString = startFormatDate;
         attrs.endDateString = endFormatDate;
-        initDate(initializeDate);
+        initDate();
     }
 
     public void setInitializeDate(String formatInitializeDate) {
@@ -148,7 +150,7 @@ public abstract class BaseCalendar extends ViewPager {
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
-        initDate(initializeDate);
+        initDate();
     }
 
     public void setDateInterval(String startFormatDate, String endFormatDate, String formatInitializeDate) {
@@ -159,7 +161,7 @@ public abstract class BaseCalendar extends ViewPager {
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
-        initDate(initializeDate);
+        initDate();
     }
 
 
@@ -179,7 +181,7 @@ public abstract class BaseCalendar extends ViewPager {
             LocalDate currectDate; //当前页面选中的日期
             if (isDefaultSelectFitst && !isJumpClick && !tempLocalDate.equals(new LocalDate())) {
                 //默认选中第一个 且 不是点击或跳转 且 不等于今天（为了第一次进来日历选中的是今天）
-                currectDate = new LocalDate(tempLocalDate.getYear(), tempLocalDate.getMonthOfYear(), 1);
+                currectDate = getFirstDate();
             } else {
                 currectDate = tempLocalDate;
             }
@@ -243,11 +245,11 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
     //点击不可用的日期处理
-    protected void onClickDisableDate(LocalDate localDate) {
+    private void clickDisableDate(LocalDate localDate) {
         if (onClickDisableDateListener != null) {
             onClickDisableDateListener.onClickDisableDate(Util.getNDate(localDate));
         } else {
-            Toast.makeText(getContext(), TextUtils.isEmpty(attrs.disabledString) ? "不可用" : attrs.disabledString, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), TextUtils.isEmpty(attrs.disabledString) ? "日期超出许可范围" : attrs.disabledString, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -308,13 +310,11 @@ public abstract class BaseCalendar extends ViewPager {
 
     public void onClickCurrectMonthOrWeekDate(LocalDate localDate) {
 
-
         //判断日期是否合法
         if (!isAvailable(localDate)) {
-            Toast.makeText(getContext(),"不合法",Toast.LENGTH_LONG).show();
+            clickDisableDate(localDate);
             return;
         }
-
 
         if (isMultiple) {
             //多选  集合不包含就添加，包含就移除
@@ -350,15 +350,11 @@ public abstract class BaseCalendar extends ViewPager {
 
 
     public void jump(LocalDate localDate, boolean isDraw) {
-
-
-
         //判断日期是否合法
         if (!isAvailable(localDate)) {
-            Toast.makeText(getContext(),"不合法",Toast.LENGTH_LONG).show();
+            clickDisableDate(localDate);
             return;
         }
-
 
         isJumpClick = true;
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());

@@ -26,4 +26,9 @@ public class WeekView extends CalendarView {
     public boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
         return mDateList.contains(date);
     }
+
+    @Override
+    public LocalDate getFirstDate() {
+        return mDateList.get(0);
+    }
 }

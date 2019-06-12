@@ -19,12 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" />
 
-    <com.necer.calendar.MonthCalendar
-        android:id="@+id/monthCalendar"
+    <com.necer.calendar.WeekCalendar
+        android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
         app:isDefaultSelect="true"
-        app:isDefaultSelectFitst="false"
-        android:layout_height="300dp" />
+        app:isDefaultSelectFitst="true"
+        android:layout_height="50dp" />
 
 
     <LinearLayout

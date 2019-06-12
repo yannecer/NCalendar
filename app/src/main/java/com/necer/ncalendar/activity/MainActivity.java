@@ -20,16 +20,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // TextView tvVersion = (TextView) findViewById(R.id.tv_version);
-       // tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
-
+        // TextView tvVersion = (TextView) findViewById(R.id.tv_version);
+        // tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
 
 
     }
 
     public void testMonth(View view) {
-        startActivity(new Intent(this,TestMonthActivity.class));
+        startActivity(new Intent(this, TestMonthActivity.class));
+    }
 
+    public void testWeek(View view) {
+        startActivity(new Intent(this, TestWeekActivity.class));
     }
 
 

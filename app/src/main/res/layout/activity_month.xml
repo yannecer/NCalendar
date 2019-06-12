@@ -23,7 +23,7 @@
         android:id="@+id/monthCalendar"
         android:layout_width="match_parent"
         app:isDefaultSelect="true"
-        app:isDefaultSelectFitst="false"
+        app:isDefaultSelectFitst="true"
         android:layout_height="300dp" />
 
 

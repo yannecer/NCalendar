@@ -193,9 +193,8 @@ public abstract class CalendarView extends View {
     }
 
 
-    public LocalDate getFirstDate() {
-        return mDateList.get(0);
-    }
+    //周或者月的第一天
+    public abstract LocalDate getFirstDate();
 
     //获取折叠的中心点 如果有当前页面有选中 返回选中的日期，如果没有选中就返回当前页面第一个日期
     public LocalDate getPivotDate() {

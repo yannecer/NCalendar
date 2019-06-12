@@ -32,4 +32,9 @@ public class MonthView extends CalendarView {
     public boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
         return Util.isEqualsMonth(date, initialDate);
     }
+
+    @Override
+    public LocalDate getFirstDate() {
+        return new LocalDate(mInitialDate.getYear(), mInitialDate.getMonthOfYear(), 1);
+    }
 }

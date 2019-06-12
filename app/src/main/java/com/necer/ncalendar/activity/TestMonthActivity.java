@@ -34,7 +34,8 @@ public class TestMonthActivity extends AppCompatActivity {
 
         monthCalendar = findViewById(R.id.monthCalendar);
 
-        monthCalendar.setDateInterval("2018-10-1","2019-10-10");
+      // monthCalendar.setDateInterval("2019-5-1","2019-5-20");
+     //   monthCalendar.setInitializeDate("2019-6-2");
 
         monthCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
