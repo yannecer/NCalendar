@@ -9,12 +9,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.necer.MyLog;
+import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.Miui9Calendar;
 import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
+import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.AAAdapter;
 import com.necer.utils.Attrs;
+
+import org.joda.time.LocalDate;
+
+import java.util.List;
 
 
 /**
@@ -38,6 +44,26 @@ public class TestMiui9Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         AAAdapter aaAdapter = new AAAdapter(this);
         recyclerView.setAdapter(aaAdapter);
+
+
+
+
+        miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+            @Override
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
+
+                MyLog.d("setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
+
+            }
+        });
+        miui9Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
+            @Override
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
+                MyLog.d(year + "年" + month + "月");
+                MyLog.d("当前页面选中：：" + currectSelectList);
+                MyLog.d("全部选中：：" + allSelectList);            }
+        });
+
 
     }
 

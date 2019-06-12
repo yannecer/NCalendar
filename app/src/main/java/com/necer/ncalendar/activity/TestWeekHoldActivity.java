@@ -1,7 +1,10 @@
 package com.necer.ncalendar.activity;
 
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,7 +17,7 @@ import com.necer.ncalendar.adapter.AAAdapter;
 /**
  * Created by necer on 2018/11/20.
  */
-public class TestWeekHoldActivity extends BaseActivity {
+public class TestWeekHoldActivity extends AppCompatActivity {
 
 
     SwipeRefreshLayout refresh_layout;
@@ -23,14 +26,10 @@ public class TestWeekHoldActivity extends BaseActivity {
     Miui9Calendar miui9Calendar;
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_week_hold;
-    }
-
-    @Override
-    protected void onCreatee() {
-
-       refresh_layout = findViewById(R.id.refresh_layout);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_week_hold);
+        refresh_layout = findViewById(R.id.refresh_layout);
         recyclerView = findViewById(R.id.recyclerView);
         miui9Calendar = findViewById(R.id.miui9Calendar);
 

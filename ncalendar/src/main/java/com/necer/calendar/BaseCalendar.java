@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
-import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
@@ -281,12 +280,12 @@ public abstract class BaseCalendar extends ViewPager {
                     mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
                 }
 
-                if (mOnCalendarChangedListener != null && !mIsMultiple) {
+                if (mOnCalendarChangedListener != null && !mIsMultiple && getVisibility()==VISIBLE) {
                     //单选
                     mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
                 }
 
-                if (mOnCalendarMultipleChangedListener != null && mIsMultiple) {
+                if (mOnCalendarMultipleChangedListener != null && mIsMultiple && getVisibility()==VISIBLE) {
                     //多选
                     mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
                 }
@@ -324,6 +323,9 @@ public abstract class BaseCalendar extends ViewPager {
 
     //点击不可用的日期处理
     private void clickDisableDate(LocalDate localDate) {
+        if (getVisibility() != VISIBLE) {
+            return;
+        }
         if (mOnClickDisableDateListener != null) {
             mOnClickDisableDateListener.onClickDisableDate(localDate);
         } else {
@@ -400,7 +402,7 @@ public abstract class BaseCalendar extends ViewPager {
     }
 
 
-    public void setOnDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
+    public void setOnMWDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
         this.mOnMWDateChangeListener = onMWDateChangeListener;
     }
 

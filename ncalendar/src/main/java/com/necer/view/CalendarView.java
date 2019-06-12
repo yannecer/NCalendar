@@ -24,16 +24,6 @@ import java.util.List;
 public abstract class CalendarView extends View {
 
 
-    /**
-     * 新需求
-     * 1、支持多选，选中的第一个为中心切换
-     * 2、支持不选中月周切换/
-     * 3、支持viewpager滑动
-     * 4、自定义简单化 比如绘制单个的日期，可用，不可用，选中不选中，逻辑部分不对外   可以设计adapter，只需要重写每一个方法完成自定义
-     * 5、支持滑动默认选中第一天
-     * 6、不选中支持月周切换
-     */
-
     private int mLineNum;//行数
     protected LocalDate mInitialDate;//当前页面的初始化日期
     protected List<Rect> mRectList;//点击用的矩形集合
