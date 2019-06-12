@@ -17,13 +17,9 @@ public class Miui9Calendar extends MiuiCalendar {
         super(context, attrs);
     }
 
-
-
     @Override
     protected float getGestureMonthUpOffset(int dy) {
-
         float maxOffset;
-
         if (STATE == Attrs.MONTH) {
             //月  月日历有选中则选中为 中心点，如果没有选中则第一行
             maxOffset = monthCalendar.getPivotDistanceFromTop() - Math.abs(monthCalendar.getY()); //结束位置

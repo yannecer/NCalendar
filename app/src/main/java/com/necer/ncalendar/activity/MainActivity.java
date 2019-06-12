@@ -34,5 +34,21 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, TestWeekActivity.class));
     }
 
+    public void test(View view) {
+        startActivity(new Intent(this, TestActivity.class));
+    }
+
+    public void miui9(View view) {
+        startActivity(new Intent(this, TestMiui9Activity.class));
+    }
+
+    public void miui10(View view) {
+        startActivity(new Intent(this, TestMiui10Activity.class));
+    }
+
+    public void emiui(View view) {
+        startActivity(new Intent(this, TestEmuiActivity.class));
+    }
+
 
 }

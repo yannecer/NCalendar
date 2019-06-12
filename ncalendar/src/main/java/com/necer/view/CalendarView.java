@@ -7,6 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Util;
@@ -53,6 +54,9 @@ public abstract class CalendarView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        MyLog.d("onFinishInflate1111111111111111111111");
+
 
         if (mCalendar == null) {
             mCalendar = (BaseCalendar) getParent();
@@ -195,6 +199,6 @@ public abstract class CalendarView extends View {
     protected abstract boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate);
 
     //周或者月的第一天
-    protected abstract LocalDate getFirstDate();
+    public abstract LocalDate getFirstDate();
 
 }

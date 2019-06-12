@@ -22,7 +22,6 @@ public abstract class MiuiCalendar extends NCalendar {
 
     @Override
     protected float getMonthYOnWeekState(LocalDate localDate) {
-
         return -monthCalendar.getDistanceFromTop(localDate);
     }
 
@@ -41,14 +40,25 @@ public abstract class MiuiCalendar extends NCalendar {
     }
 
     @Override
-    protected void onSetWeekVisible(int dy) {
+    protected void setWeekVisible(boolean isUp) {
 
         if (childLayout.isWeekState()) {
-            weekCalendar.setVisibility(VISIBLE);
-            monthCalendar.setVisibility(INVISIBLE);
+            if (weekCalendar.getVisibility() != VISIBLE) {
+                weekCalendar.setVisibility(VISIBLE);
+            }
+
+            if (monthCalendar.getVisibility() != INVISIBLE) {
+                monthCalendar.setVisibility(INVISIBLE);
+            }
+
         } else {
-            weekCalendar.setVisibility(INVISIBLE);
-            monthCalendar.setVisibility(VISIBLE);
+            if (weekCalendar.getVisibility() != INVISIBLE) {
+                weekCalendar.setVisibility(INVISIBLE);
+            }
+
+            if (monthCalendar.getVisibility() != VISIBLE) {
+                monthCalendar.setVisibility(VISIBLE);
+            }
         }
     }
 

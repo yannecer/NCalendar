@@ -56,13 +56,18 @@ public class EmuiCalendar extends NCalendar {
 
 
     @Override
-    protected void onSetWeekVisible(int dy) {
-        monthCalendar.setVisibility(VISIBLE);
-        if (monthCalendar.isWeekState() && dy > 0) {
-            weekCalendar.setVisibility(VISIBLE);
-        } else if (monthCalendar.getY() >= -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) && dy < 0) {
-            weekCalendar.setVisibility(INVISIBLE);
+    protected void setWeekVisible(boolean isUp) {
 
+        if (monthCalendar.getVisibility() != VISIBLE) {
+            monthCalendar.setVisibility(VISIBLE);
+        }
+
+        if ( STATE == Attrs.MONTH && monthCalendar.isWeekState() && isUp &&weekCalendar.getVisibility() != VISIBLE) {
+            weekCalendar.setVisibility(VISIBLE);
+        } else if (STATE == Attrs.WEEK && monthCalendar.getY() <= -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) && weekCalendar.getVisibility() != VISIBLE) {
+            weekCalendar.setVisibility(VISIBLE);
+        } else if (monthCalendar.getY() >= -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) && !isUp && weekCalendar.getVisibility() != INVISIBLE) {
+            weekCalendar.setVisibility(INVISIBLE);
         }
     }
 

@@ -35,10 +35,6 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
         <activity
-            android:name=".activity.TestMonthWeekActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
-
-        <activity
             android:name=".activity.TestAddViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
@@ -58,6 +54,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".activity.TestWeekActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <activity
+            android:name=".activity.TestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
 

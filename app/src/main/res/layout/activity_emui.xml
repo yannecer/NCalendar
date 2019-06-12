@@ -6,31 +6,64 @@
     android:orientation="vertical">
 
 
-    <FrameLayout
+    <TextView
+        android:id="@+id/tv_result"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#F29B38"
-        android:paddingBottom="5dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:onClick="lastPager"
+            android:text="上一月" />
 
-        <com.necer.view.WeekBar
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:textColor="#ffffff" />
+            android:layout_weight="1"
+            android:onClick="nextPager"
+            android:text="下一月" />
 
-    </FrameLayout>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="today"
+            android:text="今天" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fold"
+            android:text="折叠" />
+
+
+    </LinearLayout>
+
+
+
+    <com.necer.view.WeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <com.necer.calendar.EmuiCalendar
@@ -40,8 +73,10 @@
         app:bgChildColor="#F5f5f5"
         app:holidayColor="#F29B38"
         app:isShowLunar="false"
-        app:pointDistance="15dp"
+        app:isMultiple="true"
+        app:isDefaultSelect="false"
         app:lunarHolidayTextColor="#F29B38"
+        app:pointDistance="15dp"
         app:selectCircleColor="#F29B38"
         app:solarHolidayTextColor="#F29B38"
         app:solarTermTextColor="#F29B38"
