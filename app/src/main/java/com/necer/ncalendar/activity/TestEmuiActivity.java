@@ -51,7 +51,7 @@ public class TestEmuiActivity extends AppCompatActivity {
     }
 
     public void fold(View view) {
-        int state = emuiCalendar.getState();
+        int state = emuiCalendar.getCalendarState();
         if (state == Attrs.WEEK) {
             emuiCalendar.toMonth();
         } else {

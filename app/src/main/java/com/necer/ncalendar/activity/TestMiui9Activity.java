@@ -82,7 +82,7 @@ public class TestMiui9Activity extends AppCompatActivity {
     public void fold(View view) {
 
 
-        int state = miui9Calendar.getState();
+        int state = miui9Calendar.getCalendarState();
         if (state == Attrs.WEEK) {
             miui9Calendar.toMonth();
         } else {

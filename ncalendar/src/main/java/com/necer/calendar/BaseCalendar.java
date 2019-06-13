@@ -1,6 +1,7 @@
 package com.necer.calendar;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
+import com.necer.MyLog;
 import com.necer.adapter.BaseCalendarAdapter;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
@@ -49,6 +51,8 @@ public abstract class BaseCalendar extends ViewPager {
 
     private List<LocalDate> mAllSelectDateList;
 
+    private boolean mIsInflateFinish;//是否加载完成，
+
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -74,12 +78,6 @@ public abstract class BaseCalendar extends ViewPager {
         mIsDefaultSelect = mIsMultiple ? false : mAttrs.isDefaultSelect;//当多选时，不能默认选中
         mIsDefaultSelectFitst = mAttrs.isDefaultSelectFitst;
 
-        post(new Runnable() {
-            @Override
-            public void run() {
-                drawView(getCurrentItem());
-            }
-        });
 
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
@@ -464,4 +462,12 @@ public abstract class BaseCalendar extends ViewPager {
     protected abstract LocalDate getIntervalDate(LocalDate localDate, int count);
 
 
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        if (!mIsInflateFinish) {
+            drawView(getCurrentItem());
+            mIsInflateFinish = true;
+        }
+    }
 }

@@ -44,10 +44,6 @@ public abstract class CalendarView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-        MyLog.d("onFinishInflate1111111111111111111111");
-
-
         if (mCalendar == null) {
             mCalendar = (BaseCalendar) getParent();
             mAllSelectListDate = mCalendar.getAllSelectDateList();
@@ -91,7 +87,6 @@ public abstract class CalendarView extends View {
                 }
             }
         }
-
     }
 
     //获取每个元素矩形
@@ -163,17 +158,20 @@ public abstract class CalendarView extends View {
 
     //获取折叠的中心点 如果有当前页面有选中 返回选中的日期，如果没有选中就返回当前页面第一个日期
     public LocalDate getPivotDate() {
-        return mCurrentSelectDateList.size() == 0 ? mDateList.get(0) : mCurrentSelectDateList.get(0);
+        LocalDate today = new LocalDate();
+        if (mCurrentSelectDateList.size() != 0) {
+            return mCurrentSelectDateList.get(0);
+        } else if (mDateList.contains(today)) {
+            return today;
+        } else {
+            return mDateList.get(0);
+        }
     }
 
 
     //获取中心点到顶部的距离
     public int getPivotDistanceFromTop() {
-        if (mCurrentSelectDateList.size() == 0) {
-            return getDistanceFromTop(mDateList.get(0));
-        } else {
-            return getDistanceFromTop(mCurrentSelectDateList.get(0));
-        }
+        return getDistanceFromTop(getPivotDate());
     }
 
 

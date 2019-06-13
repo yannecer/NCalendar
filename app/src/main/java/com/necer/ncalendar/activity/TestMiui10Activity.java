@@ -3,9 +3,11 @@ package com.necer.ncalendar.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.NestedScrollingChild;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.necer.MyLog;
@@ -15,6 +17,7 @@ import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.ncalendar.R;
 import com.necer.painter.InnerPainter;
+import com.necer.view.ChildLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,7 +89,35 @@ public class TestMiui10Activity extends AppCompatActivity {
 
 
     public void aaa(View view) {
-        miui10Calendar.jumpDate("2018-10-12");
-      //  miui10Calendar.setVisibility(View.VISIBLE);
+       // miui10Calendar.jumpDate("2018-10-12");
+        miui10Calendar.setVisibility(View.VISIBLE);
+
+
+        try {
+            traverseView(miui10Calendar);
+        } catch (ChildLayout.ViewException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    //递归，异常中断递归
+    private void traverseView(View view) throws ChildLayout.ViewException {
+        if (view instanceof NestedScrollingChild) {
+            throw new ChildLayout.ViewException(view);
+        } else if (view instanceof ViewGroup) {
+            int childCount = ((ViewGroup) view).getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View childAt = ((ViewGroup) view).getChildAt(i);
+
+                MyLog.d("childAtchildAtchildAt:::" + childAt);
+                if (childAt instanceof NestedScrollingChild) {
+                    throw new ChildLayout.ViewException(childAt);
+                } else {
+                    traverseView(childAt);
+                }
+            }
+        }
     }
 }

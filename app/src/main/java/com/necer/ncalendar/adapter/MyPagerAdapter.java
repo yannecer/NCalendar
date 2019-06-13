@@ -24,7 +24,11 @@ public class MyPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = View.inflate(mContext, R.layout.item_view_pager, null);
+        View view = View.inflate(mContext, position%2==0?R.layout.item_view_pager:R.layout.item_2, null);
+
+
+        TextView textView = view.findViewById(R.id.tv);
+        textView.setText(position + "");
         container.addView(view);
         return view;
     }

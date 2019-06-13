@@ -38,7 +38,7 @@ public class Miui10Calendar extends MiuiCalendar {
             monthCalendarOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
         }
 
-        float childLayoutOffset = childLayout.getChildLayoutOffset();
+        float childLayoutOffset = monthHeight - weekHeight;
 
         float offset = ((monthCalendarOffset * dy) / childLayoutOffset);
         return getOffset(offset, maxOffset);
@@ -59,7 +59,7 @@ public class Miui10Calendar extends MiuiCalendar {
             monthCalendarOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
         }
 
-        float childLayoutOffset = childLayout.getChildLayoutOffset();
+        float childLayoutOffset = monthHeight - weekHeight;
         float offset = ((monthCalendarOffset * dy) / childLayoutOffset);
         return getOffset(Math.abs(offset), maxOffset);
     }

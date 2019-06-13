@@ -4,10 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.ListViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 
 import com.necer.R;
 
@@ -36,18 +38,18 @@ public class ChildLayout extends FrameLayout {
         super.addView(child, params);
 
         //通过tag查找，找不到递归查找，再找不到抛异常
-        targetView = findViewWithTag(getResources().getString(R.string.factual_scroll_view));
-        if (targetView == null) {
-            try {
-                traverseView(child);
-            } catch (ViewException e) {
-                e.printStackTrace();
-                targetView = e.getExceptionView();
-            }
-        }
-        if (targetView == null) {
-            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild的子类");
-        }
+//        targetView = findViewWithTag(getResources().getString(R.string.factual_scroll_view));
+//        if (targetView == null) {
+//            try {
+//                traverseView(child);
+//            } catch (ViewException e) {
+//                e.printStackTrace();
+//                targetView = e.getExceptionView();
+//            }
+//        }
+//        if (targetView == null) {
+//            throw new RuntimeException("NCalendar需要实现了NestedScrollingChild的子类");
+//        }
     }
 
 
@@ -70,7 +72,16 @@ public class ChildLayout extends FrameLayout {
 
 
     public boolean canScrollVertically(int direction) {
-        return ViewCompat.canScrollVertically(targetView, direction);
+        if (targetView == null) {
+            try {
+                traverseView(getChildAt(0));
+            } catch (ViewException e) {
+                e.printStackTrace();
+                targetView = e.getExceptionView();
+            }
+        }
+
+        return targetView.canScrollVertically(-1);
     }
 
 

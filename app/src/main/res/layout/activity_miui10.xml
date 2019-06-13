@@ -85,6 +85,7 @@
         app:startDate="2018-01-01"
         app:isDefaultSelect="false"
         app:isMultiple="true"
+        android:visibility="gone"
         app:todaySolarTextColor="#398FE9">
 
 

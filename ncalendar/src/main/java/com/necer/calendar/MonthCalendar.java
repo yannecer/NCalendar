@@ -55,4 +55,8 @@ public class MonthCalendar extends BaseCalendar {
         return getY() <= -getPivotDistanceFromTop();
     }
 
+    @Override
+    public float getY() {
+        return super.getY();
+    }
 }
