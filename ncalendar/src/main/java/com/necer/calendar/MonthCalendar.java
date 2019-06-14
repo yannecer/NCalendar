@@ -47,16 +47,4 @@ public class MonthCalendar extends BaseCalendar {
     }
 
 
-    public boolean isMonthState() {
-        return getY() >= 0;
-    }
-
-    public boolean isWeekState() {
-        return getY() <= -getPivotDistanceFromTop();
-    }
-
-    @Override
-    public float getY() {
-        return super.getY();
-    }
 }

@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import com.necer.R;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
@@ -29,7 +30,9 @@ import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
 import com.necer.view.ChildLayout;
+
 import org.joda.time.LocalDate;
+
 import java.util.List;
 
 
@@ -37,7 +40,6 @@ import java.util.List;
  * Created by necer on 2018/11/12.
  */
 public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener {
-
 
     protected WeekCalendar weekCalendar;
     protected MonthCalendar monthCalendar;
@@ -54,11 +56,10 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected Rect monthRect;//月日历大小的矩形
     protected Rect weekRect;//周日历大小的矩形 ，用于判断点击事件是否在日历的范围内
 
-    private boolean isWeekHold;//是否需要周状态定住
+    private boolean isWeekHold;//是否需要周状态定
 
     private CalendarPainter calendarPainter;
     private boolean isInflateFinish;//是否加载完成，
-
 
     protected ValueAnimator monthValueAnimator;//月日历动画
     protected ValueAnimator childViewValueAnimator;
@@ -263,16 +264,16 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
         //只有都在都在周状态下，才允许子View Fling滑动
-        return !(isChildWeekState() && monthCalendar.isWeekState());
+        return !(isChildWeekState() && isMonthCalendarWeekState());
     }
 
     @Override
     public void onStopNestedScroll(View target) {
         //该方法手指抬起的时候回调，此时根据此刻的位置，自动滑动到相应的状态，
         //如果已经在对应的位置上，则不执行动画，
-        if (monthCalendar.isMonthState() && isChildMonthState() && STATE == Attrs.WEEK) {
+        if (isMonthCalendarMonthState() && isChildMonthState() && STATE == Attrs.WEEK) {
             setCalenadrState();
-        } else if (monthCalendar.isWeekState() && isChildWeekState() && STATE == Attrs.MONTH) {
+        } else if (isMonthCalendarWeekState() && isChildWeekState() && STATE == Attrs.MONTH) {
             setCalenadrState();
         } else if (!isChildMonthState() && !isChildWeekState()) {
             //不是周状态也不是月状态时，自动滑动
@@ -374,67 +375,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             return weekRect.contains(x, y);
         }
     }
-
-
-    //获取月日历自动到周状态的y值
-    protected abstract float getMonthCalendarAutoWeekEndY();
-
-
-    //周状态下 月日历的getY 是个负值,用于在 周状态下日期改变设置正确的y值
-    protected abstract float getMonthYOnWeekState(LocalDate localDate);
-
-
-    /**
-     * 滑动过界处理 ，如果大于最大距离就返回最大距离
-     *
-     * @param offset    当前滑动的距离
-     * @param maxOffset 当前滑动的最大距离
-     * @return
-     */
-    protected float getOffset(float offset, float maxOffset) {
-        if (offset > maxOffset) {
-            return maxOffset;
-        }
-        return offset;
-    }
-
-    /**
-     * 设置weekCalendar的显示隐藏，该方法会在手势滑动和自动滑动的的时候一直回调
-     * isUp 是否是向上滑动
-     */
-    protected abstract void setWeekVisible(boolean isUp);
-
-    /**
-     * 月日历根据手势向上移动的距离
-     *
-     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return 根据不同日历的交互，计算不同的滑动值
-     */
-    protected abstract float getGestureMonthUpOffset(int dy);
-
-    /**
-     * Child根据手势向上移动的距离
-     *
-     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return 根据不同日历的交互，计算不同的滑动值
-     */
-    protected abstract float getGestureChildUpOffset(int dy);
-
-    /**
-     * 月日历根据手势向下移动的距离
-     *
-     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return 根据不同日历的交互，计算不同的滑动值
-     */
-    protected abstract float getGestureMonthDownOffset(int dy);
-
-    /**
-     * Child根据手势向下移动的距离
-     *
-     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return 根据不同日历的交互，计算不同的滑动值
-     */
-    protected abstract float getGestureChildDownOffset(int dy);
 
 
     //跳转日期
@@ -555,7 +495,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
 
-    //id重复
+    //修复id重复
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         super.onRestoreInstanceState(null);
@@ -597,7 +537,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
 
     //设置日历的状态、月周的显示及状态回调
     private void setCalenadrState() {
-        if (monthCalendar.isWeekState() && isChildWeekState() && STATE == Attrs.MONTH) {
+        if (isMonthCalendarWeekState() && isChildWeekState() && STATE == Attrs.MONTH) {
             STATE = Attrs.WEEK;
             weekCalendar.setVisibility(VISIBLE);
             monthCalendar.setVisibility(INVISIBLE);
@@ -605,7 +545,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             if (onCalendarStateChangedListener != null) {
                 onCalendarStateChangedListener.onCalendarStateChange(STATE);
             }
-        } else if (monthCalendar.isMonthState() && isChildMonthState() && STATE == Attrs.WEEK) {
+        } else if (isMonthCalendarMonthState() && isChildMonthState() && STATE == Attrs.WEEK) {
             STATE = Attrs.MONTH;
             weekCalendar.setVisibility(INVISIBLE);
             monthCalendar.setVisibility(VISIBLE);
@@ -624,11 +564,21 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected boolean isChildWeekState() {
         return childView.getY() <= weekHeight;
     }
+
     //childView月状态的条件
     protected boolean isChildMonthState() {
         return childView.getY() >= monthHeight;
     }
 
+    //月日历周状态
+    protected boolean isMonthCalendarWeekState() {
+        return monthCalendar.getY() <= -monthCalendar.getPivotDistanceFromTop();
+    }
+
+    //月日历月状态
+    protected boolean isMonthCalendarMonthState() {
+        return monthCalendar.getY() >= 0;
+    }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
@@ -641,5 +591,62 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
             isInflateFinish = true;
         }
     }
+
+
+    //获取月日历自动到周状态的y值
+    protected abstract float getMonthCalendarAutoWeekEndY();
+
+
+    //周状态下 月日历的getY 是个负值,用于在 周状态下日期改变设置正确的y值
+    protected abstract float getMonthYOnWeekState(LocalDate localDate);
+
+
+    //滑动过界处理 ，如果大于最大距离就返回最大距离
+    protected float getOffset(float offset, float maxOffset) {
+        if (offset > maxOffset) {
+            return maxOffset;
+        }
+        return offset;
+    }
+
+    /**
+     * 设置weekCalendar的显示隐藏，该方法会在手势滑动和自动滑动的的时候一直回调
+     * isUp 是否是向上滑动
+     */
+    protected abstract void setWeekVisible(boolean isUp);
+
+    /**
+     * 月日历根据手势向上移动的距离
+     *
+     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
+     * @return 根据不同日历的交互，计算不同的滑动值
+     */
+    protected abstract float getGestureMonthUpOffset(int dy);
+
+    /**
+     * Child根据手势向上移动的距离
+     *
+     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
+     * @return 根据不同日历的交互，计算不同的滑动值
+     */
+    protected abstract float getGestureChildUpOffset(int dy);
+
+    /**
+     * 月日历根据手势向下移动的距离
+     *
+     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
+     * @return 根据不同日历的交互，计算不同的滑动值
+     */
+    protected abstract float getGestureMonthDownOffset(int dy);
+
+    /**
+     * Child根据手势向下移动的距离
+     *
+     * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
+     * @return 根据不同日历的交互，计算不同的滑动值
+     */
+    protected abstract float getGestureChildDownOffset(int dy);
+
+
 
 }
