@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
-        versionName "4.0.0"
+        versionName "4.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -40,7 +40,7 @@ publish {
     repoName = 'maven'//bintray仓库
     groupId = 'com.necer.ncalendar'//jcenter上的路径
     artifactId = 'ncalendar'//项目名称
-    publishVersion = '4.0.0'//版本号
+    publishVersion = '4.0.1'//版本号
     desc = 'NCalendar'
     website = 'https://github.com/yannecer/NCalendar'
 }
