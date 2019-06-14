@@ -31,6 +31,9 @@
 ## 下载demo：
 [下载demo](https://github.com/yannecer/NCalendar/releases/download/4.0.1/app-debug.apk)
 
+## 旧版文档：
+[旧版文档](https://github.com/yannecer/NCalendar/blob/master/README_OLD.md)
+
 ## 使用方法
 
 #### Gradle
