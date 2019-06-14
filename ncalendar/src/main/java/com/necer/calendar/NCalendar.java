@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Created by necer on 2018/11/12.
  */
-public abstract class NCalendar extends FrameLayout implements NestedScrollingParent, ValueAnimator.AnimatorUpdateListener {
+public abstract class NCalendar extends FrameLayout implements IICalendar, NestedScrollingParent, ValueAnimator.AnimatorUpdateListener {
 
     protected WeekCalendar weekCalendar;
     protected MonthCalendar monthCalendar;
@@ -64,6 +64,8 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     protected ValueAnimator monthValueAnimator;//月日历动画
     protected ValueAnimator childViewValueAnimator;
 
+    private Attrs attrs;
+
     public NCalendar(@NonNull Context context) {
         this(context, null);
     }
@@ -76,17 +78,17 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         super(context, attrs, defStyleAttr);
 
         setMotionEventSplittingEnabled(false);
-        Attrs attrss = AttrsUtil.getAttrs(context, attrs);
+        this.attrs = AttrsUtil.getAttrs(context, attrs);
 
-        int duration = attrss.duration;
-        monthHeight = attrss.monthCalendarHeight;
-        STATE = attrss.defaultCalendar;
+        int duration = this.attrs.duration;
+        monthHeight = this.attrs.monthCalendarHeight;
+        STATE = this.attrs.defaultCalendar;
         weekHeight = monthHeight / 5;
-        isWeekHold = attrss.isWeekHold;
+        isWeekHold = this.attrs.isWeekHold;
 
-        calendarPainter = new InnerPainter(attrss);
-        weekCalendar = new WeekCalendar(context, attrss, calendarPainter);
-        monthCalendar = new MonthCalendar(context, attrss, calendarPainter);
+        calendarPainter = new InnerPainter(this);
+        weekCalendar = new WeekCalendar(context, this.attrs, calendarPainter);
+        monthCalendar = new MonthCalendar(context, this.attrs, calendarPainter);
 
         monthCalendar.setOnMWDateChangeListener(onMWDateChangeListener);
         weekCalendar.setOnMWDateChangeListener(onMWDateChangeListener);
@@ -377,7 +379,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
     }
 
 
-    //跳转日期
+    @Override
     public void jumpDate(String formatDate) {
         if (STATE == Attrs.MONTH) {
             monthCalendar.jumpDate(formatDate);
@@ -386,14 +388,14 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
-    //日历初始化的日期
+    @Override
     public void setInitializeDate(String formatDate) {
         monthCalendar.setInitializeDate(formatDate);
         weekCalendar.setInitializeDate(formatDate);
     }
 
 
-    //回到今天
+    @Override
     public void toToday() {
         if (STATE == Attrs.MONTH) {
             monthCalendar.toToday();
@@ -402,37 +404,32 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
-    //自动滑动到周视图
+    @Override
     public void toWeek() {
         if (STATE == Attrs.MONTH) {
             autoToWeekState();
         }
     }
 
-    //自动滑动到月视图
+    @Override
     public void toMonth() {
         if (STATE == Attrs.WEEK) {
             autoToMonthState();
         }
     }
 
-    /**
-     * 获取绘制CalendarPainter 强转，设置其他属性
-     *
-     * @param
-     */
+    @Override
     public CalendarPainter getCalendarPainter() {
         return calendarPainter;
     }
 
 
-    //获取当前日历的状态  Attrs.MONTH==月视图    Attrs.WEEK==周视图
+    @Override
     public int getCalendarState() {
         return STATE;
     }
 
-
-    //下一页
+    @Override
     public void toNextPager() {
         if (STATE == Attrs.MONTH) {
             monthCalendar.toNextPager();
@@ -441,7 +438,7 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
-    //上一页
+    @Override
     public void toLastPager() {
         if (STATE == Attrs.MONTH) {
             monthCalendar.toLastPager();
@@ -450,48 +447,79 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
         }
     }
 
-    //设置日期区间
+    @Override
     public void setDateInterval(String startFormatDate, String endFormatDate) {
         monthCalendar.setDateInterval(startFormatDate, endFormatDate);
         weekCalendar.setDateInterval(startFormatDate, endFormatDate);
     }
 
-    //日历单选变化回调
+    @Override
     public void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener) {
         monthCalendar.setOnCalendarChangedListener(onCalendarChangedListener);
         weekCalendar.setOnCalendarChangedListener(onCalendarChangedListener);
     }
 
 
-    //日历多选变化回调
+    @Override
     public void setOnCalendarMultipleChangedListener(OnCalendarMultipleChangedListener onCalendarMultipleChangedListener) {
         monthCalendar.setOnCalendarMultipleChangedListener(onCalendarMultipleChangedListener);
         weekCalendar.setOnCalendarMultipleChangedListener(onCalendarMultipleChangedListener);
     }
 
-    //日历月周状态回调
+    @Override
     public void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener) {
         this.onCalendarStateChangedListener = onCalendarStateChangedListener;
     }
 
 
-    //点击不可用的日期回调
+    @Override
     public void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener) {
         monthCalendar.setOnClickDisableDateListener(onClickDisableDateListener);
         weekCalendar.setOnClickDisableDateListener(onClickDisableDateListener);
     }
 
-    //设置绘制类
+    @Override
     public void setCalendarPainter(CalendarPainter calendarPainter) {
         this.calendarPainter = calendarPainter;
         monthCalendar.setCalendarPainter(calendarPainter);
         weekCalendar.setCalendarPainter(calendarPainter);
     }
 
-    //刷新页面
-    public void notifyAllView() {
-        monthCalendar.notifyAllView();
-        weekCalendar.notifyAllView();
+    @Override
+    public void notifyCalendar() {
+        monthCalendar.notifyCalendar();
+        weekCalendar.notifyCalendar();
+    }
+
+    @Override
+    public void setDateInterval(String startFormatDate, String endFormatDate, String formatInitializeDate) {
+        monthCalendar.setDateInterval(startFormatDate, endFormatDate, formatInitializeDate);
+        weekCalendar.setDateInterval(startFormatDate, endFormatDate, formatInitializeDate);
+    }
+
+    @Override
+    public Attrs getAttrs() {
+        return attrs;
+    }
+
+    @Override
+    public List<LocalDate> getAllSelectDateList() {
+        if (STATE == Attrs.WEEK) {
+            return weekCalendar.getAllSelectDateList();
+        } else if (STATE == Attrs.MONTH) {
+            return monthCalendar.getAllSelectDateList();
+        }
+        return null;
+    }
+
+    @Override
+    public List<LocalDate> getCurrectSelectDateList() {
+        if (STATE == Attrs.WEEK) {
+            return weekCalendar.getCurrectSelectDateList();
+        } else if (STATE == Attrs.MONTH) {
+            return monthCalendar.getCurrectSelectDateList();
+        }
+        return null;
     }
 
 
@@ -646,7 +674,6 @@ public abstract class NCalendar extends FrameLayout implements NestedScrollingPa
      * @return 根据不同日历的交互，计算不同的滑动值
      */
     protected abstract float getGestureChildDownOffset(int dy);
-
 
 
 }

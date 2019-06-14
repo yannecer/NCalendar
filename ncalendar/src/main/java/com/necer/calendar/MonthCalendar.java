@@ -20,8 +20,6 @@ import org.joda.time.LocalDate;
  */
 public class MonthCalendar extends BaseCalendar {
 
-
-
     public MonthCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
     }
@@ -45,6 +43,4 @@ public class MonthCalendar extends BaseCalendar {
         LocalDate date = localDate.plusMonths(count);
         return date;
     }
-
-
 }

@@ -41,6 +41,13 @@
             android:onClick="today"
             android:text="今天" />
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="fold"
+            android:text="折叠" />
+
     </LinearLayout>
 
 
@@ -49,12 +56,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="fold"
-            android:text="折叠" />
+            android:onClick="jump_2018_08_11"
+            android:text="2019-08-11" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="jump_2020_08_11"
+            android:text="2020-08-11" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="jump_2019_06_20"
+            android:text="2019-06-20" />
 
 
     </LinearLayout>
@@ -72,15 +94,14 @@
         android:background="#00000000"
         app:calendarHeight="300dp"
         app:defaultCalendar="month"
-        app:isDefaultSelect="false"
-        app:isMultiple="true">
+        app:isDefaultSelect="true"
+        app:isMultiple="false">
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/ic_launcher"
             android:tag="@string/factual_scroll_view" />
 
 

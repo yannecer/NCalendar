@@ -31,10 +31,14 @@ public class TestMiui9Activity extends AppCompatActivity {
 
     private Miui9Calendar miui9Calendar;
 
+    private TextView tv_result;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_miui9);
+
+        tv_result = findViewById(R.id.tv_result);
 
 
         miui9Calendar = findViewById(R.id.miui9Calendar);
@@ -46,12 +50,10 @@ public class TestMiui9Activity extends AppCompatActivity {
         recyclerView.setAdapter(aaAdapter);
 
 
-
-
         miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
-
+                tv_result.setText(localDate.toString());
                 MyLog.d("setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
 
             }
@@ -61,34 +63,44 @@ public class TestMiui9Activity extends AppCompatActivity {
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
                 MyLog.d(year + "年" + month + "月");
                 MyLog.d("当前页面选中：：" + currectSelectList);
-                MyLog.d("全部选中：：" + allSelectList);            }
+                MyLog.d("全部选中：：" + allSelectList);
+            }
         });
 
 
     }
 
-    public void lastPager(View view) {
+    public void jump_2018_08_11(View view) {
+        miui9Calendar.jumpDate("2018-08-11");
+    }
 
+    public void jump_2019_06_20(View view) {
+        miui9Calendar.jumpDate("2019-06-20");
+    }
+
+    public void jump_2020_08_11(View view) {
+        miui9Calendar.jumpDate("2020-08-11");
+    }
+
+    public void lastPager(View view) {
+        miui9Calendar.toLastPager();
     }
 
     public void nextPager(View view) {
-
+        miui9Calendar.toNextPager();
     }
 
     public void today(View view) {
-
+        miui9Calendar.toToday();
     }
 
     public void fold(View view) {
-
-
         int state = miui9Calendar.getCalendarState();
         if (state == Attrs.WEEK) {
             miui9Calendar.toMonth();
         } else {
             miui9Calendar.toWeek();
         }
-
     }
 
 

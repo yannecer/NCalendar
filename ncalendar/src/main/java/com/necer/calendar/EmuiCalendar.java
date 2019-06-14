@@ -10,6 +10,8 @@ import com.necer.utils.AttrsUtil;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 /**
  * 华为日历
  * Created by necer on 2018/11/14.
@@ -27,7 +29,6 @@ public class EmuiCalendar extends NCalendar {
         return -monthHeight * 4 / 5;
     }
 
-
     @Override
     protected float getMonthYOnWeekState(LocalDate localDate) {
         return weekHeight - monthHeight;
@@ -38,6 +39,7 @@ public class EmuiCalendar extends NCalendar {
         return getGestureChildUpOffset(dy);
     }
 
+    @Override
     protected float getGestureMonthDownOffset(int dy) {
         return getGestureChildDownOffset(dy);
     }
@@ -70,5 +72,6 @@ public class EmuiCalendar extends NCalendar {
             weekCalendar.setVisibility(INVISIBLE);
         }
     }
+
 
 }

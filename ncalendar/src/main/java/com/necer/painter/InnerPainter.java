@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
 
-import com.necer.MyLog;
+import com.necer.calendar.ICalendar;
 import com.necer.entity.NDate;
 import com.necer.utils.Attrs;
 import com.necer.utils.Util;
@@ -36,9 +36,8 @@ public class InnerPainter implements CalendarPainter {
     private Map<LocalDate, Integer> mReplaceLunarColorMap;
 
 
-    public InnerPainter(Attrs attrs) {
-        this.mAttrs = attrs;
-
+    public InnerPainter(ICalendar calendar) {
+        this.mAttrs = calendar.getAttrs();
         mTextPaint = getPaint();
         mCirclePaint = getPaint();
         mPointList = new ArrayList<>();
@@ -93,7 +92,7 @@ public class InnerPainter implements CalendarPainter {
     @Override
     public void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect) {
         if (isSelect) {
-            drawHollowCircle(canvas, rect);
+            drawHollowCircle(canvas, rect, noAlphaColor);
             drawOtherSolar(canvas, rect, noAlphaColor, nDate.localDate);
             drawLunar(canvas, rect, false, noAlphaColor, nDate);
             drawPoint(canvas, rect, false, noAlphaColor, nDate.localDate);
@@ -107,10 +106,10 @@ public class InnerPainter implements CalendarPainter {
     }
 
     @Override
-    public void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate,boolean isSelect) {
+    public void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate, boolean isSelect) {
 
         if (isSelect) {
-            drawHollowCircle(canvas, rect);
+            drawHollowCircle(canvas, rect, mAttrs.alphaColor);
             drawOtherSolar(canvas, rect, mAttrs.alphaColor, nDate.localDate);
             drawLunar(canvas, rect, false, mAttrs.alphaColor, nDate);
             drawPoint(canvas, rect, false, mAttrs.alphaColor, nDate.localDate);
@@ -126,11 +125,11 @@ public class InnerPainter implements CalendarPainter {
 
 
     //空心圆
-    private void drawHollowCircle(Canvas canvas, Rect rect) {
+    private void drawHollowCircle(Canvas canvas, Rect rect, int alphaColor) {
         mCirclePaint.setStyle(Paint.Style.STROKE);
         mCirclePaint.setStrokeWidth(mAttrs.hollowCircleStroke);
         mCirclePaint.setColor(mAttrs.hollowCircleColor);
-        mCirclePaint.setAlpha(noAlphaColor);
+        mCirclePaint.setAlpha(alphaColor);
         canvas.drawCircle(rect.centerX(), rect.centerY(), mAttrs.selectCircleRadius, mCirclePaint);
     }
 
@@ -288,6 +287,18 @@ public class InnerPainter implements CalendarPainter {
         mPointList.addAll(localDates);
     }
 
+    public void addPointList(List<String> list) {
+        List<LocalDate> localDates = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            try {
+                localDates.add(new LocalDate(list.get(i)));
+            } catch (Exception e) {
+                throw new RuntimeException("setPointList的参数需要 yyyy-MM-dd 格式的日期");
+            }
+        }
+        mPointList.addAll(localDates);
+    }
+
     //设置替换农历的文字
     public void setReplaceLunarStrMap(Map<String, String> replaceLunarStrMap) {
         Map<LocalDate, String> map = new HashMap<>();
@@ -321,14 +332,14 @@ public class InnerPainter implements CalendarPainter {
     public void setHolidayAndWorkdayList(List<String> holidayList, List<String> workdayList) {
         mHolidayList.clear();
         mWorkdayList.clear();
-        try{
+        try {
             for (int i = 0; i < holidayList.size(); i++) {
                 mHolidayList.add(new LocalDate(holidayList.get(i)));
             }
             for (int i = 0; i < workdayList.size(); i++) {
                 mWorkdayList.add(new LocalDate(workdayList.get(i)));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("setHolidayAndWorkdayList集合中的参数需要 yyyy-MM-dd 格式的日期");
         }
 

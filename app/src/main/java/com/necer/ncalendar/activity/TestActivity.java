@@ -17,7 +17,6 @@ import org.joda.time.LocalDate;
 
 public class TestActivity extends AppCompatActivity {
 
-   // TestAAAA aaa;
 
 
     MonthCalendar monthCalendar;

@@ -25,11 +25,8 @@ public class Miui10Calendar extends MiuiCalendar {
      */
     @Override
     protected float getGestureMonthUpOffset(int dy) {
-
-
         float maxOffset;
         float monthCalendarOffset;
-
         if (STATE == Attrs.MONTH) {
             maxOffset = monthCalendar.getPivotDistanceFromTop() - Math.abs(monthCalendar.getY());
             monthCalendarOffset = monthCalendar.getPivotDistanceFromTop();
@@ -37,9 +34,7 @@ public class Miui10Calendar extends MiuiCalendar {
             maxOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) - Math.abs(monthCalendar.getY());
             monthCalendarOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
         }
-
         float childLayoutOffset = monthHeight - weekHeight;
-
         float offset = ((monthCalendarOffset * dy) / childLayoutOffset);
         return getOffset(offset, maxOffset);
     }
@@ -51,14 +46,12 @@ public class Miui10Calendar extends MiuiCalendar {
     @Override
     protected float getGestureMonthDownOffset(int dy) {
         float maxOffset = Math.abs(monthCalendar.getY());
-
         float monthCalendarOffset;
         if (STATE == Attrs.MONTH) {
             monthCalendarOffset = monthCalendar.getPivotDistanceFromTop();
         } else {
             monthCalendarOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());
         }
-
         float childLayoutOffset = monthHeight - weekHeight;
         float offset = ((monthCalendarOffset * dy) / childLayoutOffset);
         return getOffset(Math.abs(offset), maxOffset);
