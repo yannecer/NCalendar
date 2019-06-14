@@ -26,7 +26,7 @@ public abstract class MiuiCalendar extends NCalendar {
     }
 
     @Override
-    protected float getAutoWeekEndY() {
+    protected float getMonthCalendarAutoWeekEndY() {
         float end;
         if (STATE == Attrs.MONTH) {
             //月  月日历有选中则选中为 中心点，如果没有选中则第一行

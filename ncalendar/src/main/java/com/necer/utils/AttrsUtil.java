@@ -50,7 +50,6 @@ public class AttrsUtil {
         attrs.workdayColor = ta.getColor(R.styleable.NCalendar_workdayColor, context.getResources().getColor(R.color.workdayColor));
         attrs.bgEmuiCalendarColor = ta.getColor(R.styleable.NCalendar_bgEmuiCalendarColor, context.getResources().getColor(R.color.white));
         attrs.todaySelectContrastColor = ta.getColor(R.styleable.NCalendar_todaySelectContrastColor, context.getResources().getColor(R.color.white));
-        attrs.bgChildColor = ta.getColor(R.styleable.NCalendar_bgChildColor, context.getResources().getColor(R.color.white));
         attrs.firstDayOfWeek = ta.getInt(R.styleable.NCalendar_firstDayOfWeek, Attrs.SUNDAY);
         attrs.pointLocation = ta.getInt(R.styleable.NCalendar_pointLocation, Attrs.UP);
         attrs.defaultCalendar = ta.getInt(R.styleable.NCalendar_defaultCalendar, Attrs.MONTH);

@@ -393,7 +393,7 @@ public abstract class BaseCalendar extends ViewPager {
 
 
     //月周切换时交换数据，保证月日历和周日历有相同的选中日期
-    public void setSelectDateList(List<LocalDate> dateList) {
+    public void exchangeSelectDateList(List<LocalDate> dateList) {
         mAllSelectDateList.clear();
         mAllSelectDateList.addAll(dateList);
         notifyAllView();

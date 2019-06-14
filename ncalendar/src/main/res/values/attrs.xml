@@ -44,7 +44,6 @@
         <attr name="workdayColor" format="color" />
         <attr name="bgEmuiCalendarColor" format="color" />
         <attr name="todaySelectContrastColor" format="color" />
-        <attr name="bgChildColor" format="color" />
         <attr name="disabledColor" format="color" />
 
 
