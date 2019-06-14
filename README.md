@@ -171,7 +171,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.0.1'
 
 
 
-##### 添加指示圆点
+#### 添加指示圆点
 ```
 此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
 
@@ -180,7 +180,7 @@ InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
 innerPainter.setPointList(pointList);
 
 ```
-##### 设置法定节假日
+#### 设置法定节假日
 ```
 此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
 
@@ -191,7 +191,7 @@ InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
 innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
 
 ```
-##### 替换农历文字及颜色
+#### 替换农历文字及颜色
 ```
 此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
 
