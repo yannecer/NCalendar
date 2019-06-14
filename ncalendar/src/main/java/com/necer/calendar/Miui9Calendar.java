@@ -38,14 +38,14 @@ public class Miui9Calendar extends MiuiCalendar {
 
     @Override
     protected float getGestureChildDownOffset(int dy) {
-        float maxOffset = monthHeight - childLayout.getY();
+        float maxOffset = monthHeight - childView.getY();
         return getOffset(Math.abs(dy), maxOffset);
     }
 
 
     @Override
     protected float getGestureChildUpOffset(int dy) {
-        float maxOffset = childLayout.getY() - weekHeight;
+        float maxOffset = childView.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }
 
