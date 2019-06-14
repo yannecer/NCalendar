@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.necer.MyLog;
 import com.necer.entity.Lunar;
 import com.necer.entity.NDate;
-import com.necer.view.ChildLayout;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
@@ -299,23 +297,4 @@ public class Util {
 
         return nDate;
     }
-
-
-    //递归，异常中断递归
-    public static void traverseView(View view) throws ChildLayout.ViewException {
-        if (view instanceof NestedScrollingChild) {
-            throw new ChildLayout.ViewException(view);
-        } else if (view instanceof ViewGroup) {
-            int childCount = ((ViewGroup) view).getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View childAt = ((ViewGroup) view).getChildAt(i);
-                if (childAt instanceof NestedScrollingChild) {
-                    throw new ChildLayout.ViewException(childAt);
-                } else {
-                    traverseView(childAt);
-                }
-            }
-        }
-    }
-
 }

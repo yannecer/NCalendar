@@ -36,7 +36,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     //这两个不能同时为真
     private boolean mIsDefaultSelect; //默认选中 不能多选
-    private boolean mIsMultiple;  // 多选情况下 不能默认选中
+    private boolean mIsMultipleSelset;  // 多选情况下 不能默认选中
 
     private boolean mIsJumpClick;//是否是点击上月、下月或跳转，这个只在默认选中时有用
     private boolean mIsDefaultSelectFitst;//默认选择时，翻页选中第一个日期
@@ -75,8 +75,8 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         this.mContext = context;
         mAllSelectDateList = new ArrayList<>();
         mInitializeDate = new LocalDate();
-        mIsMultiple = mAttrs.isMultiple;
-        mIsDefaultSelect = mIsMultiple ? false : mAttrs.isDefaultSelect;//当多选时，不能默认选中
+        mIsMultipleSelset = mAttrs.isMultipleSelect;
+        mIsDefaultSelect = mIsMultipleSelset ? false : mAttrs.isDefaultSelect;//当多选时，不能默认选中
         mIsDefaultSelectFitst = mAttrs.isDefaultSelectFitst;
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
@@ -197,7 +197,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             return;
         }
 
-        if (mIsMultiple) {
+        if (mIsMultipleSelset) {
             //多选  集合不包含就添加，包含就移除
             if (!mAllSelectDateList.contains(localDate)) {
                 mAllSelectDateList.add(localDate);
@@ -238,7 +238,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         mIsJumpClick = true;
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         int indexOffset = getTwoDateCount(localDate, currectCalendarView.getInitialDate(), mAttrs.firstDayOfWeek);//得出两个页面相差几个
-        if (mIsMultiple) {
+        if (mIsMultipleSelset) {
             //多选  点击的日期不清除，只翻页，如果需要清除，等到翻页之后再次点击
             if (!mAllSelectDateList.contains(localDate) && isDraw) {
                 mAllSelectDateList.add(localDate);
@@ -270,12 +270,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
                     mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
                 }
 
-                if (mOnCalendarChangedListener != null && !mIsMultiple && getVisibility() == VISIBLE) {
+                if (mOnCalendarChangedListener != null && !mIsMultipleSelset && getVisibility() == VISIBLE) {
                     //单选
                     mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
                 }
 
-                if (mOnCalendarMultipleChangedListener != null && mIsMultiple && getVisibility() == VISIBLE) {
+                if (mOnCalendarMultipleChangedListener != null && mIsMultipleSelset && getVisibility() == VISIBLE) {
                     //多选
                     mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
                 }
@@ -478,5 +478,31 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     @Override
     public Attrs getAttrs() {
         return mAttrs;
+    }
+
+    @Override
+    public void setDefaultSelect(boolean isDefaultSelect) {
+        this.mIsDefaultSelect = isDefaultSelect;
+        if (isDefaultSelect) {
+            mIsMultipleSelset = false;
+            if (mAllSelectDateList.size() == 0 ) {
+                mAllSelectDateList.add(new LocalDate());
+            }
+        } else {
+            mAllSelectDateList.clear();
+        }
+    }
+
+    @Override
+    public void setDefaultSelectFitst(boolean isDefaultSelectFitst) {
+        this.mIsDefaultSelectFitst = isDefaultSelectFitst;
+    }
+
+    @Override
+    public void setMultipleSelset(boolean isMultipleSelset) {
+        this.mIsMultipleSelset = isMultipleSelset;
+        if (mIsMultipleSelset) {
+            mIsDefaultSelect = false;
+        }
     }
 }

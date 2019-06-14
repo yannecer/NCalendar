@@ -29,7 +29,7 @@ import com.necer.painter.InnerPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.utils.Util;
-import com.necer.view.ChildLayout;
+import com.necer.utils.ViewException;
 
 import org.joda.time.LocalDate;
 
@@ -130,7 +130,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
                     @Override
                     public void run() {
                         //此时需要根据月日历的选中日期调整值
-                        // post是因为在前面得到当前view是再post中完成，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
+                        // 跳转翻页需要时间，需要等待完成之后再调整，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
                         monthCalendar.setY(getMonthYOnWeekState(localDate));
                     }
                 });
@@ -159,8 +159,8 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         targetView = findViewWithTag(getResources().getString(R.string.factual_scroll_view));
         if (targetView == null) {
             try {
-                Util.traverseView(childView);
-            } catch (ChildLayout.ViewException e) {
+                ViewException.traverseView(childView);
+            } catch (ViewException e) {
                 e.printStackTrace();
                 targetView = e.getExceptionView();
             }
@@ -300,7 +300,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         } else if (dy < 0 && isWeekHold && isChildWeekState()) {
             //不操作，
 
-        } else if (dy < 0 && !isChildMonthState() && !childView.canScrollVertically(-1)) {
+        } else if (dy < 0 && !isChildMonthState() && !targetView.canScrollVertically(-1)) {
             monthCalendar.setY(getGestureMonthDownOffset(dy) + monthCalendarY);
             childView.setY(getGestureChildDownOffset(dy) + childLayoutY);
             if (consumed != null) consumed[1] = dy;
@@ -445,6 +445,24 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         } else if (STATE == Attrs.WEEK) {
             weekCalendar.toLastPager();
         }
+    }
+
+    @Override
+    public void setDefaultSelect(boolean isDefaultSelect) {
+        monthCalendar.setDefaultSelect(isDefaultSelect);
+        weekCalendar.setDefaultSelect(isDefaultSelect);
+    }
+
+    @Override
+    public void setDefaultSelectFitst(boolean isDefaultSelectFitst) {
+        monthCalendar.setDefaultSelectFitst(isDefaultSelectFitst);
+        weekCalendar.setDefaultSelectFitst(isDefaultSelectFitst);
+    }
+
+    @Override
+    public void setMultipleSelset(boolean isMultipleSelset) {
+        monthCalendar.setMultipleSelset(isMultipleSelset);
+        weekCalendar.setMultipleSelset(isMultipleSelset);
     }
 
     @Override

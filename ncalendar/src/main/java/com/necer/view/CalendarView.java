@@ -6,14 +6,10 @@ import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Util;
-
 import org.joda.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
 

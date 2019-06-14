@@ -2,7 +2,6 @@ package com.necer.adapter;
 
 import android.content.Context;
 
-import com.necer.MyLog;
 import com.necer.utils.Util;
 import com.necer.view.CalendarView;
 import com.necer.view.WeekView;

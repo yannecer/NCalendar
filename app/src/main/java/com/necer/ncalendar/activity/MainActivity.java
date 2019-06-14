@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TextView tvVersion = (TextView) findViewById(R.id.tv_version);
-        // tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
+         TextView tvVersion = (TextView) findViewById(R.id.tv_version);
+         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
 
 
     }
@@ -34,21 +34,58 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, TestWeekActivity.class));
     }
 
-    public void test(View view) {
-        startActivity(new Intent(this, TestActivity.class));
+
+    public void miui9_0(View view) {
+        TestMiui9Activity.startActivity(this, true, false);
     }
 
-    public void miui9(View view) {
-        startActivity(new Intent(this, TestMiui9Activity.class));
+    public void miui9_1(View view) {
+        TestMiui9Activity.startActivity(this, false, false);
     }
 
-    public void miui10(View view) {
-        startActivity(new Intent(this, TestMiui10Activity.class));
+    public void miui9_2(View view) {
+        TestMiui9Activity.startActivity(this, false, true);
     }
 
-    public void emiui(View view) {
-        startActivity(new Intent(this, TestEmuiActivity.class));
+    public void miui10_0(View view) {
+        TestMiui10Activity.startActivity(this, true, false);
     }
 
+    public void miui10_1(View view) {
+        TestMiui10Activity.startActivity(this, false, false);
+    }
+
+    public void miui10_2(View view) {
+        TestMiui10Activity.startActivity(this, false, true);
+    }
+
+
+    public void emiui_0(View view) {
+        TestEmuiActivity.startActivity(this, true, false);
+    }
+
+    public void emiui_1(View view) {
+        TestEmuiActivity.startActivity(this, false, false);
+    }
+
+    public void emiui_2(View view) {
+        TestEmuiActivity.startActivity(this, false, true);
+    }
+
+
+    public void toHoldWeek(View view) {
+
+        startActivity(new Intent(this, TestWeekHoldActivity.class));
+    }
+
+    public void addView(View view) {
+
+        startActivity(new Intent(this, TestAddViewActivity.class));
+    }
+
+    public void customCalendar(View view) {
+
+        startActivity(new Intent(this, CustomCalendarActivity.class));
+    }
 
 }

@@ -38,7 +38,7 @@
         <attr name="isWeekHold" format="boolean" />
         <attr name="isShowHoliday" format="boolean" />
         <attr name="isDefaultSelect" format="boolean" />
-        <attr name="isMultiple" format="boolean" />
+        <attr name="isMultipleSelect" format="boolean" />
         <attr name="isDefaultSelectFitst" format="boolean" />
         <attr name="holidayColor" format="color" />
         <attr name="workdayColor" format="color" />

@@ -1,23 +1,23 @@
 package com.necer.ncalendar.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.NestedScrollingChild;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.necer.MyLog;
+import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.Miui10Calendar;
-import com.necer.entity.NDate;
 import com.necer.listener.OnCalendarChangedListener;
-import com.necer.listener.OnClickDisableDateListener;
+import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.painter.InnerPainter;
-import com.necer.view.ChildLayout;
+
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,33 +31,39 @@ import java.util.Map;
  */
 public class TestMiui10Activity extends AppCompatActivity {
 
-    TextView tv_month;
-    TextView tv_week;
-    TextView tv_year;
-    TextView tv_lunar;
-    TextView tv_lunar_tg;
-
     Miui10Calendar miui10Calendar;
 
+    TextView tv_result;
 
-    private final String[] weeks = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    private boolean isMultipleSelset;
+    private boolean isDefaultSelect;
+
+    public static void startActivity(Context context, boolean isDefaultSelect, boolean isMultipleSelset) {
+        Intent intent = new Intent(context, TestMiui10Activity.class);
+        intent.putExtra("isMultipleSelset", isMultipleSelset);
+        intent.putExtra("isDefaultSelect", isDefaultSelect);
+        context.startActivity(intent);
+
+    }
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_miui10);
-
-        tv_month = findViewById(R.id.tv_month);
-        tv_week = findViewById(R.id.tv_week);
-        tv_year = findViewById(R.id.tv_year);
-        tv_lunar = findViewById(R.id.tv_lunar);
-        tv_lunar_tg = findViewById(R.id.tv_lunar_tg);
-
+        tv_result = findViewById(R.id.tv_result);
         List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01", "2018-12-23");
 
+
+        isMultipleSelset = getIntent().getBooleanExtra("isMultipleSelset", false);
+        isDefaultSelect = getIntent().getBooleanExtra("isDefaultSelect", true);
+
         miui10Calendar = findViewById(R.id.miui10Calendar);
-        miui10Calendar.setDateInterval("1901-01-01","2099-12-30");
+        miui10Calendar.setMultipleSelset(isMultipleSelset);
+        miui10Calendar.setDefaultSelect(isDefaultSelect);
+
+
+        //  miui10Calendar.setDateInterval("1901-01-01","2099-12-30");
 
         InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
         innerPainter.setPointList(pointList);
@@ -85,39 +91,34 @@ public class TestMiui10Activity extends AppCompatActivity {
         workdayList.add("2019-1-24");
         workdayList.add("2019-1-25");
 
+
+        miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+            @Override
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
+                tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
+            }
+        });
+        miui10Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
+            @Override
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
+
+                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
+                MyLog.d(year + "年" + month + "月");
+                MyLog.d("当前页面选中：：" + currectSelectList);
+                MyLog.d("全部选中：：" + allSelectList);
+            }
+        });
+
+
     }
 
 
     public void aaa(View view) {
-       // miui10Calendar.jumpDate("2018-10-12");
+        // miui10Calendar.jumpDate("2018-10-12");
         miui10Calendar.setVisibility(View.VISIBLE);
 
 
-        try {
-            traverseView(miui10Calendar);
-        } catch (ChildLayout.ViewException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
-    //递归，异常中断递归
-    private void traverseView(View view) throws ChildLayout.ViewException {
-        if (view instanceof NestedScrollingChild) {
-            throw new ChildLayout.ViewException(view);
-        } else if (view instanceof ViewGroup) {
-            int childCount = ((ViewGroup) view).getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View childAt = ((ViewGroup) view).getChildAt(i);
 
-                MyLog.d("childAtchildAtchildAt:::" + childAt);
-                if (childAt instanceof NestedScrollingChild) {
-                    throw new ChildLayout.ViewException(childAt);
-                } else {
-                    traverseView(childAt);
-                }
-            }
-        }
-    }
 }

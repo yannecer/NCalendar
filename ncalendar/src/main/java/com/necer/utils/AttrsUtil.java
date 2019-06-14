@@ -35,7 +35,7 @@ public class AttrsUtil {
         attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, Util.dp2px(context, 22));
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
         attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
-        attrs.isMultiple = ta.getBoolean(R.styleable.NCalendar_isMultiple, false);
+        attrs.isMultipleSelect = ta.getBoolean(R.styleable.NCalendar_isMultipleSelect, false);
         attrs.isDefaultSelectFitst = ta.getBoolean(R.styleable.NCalendar_isDefaultSelectFitst, false);
         attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, Util.dp2px(context, 2));
         attrs.pointDistance = ta.getDimension(R.styleable.NCalendar_pointDistance, Util.dp2px(context, 18));

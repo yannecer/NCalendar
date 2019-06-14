@@ -1,5 +1,7 @@
 package com.necer.ncalendar.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +30,17 @@ import java.util.List;
  */
 public class TestMiui9Activity extends AppCompatActivity {
 
+    private boolean isMultipleSelset;
+    private boolean isDefaultSelect;
+
+    public static void startActivity(Context context, boolean isDefaultSelect, boolean isMultipleSelset) {
+        Intent intent = new Intent(context, TestMiui9Activity.class);
+        intent.putExtra("isMultipleSelset", isMultipleSelset);
+        intent.putExtra("isDefaultSelect", isDefaultSelect);
+        context.startActivity(intent);
+
+    }
+
 
     private Miui9Calendar miui9Calendar;
 
@@ -40,8 +53,12 @@ public class TestMiui9Activity extends AppCompatActivity {
 
         tv_result = findViewById(R.id.tv_result);
 
+        isMultipleSelset = getIntent().getBooleanExtra("isMultipleSelset", false);
+        isDefaultSelect = getIntent().getBooleanExtra("isDefaultSelect", true);
 
         miui9Calendar = findViewById(R.id.miui9Calendar);
+        miui9Calendar.setMultipleSelset(isMultipleSelset);
+        miui9Calendar.setDefaultSelect(isDefaultSelect);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
@@ -53,20 +70,19 @@ public class TestMiui9Activity extends AppCompatActivity {
         miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
-                tv_result.setText(localDate.toString());
-                MyLog.d("setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
-
+                tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
             }
         });
         miui9Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
+
+                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
                 MyLog.d(year + "年" + month + "月");
                 MyLog.d("当前页面选中：：" + currectSelectList);
                 MyLog.d("全部选中：：" + allSelectList);
             }
         });
-
 
     }
 
@@ -102,6 +118,5 @@ public class TestMiui9Activity extends AppCompatActivity {
             miui9Calendar.toWeek();
         }
     }
-
 
 }

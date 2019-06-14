@@ -15,6 +15,15 @@ import java.util.List;
  */
 public interface ICalendar {
 
+    //设置默认选中
+    void setDefaultSelect(boolean isDefaultSelect);
+
+    //默认选中时，是否翻页选中第一个，前提必须默认选中
+    void setDefaultSelectFitst(boolean isDefaultSelectFitst);
+
+    //是否多选
+    void setMultipleSelset(boolean isMultipleSelset);
+
     //跳转日期
     void jumpDate(String formatDate);
 

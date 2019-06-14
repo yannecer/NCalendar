@@ -24,14 +24,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="lastPager"
-            android:text="上一月" />
+            android:text="上一页" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="nextPager"
-            android:text="下一月" />
+            android:text="下一页" />
 
 
         <Button
@@ -72,7 +72,6 @@
         android:layout_height="match_parent"
         app:holidayColor="#F29B38"
         app:isShowLunar="false"
-        app:isMultiple="true"
         app:isDefaultSelect="false"
         app:lunarHolidayTextColor="#F29B38"
         app:pointDistance="15dp"

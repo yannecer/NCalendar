@@ -64,7 +64,7 @@ public class Attrs {
     public int workdayColor;
     public int bgEmuiCalendarColor;//华为日历的背景
     public boolean isDefaultSelect;//是否默认选中
-    public boolean isMultiple;//是否多选
+    public boolean isMultipleSelect;//是否多选
     public boolean isDefaultSelectFitst;//翻页默认选中当月1号
 
     public String startDateString;
