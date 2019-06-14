@@ -3,12 +3,11 @@
 ## 特点:
 
  - 3种常见日历交互方式，MIUI系统日历：miui9、miui10、华为emui，miui9和钉钉日历类似，华为emui和365日历类似
- - 月周滑动切换
+ - 月周滑动切换，月周不选中
  - 支持设置默认视图，默认周日历或者月日历
  - 支持周状态固定，下拉刷新等
  - 支持设置一周开始的是周一还是周日
  - 可设置日期区间，默认区间从1901-01-01到2099-12-31 
- - 支持单独月日历和单独周日历默认不选中
  - 支持农历，节气、法定节假日等
  - 支持添加指示点及设置指示点位置
  - 支持各种颜色、距离、位置等属性
@@ -32,7 +31,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:3.4.5'
+implementation 'com.necer.ncalendar:ncalendar:4.0.1'
 
 ```
 
@@ -81,7 +80,6 @@ implementation 'com.necer.ncalendar:ncalendar:3.4.5'
 - NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild```的子类，
 如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个```NestedScrollingChild```
 - 如果布局文件中，内部的子view有多个父view，恰好也有实现了```NestedScrollingChild```的父view，则需要给真实滑动的子view设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
-- 单个的周日历和月日历可以设置默认不选中（即是点击才选中，不点击不选中），但是月周切换必须每页都选中
 - 新版的代码已经将NestedScrollingChild2改成了NestedScrollingChild，如果出现滑动异常，则需要给实际滑动的view设置tag（“@string/factual_scroll_view”）
 
 
@@ -89,95 +87,86 @@ implementation 'com.necer.ncalendar:ncalendar:3.4.5'
 ### 交流群
 
 技术交流QQ群：127278900
-
-
-
-
-
 ### 主要Api
 
+###### 月日历、周日历、折叠日历都拥有的api
 
-##### 1、监听
-```
 
-NCalendar（包含Miui9Calendar、Miui10Calendar和EmuiCalendar）OnCalendarChangedListener 日期、月周状态变化回调
+    //设置默认选中
+    void setDefaultSelect(boolean isDefaultSelect);
 
-nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
-            @Override
-            public void onCalendarDateChanged(NDate date，boolean isClick) {
-               //日历回调 NDate包含公历、农历、节气、节假日、闰年等信息
-            }
-               
-            @Override
-            public void onCalendarStateChanged(boolean isMonthSate) {
-               //日历状态回调， 月->周 isMonthSate返回false ，反之返回true   
-            }
-        });
-        
-其他回调
+    //默认选中时，是否翻页选中第一个，前提必须默认选中
+    void setDefaultSelectFitst(boolean isDefaultSelectFitst);
 
-OnCalendarChangedListener         //日期、月周状态变化回调（NCalendar）
-OnClickDisableDateListener        //点击区间之外的日期回调，如果不设置会弹出不可用提示（NCalendar、MonthCalendar、WeekCalendar）
-OnMonthSelectListener             //月日历默认选中时 日期选中回调（MonthCalendar）
-OnWeekSelectListener              //周日历默认选中时 日期选中回调（WeekCalendar）
-OnYearMonthChangedListener        //月日历，周日历默认不选中是翻页回调 年 月 （MonthCalendar、WeekCalendar）
+    //是否多选
+    void setMultipleSelset(boolean isMultipleSelset);
 
-```
+    //跳转日期
+    void jumpDate(String formatDate);
 
-##### 2、跳转日期
-```
-参数为 yyyy-MM-dd 格式的日期
+    //上一页 上一周 上一月
+    void toLastPager();
 
-ncalendar.jumpDate("2017-12-31"); 
-```
-##### 3、回到今天
-```
-ncalendar.toToday(); 
-```
+    //下一页 下一周 下一月
+    void toNextPager();
 
-##### 4、日历切换，月-->周  周-->月
-```
-ncalendar.toWeek();
-ncalendar.toMonth();
-```
-##### 5、上一月、下一月、上一周、下一周
-```
-ncalendar.toNextPager();
-ncalendar.toLastPager();
-```
+    //回到今天
+    void toToday();
 
-##### 6、默认视图 
-```
-app:defaultCalendar="week"  默认周视图
-app:defaultCalendar="month"  默认月视图
-```
-##### 7、周状态固定
-```
-app:isWeekHold="true"  周视图固定，下拉刷新
-```
-##### 8、设置日期区间 
-```
-app:startDate="2018-01-01" 开始日期
-app:endDate="2018-12-31" 结束日期
+    //设置自定义绘制类
+    void setCalendarPainter(CalendarPainter calendarPainter);
 
-或
+    //刷新日历
+    void notifyCalendar();
 
-setDateInterval(startFormatDate, endFormatDate)
-```
-##### 9、设置初始化日期
-```
-setInitializeDate(formatDate) 
-```
-##### 10、设置CalendarPainter
-```
-setCalendarPainter(painter)
-```
-##### 11、刷新页面
-```
-自定义的标签等，如果在初始化时设置不需要调用此方法，如果在初始化之后设置，需要调用此方法
+    //设置初始化日期
+    void setInitializeDate(String formatInitializeDate);
 
-notifyAllView()
-```
+    //设置初始化日期和可用区间
+    void setDateInterval(String startFormatDate, String endFormatDate, String formatInitializeDate);
+
+    //设置可用区间
+    void setDateInterval(String startFormatDate, String endFormatDate);
+
+    //单选日期变化监听
+    void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener);
+
+    //多选日期变化监听
+    void setOnCalendarMultipleChangedListener(OnCalendarMultipleChangedListener onCalendarMultipleChangedListener);
+
+    //设置点击了不可用日期监听
+    void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener);
+
+    //获取xml参数
+    Attrs getAttrs();
+
+    //获取绘制类
+    CalendarPainter getCalendarPainter();
+
+    //获取全部选中的日期集合
+    List<LocalDate> getAllSelectDateList();
+
+    //获取当前页面选中的日期集合
+    List<LocalDate> getCurrectSelectDateList();
+
+
+###### 折叠日历拥有的api
+
+
+    //回到周状态
+    void toWeek();
+
+    //回到月状态
+    void toMonth();
+
+    //日历月周状态变化回调
+    void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener);
+
+    //获取当前日历的状态  Attrs.MONTH==月视图    Attrs.WEEK==周视图
+    int getCalendarState();
+
+
+
 ##### 12、添加指示圆点
 ```
 此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
@@ -233,14 +222,13 @@ void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 
 //绘制不是当月的日期，即上一月，下一月，周日历不用实现
-void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate);
+void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate，, boolean isSelect);
 
 //绘制日期区间之外的日期，方法setDateInterval(startFormatDate, endFormatDate)对应
 void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
-实现接口 CalendarPainter，分别重写以上几个方法，setCalendarPainter(calendarPainter)即可实现自定义日历界面，
-可以在自定义的CalendarPainter中实现，在绘制的时候判断条件绘制不同的内容，最后通过日历的notifyAllView（）方法刷新即可
+实现接口 CalendarPainter，分别重写以上几个方法，setCalendarPainter(calendarPainter)即可实现自定义日历界面
 
 ```
 
@@ -270,6 +258,9 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 |pointColor| color |小圆点的颜色
 |startDate| string |日期区间开始日期
 |endDate| string |日期区间结束日期
+|isDefaultSelect| boolean |是否默认选中
+|isDefaultSelectFitst| boolean |是否默认翻页选中第一天
+|isMultipleSelect| boolean |是否多选
 |alphaColor| integer |不是本月的日期颜色的透明度0-255
 |disabledAlphaColor| integer |日期区间之外的地日颜色的透明度0-255
 |disabledString| string |点击日期区间之外的日期提示语
@@ -297,25 +288,8 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 更新日志
-* 3.4.5<br/>修复id重复错误
-* 3.4.4<br/>修复未加载完成点击崩溃的问题
-* 3.4.3<br/>五月节假日调整
-* 3.4.2<br/>调整设置日历背景的方法，MIUI日历在xml文件中设置background属性，Emui日历使用用属性bgEmuiCalendarColor
-* 3.4.1<br/>增加替换农历文字、设置法定节假日等方法
-* 3.3.3<br/>修复5.0以下崩溃的问题
-* 3.3.2<br/>修复区间最后一天点击不回调
-* 3.3.1<br/>增加自定义绘制类Painter，实现自定义界面
-* 3.2.5<br/>调整默认未选中选中日期的逻辑
-* 3.2.4<br/>修改回调逻辑，区分翻页和点击，修改NestedScrollingChild2为NestedScrollingChild
-* 3.2.3<br/>增加设置滑动view的tag，方便查找NestedScrollingChild2
-* 3.2.2<br/>增加设置日历初始化日期的方法
-* 3.2.1<br/>设置日期区间
-* 3.2.0<br/>miui10完美了
-* 3.1.5<br/>更正2019年劳动节公休
-* 3.1.4<br/>增加toNextPager()和toLastPager()
-* 3.1.3<br/>修复Emui日历选中第一行下拉时周日历不消失的bug
-* 3.1.2<br/>修复初十的农历日期显示
-* 3.1.1<br/>修复当月跳转今天不回调
+* 4.0.1<br/> 1、新增月周切换日历多选<br/>2、新增默认不选中折叠<br/>3、新增翻页默认选中每月1号<br/>4、修复设置左右padding偏差
+
 
 
 
