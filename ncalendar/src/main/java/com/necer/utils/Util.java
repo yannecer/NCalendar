@@ -26,6 +26,7 @@ public class Util {
 
     /**
      * 屏幕宽度
+     *
      * @param context
      * @return
      */
@@ -33,7 +34,6 @@ public class Util {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         return windowManager.getDefaultDisplay().getWidth();
     }
-
 
 
     /**
@@ -279,20 +279,17 @@ public class Util {
 
     public static NDate getNDate(LocalDate localDate) {
         NDate nDate = new NDate();
-
         int solarYear = localDate.getYear();
         int solarMonth = localDate.getMonthOfYear();
         int solarDay = localDate.getDayOfMonth();
-
         Lunar lunar = LunarUtil.getLunar(solarYear, solarMonth, solarDay);
 
         if (solarYear != 1900) {
             nDate.lunar = lunar;
             nDate.localDate = localDate;
-            nDate.solarTerm = SolarTermUtil.getSolatName(solarYear, solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "") + solarDay);
+            nDate.solarTerm = SolarTermUtil.getSolatName(solarYear, (solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "")) + solarDay);
             nDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
             nDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay);
-
         }
 
         return nDate;
