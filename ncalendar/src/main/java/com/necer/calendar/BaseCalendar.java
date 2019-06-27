@@ -263,8 +263,14 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             @Override
             public void run() {
                 CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
-                LocalDate initialDate = currectCalendarView.getInitialDate();
+                LocalDate middleLocalDate = currectCalendarView.getMiddleLocalDate();
                 List<LocalDate> currentSelectDateList = currectCalendarView.getCurrentSelectDateList();
+                LocalDate yearMonthLocalDate;
+                if (currentSelectDateList.size() == 0) {
+                    yearMonthLocalDate = middleLocalDate;
+                } else {
+                    yearMonthLocalDate = currentSelectDateList.get(0);
+                }
 
                 if (mOnMWDateChangeListener != null) {
                     mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
@@ -272,12 +278,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
                 if (mOnCalendarChangedListener != null && !mIsMultipleSelset && getVisibility() == VISIBLE) {
                     //单选
-                    mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
+                    mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
                 }
 
                 if (mOnCalendarMultipleChangedListener != null && mIsMultipleSelset && getVisibility() == VISIBLE) {
                     //多选
-                    mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, initialDate.getYear(), initialDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
+                    mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
                 }
             }
         });
@@ -485,7 +491,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         this.mIsDefaultSelect = isDefaultSelect;
         if (isDefaultSelect) {
             mIsMultipleSelset = false;
-            if (mAllSelectDateList.size() == 0 ) {
+            if (mAllSelectDateList.size() == 0) {
                 mAllSelectDateList.add(new LocalDate());
             }
         } else {

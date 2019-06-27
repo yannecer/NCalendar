@@ -113,12 +113,5 @@ public class TestMiui10Activity extends AppCompatActivity {
     }
 
 
-    public void aaa(View view) {
-        // miui10Calendar.jumpDate("2018-10-12");
-        miui10Calendar.setVisibility(View.VISIBLE);
-
-
-    }
-
 
 }
