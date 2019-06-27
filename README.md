@@ -4,6 +4,7 @@
 
  - 3种常见日历交互方式，MIUI系统日历：miui9、miui10、华为emui，miui9和钉钉日历类似，华为emui和365日历类似
  - 月周滑动切换，月周不选中
+ - 支持多选
  - 支持设置默认视图，默认周日历或者月日历
  - 支持周状态固定，下拉刷新等
  - 支持设置一周开始的是周一还是周日
@@ -38,7 +39,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.0.1'
+implementation 'com.necer.ncalendar:ncalendar:4.0.3'
 
 ```
 
@@ -295,8 +296,9 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 更新日志
+* 4.0.3<br/> 修复某些情况下选中回调返回null的bug
+* 4.0.2<br/> 修复节气不显示的bug
 * 4.0.1<br/> 1、新增月周切换日历多选<br/>2、新增默认不选中折叠<br/>3、新增翻页默认选中每月1号<br/>4、修复设置左右padding偏差
-
 
 
 
