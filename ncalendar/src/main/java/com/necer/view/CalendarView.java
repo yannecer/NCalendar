@@ -30,6 +30,9 @@ public abstract class CalendarView extends View {
     protected List<LocalDate> mDateList;//页面的数据集合
     private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
     protected BaseCalendar mCalendar;
+    protected LocalDate mStartDate;
+    protected LocalDate mEndDate;
+    protected CalendarPainter mCalendarPainter;
 
     public CalendarView(Context context, ViewGroup container, LocalDate initialDate, List<LocalDate> dateList) {
         super(context);
@@ -40,15 +43,15 @@ public abstract class CalendarView extends View {
 
         mCalendar = (BaseCalendar) container;
         mAllSelectListDate = mCalendar.getAllSelectDateList();
+        mStartDate = mCalendar.getStartDate();
+        mEndDate = mCalendar.getEndDate();
+        mCalendarPainter = mCalendar.getCalendarPainter();
+
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-        LocalDate startDate = mCalendar.getStartDate();
-        LocalDate endDate = mCalendar.getEndDate();
-        CalendarPainter calendarPainter = mCalendar.getCalendarPainter();
 
         mRectList.clear();
 
@@ -58,26 +61,26 @@ public abstract class CalendarView extends View {
                 mRectList.add(rect);
                 LocalDate date = mDateList.get(i * 7 + j);
                 //在可用区间内的正常绘制，
-                if (!(date.isBefore(startDate) || date.isAfter(endDate))) {
+                if (!(date.isBefore(mStartDate) || date.isAfter(mEndDate))) {
                     if (isEqualsMonthOrWeek(date, mInitialDate)) {  //当月和上下月的颜色不同
                         if (Util.isToday(date) && mAllSelectListDate.contains(date)) {  //当天且选中的当天
-                            calendarPainter.onDrawToday(canvas, rect, Util.getNDate(date), true);
+                            mCalendarPainter.onDrawToday(canvas, rect, Util.getNDate(date), true);
                         } else if (Util.isToday(date) && !mAllSelectListDate.contains(date)) { //当天但选中的不是今天
-                            calendarPainter.onDrawToday(canvas, rect, Util.getNDate(date), false);
+                            mCalendarPainter.onDrawToday(canvas, rect, Util.getNDate(date), false);
                         } else if (mAllSelectListDate.contains(date)) { //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
-                            calendarPainter.onDrawCurrentMonthOrWeek(canvas, rect, Util.getNDate(date), true);
+                            mCalendarPainter.onDrawCurrentMonthOrWeek(canvas, rect, Util.getNDate(date), true);
                         } else { //当月其他的日历绘制
-                            calendarPainter.onDrawCurrentMonthOrWeek(canvas, rect, Util.getNDate(date), false);
+                            mCalendarPainter.onDrawCurrentMonthOrWeek(canvas, rect, Util.getNDate(date), false);
                         }
                     } else {  //不是当月的日历
                         if (mAllSelectListDate.contains(date)) {
-                            calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date), true);
+                            mCalendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date), true);
                         } else {
-                            calendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date), false);
+                            mCalendarPainter.onDrawNotCurrentMonth(canvas, rect, Util.getNDate(date), false);
                         }
                     }
                 } else { //日期区间之外的日期
-                    calendarPainter.onDrawDisableDate(canvas, rect, Util.getNDate(date));
+                    mCalendarPainter.onDrawDisableDate(canvas, rect, Util.getNDate(date));
                 }
             }
         }
