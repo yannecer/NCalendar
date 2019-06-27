@@ -39,7 +39,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.0.3'
+implementation 'com.necer.ncalendar:ncalendar:4.0.4'
 
 ```
 
@@ -296,7 +296,7 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 更新日志
-* 4.0.3<br/> 修复某些情况下选中回调返回null的bug
+* 4.0.4<br/> 修复某些情况下选中回调返回null的bug
 * 4.0.2<br/> 修复节气不显示的bug
 * 4.0.1<br/> 1、新增月周切换日历多选<br/>2、新增默认不选中折叠<br/>3、新增翻页默认选中每月1号<br/>4、修复设置左右padding偏差
 
