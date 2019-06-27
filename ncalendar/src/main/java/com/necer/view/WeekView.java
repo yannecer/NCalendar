@@ -1,6 +1,7 @@
 package com.necer.view;
 
 import android.content.Context;
+import android.view.ViewGroup;
 
 import org.joda.time.LocalDate;
 
@@ -13,8 +14,8 @@ import java.util.List;
 public class WeekView extends CalendarView {
 
 
-    public WeekView(Context context,LocalDate initialDate, List<LocalDate> dateList) {
-        super(context,initialDate, dateList);
+    public WeekView(Context context, ViewGroup container,LocalDate initialDate, List<LocalDate> dateList) {
+        super(context,container,initialDate, dateList);
     }
 
     @Override

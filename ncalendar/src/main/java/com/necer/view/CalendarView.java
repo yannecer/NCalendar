@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.necer.calendar.BaseCalendar;
 import com.necer.painter.CalendarPainter;
@@ -30,21 +31,20 @@ public abstract class CalendarView extends View {
     private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
     protected BaseCalendar mCalendar;
 
-    public CalendarView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
+    public CalendarView(Context context, ViewGroup container, LocalDate initialDate, List<LocalDate> dateList) {
         super(context);
         this.mInitialDate = initialDate;
         this.mDateList = dateList;
         mRectList = new ArrayList<>();
         mLineNum = mDateList.size() / 7;//天数/7
+
+        mCalendar = (BaseCalendar) container;
+        mAllSelectListDate = mCalendar.getAllSelectDateList();
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mCalendar == null) {
-            mCalendar = (BaseCalendar) getParent();
-            mAllSelectListDate = mCalendar.getAllSelectDateList();
-        }
 
         LocalDate startDate = mCalendar.getStartDate();
         LocalDate endDate = mCalendar.getEndDate();

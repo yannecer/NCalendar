@@ -1,7 +1,12 @@
 package com.necer.view;
+
 import android.content.Context;
+import android.view.ViewGroup;
+
 import com.necer.utils.Util;
+
 import org.joda.time.LocalDate;
+
 import java.util.List;
 
 /**
@@ -9,10 +14,11 @@ import java.util.List;
  * qq群：127278900
  */
 public class MonthView extends CalendarView {
-    public MonthView(Context context, LocalDate initialDate, List<LocalDate> dateList) {
-        super(context, initialDate, dateList);
+    public MonthView(Context context, ViewGroup container, LocalDate initialDate, List<LocalDate> dateList) {
+        super(context, container, initialDate, dateList);
 
     }
+
     @Override
     protected void dealClickDate(LocalDate localDate) {
         if (Util.isLastMonth(localDate, mInitialDate)) {

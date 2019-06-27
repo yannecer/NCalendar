@@ -50,7 +50,7 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        CalendarView view = getCalendarView(position);
+        CalendarView view = getCalendarView(container,position);
         view.setTag(position);
         container.addView(view);
         return view;
@@ -61,7 +61,7 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
         return mCurr;
     }
 
-    protected abstract CalendarView getCalendarView(int position);
+    protected abstract CalendarView getCalendarView(ViewGroup container,int position);
 
     protected abstract int getIntervalCount(LocalDate startDate, LocalDate endDate, int weekFirstDayType);
 
