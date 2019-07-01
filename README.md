@@ -97,7 +97,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.0.4'
 技术交流QQ群：127278900
 ### 主要Api
 
-#### 月日历、周日历、折叠日历都拥有的api
+#### 月日历、周日历、折叠日历共同拥有的api
 
 
     //设置默认选中
@@ -158,13 +158,13 @@ implementation 'com.necer.ncalendar:ncalendar:4.0.4'
     List<LocalDate> getCurrectSelectDateList();
 
 
-#### 折叠日历拥有的api
+#### 折叠日历miui9，miui10，emui 拥有的api
 
 
-    //回到周状态
+    //折叠回到周状态
     void toWeek();
 
-    //回到月状态
+    //展开回到月状态
     void toMonth();
 
     //日历月周状态变化回调
