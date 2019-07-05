@@ -10,6 +10,8 @@ import com.necer.calendar.MonthCalendar;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
+import com.necer.ncalendar.painter.LigaturePainter;
+
 import org.joda.time.LocalDate;
 import java.util.List;
 
@@ -29,6 +31,12 @@ public class TestMonthActivity extends AppCompatActivity {
 
 
         monthCalendar = findViewById(R.id.monthCalendar);
+
+        monthCalendar.setMultipleSelset(true);
+
+        LigaturePainter ligaturePainter = new LigaturePainter(this);
+        monthCalendar.setCalendarPainter(ligaturePainter);
+
 
       // monthCalendar.setDateInterval("2019-5-1","2019-5-20");
      //   monthCalendar.setInitializeDate("2019-6-2");

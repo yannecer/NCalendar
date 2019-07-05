@@ -8,6 +8,7 @@ import android.view.View;
 import com.necer.calendar.Miui10Calendar;
 import com.necer.ncalendar.CustomPainter;
 import com.necer.ncalendar.R;
+import com.necer.ncalendar.painter.LigaturePainter;
 import com.necer.painter.CalendarPainter;
 
 /**
@@ -23,9 +24,10 @@ public class CustomCalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom);
         miui10Calendar = findViewById(R.id.miui10Calendar);
-
-        customPainter = new CustomPainter(this);
-        miui10Calendar.setCalendarPainter(customPainter);
+        miui10Calendar.setMultipleSelset(true);
+       // customPainter = new CustomPainter(this);
+        LigaturePainter painter = new LigaturePainter(this);
+        miui10Calendar.setCalendarPainter(painter);
 
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.necer.entity.NDate;
 import com.necer.painter.CalendarPainter;
@@ -87,22 +88,22 @@ public class CustomPainter implements CalendarPainter {
     }
 
     @Override
-    public void onDrawToday(Canvas canvas, Rect rect, LocalDate localDate, List<LocalDate> selectedDateList) {
+    public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
 
     }
 
     @Override
-    public void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, LocalDate localDate, List<LocalDate> selectedDateList) {
+    public void onDrawCurrentMonthOrWeek(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
 
     }
 
     @Override
-    public void onDrawLastOrNextMonth(Canvas canvas, Rect rect, LocalDate localDate, List<LocalDate> selectedDateList) {
+    public void onDrawLastOrNextMonth(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
 
     }
 
     @Override
-    public void onDrawDisableDate(Canvas canvas, Rect rect, LocalDate localDate) {
+    public void onDrawDisableDate(Canvas canvas, RectF rectF, LocalDate localDate) {
 
     }
 }

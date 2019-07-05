@@ -82,15 +82,16 @@ public class TestMiui10Activity extends AppCompatActivity {
 
 
         List<String> holidayList = new ArrayList<>();
-        holidayList.add("2019-1-20");
-        holidayList.add("2019-1-21");
-        holidayList.add("2019-1-22");
+        holidayList.add("2019-7-20");
+        holidayList.add("2019-7-21");
+        holidayList.add("2019-7-22");
 
         List<String> workdayList = new ArrayList<>();
-        workdayList.add("2019-1-23");
-        workdayList.add("2019-1-24");
-        workdayList.add("2019-1-25");
+        workdayList.add("2019-7-23");
+        workdayList.add("2019-7-24");
+        workdayList.add("2019-7-25");
 
+        innerPainter.setLegalHolidayList(holidayList,workdayList);
 
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
