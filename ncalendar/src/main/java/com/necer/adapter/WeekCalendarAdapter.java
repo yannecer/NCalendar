@@ -1,14 +1,10 @@
 package com.necer.adapter;
-
 import android.content.Context;
 import android.view.ViewGroup;
-
 import com.necer.utils.Util;
 import com.necer.view.CalendarView;
 import com.necer.view.WeekView;
-
 import org.joda.time.LocalDate;
-
 import java.util.List;
 
 /**

@@ -17,16 +17,16 @@ public interface CalendarPainter {
 
 
     //绘制今天的日期
-    void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+    void onDrawToday(Canvas canvas, Rect rect, LocalDate localDate, List<LocalDate> selectedDateList);
 
     //绘制当前月或周的日期
-    void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+    void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, LocalDate localDate, List<LocalDate> selectedDateList);
 
     //绘制上一月，下一月的日期，周日历不须实现
-    void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+    void onDrawLastOrNextMonth(Canvas canvas, Rect rect, LocalDate localDate, List<LocalDate> selectedDateList);
 
     //绘制不可用的日期，和方法setDateInterval(startFormatDate, endFormatDate)对应
-    void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
+    void onDrawDisableDate(Canvas canvas, Rect rect, LocalDate localDate);
 
 
 }

@@ -1,10 +1,7 @@
 package com.necer.view;
-
 import android.content.Context;
 import android.view.ViewGroup;
-
 import org.joda.time.LocalDate;
-
 import java.util.List;
 
 /**
