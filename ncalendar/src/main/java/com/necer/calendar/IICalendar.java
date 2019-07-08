@@ -1,5 +1,6 @@
 package com.necer.calendar;
 
+import com.necer.enumeration.CalendarState;
 import com.necer.listener.OnCalendarStateChangedListener;
 
 /**
@@ -16,7 +17,12 @@ public interface IICalendar extends ICalendar {
     //日历月周状态变化回调
     void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener);
 
-    //获取当前日历的状态  Attrs.MONTH==月视图    Attrs.WEEK==周视图
-    int getCalendarState();
+    //设置日历状态
+    void setCalendarState(CalendarState calendarState);
+
+    //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图
+    CalendarState getCalendarState();
+
+
 
 }

@@ -7,13 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.Miui9Calendar;
-import com.necer.entity.NDate;
+import com.necer.enumeration.CalendarState;
+import com.necer.enumeration.MultipleModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
@@ -41,7 +42,7 @@ public class TestMiui9Activity extends AppCompatActivity {
 
     }
 
-
+    private final static String TAG = "NECER";
     private Miui9Calendar miui9Calendar;
 
     private TextView tv_result;
@@ -59,6 +60,10 @@ public class TestMiui9Activity extends AppCompatActivity {
         miui9Calendar = findViewById(R.id.miui9Calendar);
         miui9Calendar.setMultipleSelset(isMultipleSelset);
         miui9Calendar.setDefaultSelect(isDefaultSelect);
+
+        miui9Calendar.setMultipleNum(3,MultipleModel.FULL_CLEAR);
+
+        miui9Calendar.setCalendarState(CalendarState.MONTH);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
@@ -78,9 +83,9 @@ public class TestMiui9Activity extends AppCompatActivity {
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
 
                 tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
-                MyLog.d(year + "年" + month + "月");
-                MyLog.d("当前页面选中：：" + currectSelectList);
-                MyLog.d("全部选中：：" + allSelectList);
+                Log.d(TAG, year + "年" + month + "月");
+                Log.d(TAG, "当前页面选中：：" + currectSelectList);
+                Log.d(TAG, "全部选中：：" + allSelectList);
             }
         });
 
@@ -111,8 +116,7 @@ public class TestMiui9Activity extends AppCompatActivity {
     }
 
     public void fold(View view) {
-        int state = miui9Calendar.getCalendarState();
-        if (state == Attrs.WEEK) {
+        if (miui9Calendar.getCalendarState() == CalendarState.WEEK) {
             miui9Calendar.toMonth();
         } else {
             miui9Calendar.toWeek();

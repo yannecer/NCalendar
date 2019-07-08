@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.enumeration.CalendarState;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 
@@ -19,9 +20,6 @@ import java.util.List;
 public class EmuiCalendar extends NCalendar {
     public EmuiCalendar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Attrs attrss = AttrsUtil.getAttrs(context, attrs);
-        monthCalendar.setBackgroundColor(attrss.bgEmuiCalendarColor);
-        weekCalendar.setBackgroundColor(attrss.bgEmuiCalendarColor);
     }
 
     @Override
@@ -64,9 +62,9 @@ public class EmuiCalendar extends NCalendar {
             monthCalendar.setVisibility(VISIBLE);
         }
 
-        if ( STATE == Attrs.MONTH && isMonthCalendarWeekState() && isUp &&weekCalendar.getVisibility() != VISIBLE) {
+        if (calendarState == CalendarState.MONTH && isMonthCalendarWeekState() && isUp && weekCalendar.getVisibility() != VISIBLE) {
             weekCalendar.setVisibility(VISIBLE);
-        } else if (STATE == Attrs.WEEK && monthCalendar.getY() <= -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) && weekCalendar.getVisibility() != VISIBLE) {
+        } else if (calendarState == CalendarState.WEEK && monthCalendar.getY() <= -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) && weekCalendar.getVisibility() != VISIBLE) {
             weekCalendar.setVisibility(VISIBLE);
         } else if (monthCalendar.getY() >= -monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate()) && !isUp && weekCalendar.getVisibility() != INVISIBLE) {
             weekCalendar.setVisibility(INVISIBLE);

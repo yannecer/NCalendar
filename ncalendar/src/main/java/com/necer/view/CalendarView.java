@@ -1,4 +1,5 @@
 package com.necer.view;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
@@ -6,10 +7,13 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.necer.calendar.BaseCalendar;
 import com.necer.painter.CalendarPainter;
-import com.necer.utils.Util;
+import com.necer.utils.CalendarUtil;
+
 import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,7 @@ public abstract class CalendarView extends View {
 
     private int mLineNum;//行数
     protected LocalDate mInitialDate;//当前页面的初始化日期
-    protected List<RectF> mRectList;//点击用的矩形集合
+    protected List<RectF> mRectFList;//点击用的矩形集合
     protected List<LocalDate> mDateList;//页面的数据集合
     private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
     protected BaseCalendar mCalendar;
@@ -33,7 +37,7 @@ public abstract class CalendarView extends View {
         super(context);
         this.mInitialDate = initialDate;
         this.mDateList = dateList;
-        mRectList = new ArrayList<>();
+        mRectFList = new ArrayList<>();
         mLineNum = mDateList.size() / 7;//天数/7
 
         mCalendar = (BaseCalendar) container;
@@ -41,30 +45,49 @@ public abstract class CalendarView extends View {
         mStartDate = mCalendar.getStartDate();
         mEndDate = mCalendar.getEndDate();
 
-
+        //为每一个日期分配一个矩形，便于计算位置
+        for (int i = 0; i < mDateList.size(); i++) {
+            mRectFList.add(new RectF());
+        }
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
 
-        mRectList.clear();
         CalendarPainter calendarPainter = mCalendar.getCalendarPainter();
 
         for (int i = 0; i < mLineNum; i++) {
             for (int j = 0; j < 7; j++) {
-                RectF rectF = getRect(i, j);
-                mRectList.add(rectF);
+                RectF rectF = mRectFList.get(i * 7 + j);
+                if (rectF.isEmpty()) {
+                    float width = getMeasuredWidth();
+                    float height = getMeasuredHeight();
+                    //为每个矩形确定位置
+                    if (mLineNum == 5 || mLineNum == 1) {
+                        //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
+                        float rectHeight = height / mLineNum;
+                        rectF.set(j * width / 7, i * rectHeight, j * width / 7 + width / 7, i * rectHeight + rectHeight);
+                    } else {
+                        //6行的月份，要第一行和最后一行矩形的中心分别和和5行月份第一行和最后一行矩形的中心对齐
+                        //5行一个矩形高度 mHeight/5, 画图可知,4个5行矩形的高度等于5个6行矩形的高度  故：6行的每一个矩形高度是  (mHeight/5)*4/5
+                        float rectHeight5 = height / 5;
+                        float rectHeight6 = (height / 5) * 4 / 5;
+                        rectF.set(j * width / 7, i * rectHeight6 + (rectHeight5 - rectHeight6) / 2, j * width / 7 + width / 7, i * rectHeight6 + rectHeight6 + (rectHeight5 - rectHeight6) / 2);
+                    }
+                }
+
                 LocalDate localDate = mDateList.get(i * 7 + j);
+
                 //在可用区间内的正常绘制，
                 if (!(localDate.isBefore(mStartDate) || localDate.isAfter(mEndDate))) {
                     if (isEqualsMonthOrWeek(localDate, mInitialDate)) {  //当月和上下月的颜色不同
-                        if (Util.isToday(localDate) && mAllSelectListDate.contains(localDate)) {  //当天且选中的当天
+                        if (CalendarUtil.isToday(localDate) && mAllSelectListDate.contains(localDate)) {  //当天且选中的当天
                             calendarPainter.onDrawToday(canvas, rectF, localDate, mAllSelectListDate);
-                        } else if (Util.isToday(localDate) && !mAllSelectListDate.contains(localDate)) { //当天但选中的不是今天
+                        } else if (CalendarUtil.isToday(localDate) && !mAllSelectListDate.contains(localDate)) { //当天但选中的不是今天
                             calendarPainter.onDrawToday(canvas, rectF, localDate, mAllSelectListDate);
                         } else if (mAllSelectListDate.contains(localDate)) { //如果默认选择，就绘制，如果默认不选择且不是点击，就不绘制
-                            calendarPainter.onDrawCurrentMonthOrWeek(canvas, rectF,localDate, mAllSelectListDate);
+                            calendarPainter.onDrawCurrentMonthOrWeek(canvas, rectF, localDate, mAllSelectListDate);
                         } else { //当月其他的日历绘制
                             calendarPainter.onDrawCurrentMonthOrWeek(canvas, rectF, localDate, mAllSelectListDate);
                         }
@@ -82,25 +105,6 @@ public abstract class CalendarView extends View {
         }
     }
 
-    //获取每个元素矩形
-    private RectF getRect(int i, int j) {
-        float width = getMeasuredWidth();
-        float height = getMeasuredHeight();
-        RectF rectF;
-        //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
-        if (mLineNum == 5 || mLineNum == 1) {
-            float rectHeight = height / mLineNum;
-            rectF = new RectF(j * width / 7, i * rectHeight, j * width / 7 + width / 7, i * rectHeight + rectHeight);
-        } else {
-            //6行的月份，要第一行和最后一行矩形的中心分别和和5行月份第一行和最后一行矩形的中心对齐
-            //5行一个矩形高度 mHeight/5, 画图可知,4个5行矩形的高度等于5个6行矩形的高度  故：6行的每一个矩形高度是  (mHeight/5)*4/5
-            float rectHeight5 = height / 5;
-            float rectHeight6 = (height / 5) * 4 / 5;
-            rectF = new RectF(j * width / 7, i * rectHeight6 + (rectHeight5 - rectHeight6) / 2, j * width / 7 + width / 7, i * rectHeight6 + rectHeight6 + (rectHeight5 - rectHeight6) / 2);
-        }
-        return rectF;
-    }
-
 
     //获取当前页面的初始化日期
     public LocalDate getInitialDate() {
@@ -112,7 +116,6 @@ public abstract class CalendarView extends View {
     public LocalDate getMiddleLocalDate() {
         return mDateList.get((mDateList.size() / 2) + 1);
     }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -127,8 +130,8 @@ public abstract class CalendarView extends View {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            for (int i = 0; i < mRectList.size(); i++) {
-                RectF rectF = mRectList.get(i);
+            for (int i = 0; i < mRectFList.size(); i++) {
+                RectF rectF = mRectFList.get(i);
                 if (rectF.contains((int) e.getX(), (int) e.getY())) {
                     LocalDate clickDate = mDateList.get(i);
                     dealClickDate(clickDate);
@@ -168,13 +171,12 @@ public abstract class CalendarView extends View {
         }
     }
 
-
     //获取中心点到顶部的距离
     public int getPivotDistanceFromTop() {
         return getDistanceFromTop(getPivotDate());
     }
 
-
+    //获取当前页面选中的日期
     public List<LocalDate> getCurrentSelectDateList() {
         List<LocalDate> currentSelectDateList = new ArrayList<>();
         for (int i = 0; i < mDateList.size(); i++) {
@@ -185,7 +187,6 @@ public abstract class CalendarView extends View {
         }
         return currentSelectDateList;
     }
-
 
     //处理当前页面的点击事件
     protected abstract void dealClickDate(LocalDate clickDate);

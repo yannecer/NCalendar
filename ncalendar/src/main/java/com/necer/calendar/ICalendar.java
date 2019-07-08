@@ -1,5 +1,6 @@
 package com.necer.calendar;
 
+import com.necer.enumeration.MultipleModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
@@ -23,6 +24,9 @@ public interface ICalendar {
 
     //是否多选
     void setMultipleSelset(boolean isMultipleSelset);
+
+    //多选个数和模式 FULL_CLEAR-超过清除所有  FULL_REMOVE_FIRST-超过清除第一个
+    void setMultipleNum(int multipleNum, MultipleModel multipleModel);
 
     //跳转日期
     void jumpDate(String formatDate);

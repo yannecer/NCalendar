@@ -42,9 +42,9 @@
         <attr name="isDefaultSelectFitst" format="boolean" />
         <attr name="holidayColor" format="color" />
         <attr name="workdayColor" format="color" />
-        <attr name="bgEmuiCalendarColor" format="color" />
         <attr name="todaySelectContrastColor" format="color" />
         <attr name="disabledColor" format="color" />
+        <attr name="bgCalendarColor" format="color" />
 
 
         <attr name="defaultCalendar" format="enum">

@@ -2,13 +2,10 @@ package com.necer.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
-
-import com.necer.utils.Util;
+import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
 import com.necer.view.MonthView;
-
 import org.joda.time.LocalDate;
-
 import java.util.List;
 
 /**
@@ -25,13 +22,12 @@ public class MonthCalendarAdapter extends BaseCalendarAdapter {
     @Override
     protected CalendarView getCalendarView(ViewGroup container, int position) {
         LocalDate localDate = mInitializeDate.plusMonths(position - mCurr);
-        List<LocalDate> dateList = Util.getMonthCalendar(localDate, mFirstDayOfWeek);
+        List<LocalDate> dateList = CalendarUtil.getMonthCalendar(localDate, mFirstDayOfWeek);
         return new MonthView(mContext, container, localDate, dateList);
     }
 
-
     @Override
     protected int getIntervalCount(LocalDate startDate, LocalDate endDate, int type) {
-        return Util.getIntervalMonths(startDate, endDate);
+        return CalendarUtil.getIntervalMonths(startDate, endDate);
     }
 }

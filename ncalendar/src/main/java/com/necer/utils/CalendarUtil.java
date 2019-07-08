@@ -1,19 +1,13 @@
 package com.necer.utils;
 
 import android.content.Context;
-import android.support.v4.view.NestedScrollingChild;
 import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-
+import com.necer.entity.CalendarDate;
 import com.necer.entity.Lunar;
-import com.necer.entity.NDate;
-
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.Weeks;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +15,7 @@ import java.util.List;
  * Created by necer on 2017/6/9.
  */
 
-public class Util {
+public class CalendarUtil {
 
 
     /**
@@ -277,21 +271,22 @@ public class Util {
     }
 
 
-    public static NDate getNDate(LocalDate localDate) {
-        NDate nDate = new NDate();
+    //获取CalendarDate  CalendarDate包含需要显示的信息 农历，节气等
+    public static CalendarDate getCalendarDate(LocalDate localDate) {
+        CalendarDate calendarDate = new CalendarDate();
         int solarYear = localDate.getYear();
         int solarMonth = localDate.getMonthOfYear();
         int solarDay = localDate.getDayOfMonth();
         Lunar lunar = LunarUtil.getLunar(solarYear, solarMonth, solarDay);
 
         if (solarYear != 1900) {
-            nDate.lunar = lunar;
-            nDate.localDate = localDate;
-            nDate.solarTerm = SolarTermUtil.getSolatName(solarYear, (solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "")) + solarDay);
-            nDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
-            nDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay);
+            calendarDate.lunar = lunar;
+            calendarDate.localDate = localDate;
+            calendarDate.solarTerm = SolarTermUtil.getSolatName(solarYear, (solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "")) + solarDay);
+            calendarDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
+            calendarDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay);
         }
 
-        return nDate;
+        return calendarDate;
     }
 }

@@ -2,14 +2,12 @@ package com.necer.ncalendar;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.necer.entity.NDate;
 import com.necer.painter.CalendarPainter;
-import com.necer.utils.Util;
+import com.necer.utils.CalendarUtil;
 
 import org.joda.time.LocalDate;
 
@@ -27,7 +25,7 @@ public class CustomPainter implements CalendarPainter {
     public CustomPainter(Context context) {
         this.context = context;
         paint = new Paint();
-        paint.setTextSize(Util.sp2px(context, 15));
+        paint.setTextSize(CalendarUtil.sp2px(context, 15));
         paint.setTextAlign(Paint.Align.CENTER);
     }
 
@@ -83,7 +81,7 @@ public class CustomPainter implements CalendarPainter {
     }
 
     private Rect getNewRect(Context context,Rect rect) {
-        int rectDistance = (int) Util.dp2px(context, 20);
+        int rectDistance = (int) CalendarUtil.dp2px(context, 20);
         return new Rect(rect.centerX() - rectDistance, rect.centerY() - rectDistance, rect.centerX() + rectDistance, rect.centerY() + rectDistance);
     }
 

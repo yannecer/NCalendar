@@ -1,14 +1,8 @@
 package com.necer.painter;
 
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.RectF;
-
-import com.necer.entity.NDate;
-
 import org.joda.time.LocalDate;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**

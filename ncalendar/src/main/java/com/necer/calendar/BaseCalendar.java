@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
+import com.necer.enumeration.MultipleModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
@@ -47,13 +48,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     private OnCalendarMultipleChangedListener mOnCalendarMultipleChangedListener;//多选时回调
 
     protected LocalDate mStartDate, mEndDate, mInitializeDate;
-
     protected CalendarPainter mCalendarPainter;
-
     private List<LocalDate> mAllSelectDateList;
 
-
     private boolean mIsInflateFinish;//是否加载完成，
+    private MultipleModel mMultipleModel;//多选模式
+    private int mMultipleNum;//多选个数
 
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
@@ -78,6 +78,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         mIsMultipleSelset = mAttrs.isMultipleSelect;
         mIsDefaultSelect = mIsMultipleSelset ? false : mAttrs.isDefaultSelect;//当多选时，不能默认选中
         mIsDefaultSelectFitst = mAttrs.isDefaultSelectFitst;
+        setBackgroundColor(mAttrs.bgCalendarColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(final int position) {
@@ -101,7 +102,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         } catch (Exception e) {
             throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
         }
-
 
         if (mStartDate.isAfter(mEndDate)) {
             throw new RuntimeException("startDate必须在endDate之前");
@@ -200,6 +200,11 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         if (mIsMultipleSelset) {
             //多选  集合不包含就添加，包含就移除
             if (!mAllSelectDateList.contains(localDate)) {
+                if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_CLEAR) {
+                    mAllSelectDateList.clear();
+                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_REMOVE_FIRST) {
+                    mAllSelectDateList.remove(0);
+                }
                 mAllSelectDateList.add(localDate);
             } else {
                 mAllSelectDateList.remove(localDate);
@@ -241,6 +246,11 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         if (mIsMultipleSelset) {
             //多选  点击的日期不清除，只翻页，如果需要清除，等到翻页之后再次点击
             if (!mAllSelectDateList.contains(localDate) && isDraw) {
+                if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_CLEAR) {
+                    mAllSelectDateList.clear();
+                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_REMOVE_FIRST) {
+                    mAllSelectDateList.remove(0);
+                }
                 mAllSelectDateList.add(localDate);
             }
         } else {
@@ -273,6 +283,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
                 }
 
                 if (mOnMWDateChangeListener != null) {
+                    //月周折叠日历使用
                     mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
                 }
 
@@ -390,14 +401,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return mCalendarPainter;
     }
 
-
     //月周切换时交换数据，保证月日历和周日历有相同的选中日期
     public void exchangeSelectDateList(List<LocalDate> dateList) {
         mAllSelectDateList.clear();
         mAllSelectDateList.addAll(dateList);
         notifyCalendar();
     }
-
 
     public void setOnMWDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
         this.mOnMWDateChangeListener = onMWDateChangeListener;
@@ -432,7 +441,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return null;
     }
 
-
     //localDate到顶部的距离
     public int getDistanceFromTop(LocalDate localDate) {
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
@@ -441,7 +449,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         }
         return 0;
     }
-
 
     //PivotDate到顶部的距离
     public int getPivotDistanceFromTop() {
@@ -452,7 +459,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return 0;
     }
 
-
     //回去viewpager的adapter
     protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek);
 
@@ -461,7 +467,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     //相差count之后的的日期
     protected abstract LocalDate getIntervalDate(LocalDate localDate, int count);
-
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
@@ -510,5 +515,14 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         if (mIsMultipleSelset) {
             mIsDefaultSelect = false;
         }
+    }
+
+    @Override
+    public void setMultipleNum(int multipleNum, MultipleModel multipleModel) {
+        this.mIsMultipleSelset = true;
+        this.mIsDefaultSelect = false;
+
+        this.mMultipleModel = multipleModel;
+        this.mMultipleNum = multipleNum;
     }
 }

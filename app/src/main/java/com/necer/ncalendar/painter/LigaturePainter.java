@@ -4,12 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.necer.MyLog;
 import com.necer.painter.CalendarPainter;
-import com.necer.utils.Util;
+import com.necer.utils.CalendarUtil;
 
 import org.joda.time.LocalDate;
 
@@ -30,12 +28,10 @@ public class LigaturePainter implements CalendarPainter {
         mTextPaint = getPaint();
         mBgPaint = getPaint();
 
-
-        mTextPaint.setColor(Color.BLACK);
-        mTextPaint.setTextSize(Util.dp2px(context, 20));
+        mTextPaint.setTextSize(CalendarUtil.dp2px(context, 20));
 
         mBgPaint.setColor(Color.parseColor("#ff7575"));
-        circleRadius = (int) Util.dp2px(context, 20);
+        circleRadius = (int) CalendarUtil.dp2px(context, 20);
 
     }
 
@@ -48,53 +44,23 @@ public class LigaturePainter implements CalendarPainter {
 
     @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
-        LocalDate lastLocalDate = localDate.minusDays(1);
-        LocalDate nextLocalDate = localDate.plusDays(1);
 
-        if (selectedDateList.contains(localDate)) {
-            if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate)) {
-                drawSelectBg(canvas, rectF, localDate, 2);
-            } else if (selectedDateList.contains(lastLocalDate) && !selectedDateList.contains(nextLocalDate)) {
-                drawSelectBg(canvas, rectF, localDate, 4);
-            } else if (!selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate)) {
-                drawSelectBg(canvas, rectF, localDate, 3);
-            } else {
-                drawSelectBg(canvas, rectF, localDate, 1);
-            }
-        }
-
-        drawSolar(canvas, rectF, localDate);
+        drawSelectBg(canvas, rectF, localDate, true, selectedDateList);
+        drawSolar(canvas, rectF, localDate, selectedDateList.contains(localDate));
     }
 
     @Override
     public void onDrawCurrentMonthOrWeek(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
 
+        drawSelectBg(canvas, rectF, localDate, true, selectedDateList);
+        drawSolar(canvas, rectF, localDate, selectedDateList.contains(localDate));
 
-        LocalDate lastLocalDate = localDate.minusDays(1);
-        LocalDate nextLocalDate = localDate.plusDays(1);
-
-        if (selectedDateList.contains(localDate)) {
-            if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate)) {
-                drawSelectBg(canvas, rectF, localDate, 2);
-            } else if (selectedDateList.contains(lastLocalDate) && !selectedDateList.contains(nextLocalDate)) {
-                drawSelectBg(canvas, rectF, localDate, 4);
-            } else if (!selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate)) {
-                drawSelectBg(canvas, rectF, localDate, 3);
-            } else {
-                drawSelectBg(canvas, rectF, localDate, 1);
-            }
-        }
-
-
-        drawSolar(canvas, rectF, localDate);
-
-
-        new RectF();
     }
 
     @Override
-    public void onDrawLastOrNextMonth(Canvas canvas, RectF rect, LocalDate localDate, List<LocalDate> selectedDateList) {
-        drawSolar(canvas, rect, localDate);
+    public void onDrawLastOrNextMonth(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
+        drawSelectBg(canvas, rectF, localDate, false, selectedDateList);
+        drawSolar(canvas, rectF, localDate, selectedDateList.contains(localDate));
     }
 
     @Override
@@ -102,38 +68,39 @@ public class LigaturePainter implements CalendarPainter {
 
     }
 
-    //bgType 1==圆  2全矩形 3左半边圆右半边矩形    4左半边矩形右半边圆
-    private void drawSelectBg(Canvas canvas, RectF rectF, LocalDate localDate, int bgType) {
+    private void drawSelectBg(Canvas canvas, RectF rectF, LocalDate localDate, boolean isCurrectMonthOrWeek, List<LocalDate> selectedDateList) {
 
-        if (bgType == 1) {
-            mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-            canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
-        } else if (bgType == 2) {
-            RectF rectF1 = new RectF(rectF.left, rectF.centerY() - circleRadius, rectF.right, rectF.centerY() + circleRadius);
-            canvas.drawRect(rectF1, mBgPaint);
-        } else if (bgType == 3) {
-            mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-            canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
-            RectF rectF1 = new RectF(rectF.centerX(), rectF.centerY() - circleRadius, rectF.right, rectF.centerY() + circleRadius);
-            canvas.drawRect(rectF1, mBgPaint);
-        } else if (bgType == 4) {
-            RectF rectF1 = new RectF(rectF.left, rectF.centerY() - circleRadius, rectF.centerX(), rectF.centerY() + circleRadius);
-            canvas.drawRect(rectF1, mBgPaint);
-            mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-            canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
+        mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mBgPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
+
+        LocalDate lastLocalDate = localDate.minusDays(1);
+        LocalDate nextLocalDate = localDate.plusDays(1);
+
+
+
+        if (selectedDateList.contains(localDate)) {
+            if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(lastLocalDate,nextLocalDate)) {
+                RectF rectF1 = new RectF(rectF.left, rectF.centerY() - circleRadius, rectF.right, rectF.centerY() + circleRadius);
+                canvas.drawRect(rectF1, mBgPaint);
+            } else if (selectedDateList.contains(lastLocalDate) && !selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(lastLocalDate,localDate)) {
+                RectF rectF1 = new RectF(rectF.left, rectF.centerY() - circleRadius, rectF.centerX(), rectF.centerY() + circleRadius);
+                canvas.drawRect(rectF1, mBgPaint);
+                canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
+            } else if (!selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate)&& CalendarUtil.isEqualsMonth(nextLocalDate,localDate)) {
+                canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
+                RectF rectF1 = new RectF(rectF.centerX(), rectF.centerY() - circleRadius, rectF.right, rectF.centerY() + circleRadius);
+                canvas.drawRect(rectF1, mBgPaint);
+            } else {
+                canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
+            }
         }
     }
 
     //绘制公历
-    private void drawSolar(Canvas canvas, RectF rect, LocalDate date) {
-
+    private void drawSolar(Canvas canvas, RectF rect, LocalDate date, boolean isSelected) {
+        mTextPaint.setColor(isSelected ? Color.WHITE : Color.BLACK);
         canvas.drawText(date.getDayOfMonth() + "", rect.centerX(), getBaseLineY(rect), mTextPaint);
     }
-
-    private void drawLunar() {
-
-    }
-
 
     private int getBaseLineY(RectF rect) {
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
@@ -142,6 +109,5 @@ public class LigaturePainter implements CalendarPainter {
         int baseLineY = (int) (rect.centerY() - top / 2 - bottom / 2);
         return baseLineY;
     }
-
 
 }

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.enumeration.CalendarState;
 import com.necer.utils.Attrs;
 
 /**
@@ -20,7 +21,7 @@ public class Miui9Calendar extends MiuiCalendar {
     @Override
     protected float getGestureMonthUpOffset(int dy) {
         float maxOffset;
-        if (STATE == Attrs.MONTH) {
+        if (calendarState == CalendarState.MONTH) {
             //月  月日历有选中则选中为 中心点，如果没有选中则第一行
             maxOffset = monthCalendar.getPivotDistanceFromTop() - Math.abs(monthCalendar.getY()); //结束位置
         } else {

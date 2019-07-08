@@ -3,7 +3,7 @@ package com.necer.view;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import com.necer.utils.Util;
+import com.necer.utils.CalendarUtil;
 
 import org.joda.time.LocalDate;
 
@@ -21,9 +21,9 @@ public class MonthView extends CalendarView {
 
     @Override
     protected void dealClickDate(LocalDate localDate) {
-        if (Util.isLastMonth(localDate, mInitialDate)) {
+        if (CalendarUtil.isLastMonth(localDate, mInitialDate)) {
             mCalendar.onClickLastMonthDate(localDate);
-        } else if (Util.isNextMonth(localDate, mInitialDate)) {
+        } else if (CalendarUtil.isNextMonth(localDate, mInitialDate)) {
             mCalendar.onClickNextMonthDate(localDate);
         } else {
             mCalendar.onClickCurrectMonthOrWeekDate(localDate);
@@ -32,7 +32,7 @@ public class MonthView extends CalendarView {
 
     @Override
     public boolean isEqualsMonthOrWeek(LocalDate date, LocalDate initialDate) {
-        return Util.isEqualsMonth(date, initialDate);
+        return CalendarUtil.isEqualsMonth(date, initialDate);
     }
 
     @Override

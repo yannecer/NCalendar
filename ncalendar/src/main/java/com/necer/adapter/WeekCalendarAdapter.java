@@ -1,7 +1,8 @@
 package com.necer.adapter;
+
 import android.content.Context;
 import android.view.ViewGroup;
-import com.necer.utils.Util;
+import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
 import com.necer.view.WeekView;
 import org.joda.time.LocalDate;
@@ -19,12 +20,12 @@ public class WeekCalendarAdapter extends BaseCalendarAdapter {
     @Override
     protected CalendarView getCalendarView(ViewGroup container, int position) {
         LocalDate localDate = mInitializeDate.plusDays((position - mCurr) * 7);
-        List<LocalDate> dateList = Util.getWeekCalendar(localDate, mFirstDayOfWeek);
+        List<LocalDate> dateList = CalendarUtil.getWeekCalendar(localDate, mFirstDayOfWeek);
         return new WeekView(mContext, container, localDate, dateList);
     }
 
     @Override
     protected int getIntervalCount(LocalDate startDate, LocalDate endDate, int type) {
-        return Util.getIntervalWeek(startDate, endDate, type);
+        return CalendarUtil.getIntervalWeek(startDate, endDate, type);
     }
 }

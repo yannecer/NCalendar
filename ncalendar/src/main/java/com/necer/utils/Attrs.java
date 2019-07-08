@@ -62,19 +62,19 @@ public class Attrs {
     public float holidayDistance;
     public int holidayLocation;
     public int workdayColor;
-    public int bgEmuiCalendarColor;//华为日历的背景
     public boolean isDefaultSelect;//是否默认选中
     public boolean isMultipleSelect;//是否多选
     public boolean isDefaultSelectFitst;//翻页默认选中当月1号
 
     public String startDateString;
     public String endDateString;
-
     public int alphaColor;//不在同一月的颜色透明度
     public int disabledAlphaColor;//不可用的日期颜色透明度
     public String disabledString;//点击不可用的日期提示语
 
+
     public int todaySelectContrastColor;//当天被选中的对比色，选中当前的农历，原定等颜色
+    public int bgCalendarColor;//日历背景
 
 
 

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.necer.enumeration.CalendarState;
 import com.necer.utils.Attrs;
 
 
@@ -18,7 +19,6 @@ public class Miui10Calendar extends MiuiCalendar {
         super(context, attrs);
     }
 
-
     /**
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
      * @return
@@ -27,7 +27,7 @@ public class Miui10Calendar extends MiuiCalendar {
     protected float getGestureMonthUpOffset(int dy) {
         float maxOffset;
         float monthCalendarOffset;
-        if (STATE == Attrs.MONTH) {
+        if (calendarState == CalendarState.MONTH) {
             maxOffset = monthCalendar.getPivotDistanceFromTop() - Math.abs(monthCalendar.getY());
             monthCalendarOffset = monthCalendar.getPivotDistanceFromTop();
         } else {
@@ -47,7 +47,7 @@ public class Miui10Calendar extends MiuiCalendar {
     protected float getGestureMonthDownOffset(int dy) {
         float maxOffset = Math.abs(monthCalendar.getY());
         float monthCalendarOffset;
-        if (STATE == Attrs.MONTH) {
+        if (calendarState == CalendarState.MONTH) {
             monthCalendarOffset = monthCalendar.getPivotDistanceFromTop();
         } else {
             monthCalendarOffset = monthCalendar.getDistanceFromTop(weekCalendar.getFirstDate());

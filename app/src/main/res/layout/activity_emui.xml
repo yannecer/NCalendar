@@ -75,6 +75,7 @@
         app:isDefaultSelect="false"
         app:lunarHolidayTextColor="#F29B38"
         app:pointDistance="15dp"
+        app:bgCalendarColor="#ffeeff"
         app:selectCircleColor="#F29B38"
         app:solarHolidayTextColor="#F29B38"
         app:solarTermTextColor="#F29B38"

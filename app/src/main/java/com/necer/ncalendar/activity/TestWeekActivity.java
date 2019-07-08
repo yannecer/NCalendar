@@ -3,10 +3,10 @@ package com.necer.ncalendar.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
@@ -23,7 +23,7 @@ public class TestWeekActivity extends AppCompatActivity {
 
     private TextView tv_result;
     private WeekCalendar weekCalendar;
-
+    private final static String TAG = "NECER";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,14 +35,14 @@ public class TestWeekActivity extends AppCompatActivity {
 
         weekCalendar = findViewById(R.id.weekCalendar);
 
-      //  weekCalendar.setDateInterval("2018-10-1","2019-10-10");
+        //  weekCalendar.setDateInterval("2018-10-1","2019-10-10");
 
         weekCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
 
-                MyLog.d("setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
+                Log.d(TAG, "setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
             }
         });
 
@@ -50,9 +50,9 @@ public class TestWeekActivity extends AppCompatActivity {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
 
-                MyLog.d(year + "年" + month + "月");
-                MyLog.d("当前页面选中：：" + currectSelectList);
-                MyLog.d("全部选中：：" + allSelectList);
+                Log.d(TAG, year + "年" + month + "月");
+                Log.d(TAG, "当前页面选中：：" + currectSelectList);
+                Log.d(TAG, "全部选中：：" + allSelectList);
 
             }
         });

@@ -227,7 +227,7 @@ public class LunarUtil {
         lunar.lunarYearStr = getGan(lunar.lunarYear) + getZhi(lunar.lunarYear) + getAnimalString(lunar.lunarYear);
         lunar.lunarMonthStr = getMonthStr(lunar.lunarMonth, lunar.isLeap);
         lunar.lunarDayStr = getDayStr(lunar.lunarDay);
-        lunar.lunarDrawStr = getDrawStr(lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+        lunar.lunarOnDrawStr = getDrawStr(lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
 
         return lunar;
     }

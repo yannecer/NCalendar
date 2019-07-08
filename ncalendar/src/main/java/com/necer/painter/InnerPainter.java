@@ -6,12 +6,10 @@ import android.graphics.RectF;
 import android.text.TextUtils;
 
 import com.necer.calendar.ICalendar;
-import com.necer.entity.NDate;
+import com.necer.entity.CalendarDate;
 import com.necer.utils.Attrs;
-import com.necer.utils.Util;
-
+import com.necer.utils.CalendarUtil;
 import org.joda.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,11 +46,11 @@ public class InnerPainter implements CalendarPainter {
         mReplaceLunarStrMap = new HashMap<>();
         mReplaceLunarColorMap = new HashMap<>();
 
-        List<String> holidayList = Util.getHolidayList();
+        List<String> holidayList = CalendarUtil.getHolidayList();
         for (int i = 0; i < holidayList.size(); i++) {
             mHolidayList.add(new LocalDate(holidayList.get(i)));
         }
-        List<String> workdayList = Util.getWorkdayList();
+        List<String> workdayList = CalendarUtil.getWorkdayList();
         for (int i = 0; i < workdayList.size(); i++) {
             mWorkdayList.add(new LocalDate(workdayList.get(i)));
         }
@@ -149,25 +147,25 @@ public class InnerPainter implements CalendarPainter {
     //绘制农历
     private void drawLunar(Canvas canvas, RectF rec, boolean isTodaySelect, int alphaColor, LocalDate localDate) {
         if (mAttrs.isShowLunar) {
-            NDate nDate = Util.getNDate(localDate);
+            CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
             //优先顺序 替换的文字、农历节日、节气、公历节日、正常农历日期
-            String lunarString = mReplaceLunarStrMap.get(nDate.localDate);
+            String lunarString = mReplaceLunarStrMap.get(calendarDate.localDate);
             if (lunarString == null) {
-                if (!TextUtils.isEmpty(nDate.lunarHoliday)) {
+                if (!TextUtils.isEmpty(calendarDate.lunarHoliday)) {
                     mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.lunarHolidayTextColor);
-                    lunarString = nDate.lunarHoliday;
-                } else if (!TextUtils.isEmpty(nDate.solarTerm)) {
+                    lunarString = calendarDate.lunarHoliday;
+                } else if (!TextUtils.isEmpty(calendarDate.solarTerm)) {
                     mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.solarTermTextColor);
-                    lunarString = nDate.solarTerm;
-                } else if (!TextUtils.isEmpty(nDate.solarHoliday)) {
+                    lunarString = calendarDate.solarTerm;
+                } else if (!TextUtils.isEmpty(calendarDate.solarHoliday)) {
                     mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.solarHolidayTextColor);
-                    lunarString = nDate.solarHoliday;
+                    lunarString = calendarDate.solarHoliday;
                 } else {
                     mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.lunarTextColor);
-                    lunarString = nDate.lunar.lunarDrawStr;
+                    lunarString = calendarDate.lunar.lunarOnDrawStr;
                 }
             }
-            Integer color = mReplaceLunarColorMap.get(nDate.localDate);
+            Integer color = mReplaceLunarColorMap.get(calendarDate.localDate);
             mTextPaint.setColor(color == null ? (isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.lunarTextColor) : color);
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
             mTextPaint.setAlpha(alphaColor);
@@ -203,6 +201,7 @@ public class InnerPainter implements CalendarPainter {
         }
     }
 
+    //canvas.drawText的基准线
     private int getBaseLineY(RectF rectF) {
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         float top = fontMetrics.top;

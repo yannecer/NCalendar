@@ -1,7 +1,4 @@
 package com.necer.listener;
-
-import com.necer.entity.NDate;
-
 import org.joda.time.LocalDate;
 
 /**

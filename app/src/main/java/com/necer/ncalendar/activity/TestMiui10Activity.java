@@ -6,10 +6,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.util.Log;
 import android.widget.TextView;
 
-import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.Miui10Calendar;
 import com.necer.listener.OnCalendarChangedListener;
@@ -31,10 +30,10 @@ import java.util.Map;
  */
 public class TestMiui10Activity extends AppCompatActivity {
 
-    Miui10Calendar miui10Calendar;
+    private Miui10Calendar miui10Calendar;
 
-    TextView tv_result;
-
+    private TextView tv_result;
+    private final static String TAG = "NECER";
     private boolean isMultipleSelset;
     private boolean isDefaultSelect;
 
@@ -91,7 +90,7 @@ public class TestMiui10Activity extends AppCompatActivity {
         workdayList.add("2019-7-24");
         workdayList.add("2019-7-25");
 
-        innerPainter.setLegalHolidayList(holidayList,workdayList);
+        innerPainter.setLegalHolidayList(holidayList, workdayList);
 
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
@@ -104,15 +103,14 @@ public class TestMiui10Activity extends AppCompatActivity {
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
 
                 tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
-                MyLog.d(year + "年" + month + "月");
-                MyLog.d("当前页面选中：：" + currectSelectList);
-                MyLog.d("全部选中：：" + allSelectList);
+                Log.d(TAG, year + "年" + month + "月");
+                Log.d(TAG, "当前页面选中：：" + currectSelectList);
+                Log.d(TAG, "全部选中：：" + allSelectList);
             }
         });
 
 
     }
-
 
 
 }

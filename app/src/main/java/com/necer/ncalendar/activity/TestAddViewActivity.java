@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.necer.calendar.Miui10Calendar;
+import com.necer.enumeration.CalendarState;
 import com.necer.ncalendar.R;
 import com.necer.utils.Attrs;
 
@@ -21,7 +22,7 @@ public class TestAddViewActivity extends AppCompatActivity {
         findViewById(R.id.iv_icon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (miui10Calendar.getCalendarState() == Attrs.MONTH) {
+                if (miui10Calendar.getCalendarState() == CalendarState.MONTH) {
                     miui10Calendar.toWeek();
                 } else {
                     miui10Calendar.toMonth();
