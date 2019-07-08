@@ -274,6 +274,10 @@ InnerPainter 实现了设置圆点、替换农历等方法，还可以实现更�
     public String chineseEra;//天干地支
 
 
+CalendarDate对象通过 CalendarUtil 获取
+
+CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
+
 ```
 
 
