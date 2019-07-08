@@ -41,7 +41,7 @@ public class TestMonthActivity extends AppCompatActivity {
         LigaturePainter ligaturePainter = new LigaturePainter(this);
         monthCalendar.setCalendarPainter(ligaturePainter);
 
-        monthCalendar.setMultipleNum(3,MultipleModel.FULL_REMOVE_FIRST);
+       // monthCalendar.setMultipleNum(3,MultipleModel.FULL_REMOVE_FIRST);
 
 
         // monthCalendar.setDateInterval("2019-5-1","2019-5-20");

@@ -52,6 +52,12 @@ public class LigaturePainter implements CalendarPainter {
     @Override
     public void onDrawCurrentMonthOrWeek(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
 
+
+       // canvas.drawArc(rectF,-90,180,false,mBgPaint);//右半圆
+       // canvas.drawArc(rectF,90,180,false,mBgPaint);//左半圆
+
+
+
         drawSelectBg(canvas, rectF, localDate, true, selectedDateList);
         drawSolar(canvas, rectF, localDate, selectedDateList.contains(localDate));
 
@@ -77,20 +83,27 @@ public class LigaturePainter implements CalendarPainter {
         LocalDate nextLocalDate = localDate.plusDays(1);
 
 
-
         if (selectedDateList.contains(localDate)) {
-            if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(lastLocalDate,nextLocalDate)) {
+            if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(lastLocalDate, nextLocalDate)) {
+                //画全整个矩形
                 RectF rectF1 = new RectF(rectF.left, rectF.centerY() - circleRadius, rectF.right, rectF.centerY() + circleRadius);
                 canvas.drawRect(rectF1, mBgPaint);
-            } else if (selectedDateList.contains(lastLocalDate) && !selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(lastLocalDate,localDate)) {
+            } else if (selectedDateList.contains(lastLocalDate) && (!selectedDateList.contains(nextLocalDate) || !CalendarUtil.isEqualsMonth(nextLocalDate, localDate)) && CalendarUtil.isEqualsMonth(lastLocalDate, localDate)) {
+                //左矩形 右圆
                 RectF rectF1 = new RectF(rectF.left, rectF.centerY() - circleRadius, rectF.centerX(), rectF.centerY() + circleRadius);
                 canvas.drawRect(rectF1, mBgPaint);
                 canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
-            } else if (!selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate)&& CalendarUtil.isEqualsMonth(nextLocalDate,localDate)) {
+
+               // rectF.set(rectF.left,);
+             //   canvas.drawArc(rectF1,-90,180,false,mBgPaint);
+
+            } else if ((!selectedDateList.contains(lastLocalDate) || !CalendarUtil.isEqualsMonth(lastLocalDate, localDate)) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(nextLocalDate, localDate)) {
+                //右矩形 左圆
                 canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
                 RectF rectF1 = new RectF(rectF.centerX(), rectF.centerY() - circleRadius, rectF.right, rectF.centerY() + circleRadius);
                 canvas.drawRect(rectF1, mBgPaint);
             } else {
+                //圆形
                 canvas.drawCircle(rectF.centerX(), rectF.centerY(), circleRadius, mBgPaint);
             }
         }
