@@ -250,7 +250,7 @@ InnerPainter 实现了设置圆点、替换农历等方法，还可以实现更�
 
 ### CalendarDate
 ```
-日历中存放日期各种参数的类，包含公历、农历、节气、节日、属相、天干地支等
+CalendarDate 日历中存放日期各种参数的类，包含公历、农历、节气、节日、属相、天干地支等
 
     public LocalDate localDate;//公历日期
     public Lunar lunar;//农历
