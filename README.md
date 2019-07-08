@@ -4,7 +4,7 @@
 
  - 3种常见日历交互方式，MIUI系统日历：miui9、miui10、华为emui，miui9和钉钉日历类似，华为emui和365日历类似
  - 月周滑动切换，月周不选中
- - 支持多选
+ - 支持多选，设置多选的数量
  - 支持设置默认视图，默认周日历或者月日历
  - 支持周状态固定，下拉刷新等
  - 支持设置一周开始的是周一还是周日
@@ -39,7 +39,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.0.4'
+implementation 'com.necer.ncalendar:ncalendar:4.1.0'
 
 ```
 
@@ -108,6 +108,9 @@ implementation 'com.necer.ncalendar:ncalendar:4.0.4'
 
     //是否多选
     void setMultipleSelset(boolean isMultipleSelset);
+    
+    //多选个数和模式 FULL_CLEAR-超过清除所有  FULL_REMOVE_FIRST-超过清除第一个
+    void setMultipleNum(int multipleNum, MultipleModel multipleModel);
 
     //跳转日期
     void jumpDate(String formatDate);
@@ -170,8 +173,11 @@ implementation 'com.necer.ncalendar:ncalendar:4.0.4'
     //日历月周状态变化回调
     void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener);
 
-    //获取当前日历的状态  Attrs.MONTH==月视图    Attrs.WEEK==周视图
-    int getCalendarState();
+     //设置日历状态
+    void setCalendarState(CalendarState calendarState);
+
+    //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图
+    CalendarState getCalendarState();
 
 
 
@@ -192,7 +198,7 @@ List<String> holidayList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20
 List<String> holidayList = Arrays.asList("2019-10-01", "2019-11-19", "2019-11-20");
 
 InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
-innerPainter.setHolidayAndWorkdayList(holidayList,workdayList);
+innerPainter.setLegalHolidayList(holidayList,workdayList);
 
 ```
 #### 替换农历文字及颜色
@@ -223,22 +229,57 @@ innerPainter.setReplaceLunarColorMap(colorMap);
 日历内部内置了一个 InnerPainter ，各个属性也是这个绘制类的，如果自定义 CalendarPainter ，则这些属性都不适用
 InnerPainter 实现了设置圆点、替换农历等方法，还可以实现更多方法，如多选，多标记等，
 
-//绘制今天的日期，绘制选中状态和未选中状态
-void onDrawToday(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
 
-//绘制当前月（周）的日期
-void onDrawCurrentMonthOrWeek(Canvas canvas, Rect rect, NDate nDate, boolean isSelect);
+    //绘制今天的日期
+    void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList);
 
-//绘制不是当月的日期，即上一月，下一月，周日历不用实现
-void onDrawNotCurrentMonth(Canvas canvas, Rect rect, NDate nDate，, boolean isSelect);
+    //绘制当前月或周的日期
+    void onDrawCurrentMonthOrWeek(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList);
 
-//绘制日期区间之外的日期，方法setDateInterval(startFormatDate, endFormatDate)对应
-void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
+    //绘制上一月，下一月的日期，周日历不须实现
+    void onDrawLastOrNextMonth(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList);
+
+    //绘制不可用的日期，和方法setDateInterval(startFormatDate, endFormatDate)对应
+    void onDrawDisableDate(Canvas canvas, RectF rectF, LocalDate localDate);
+
 
 
 实现接口 CalendarPainter，分别重写以上几个方法，setCalendarPainter(calendarPainter)即可实现自定义日历界面
 
 ```
+
+### CalendarDate
+```
+CalendarDate 日历中存放日期各种参数的类，包含公历、农历、节气、节日、属相、天干地支等
+
+    public LocalDate localDate;//公历日期
+    public Lunar lunar;//农历
+    public String solarHoliday;//公历节日
+    public String lunarHoliday;//农历节日
+    public String solarTerm;//节气
+   
+其中Lunar为农历信息的对象
+
+    public boolean isLeap; //是否闰年
+    public int lunarDay;
+    public int lunarMonth;
+    public int lunarYear;
+    public int leapMonth;
+
+    public String lunarOnDrawStr;//农历位置需要绘制的文字
+    public String lunarDayStr;
+    public String lunarMonthStr;
+    public String lunarYearStr;
+    public String animals;//生肖
+    public String chineseEra;//天干地支
+
+
+CalendarDate对象通过 CalendarUtil 获取
+
+CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
+
+```
+
 
 
 
@@ -260,7 +301,7 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 |selectCircleColor| color|选中圈的颜色
 |holidayColor|color| 法定节休息日颜色
 |workdayColor|color| 法定节调休工作日颜色
-|bgEmuiCalendarColor|color| Emui日历的背景
+|bgCalendarColor|color| 日历的背景
 |bgChildColor|color| 日历包含子view的背景
 |todaySelectContrastColor|color| 今天被选中是其他元素的对比色，比如 农历，圆点等
 |pointColor| color |小圆点的颜色
@@ -296,6 +337,7 @@ void onDrawDisableDate(Canvas canvas, Rect rect, NDate nDate);
 
 
 ## 更新日志
+* 4.1.0<br/> 优化onDraw效率、修改CalendarPainter回调参数、新增多选日期数量
 * 4.0.4<br/> 修复某些情况下选中回调返回null的bug
 * 4.0.2<br/> 修复节气不显示的bug
 * 4.0.1<br/> 1、新增月周切换日历多选<br/>2、新增默认不选中折叠<br/>3、新增翻页默认选中每月1号<br/>4、修复设置左右padding偏差
