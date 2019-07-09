@@ -2,7 +2,9 @@ package com.necer.painter;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+
 import org.joda.time.LocalDate;
+
 import java.util.List;
 
 /**

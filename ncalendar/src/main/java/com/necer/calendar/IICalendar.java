@@ -24,5 +24,4 @@ public interface IICalendar extends ICalendar {
     CalendarState getCalendarState();
 
 
-
 }

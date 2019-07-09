@@ -188,6 +188,11 @@ public abstract class CalendarView extends View {
         return currentSelectDateList;
     }
 
+    //获取当前页面的日期
+    public List<LocalDate> getCurrentDateList() {
+        return mDateList;
+    }
+
     //处理当前页面的点击事件
     protected abstract void dealClickDate(LocalDate clickDate);
 

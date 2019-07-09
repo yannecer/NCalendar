@@ -14,10 +14,13 @@ import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.painter.LigaturePainter;
+import com.necer.ncalendar.painter.TicketPainter;
 
 import org.joda.time.LocalDate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TestMonthActivity extends AppCompatActivity {
 
@@ -36,12 +39,12 @@ public class TestMonthActivity extends AppCompatActivity {
 
         monthCalendar = findViewById(R.id.monthCalendar);
 
-        monthCalendar.setMultipleSelset(true);
+        monthCalendar.setMultipleSelset(false);
 
-        LigaturePainter ligaturePainter = new LigaturePainter(this);
-        monthCalendar.setCalendarPainter(ligaturePainter);
 
-       // monthCalendar.setMultipleNum(3,MultipleModel.FULL_REMOVE_FIRST);
+
+
+        // monthCalendar.setMultipleNum(3,MultipleModel.FULL_REMOVE_FIRST);
 
 
         // monthCalendar.setDateInterval("2019-5-1","2019-5-20");
@@ -71,6 +74,22 @@ public class TestMonthActivity extends AppCompatActivity {
 
     public void lastMonth(View view) {
         monthCalendar.toLastPager();
+
+//        Map<LocalDate, String> priceMap = new HashMap<>();
+//        priceMap.put(new LocalDate("2019-06-07"), "￥350");
+//        priceMap.put(new LocalDate("2019-07-07"), "￥350");
+//        priceMap.put(new LocalDate("2019-06-30"), "￥350");
+//        priceMap.put(new LocalDate("2019-07-03"), "￥350");
+//        priceMap.put(new LocalDate("2019-07-04"), "￥350");
+//        priceMap.put(new LocalDate("2019-07-10"), "￥350");
+//        priceMap.put(new LocalDate("2019-07-15"), "￥350");
+//        priceMap.put(new LocalDate("2019-07-30"), "￥350");
+//        priceMap.put(new LocalDate("2019-08-04"), "￥350");
+//        priceMap.put(new LocalDate("2019-08-29"), "￥350");
+//
+//
+//        ticketPainter.setPriceMap(priceMap);
+
     }
 
     public void nextMonth(View view) {

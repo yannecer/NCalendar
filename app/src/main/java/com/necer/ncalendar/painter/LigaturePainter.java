@@ -31,8 +31,8 @@ public class LigaturePainter implements CalendarPainter {
         mBgPaint = getPaint();
 
         mBgPaint.setColor(Color.parseColor("#ff7575"));
+        mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mCircleRadius = (int) CalendarUtil.dp2px(context, 20);
-
     }
 
     private Paint getPaint() {
@@ -70,7 +70,7 @@ public class LigaturePainter implements CalendarPainter {
 
     //绘制选中背景
     private void drawSelectBg(Canvas canvas, RectF rectF, LocalDate localDate, boolean isCurrectMonthOrWeek, List<LocalDate> selectedDateList) {
-        mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
         mBgPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
 
         LocalDate lastLocalDate = localDate.minusDays(1);
@@ -87,7 +87,6 @@ public class LigaturePainter implements CalendarPainter {
                 canvas.drawRect(rectF1, mBgPaint);
                 RectF rectF2 = new RectF(rectF.centerX() - mCircleRadius, rectF.centerY() - mCircleRadius, rectF.centerX() + mCircleRadius, rectF.centerY() + mCircleRadius);
                 canvas.drawArc(rectF2, -90, 180, false, mBgPaint);//右半圆
-
             } else if ((!selectedDateList.contains(lastLocalDate) || !CalendarUtil.isEqualsMonth(lastLocalDate, localDate)) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(nextLocalDate, localDate)) {
                 //右矩形 左圆
                 RectF rectF1 = new RectF(rectF.centerX(), rectF.centerY() - mCircleRadius, rectF.right, rectF.centerY() + mCircleRadius);
@@ -116,16 +115,6 @@ public class LigaturePainter implements CalendarPainter {
         mTextPaint.setColor(isSelected ? Color.WHITE : Color.GRAY);
         mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
         canvas.drawText(calendarDate.lunar.lunarOnDrawStr, rectF.centerX(), rectF.centerY() + CalendarUtil.dp2px(mContext, 12), mTextPaint);
-    }
-
-
-
-    private int getBaseLineY(RectF rectF) {
-        Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-        float top = fontMetrics.top;
-        float bottom = fontMetrics.bottom;
-        int baseLineY = (int) (rectF.centerY() - top / 2 - bottom / 2);
-        return baseLineY;
     }
 
 }

@@ -4,7 +4,7 @@ import android.support.v4.view.NestedScrollingChild;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ViewException extends Throwable{
+public class ViewException extends Throwable {
     private View view;
 
     public ViewException(View view) {

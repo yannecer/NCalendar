@@ -26,7 +26,6 @@ public class Attrs {
     public static final int BOTTOM_LEFT = 403;//左下方
 
 
-
     public int solarTextColor;
     public int todaySolarTextColor;
     public int todaySolarSelectTextColor;
@@ -75,8 +74,6 @@ public class Attrs {
 
     public int todaySelectContrastColor;//当天被选中的对比色，选中当前的农历，原定等颜色
     public int bgCalendarColor;//日历背景
-
-
 
 
 }

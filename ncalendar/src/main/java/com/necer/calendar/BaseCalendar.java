@@ -487,6 +487,15 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     @Override
+    public List<LocalDate> getCurrectDateList() {
+        CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            return currectCalendarView.getCurrentDateList();
+        }
+        return null;
+    }
+
+    @Override
     public Attrs getAttrs() {
         return mAttrs;
     }

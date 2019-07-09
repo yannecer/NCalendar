@@ -13,7 +13,7 @@ import com.necer.R;
 public class AttrsUtil {
 
 
-    public static Attrs getAttrs(Context context,AttributeSet attributeSet) {
+    public static Attrs getAttrs(Context context, AttributeSet attributeSet) {
         Attrs attrs = new Attrs();
 
         TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.NCalendar);

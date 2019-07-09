@@ -546,6 +546,16 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         return null;
     }
 
+    @Override
+    public List<LocalDate> getCurrectDateList() {
+        if (calendarState == CalendarState.WEEK) {
+            return weekCalendar.getCurrectDateList();
+        } else if (calendarState == CalendarState.MONTH) {
+            return monthCalendar.getCurrectDateList();
+        }
+        return null;
+    }
+
     //修复id重复
     @Override
     protected void onRestoreInstanceState(Parcelable state) {

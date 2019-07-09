@@ -19,7 +19,6 @@ import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.AAAdapter;
-import com.necer.utils.Attrs;
 
 import org.joda.time.LocalDate;
 
