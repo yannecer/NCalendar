@@ -24,13 +24,15 @@
 
 |周固定，下拉刷新|日历和子view添加其他view|自定义日历界面（LigaturePainter）|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/addview.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/LigaturePainter.png)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)
+|![](https://github.com/yannecer/NCalendar/blob/master/app/addview.gif)
+|![](https://github.com/yannecer/NCalendar/blob/master/app/LigaturePainter.png)|
 
 |默认不选中|默认多选|自定义日历界面（TicketPainter）|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/111.gif)|![]
-(https://github.com/yannecer/NCalendar/blob/master/app/222.gif)|![]
-(https://github.com/yannecer/NCalendar/blob/master/app/TicketPainter.png)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/111.gif)
+|![](https://github.com/yannecer/NCalendar/blob/master/app/222.gif)
+|![](https://github.com/yannecer/NCalendar/blob/master/app/TicketPainter.png)|
 |demo功能预览|
 |:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/demo.png)|
