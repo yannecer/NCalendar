@@ -37,7 +37,7 @@
 
 
 ## 下载demo：
-[下载demo](https://github.com/yannecer/NCalendar/releases/download/4.0.1/app-debug.apk)
+[下载demo](https://github.com/yannecer/NCalendar/releases/download/4.1.1/4.1.1.apk)
 
 ## 旧版文档：
 [旧版文档](https://github.com/yannecer/NCalendar/blob/master/README_OLD.md)
