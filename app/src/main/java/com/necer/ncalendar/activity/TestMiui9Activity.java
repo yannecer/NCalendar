@@ -1,10 +1,7 @@
 package com.necer.ncalendar.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.Miui9Calendar;
 import com.necer.enumeration.CalendarState;
-import com.necer.enumeration.MultipleModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
@@ -28,20 +24,9 @@ import java.util.List;
 /**
  * Created by necer on 2018/11/7.
  */
-public class TestMiui9Activity extends AppCompatActivity {
+public class TestMiui9Activity extends BaseActivity {
 
-    private boolean isMultipleSelset;
-    private boolean isDefaultSelect;
 
-    public static void startActivity(Context context, boolean isDefaultSelect, boolean isMultipleSelset) {
-        Intent intent = new Intent(context, TestMiui9Activity.class);
-        intent.putExtra("isMultipleSelset", isMultipleSelset);
-        intent.putExtra("isDefaultSelect", isDefaultSelect);
-        context.startActivity(intent);
-
-    }
-
-    private final static String TAG = "NECER";
     private Miui9Calendar miui9Calendar;
 
     private TextView tv_result;
@@ -53,17 +38,10 @@ public class TestMiui9Activity extends AppCompatActivity {
 
         tv_result = findViewById(R.id.tv_result);
 
-        isMultipleSelset = getIntent().getBooleanExtra("isMultipleSelset", false);
-        isDefaultSelect = getIntent().getBooleanExtra("isDefaultSelect", true);
-
         miui9Calendar = findViewById(R.id.miui9Calendar);
-        miui9Calendar.setMultipleSelset(isMultipleSelset);
-        miui9Calendar.setDefaultSelect(isDefaultSelect);
 
-        miui9Calendar.setMultipleNum(3,MultipleModel.FULL_CLEAR);
-
-        miui9Calendar.setCalendarState(CalendarState.MONTH);
-
+        miui9Calendar.setCalendarState(CalendarState.WEEK);
+        miui9Calendar.setSelectedMode(selectedModel);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

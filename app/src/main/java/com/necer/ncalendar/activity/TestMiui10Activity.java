@@ -1,20 +1,20 @@
 package com.necer.ncalendar.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.Miui10Calendar;
+import com.necer.entity.CalendarDate;
+import com.necer.entity.Lunar;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.painter.InnerPainter;
+import com.necer.utils.CalendarUtil;
 
 import org.joda.time.LocalDate;
 
@@ -28,42 +28,25 @@ import java.util.Map;
 /**
  * Created by necer on 2018/11/12.
  */
-public class TestMiui10Activity extends AppCompatActivity {
+public class TestMiui10Activity extends BaseActivity {
 
     private Miui10Calendar miui10Calendar;
 
     private TextView tv_result;
-    private final static String TAG = "NECER";
-    private boolean isMultipleSelset;
-    private boolean isDefaultSelect;
-
-    public static void startActivity(Context context, boolean isDefaultSelect, boolean isMultipleSelset) {
-        Intent intent = new Intent(context, TestMiui10Activity.class);
-        intent.putExtra("isMultipleSelset", isMultipleSelset);
-        intent.putExtra("isDefaultSelect", isDefaultSelect);
-        context.startActivity(intent);
-
-    }
-
+    private TextView tv_data;
+    private TextView tv_desc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_miui10);
         tv_result = findViewById(R.id.tv_result);
+        tv_data = findViewById(R.id.tv_data);
+        tv_desc = findViewById(R.id.tv_desc);
         List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01", "2018-12-23");
 
-
-        isMultipleSelset = getIntent().getBooleanExtra("isMultipleSelset", false);
-        isDefaultSelect = getIntent().getBooleanExtra("isDefaultSelect", true);
-
         miui10Calendar = findViewById(R.id.miui10Calendar);
-        miui10Calendar.setMultipleSelset(isMultipleSelset);
-        miui10Calendar.setDefaultSelect(isDefaultSelect);
-
-
-        //  miui10Calendar.setDateInterval("1901-01-01","2099-12-30");
-
+        miui10Calendar.setSelectedMode(selectedModel);
         InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
         innerPainter.setPointList(pointList);
 
@@ -96,6 +79,17 @@ public class TestMiui10Activity extends AppCompatActivity {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
+                Log.d(TAG, "   当前页面选中 " + localDate);
+
+                if (localDate != null) {
+                    CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
+                    Lunar lunar = calendarDate.lunar;
+                    tv_data.setText(localDate.toString("yyyy年MM月dd日"));
+                    tv_desc.setText(lunar.chineseEra + lunar.animals + "年" + lunar.lunarMonthStr + lunar.lunarDayStr);
+                } else {
+                    tv_data.setText("");
+                    tv_desc.setText("");
+                }
             }
         });
         miui10Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {

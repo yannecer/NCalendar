@@ -22,8 +22,6 @@
     <com.necer.calendar.WeekCalendar
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
-        app:isDefaultSelect="true"
-        app:isDefaultSelectFitst="true"
         android:layout_height="50dp" />
 
 

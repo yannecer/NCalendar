@@ -94,7 +94,6 @@
         android:background="#00000000"
         app:calendarHeight="300dp"
         app:defaultCalendar="week"
-        app:isDefaultSelect="true"
         >
 
 

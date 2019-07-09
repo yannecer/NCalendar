@@ -2,13 +2,11 @@ package com.necer.ncalendar.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.necer.calendar.BaseCalendar;
-import com.necer.calendar.MonthCalendar;
 import com.necer.calendar.WeekCalendar;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
@@ -18,12 +16,11 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
-public class TestWeekActivity extends AppCompatActivity {
+public class TestWeekActivity extends BaseActivity {
 
 
     private TextView tv_result;
     private WeekCalendar weekCalendar;
-    private final static String TAG = "NECER";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,9 +31,7 @@ public class TestWeekActivity extends AppCompatActivity {
 
 
         weekCalendar = findViewById(R.id.weekCalendar);
-
-        //  weekCalendar.setDateInterval("2018-10-1","2019-10-10");
-
+        weekCalendar.setSelectedMode(selectedModel);
         weekCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
@@ -49,6 +44,7 @@ public class TestWeekActivity extends AppCompatActivity {
         weekCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
+                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
 
                 Log.d(TAG, year + "年" + month + "月");
                 Log.d(TAG, "当前页面选中：：" + currectSelectList);

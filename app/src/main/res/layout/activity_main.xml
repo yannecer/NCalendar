@@ -13,17 +13,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="testMonth"
-            android:text="月日历" />
+            android:onClick="month_selected"
+            android:text="月日历选中" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="testWeek"
-            android:text="周日历" />
+            android:onClick="month_unSelected"
+            android:text="月日历不选中" />
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="month_multiple"
+            android:text="月日历多选" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,24 +40,49 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="miui9_0"
+            android:onClick="week_selected"
+            android:text="周日历选中" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="week_unSelected"
+            android:text="周日历不选中" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="week_multiple"
+            android:text="周日历多选" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="miui9_selected"
             android:text="miui9选中" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="miui9_1"
+            android:onClick="miui9_unSelected"
             android:text="miui9不选中" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="miui9_2"
+            android:onClick="miui9_multiple"
             android:text="miui9多选" />
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -61,21 +93,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="miui10_0"
+            android:onClick="miui10_selected"
             android:text="miui10选中" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="miui10_1"
+            android:onClick="miui10_unSelected"
             android:text="miui10不选中" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="miui10_2"
+            android:onClick="miui10_multiple"
             android:text="miui10多选" />
 
     </LinearLayout>
@@ -88,21 +120,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="emiui_0"
+            android:onClick="emiui_selected"
             android:text="emiui选中" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="emiui_1"
+            android:onClick="emiui_unSelected"
             android:text="emiui不选中" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="emiui_2"
+            android:onClick="emiui_multiple"
             android:text="emiui多选" />
 
     </LinearLayout>
@@ -112,7 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="toHoldWeek"
-        android:text="周日历hold" />
+        android:text="周日历固定 hold" />
 
     <Button
         android:layout_width="wrap_content"
@@ -121,11 +153,12 @@
         android:text="日历和子view之间添加view" />
 
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="customCalendar"
-        android:text="自定义日历" />
+        android:onClick="custom_painter"
+        android:text="自定义页面（两种效果）" />
 
     <TextView
         android:id="@+id/tv_version"

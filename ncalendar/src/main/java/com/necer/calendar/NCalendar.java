@@ -19,7 +19,8 @@ import android.widget.FrameLayout;
 
 import com.necer.R;
 import com.necer.enumeration.CalendarState;
-import com.necer.enumeration.MultipleModel;
+import com.necer.enumeration.MultipleNumModel;
+import com.necer.enumeration.SelectedModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnCalendarStateChangedListener;
@@ -449,21 +450,15 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
     @Override
-    public void setDefaultSelect(boolean isDefaultSelect) {
-        monthCalendar.setDefaultSelect(isDefaultSelect);
-        weekCalendar.setDefaultSelect(isDefaultSelect);
+    public void setSelectedMode(SelectedModel selectedMode) {
+        monthCalendar.setSelectedMode(selectedMode);
+        weekCalendar.setSelectedMode(selectedMode);
     }
 
     @Override
     public void setDefaultSelectFitst(boolean isDefaultSelectFitst) {
         monthCalendar.setDefaultSelectFitst(isDefaultSelectFitst);
         weekCalendar.setDefaultSelectFitst(isDefaultSelectFitst);
-    }
-
-    @Override
-    public void setMultipleSelset(boolean isMultipleSelset) {
-        monthCalendar.setMultipleSelset(isMultipleSelset);
-        weekCalendar.setMultipleSelset(isMultipleSelset);
     }
 
     @Override
@@ -516,9 +511,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
     @Override
-    public void setMultipleNum(int multipleNum, MultipleModel multipleModel) {
-        monthCalendar.setMultipleNum(multipleNum, multipleModel);
-        weekCalendar.setMultipleNum(multipleNum, multipleModel);
+    public void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel) {
+        monthCalendar.setMultipleNum(multipleNum, multipleNumModel);
+        weekCalendar.setMultipleNum(multipleNum, multipleNumModel);
     }
 
     @Override

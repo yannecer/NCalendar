@@ -6,10 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.necer.calendar.Miui10Calendar;
-import com.necer.ncalendar.CustomPainter;
+import com.necer.enumeration.SelectedModel;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.painter.LigaturePainter;
-import com.necer.painter.CalendarPainter;
+import com.necer.ncalendar.painter.TicketPainter;
+
+import org.joda.time.LocalDate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by necer on 2019/1/4.
@@ -17,17 +22,40 @@ import com.necer.painter.CalendarPainter;
 public class CustomCalendarActivity extends AppCompatActivity {
 
     Miui10Calendar miui10Calendar;
-    CustomPainter customPainter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom);
         miui10Calendar = findViewById(R.id.miui10Calendar);
-        miui10Calendar.setMultipleSelset(true);
-       // customPainter = new CustomPainter(this);
+        miui10Calendar.setSelectedMode(SelectedModel.MULTIPLE);
         LigaturePainter painter = new LigaturePainter(this);
         miui10Calendar.setCalendarPainter(painter);
 
+    }
+
+    public void ligaturePainter(View view) {
+        LigaturePainter painter = new LigaturePainter(this);
+        miui10Calendar.setCalendarPainter(painter);
+    }
+
+    public void ticketPainter(View view) {
+        TicketPainter ticketPainter = new TicketPainter(this, miui10Calendar);
+
+        Map<LocalDate, String> priceMap = new HashMap<>();
+        priceMap.put(new LocalDate("2019-06-07"), "￥350");
+        priceMap.put(new LocalDate("2019-07-07"), "￥350");
+        priceMap.put(new LocalDate("2019-06-30"), "￥350");
+        priceMap.put(new LocalDate("2019-07-03"), "￥350");
+        priceMap.put(new LocalDate("2019-07-04"), "￥350");
+        priceMap.put(new LocalDate("2019-07-10"), "￥350");
+        priceMap.put(new LocalDate("2019-07-15"), "￥350");
+        priceMap.put(new LocalDate("2019-07-30"), "￥350");
+        priceMap.put(new LocalDate("2019-08-04"), "￥350");
+        priceMap.put(new LocalDate("2019-08-29"), "￥350");
+
+        ticketPainter.setPriceMap(priceMap);
+
+        miui10Calendar.setCalendarPainter(ticketPainter);
     }
 }

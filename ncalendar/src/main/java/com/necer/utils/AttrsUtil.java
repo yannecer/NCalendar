@@ -34,9 +34,6 @@ public class AttrsUtil {
         attrs.holidayTextSize = ta.getDimension(R.styleable.NCalendar_holidayTextSize, CalendarUtil.sp2px(context, 10));
         attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, CalendarUtil.dp2px(context, 22));
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
-        attrs.isDefaultSelect = ta.getBoolean(R.styleable.NCalendar_isDefaultSelect, true);
-        attrs.isMultipleSelect = ta.getBoolean(R.styleable.NCalendar_isMultipleSelect, false);
-        attrs.isDefaultSelectFitst = ta.getBoolean(R.styleable.NCalendar_isDefaultSelectFitst, false);
         attrs.pointSize = ta.getDimension(R.styleable.NCalendar_pointSize, CalendarUtil.dp2px(context, 2));
         attrs.pointDistance = ta.getDimension(R.styleable.NCalendar_pointDistance, CalendarUtil.dp2px(context, 18));
         attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, context.getResources().getColor(R.color.pointColor));

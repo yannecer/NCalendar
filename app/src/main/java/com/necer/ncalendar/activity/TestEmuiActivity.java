@@ -1,10 +1,7 @@
 package com.necer.ncalendar.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -15,7 +12,6 @@ import com.necer.enumeration.CalendarState;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
-import com.necer.utils.Attrs;
 
 import org.joda.time.LocalDate;
 
@@ -25,24 +21,11 @@ import java.util.List;
 /**
  * Created by necer on 2018/11/12.
  */
-public class TestEmuiActivity extends AppCompatActivity {
+public class TestEmuiActivity extends BaseActivity {
 
     private EmuiCalendar emuiCalendar;
 
     private TextView tv_result;
-
-    private boolean isMultipleSelset;
-    private boolean isDefaultSelect;
-
-    private final static String TAG = "NECER";
-
-    public static void startActivity(Context context, boolean isDefaultSelect, boolean isMultipleSelset) {
-        Intent intent = new Intent(context, TestEmuiActivity.class);
-        intent.putExtra("isMultipleSelset", isMultipleSelset);
-        intent.putExtra("isDefaultSelect", isDefaultSelect);
-        context.startActivity(intent);
-
-    }
 
 
     @Override
@@ -52,20 +35,16 @@ public class TestEmuiActivity extends AppCompatActivity {
 
         emuiCalendar = findViewById(R.id.emuiCalendar);
 
-
         tv_result = findViewById(R.id.tv_result);
 
-        isMultipleSelset = getIntent().getBooleanExtra("isMultipleSelset", false);
-        isDefaultSelect = getIntent().getBooleanExtra("isDefaultSelect", true);
-
-        emuiCalendar.setMultipleSelset(isMultipleSelset);
-        emuiCalendar.setDefaultSelect(isDefaultSelect);
-
+        emuiCalendar.setSelectedMode(selectedModel);
+        emuiCalendar.setDefaultSelectFitst(true);//只在selectedMode==SINGLE_SELECTED有效
 
         emuiCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
+                Log.d(TAG, "当前页面选中：：" + localDate);
             }
         });
         emuiCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {

@@ -72,7 +72,6 @@
         android:layout_height="match_parent"
         app:holidayColor="#F29B38"
         app:isShowLunar="false"
-        app:isDefaultSelect="false"
         app:lunarHolidayTextColor="#F29B38"
         app:pointDistance="15dp"
         app:bgCalendarColor="#ffeeff"

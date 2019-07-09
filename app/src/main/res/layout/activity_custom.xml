@@ -4,6 +4,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="ligaturePainter"
+            android:text="自定义日历 (连线)" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="ticketPainter"
+            android:text="自定义日历 (票务)" />
+
+
+    </LinearLayout>
 
     <com.necer.view.WeekBar
         android:layout_width="match_parent"

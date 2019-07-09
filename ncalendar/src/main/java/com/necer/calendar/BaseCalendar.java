@@ -10,7 +10,8 @@ import android.util.AttributeSet;
 import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
-import com.necer.enumeration.MultipleModel;
+import com.necer.enumeration.MultipleNumModel;
+import com.necer.enumeration.SelectedModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
@@ -35,9 +36,8 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     private Context mContext;
     private Attrs mAttrs;
 
-    //这两个不能同时为真
-    private boolean mIsDefaultSelect; //默认选中 不能多选
-    private boolean mIsMultipleSelset;  // 多选情况下 不能默认选中
+
+    private SelectedModel mSelectedModel;//选中模式
 
     private boolean mIsJumpClick;//是否是点击上月、下月或跳转，这个只在默认选中时有用
     private boolean mIsDefaultSelectFitst;//默认选择时，翻页选中第一个日期
@@ -52,7 +52,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     private List<LocalDate> mAllSelectDateList;
 
     private boolean mIsInflateFinish;//是否加载完成，
-    private MultipleModel mMultipleModel;//多选模式
+    private MultipleNumModel mMultipleNumModel;//多选数量模式
     private int mMultipleNum;//多选个数
 
 
@@ -73,11 +73,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     private void init(Context context) {
         this.mContext = context;
+        mSelectedModel = SelectedModel.SINGLE_SELECTED;
         mAllSelectDateList = new ArrayList<>();
         mInitializeDate = new LocalDate();
-        mIsMultipleSelset = mAttrs.isMultipleSelect;
-        mIsDefaultSelect = mIsMultipleSelset ? false : mAttrs.isDefaultSelect;//当多选时，不能默认选中
-        mIsDefaultSelectFitst = mAttrs.isDefaultSelectFitst;
         setBackgroundColor(mAttrs.bgCalendarColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
@@ -85,15 +83,17 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
                 drawView(position);
             }
         });
-        initDate();
-    }
 
-
-    private void initDate() {
-        if (mIsDefaultSelect) {
+        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {
             mAllSelectDateList.clear();
             mAllSelectDateList.add(mInitializeDate);
         }
+        initAdapter();
+    }
+
+
+    private void initAdapter() {
+
         String startDateString = mAttrs.startDateString;
         String endDateString = mAttrs.endDateString;
         try {
@@ -129,7 +129,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     public void setDateInterval(String startFormatDate, String endFormatDate) {
         mAttrs.startDateString = startFormatDate;
         mAttrs.endDateString = endFormatDate;
-        initDate();
+        initAdapter();
     }
 
     @Override
@@ -139,7 +139,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
-        initDate();
+        initAdapter();
     }
 
     @Override
@@ -151,7 +151,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
         }
-        initDate();
+        initAdapter();
     }
 
 
@@ -160,7 +160,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         if (currectCalendarView == null) {
             return;
         }
-        if (mIsDefaultSelect) {//默认选中，只有一种情况 单选
+        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {//每页单个选中
             LocalDate initialDate = currectCalendarView.getInitialDate();//当前页面初始化的日期
             LocalDate lastDate = mAllSelectDateList.get(0);//上个页面选中的日期
             //当前面页面的初始值和上个页选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
@@ -182,7 +182,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             mAllSelectDateList.add(currectDate);
             currectCalendarView.invalidate();
         } else {
-            //不默认选中，分为两种情况，1、单选 2、多选  这两种情况只需要绘制页面
+            //分为两种情况，1、单选不选中 2、多选  这两种情况只需要绘制页面
             currectCalendarView.invalidate();
         }
 
@@ -197,12 +197,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             return;
         }
 
-        if (mIsMultipleSelset) {
+        if (mSelectedModel == SelectedModel.MULTIPLE) {
             //多选  集合不包含就添加，包含就移除
             if (!mAllSelectDateList.contains(localDate)) {
-                if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_CLEAR) {
+                if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_CLEAR) {
                     mAllSelectDateList.clear();
-                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_REMOVE_FIRST) {
+                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_REMOVE_FIRST) {
                     mAllSelectDateList.remove(0);
                 }
                 mAllSelectDateList.add(localDate);
@@ -243,12 +243,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         mIsJumpClick = true;
         CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
         int indexOffset = getTwoDateCount(localDate, currectCalendarView.getInitialDate(), mAttrs.firstDayOfWeek);//得出两个页面相差几个
-        if (mIsMultipleSelset) {
+        if (mSelectedModel == SelectedModel.MULTIPLE) {
             //多选  点击的日期不清除，只翻页，如果需要清除，等到翻页之后再次点击
             if (!mAllSelectDateList.contains(localDate) && isDraw) {
-                if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_CLEAR) {
+                if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_CLEAR) {
                     mAllSelectDateList.clear();
-                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleModel == MultipleModel.FULL_REMOVE_FIRST) {
+                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_REMOVE_FIRST) {
                     mAllSelectDateList.remove(0);
                 }
                 mAllSelectDateList.add(localDate);
@@ -287,12 +287,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
                     mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, currectCalendarView.getPivotDate(), mAllSelectDateList);
                 }
 
-                if (mOnCalendarChangedListener != null && !mIsMultipleSelset && getVisibility() == VISIBLE) {
+                if (mOnCalendarChangedListener != null && !(mSelectedModel == SelectedModel.MULTIPLE) && getVisibility() == VISIBLE) {
                     //单选
                     mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
                 }
 
-                if (mOnCalendarMultipleChangedListener != null && mIsMultipleSelset && getVisibility() == VISIBLE) {
+                if (mOnCalendarMultipleChangedListener != null && mSelectedModel == SelectedModel.MULTIPLE && getVisibility() == VISIBLE) {
                     //多选
                     mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
                 }
@@ -500,16 +500,13 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return mAttrs;
     }
 
+
     @Override
-    public void setDefaultSelect(boolean isDefaultSelect) {
-        this.mIsDefaultSelect = isDefaultSelect;
-        if (isDefaultSelect) {
-            mIsMultipleSelset = false;
-            if (mAllSelectDateList.size() == 0) {
-                mAllSelectDateList.add(new LocalDate());
-            }
-        } else {
-            mAllSelectDateList.clear();
+    public void setSelectedMode(SelectedModel selectedMode) {
+        this.mSelectedModel = selectedMode;
+        mAllSelectDateList.clear();
+        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {
+            mAllSelectDateList.add(new LocalDate());
         }
     }
 
@@ -519,19 +516,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     @Override
-    public void setMultipleSelset(boolean isMultipleSelset) {
-        this.mIsMultipleSelset = isMultipleSelset;
-        if (mIsMultipleSelset) {
-            mIsDefaultSelect = false;
-        }
-    }
-
-    @Override
-    public void setMultipleNum(int multipleNum, MultipleModel multipleModel) {
-        this.mIsMultipleSelset = true;
-        this.mIsDefaultSelect = false;
-
-        this.mMultipleModel = multipleModel;
+    public void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel) {
+        this.mSelectedModel = SelectedModel.MULTIPLE;
+        this.mMultipleNumModel = multipleNumModel;
         this.mMultipleNum = multipleNum;
     }
 }

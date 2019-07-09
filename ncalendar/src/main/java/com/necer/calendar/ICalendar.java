@@ -1,6 +1,7 @@
 package com.necer.calendar;
 
-import com.necer.enumeration.MultipleModel;
+import com.necer.enumeration.MultipleNumModel;
+import com.necer.enumeration.SelectedModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
@@ -16,17 +17,28 @@ import java.util.List;
  */
 public interface ICalendar {
 
-    //设置默认选中
-    void setDefaultSelect(boolean isDefaultSelect);
+    /**
+     * 设置选中模式
+     *
+     * @param selectedMode SINGLE_SELECTED-单个默认选中  默认模式
+     *                     SINGLE_UNSELECTED-单个不选中
+     *                     MULTIPLE-多选
+     */
+    void setSelectedMode(SelectedModel selectedMode);
 
-    //默认选中时，是否翻页选中第一个，前提必须默认选中
+    /**
+     * 多选个数和模式
+     *
+     * @param multipleNum      多选个数
+     * @param multipleNumModel FULL_CLEAR-超过清除所有
+     *                         FULL_REMOVE_FIRST-超过清除第一个
+     */
+    void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel);
+
+
+    //默认选中时，是否翻页选中第一个，只在selectedMode==SINGLE_SELECTED有效
     void setDefaultSelectFitst(boolean isDefaultSelectFitst);
 
-    //是否多选
-    void setMultipleSelset(boolean isMultipleSelset);
-
-    //多选个数和模式 FULL_CLEAR-超过清除所有  FULL_REMOVE_FIRST-超过清除第一个
-    void setMultipleNum(int multipleNum, MultipleModel multipleModel);
 
     //跳转日期
     void jumpDate(String formatDate);

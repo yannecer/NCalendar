@@ -1,9 +1,11 @@
 package com.necer.enumeration;
 
+import java.io.Serializable;
+
 /**
  * 日历状态
  */
-public enum CalendarState {
+public enum CalendarState implements Serializable {
 
     WEEK(100), MONTH(101);
 

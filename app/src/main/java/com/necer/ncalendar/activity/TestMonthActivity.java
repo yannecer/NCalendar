@@ -2,32 +2,25 @@ package com.necer.ncalendar.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
-import com.necer.enumeration.MultipleModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
-import com.necer.ncalendar.painter.LigaturePainter;
-import com.necer.ncalendar.painter.TicketPainter;
 
 import org.joda.time.LocalDate;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class TestMonthActivity extends AppCompatActivity {
+public class TestMonthActivity extends BaseActivity {
 
 
     private TextView tv_result;
     private MonthCalendar monthCalendar;
-    private final static String TAG = "NECER";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,17 +31,7 @@ public class TestMonthActivity extends AppCompatActivity {
 
 
         monthCalendar = findViewById(R.id.monthCalendar);
-
-        monthCalendar.setMultipleSelset(false);
-
-
-
-
-        // monthCalendar.setMultipleNum(3,MultipleModel.FULL_REMOVE_FIRST);
-
-
-        // monthCalendar.setDateInterval("2019-5-1","2019-5-20");
-        //   monthCalendar.setInitializeDate("2019-6-2");
+        monthCalendar.setSelectedMode(selectedModel);
 
         monthCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
@@ -62,6 +45,7 @@ public class TestMonthActivity extends AppCompatActivity {
         monthCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
+                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
 
                 Log.d(TAG, year + "年" + month + "月");
                 Log.d(TAG, "当前页面选中：：" + currectSelectList);
@@ -74,22 +58,6 @@ public class TestMonthActivity extends AppCompatActivity {
 
     public void lastMonth(View view) {
         monthCalendar.toLastPager();
-
-//        Map<LocalDate, String> priceMap = new HashMap<>();
-//        priceMap.put(new LocalDate("2019-06-07"), "￥350");
-//        priceMap.put(new LocalDate("2019-07-07"), "￥350");
-//        priceMap.put(new LocalDate("2019-06-30"), "￥350");
-//        priceMap.put(new LocalDate("2019-07-03"), "￥350");
-//        priceMap.put(new LocalDate("2019-07-04"), "￥350");
-//        priceMap.put(new LocalDate("2019-07-10"), "￥350");
-//        priceMap.put(new LocalDate("2019-07-15"), "￥350");
-//        priceMap.put(new LocalDate("2019-07-30"), "￥350");
-//        priceMap.put(new LocalDate("2019-08-04"), "￥350");
-//        priceMap.put(new LocalDate("2019-08-29"), "￥350");
-//
-//
-//        ticketPainter.setPriceMap(priceMap);
-
     }
 
     public void nextMonth(View view) {
