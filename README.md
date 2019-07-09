@@ -22,13 +22,17 @@
 |:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|
 
-|周固定，下拉刷新|日历和子view添加其他view|自定义日历界面|
+|周固定，下拉刷新|日历和子view添加其他view|自定义日历界面（LigaturePainter）|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/addview.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/custom.gif)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/addview.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/LigaturePainter.png)|
 
-|默认不选中|默认多选|
-|:---:|:---:|
+|默认不选中|默认多选|自定义日历界面（TicketPainter）|
+|:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/111.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/222.gif)|
+![](https://github.com/yannecer/NCalendar/blob/master/app/TicketPainter.png)|
+|demo功能预览|
+|:---:|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/demo.png)|
 ## 下载demo：
 [下载demo](https://github.com/yannecer/NCalendar/releases/download/4.0.1/app-debug.apk)
 
@@ -97,20 +101,31 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.0'
 技术交流QQ群：127278900
 ### 主要Api
 
-#### 月日历、周日历、折叠日历共同拥有的api
+#### 月日历、周日历、折叠月周日历共同拥有的api
 
 
-    //设置默认选中
-    void setDefaultSelect(boolean isDefaultSelect);
 
-    //默认选中时，是否翻页选中第一个，前提必须默认选中
+   /**
+     * 设置选中模式
+     *
+     * @param selectedMode SINGLE_SELECTED-单个默认选中  默认模式
+     *                     SINGLE_UNSELECTED-单个不选中
+     *                     MULTIPLE-多选
+     */
+    void setSelectedMode(SelectedModel selectedMode);
+
+    /**
+     * 多选个数和模式
+     *
+     * @param multipleNum      多选个数
+     * @param multipleNumModel FULL_CLEAR-超过清除所有
+     *                         FULL_REMOVE_FIRST-超过清除第一个
+     */
+    void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel);
+
+
+    //默认选中时，是否翻页选中第一个，只在selectedMode==SINGLE_SELECTED有效
     void setDefaultSelectFitst(boolean isDefaultSelectFitst);
-
-    //是否多选
-    void setMultipleSelset(boolean isMultipleSelset);
-    
-    //多选个数和模式 FULL_CLEAR-超过清除所有  FULL_REMOVE_FIRST-超过清除第一个
-    void setMultipleNum(int multipleNum, MultipleModel multipleModel);
 
     //跳转日期
     void jumpDate(String formatDate);
@@ -159,9 +174,12 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.0'
 
     //获取当前页面选中的日期集合
     List<LocalDate> getCurrectSelectDateList();
+    
+    //获取当前页面的数据 如果是月周折叠日历 周状态下获取的是一周的数据，月状态下获取的一月的数据
+    List<LocalDate> getCurrectDateList();
 
 
-#### 折叠日历miui9，miui10，emui 拥有的api
+#### 折叠月周日历miui9，miui10，emui 拥有的api
 
 
     //折叠回到周状态
@@ -225,7 +243,7 @@ innerPainter.setReplaceLunarColorMap(colorMap);
 
 ```
 日历绘制接口，绘制的所有内容通过这个接口完成，实现这个类可实现自定义的日历界面，
-参数中的 rect 是文字位置的矩形对象
+参数中的 rectF 是文字位置的矩形对象
 日历内部内置了一个 InnerPainter ，各个属性也是这个绘制类的，如果自定义 CalendarPainter ，则这些属性都不适用
 InnerPainter 实现了设置圆点、替换农历等方法，还可以实现更多方法，如多选，多标记等，
 
@@ -236,10 +254,10 @@ InnerPainter 实现了设置圆点、替换农历等方法，还可以实现更�
     //绘制当前月或周的日期
     void onDrawCurrentMonthOrWeek(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList);
 
-    //绘制上一月，下一月的日期，周日历不须实现
+    //绘制上一月，下一月的日期，周日历不用实现
     void onDrawLastOrNextMonth(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList);
 
-    //绘制不可用的日期，和方法setDateInterval(startFormatDate, endFormatDate)对应
+    //绘制不可用的日期，和方法setDateInterval(startFormatDate, endFormatDate)对应 如果没有使用setDateInterval设置日期范围 此方法不用实现
     void onDrawDisableDate(Canvas canvas, RectF rectF, LocalDate localDate);
 
 
@@ -260,18 +278,20 @@ CalendarDate 日历中存放日期各种参数的类，包含公历、农历、�
    
 其中Lunar为农历信息的对象
 
-    public boolean isLeap; //是否闰年
-    public int lunarDay;
-    public int lunarMonth;
-    public int lunarYear;
-    public int leapMonth;
+
+    public boolean isLeap;//是否闰年
+    public int lunarDay;//农历天
+    public int lunarMonth;//农历月
+    public int lunarYear;//农历年
+    public int leapMonth;//闰月
 
     public String lunarOnDrawStr;//农历位置需要绘制的文字
-    public String lunarDayStr;
-    public String lunarMonthStr;
-    public String lunarYearStr;
+    public String lunarDayStr;//农历天 描述 廿二等
+    public String lunarMonthStr;//农历月 描述
+    public String lunarYearStr;//农历年 描述
     public String animals;//生肖
     public String chineseEra;//天干地支
+
 
 
 CalendarDate对象通过 CalendarUtil 获取
@@ -307,9 +327,6 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |pointColor| color |小圆点的颜色
 |startDate| string |日期区间开始日期
 |endDate| string |日期区间结束日期
-|isDefaultSelect| boolean |是否默认选中
-|isDefaultSelectFitst| boolean |是否默认翻页选中第一天
-|isMultipleSelect| boolean |是否多选
 |alphaColor| integer |不是本月的日期颜色的透明度0-255
 |disabledAlphaColor| integer |日期区间之外的地日颜色的透明度0-255
 |disabledString| string |点击日期区间之外的日期提示语
@@ -337,6 +354,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 
 
 ## 更新日志
+* 4.1.1<br/> 修改选中模式为枚举，demo增加了两种自定义CalendarPainter
 * 4.1.0<br/> 优化onDraw效率、修改CalendarPainter回调参数、新增多选日期数量
 * 4.0.4<br/> 修复某些情况下选中回调返回null的bug
 * 4.0.2<br/> 修复节气不显示的bug
