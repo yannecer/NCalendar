@@ -107,6 +107,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.1'
 #### 月日历、周日历、折叠月周日历共同拥有的api
 
 
+```
 
    /**
      * 设置选中模式
@@ -180,10 +181,10 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.1'
     
     //获取当前页面的数据 如果是月周折叠日历 周状态下获取的是一周的数据，月状态下获取的一月的数据
     List<LocalDate> getCurrectDateList();
-
+```
 
 #### 折叠月周日历miui9，miui10，emui 拥有的api
-
+```
 
     //折叠回到周状态
     void toWeek();
@@ -199,7 +200,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.1'
 
     //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图
     CalendarState getCalendarState();
-
+```
 
 
 #### 添加指示圆点
