@@ -112,18 +112,18 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.1'
    /**
      * 设置选中模式
      *
-     * @param selectedMode SINGLE_SELECTED-单个默认选中  默认模式
-     *                     SINGLE_UNSELECTED-单个不选中
-     *                     MULTIPLE-多选
+     * @param selectedMode SINGLE_SELECTED--每页单个默认选中  默认模式
+     *                     SINGLE_UNSELECTED--单个不选中
+     *                     MULTIPLE--多选
      */
     void setSelectedMode(SelectedModel selectedMode);
 
     /**
      * 多选个数和模式
      *
-     * @param multipleNum      多选个数
-     * @param multipleNumModel FULL_CLEAR-超过清除所有
-     *                         FULL_REMOVE_FIRST-超过清除第一个
+     * @param multipleNum      多选限制的个数
+     * @param multipleNumModel FULL_CLEAR--超过清除所有
+     *                         FULL_REMOVE_FIRST--超过清除第一个
      */
     void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel);
 
