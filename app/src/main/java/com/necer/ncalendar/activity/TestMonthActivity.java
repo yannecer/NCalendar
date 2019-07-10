@@ -33,6 +33,7 @@ public class TestMonthActivity extends BaseActivity {
         monthCalendar = findViewById(R.id.monthCalendar);
         monthCalendar.setSelectedMode(selectedModel);
 
+
         monthCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {

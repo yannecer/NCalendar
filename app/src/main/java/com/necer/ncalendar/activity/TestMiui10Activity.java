@@ -13,6 +13,7 @@ import com.necer.entity.Lunar;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
+import com.necer.ncalendar.painter.LigaturePainter;
 import com.necer.painter.InnerPainter;
 import com.necer.utils.CalendarUtil;
 

@@ -23,10 +23,6 @@ public class WeekCalendar extends BaseCalendar {
         super(context, attributeSet);
     }
 
-    public WeekCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter) {
-        super(context, attrs, calendarPainter);
-    }
-
     @Override
     protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
         return new WeekCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);

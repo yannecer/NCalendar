@@ -36,7 +36,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     private Context mContext;
     private Attrs mAttrs;
 
-
     private SelectedModel mSelectedModel;//选中模式
 
     private boolean mIsJumpClick;//是否是点击上月、下月或跳转，这个只在默认选中时有用
@@ -59,23 +58,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
         this.mAttrs = AttrsUtil.getAttrs(context, attributeSet);
-        this.mCalendarPainter = new InnerPainter(this);
-        init(context);
-    }
-
-
-    public BaseCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter) {
-        super(context);
-        this.mAttrs = attrs;
-        this.mCalendarPainter = calendarPainter;
-        init(context);
-    }
-
-    private void init(Context context) {
         this.mContext = context;
         mSelectedModel = SelectedModel.SINGLE_SELECTED;
         mAllSelectDateList = new ArrayList<>();
         mInitializeDate = new LocalDate();
+        mStartDate = new LocalDate("1901-01-01");
+        mEndDate = new LocalDate("2099-12-31");
         setBackgroundColor(mAttrs.bgCalendarColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
@@ -84,23 +72,15 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             }
         });
 
-        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {
-            mAllSelectDateList.clear();
-            mAllSelectDateList.add(mInitializeDate);
-        }
         initAdapter();
     }
 
 
     private void initAdapter() {
 
-        String startDateString = mAttrs.startDateString;
-        String endDateString = mAttrs.endDateString;
-        try {
-            mStartDate = new LocalDate(startDateString);
-            mEndDate = new LocalDate(endDateString);
-        } catch (Exception e) {
-            throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
+        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {
+            mAllSelectDateList.clear();
+            mAllSelectDateList.add(mInitializeDate);
         }
 
         if (mStartDate.isAfter(mEndDate)) {
@@ -115,9 +95,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             throw new RuntimeException("endDate必须在2099-12-31之前");
         }
 
-      /*  if (startDate.isAfter(initializeDate) || endDate.isBefore(initializeDate)) {
-            throw new RuntimeException("日期区间需要包含今天");
-        }*/
+        if (mStartDate.isAfter(mInitializeDate) || mEndDate.isBefore(mInitializeDate)) {
+            throw new RuntimeException("日期区间必须包含初始化日期");
+        }
 
         BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, mStartDate, mEndDate, mInitializeDate, mAttrs.firstDayOfWeek);
         int currItem = calendarAdapter.getCurrItem();
@@ -127,8 +107,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     @Override
     public void setDateInterval(String startFormatDate, String endFormatDate) {
-        mAttrs.startDateString = startFormatDate;
-        mAttrs.endDateString = endFormatDate;
+        try {
+            mStartDate = new LocalDate(startFormatDate);
+            mEndDate = new LocalDate(endFormatDate);
+        } catch (Exception e) {
+            throw new RuntimeException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
+        }
         initAdapter();
     }
 
@@ -144,9 +128,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     @Override
     public void setDateInterval(String startFormatDate, String endFormatDate, String formatInitializeDate) {
-        mAttrs.startDateString = startFormatDate;
-        mAttrs.endDateString = endFormatDate;
         try {
+            mStartDate = new LocalDate(startFormatDate);
+            mEndDate = new LocalDate(endFormatDate);
             mInitializeDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
             throw new RuntimeException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
@@ -398,6 +382,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     @Override
     public CalendarPainter getCalendarPainter() {
+        if (mCalendarPainter == null) {
+            mCalendarPainter = new InnerPainter(this);
+        }
         return mCalendarPainter;
     }
 
@@ -506,7 +493,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         this.mSelectedModel = selectedMode;
         mAllSelectDateList.clear();
         if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {
-            mAllSelectDateList.add(new LocalDate());
+            mAllSelectDateList.add(mInitializeDate);
         }
     }
 

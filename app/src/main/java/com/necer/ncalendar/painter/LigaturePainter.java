@@ -22,7 +22,7 @@ public class LigaturePainter implements CalendarPainter {
 
     protected Paint mTextPaint;
     protected Paint mBgPaint;
-    private int mCircleRadius;
+    private float mCircleRadius;
     private Context mContext;
 
     public LigaturePainter(Context context) {
@@ -30,14 +30,15 @@ public class LigaturePainter implements CalendarPainter {
         mTextPaint = getPaint();
         mBgPaint = getPaint();
 
+
+        mCircleRadius = CalendarUtil.dp2px(context, 20);
         mBgPaint.setColor(Color.parseColor("#ff7575"));
-        mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mCircleRadius = (int) CalendarUtil.dp2px(context, 20);
     }
 
     private Paint getPaint() {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
+        paint.setDither(true);
         paint.setTextAlign(Paint.Align.CENTER);
         return paint;
     }
@@ -80,21 +81,46 @@ public class LigaturePainter implements CalendarPainter {
             if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(lastLocalDate, nextLocalDate)) {
                 //画全整个矩形
                 RectF rectF1 = new RectF(rectF.left, rectF.centerY() - mCircleRadius, rectF.right, rectF.centerY() + mCircleRadius);
+                mBgPaint.setAntiAlias(false);
+                mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawRect(rectF1, mBgPaint);
+
             } else if (selectedDateList.contains(lastLocalDate) && (!selectedDateList.contains(nextLocalDate) || !CalendarUtil.isEqualsMonth(nextLocalDate, localDate)) && CalendarUtil.isEqualsMonth(lastLocalDate, localDate)) {
                 //左矩形 右圆
                 RectF rectF1 = new RectF(rectF.left, rectF.centerY() - mCircleRadius, rectF.centerX(), rectF.centerY() + mCircleRadius);
+                mBgPaint.setAntiAlias(false);
+                mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawRect(rectF1, mBgPaint);
+
+                mBgPaint.setAntiAlias(false);
+                mBgPaint.setStyle(Paint.Style.FILL);
                 RectF rectF2 = new RectF(rectF.centerX() - mCircleRadius, rectF.centerY() - mCircleRadius, rectF.centerX() + mCircleRadius, rectF.centerY() + mCircleRadius);
                 canvas.drawArc(rectF2, -90, 180, false, mBgPaint);//右半圆
+
+                mBgPaint.setAntiAlias(true);
+                mBgPaint.setStyle(Paint.Style.STROKE);
+                canvas.drawArc(rectF2, -90, 180, false, mBgPaint);//右半圆弧
+
             } else if ((!selectedDateList.contains(lastLocalDate) || !CalendarUtil.isEqualsMonth(lastLocalDate, localDate)) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(nextLocalDate, localDate)) {
                 //右矩形 左圆
                 RectF rectF1 = new RectF(rectF.centerX(), rectF.centerY() - mCircleRadius, rectF.right, rectF.centerY() + mCircleRadius);
+                mBgPaint.setAntiAlias(false);
+                mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawRect(rectF1, mBgPaint);
+
+                mBgPaint.setAntiAlias(false);
+                mBgPaint.setStyle(Paint.Style.FILL);
                 RectF rectF2 = new RectF(rectF.centerX() - mCircleRadius, rectF.centerY() - mCircleRadius, rectF.centerX() + mCircleRadius, rectF.centerY() + mCircleRadius);
                 canvas.drawArc(rectF2, 90, 180, false, mBgPaint);//右半圆
+
+                mBgPaint.setAntiAlias(true);
+                mBgPaint.setStyle(Paint.Style.STROKE);
+                canvas.drawArc(rectF2, 90, 180, false, mBgPaint);//右半圆弧
+
             } else {
                 //圆形
+                mBgPaint.setAntiAlias(true);
+                mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawCircle(rectF.centerX(), rectF.centerY(), mCircleRadius, mBgPaint);
             }
         }

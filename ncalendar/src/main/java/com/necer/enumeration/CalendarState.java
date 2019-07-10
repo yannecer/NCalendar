@@ -15,6 +15,10 @@ public enum CalendarState implements Serializable {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public static CalendarState valueOf(int value) {
         switch (value) {
             case 100:

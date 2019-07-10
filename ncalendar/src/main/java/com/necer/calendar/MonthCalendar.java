@@ -28,10 +28,6 @@ public class MonthCalendar extends BaseCalendar {
         return new MonthCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);
     }
 
-    public MonthCalendar(Context context, Attrs attrs, CalendarPainter calendarPainter) {
-        super(context, attrs, calendarPainter);
-    }
-
     @Override
     protected int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type) {
         return CalendarUtil.getIntervalMonths(startDate, endDate);

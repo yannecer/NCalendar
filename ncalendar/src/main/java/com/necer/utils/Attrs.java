@@ -6,9 +6,6 @@ package com.necer.utils;
 
 public class Attrs {
 
-    //日历默认视图
-    public static final int WEEK = 100;//周视图
-    public static final int MONTH = 101;//月视图
 
     //指示圆点的位置
     public static final int UP = 200;//再公历日期上面
@@ -62,8 +59,6 @@ public class Attrs {
     public int holidayLocation;
     public int workdayColor;
 
-    public String startDateString;
-    public String endDateString;
     public int alphaColor;//不在同一月的颜色透明度
     public int disabledAlphaColor;//不可用的日期颜色透明度
     public String disabledString;//点击不可用的日期提示语

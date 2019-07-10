@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.necer.R;
+import com.necer.enumeration.CalendarState;
 
 /**
  * Created by necer on 2018/11/28.
@@ -49,19 +50,12 @@ public class AttrsUtil {
         attrs.bgCalendarColor = ta.getColor(R.styleable.NCalendar_bgCalendarColor, context.getResources().getColor(R.color.white));
         attrs.firstDayOfWeek = ta.getInt(R.styleable.NCalendar_firstDayOfWeek, Attrs.SUNDAY);
         attrs.pointLocation = ta.getInt(R.styleable.NCalendar_pointLocation, Attrs.UP);
-        attrs.defaultCalendar = ta.getInt(R.styleable.NCalendar_defaultCalendar, Attrs.MONTH);
+        attrs.defaultCalendar = ta.getInt(R.styleable.NCalendar_defaultCalendar, CalendarState.MONTH.getValue());
         attrs.holidayLocation = ta.getInt(R.styleable.NCalendar_holidayLocation, Attrs.TOP_RIGHT);
 
         attrs.alphaColor = ta.getInt(R.styleable.NCalendar_alphaColor, 90);
         attrs.disabledAlphaColor = ta.getInt(R.styleable.NCalendar_disabledAlphaColor, 50);
-
-        String startString = ta.getString(R.styleable.NCalendar_startDate);
-        String endString = ta.getString(R.styleable.NCalendar_endDate);
         attrs.disabledString = ta.getString(R.styleable.NCalendar_disabledString);
-
-
-        attrs.startDateString = TextUtils.isEmpty(startString) ? "1901-01-01" : startString;
-        attrs.endDateString = TextUtils.isEmpty(endString) ? "2099-12-31" : endString;
 
         ta.recycle();
 

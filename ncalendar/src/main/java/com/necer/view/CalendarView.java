@@ -55,11 +55,10 @@ public abstract class CalendarView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        CalendarPainter calendarPainter = mCalendar.getCalendarPainter();
-
         for (int i = 0; i < mLineNum; i++) {
             for (int j = 0; j < 7; j++) {
                 RectF rectF = mRectFList.get(i * 7 + j);
+                //矩形确定位置
                 if (rectF.isEmpty()) {
                     float width = getMeasuredWidth();
                     float height = getMeasuredHeight();
@@ -77,8 +76,9 @@ public abstract class CalendarView extends View {
                     }
                 }
 
+                //开始绘制
+                CalendarPainter calendarPainter = mCalendar.getCalendarPainter();
                 LocalDate localDate = mDateList.get(i * 7 + j);
-
                 //在可用区间内的正常绘制，
                 if (!(localDate.isBefore(mStartDate) || localDate.isAfter(mEndDate))) {
                     if (isEqualsMonthOrWeek(localDate, mInitialDate)) {  //当月和上下月的颜色不同

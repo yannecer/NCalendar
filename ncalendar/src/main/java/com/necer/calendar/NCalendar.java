@@ -60,7 +60,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     private boolean isWeekHold;//是否需要周状态定
 
-    private CalendarPainter calendarPainter;
     private boolean isInflateFinish;//是否加载完成，
 
     protected ValueAnimator monthValueAnimator;//月日历动画
@@ -88,9 +87,10 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         weekHeight = monthHeight / 5;
         isWeekHold = this.attrs.isWeekHold;
 
-        calendarPainter = new InnerPainter(this);
-        weekCalendar = new WeekCalendar(context, this.attrs, calendarPainter);
-        monthCalendar = new MonthCalendar(context, this.attrs, calendarPainter);
+        monthCalendar = new MonthCalendar(context, attrs);
+        weekCalendar = new WeekCalendar(context, attrs);
+
+        setCalendarPainter(new InnerPainter(this));
 
         monthCalendar.setOnMWDateChangeListener(onMWDateChangeListener);
         weekCalendar.setOnMWDateChangeListener(onMWDateChangeListener);
@@ -418,7 +418,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public CalendarPainter getCalendarPainter() {
-        return calendarPainter;
+        return monthCalendar.getCalendarPainter();
     }
 
     @Override
@@ -493,7 +493,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public void setCalendarPainter(CalendarPainter calendarPainter) {
-        this.calendarPainter = calendarPainter;
         monthCalendar.setCalendarPainter(calendarPainter);
         weekCalendar.setCalendarPainter(calendarPainter);
     }

@@ -23,8 +23,6 @@
 
         <attr name="hollowCircleColor" format="color" />
         <attr name="hollowCircleStroke" format="dimension" />
-        <attr name="startDate" format="string" />
-        <attr name="endDate" format="string" />
 
         <attr name="disabledString" format="string" />
 
