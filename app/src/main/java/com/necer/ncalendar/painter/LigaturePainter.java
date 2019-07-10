@@ -30,7 +30,6 @@ public class LigaturePainter implements CalendarPainter {
         mTextPaint = getPaint();
         mBgPaint = getPaint();
 
-
         mCircleRadius = CalendarUtil.dp2px(context, 20);
         mBgPaint.setColor(Color.parseColor("#ff7575"));
     }
