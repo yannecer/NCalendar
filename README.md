@@ -112,9 +112,9 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.2'
    /**
      * 设置选中模式
      *
-     * @param selectedMode SINGLE_SELECTED--每页单个默认选中  默认模式
-     *                     SINGLE_UNSELECTED--单个不选中
-     *                     MULTIPLE--多选
+     * @param selectedMode SINGLE_SELECTED--日历默认选中模式  每个页面都有选中，左右页面为加减一月或者一周后的日期 
+     *                     SINGLE_UNSELECTED--单个选中，不点击选中日期不会改变，翻页不改变选中日期
+     *                     MULTIPLE--多选，多个选中，累计选中
      */
     void setSelectedMode(SelectedModel selectedMode);
 
