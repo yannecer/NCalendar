@@ -11,7 +11,9 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
+import android.support.v4.view.NestedScrollingParentHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +109,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         childViewValueAnimator.setDuration(duration);
         childViewValueAnimator.addUpdateListener(this);
         childViewValueAnimator.addListener(onEndAnimatorListener);
+
     }
 
 
@@ -154,18 +157,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
                 }
             }
         }
-        targetView = findViewWithTag(getResources().getString(R.string.factual_scroll_view));
-        if (targetView == null) {
-            try {
-                ViewException.traverseView(childView);
-            } catch (ViewException e) {
-                e.printStackTrace();
-                targetView = e.getExceptionView();
-            }
-        }
-        if (targetView == null) {
-            throw new RuntimeException("NCalendar中需要实现了NestedScrollingChild的子类");
-        }
+
     }
 
     @Override
@@ -191,6 +183,22 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     }
 
+
+    private View getRealTargetView(View view) {
+        View targetView = view.findViewWithTag(getResources().getString(R.string.factual_scroll_view));
+        if (targetView == null) {
+            try {
+                ViewException.traverseView(childView);
+            } catch (ViewException e) {
+                e.printStackTrace();
+                targetView = e.getExceptionView();
+            }
+        }
+        if (targetView == null) {
+            throw new RuntimeException("NCalendar中需要实现了NestedScrollingChild的子类");
+        }
+        return targetView;
+    }
 
     //自动滑动到适当的位置
     private void autoScroll() {
@@ -279,6 +287,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             //不是周状态也不是月状态时，自动滑动
             autoScroll();
         }
+        targetView = null;
     }
 
     /**
@@ -287,6 +296,11 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
      * 2、向下滑动未到月状态
      */
     protected void gestureMove(int dy, int[] consumed) {
+        if (targetView == null) {
+            targetView = getRealTargetView(childView);
+
+            Log.e("aaa", "targetView::" + targetView);
+        }
 
         float monthCalendarY = monthCalendar.getY();
         float childLayoutY = childView.getY();
@@ -361,6 +375,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             case MotionEvent.ACTION_CANCEL:
                 isFirstScroll = true;
                 autoScroll();
+                targetView = null;
                 break;
         }
         return true;

@@ -51,6 +51,9 @@
         <activity
             android:name=".activity.TestWeekActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".activity.TestViewPagerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
 
 
     </application>

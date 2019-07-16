@@ -153,12 +153,18 @@
         android:text="日历和子view之间添加view" />
 
 
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="custom_painter"
         android:text="自定义页面（两种效果）" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="viewpager"
+        android:text="view_pager" />
+
 
     <TextView
         android:id="@+id/tv_version"

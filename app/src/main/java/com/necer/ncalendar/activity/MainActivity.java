@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void week_multiple(View view) {
-        startActivity(getNewIntent(TestWeekActivity.class,  SelectedModel.MULTIPLE, "周日历多选"));
+        startActivity(getNewIntent(TestWeekActivity.class, SelectedModel.MULTIPLE, "周日历多选"));
     }
 
     public void miui9_selected(View view) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void miui9_multiple(View view) {
-        startActivity(getNewIntent(TestMiui9Activity.class,  SelectedModel.MULTIPLE, "miui9多选"));
+        startActivity(getNewIntent(TestMiui9Activity.class, SelectedModel.MULTIPLE, "miui9多选"));
     }
 
     public void miui10_selected(View view) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void miui10_multiple(View view) {
-        startActivity(getNewIntent(TestMiui10Activity.class,  SelectedModel.MULTIPLE, "miui10多选"));
+        startActivity(getNewIntent(TestMiui10Activity.class, SelectedModel.MULTIPLE, "miui10多选"));
     }
 
     public void emiui_selected(View view) {
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void emiui_multiple(View view) {
-        startActivity(getNewIntent(TestEmuiActivity.class,  SelectedModel.MULTIPLE, "emiui多选"));
+        startActivity(getNewIntent(TestEmuiActivity.class, SelectedModel.MULTIPLE, "emiui多选"));
     }
 
     public void toHoldWeek(View view) {
@@ -94,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
     public void custom_painter(View view) {
         startActivity(new Intent(this, CustomCalendarActivity.class));
     }
+
+    public void viewpager(View view) {
+        startActivity(new Intent(this, TestViewPagerActivity.class));
+    }
+
+
 
     private Intent getNewIntent(Class<? extends BaseActivity> clazz, SelectedModel selectedModel, String title) {
         Intent intent = new Intent(this, clazz);
