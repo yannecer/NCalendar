@@ -46,7 +46,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.1.1'
+implementation 'com.necer.ncalendar:ncalendar:4.1.2'
 
 ```
 
@@ -112,9 +112,9 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.1'
    /**
      * 设置选中模式
      *
-     * @param selectedMode SINGLE_SELECTED--每页单个默认选中  默认模式
-     *                     SINGLE_UNSELECTED--单个不选中
-     *                     MULTIPLE--多选
+     * @param selectedMode SINGLE_SELECTED--日历默认选中模式  每个页面都有选中，左右页面为加减一月或者一周后的日期 
+     *                     SINGLE_UNSELECTED--单个选中，不点击选中日期不会改变，翻页不改变选中日期
+     *                     MULTIPLE--多选，多个选中，累计选中
      */
     void setSelectedMode(SelectedModel selectedMode);
 
@@ -329,8 +329,6 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |bgChildColor|color| 日历包含子view的背景
 |todaySelectContrastColor|color| 今天被选中是其他元素的对比色，比如 农历，圆点等
 |pointColor| color |小圆点的颜色
-|startDate| string |日期区间开始日期
-|endDate| string |日期区间结束日期
 |alphaColor| integer |不是本月的日期颜色的透明度0-255
 |disabledAlphaColor| integer |日期区间之外的地日颜色的透明度0-255
 |disabledString| string |点击日期区间之外的日期提示语
@@ -358,6 +356,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 
 
 ## 更新日志
+* 4.1.2<br/> 完善LigaturePainter
 * 4.1.1<br/> 修改选中模式为枚举，demo增加了两种自定义CalendarPainter
 * 4.1.0<br/> 优化onDraw效率、修改CalendarPainter回调参数、新增多选日期数量
 * 4.0.4<br/> 修复某些情况下选中回调返回null的bug
