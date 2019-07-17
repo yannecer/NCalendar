@@ -14,7 +14,7 @@ import com.necer.enumeration.CalendarState;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
-import com.necer.ncalendar.adapter.AAAdapter;
+import com.necer.ncalendar.adapter.RecyclerViewAdapter;
 
 import org.joda.time.LocalDate;
 
@@ -45,8 +45,8 @@ public class TestMiui9Activity extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AAAdapter aaAdapter = new AAAdapter(this);
-        recyclerView.setAdapter(aaAdapter);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this);
+        recyclerView.setAdapter(recyclerViewAdapter);
 
 
         miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {

@@ -11,15 +11,12 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
-import android.support.v4.view.NestedScrollingParentHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.necer.R;
 import com.necer.enumeration.CalendarState;
 import com.necer.enumeration.MultipleNumModel;
 import com.necer.enumeration.SelectedModel;
@@ -33,7 +30,7 @@ import com.necer.painter.CalendarPainter;
 import com.necer.painter.InnerPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
-import com.necer.utils.ViewException;
+import com.necer.utils.ViewUtil;
 
 import org.joda.time.LocalDate;
 
@@ -55,7 +52,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     private OnCalendarStateChangedListener onCalendarStateChangedListener;
 
     protected View childView;//NCalendar内部包含的直接子view，直接子view并不一定是NestScrillChild
-    private View targetView;//实际滑动的view
+    private View targetView;//实际滑动的view 当targetView==null时，子view没有NestScrillChild或者NestScrillChild不可见，此时滑动交给onTochEvent处理
 
     protected Rect monthRect;//月日历大小的矩形
     protected Rect weekRect;//周日历大小的矩形 ，用于判断点击事件是否在日历的范围内
@@ -68,6 +65,8 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     protected ValueAnimator childViewValueAnimator;
 
     private Attrs attrs;
+
+    private boolean isNestedScrollEnable = true;
 
     public NCalendar(@NonNull Context context) {
         this(context, null);
@@ -184,22 +183,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
 
-    private View getRealTargetView(View view) {
-        View targetView = view.findViewWithTag(getResources().getString(R.string.factual_scroll_view));
-        if (targetView == null) {
-            try {
-                ViewException.traverseView(childView);
-            } catch (ViewException e) {
-                e.printStackTrace();
-                targetView = e.getExceptionView();
-            }
-        }
-        if (targetView == null) {
-            throw new RuntimeException("NCalendar中需要实现了NestedScrollingChild的子类");
-        }
-        return targetView;
-    }
-
     //自动滑动到适当的位置
     private void autoScroll() {
         float childLayoutY = childView.getY();
@@ -287,7 +270,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             //不是周状态也不是月状态时，自动滑动
             autoScroll();
         }
-        targetView = null;
     }
 
     /**
@@ -296,12 +278,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
      * 2、向下滑动未到月状态
      */
     protected void gestureMove(int dy, int[] consumed) {
-        if (targetView == null) {
-            targetView = getRealTargetView(childView);
-
-            Log.e("aaa", "targetView::" + targetView);
-        }
-
         float monthCalendarY = monthCalendar.getY();
         float childLayoutY = childView.getY();
 
@@ -312,7 +288,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         } else if (dy < 0 && isWeekHold && isChildWeekState()) {
             //不操作，
 
-        } else if (dy < 0 && !isChildMonthState() && !targetView.canScrollVertically(-1)) {
+        } else if (dy < 0 && !isChildMonthState() && (targetView == null ? true : !targetView.canScrollVertically(-1))) {
             monthCalendar.setY(getGestureMonthDownOffset(dy) + monthCalendarY);
             childView.setY(getGestureChildDownOffset(dy) + childLayoutY);
             if (consumed != null) consumed[1] = dy;
@@ -338,12 +314,13 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
                 dowmY = (int) ev.getY();
                 downX = (int) ev.getX();
                 lastY = dowmY;
+                targetView = ViewUtil.getTargetView(getContext(), childView);
                 break;
             case MotionEvent.ACTION_MOVE:
                 int y = (int) ev.getY();
                 int absY = Math.abs(dowmY - y);
                 boolean inCalendar = isInCalendar(downX, dowmY);
-                if (absY > verticalY && inCalendar) {
+                if ((absY > verticalY && inCalendar) || targetView == null && absY > verticalY) {
                     //onInterceptTouchEvent返回true，触摸事件交给当前的onTouchEvent处理
                     return true;
                 }
@@ -375,7 +352,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             case MotionEvent.ACTION_CANCEL:
                 isFirstScroll = true;
                 autoScroll();
-                targetView = null;
                 break;
         }
         return true;

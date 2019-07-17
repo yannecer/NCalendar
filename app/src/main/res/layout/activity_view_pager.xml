@@ -14,14 +14,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingRight="50dp"
-            android:paddingLeft="50dp"
-            android:clipToPadding="false"/>
+            android:orientation="vertical">
+
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tl_tabs"
+                android:layout_width="match_parent"
+                android:background="#eeeeee"
+                android:layout_height="40dp" />
+
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
 
     </com.necer.calendar.Miui10Calendar>
 

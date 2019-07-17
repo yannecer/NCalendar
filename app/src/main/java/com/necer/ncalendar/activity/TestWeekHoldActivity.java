@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.necer.calendar.Miui9Calendar;
 import com.necer.ncalendar.R;
-import com.necer.ncalendar.adapter.AAAdapter;
+import com.necer.ncalendar.adapter.RecyclerViewAdapter;
 
 
 /**
@@ -35,8 +35,8 @@ public class TestWeekHoldActivity extends AppCompatActivity {
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AAAdapter aaAdapter = new AAAdapter(this);
-        recyclerView.setAdapter(aaAdapter);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this);
+        recyclerView.setAdapter(recyclerViewAdapter);
 
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

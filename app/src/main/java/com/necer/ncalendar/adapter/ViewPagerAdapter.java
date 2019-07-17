@@ -1,49 +1,35 @@
 package com.necer.ncalendar.adapter;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import com.necer.ncalendar.R;
+import java.util.List;
 
-public class ViewPagerAdapter extends PagerAdapter {
+public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
-    private Context mContext;
+    private List<Fragment> fragmentList;
+    private List<String> titleList;
 
-    public ViewPagerAdapter(Context context) {
-        this.mContext = context;
+    public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titleList) {
+        super(fm);
+        this.fragmentList = fragmentList;
+        this.titleList = titleList;
     }
 
+    @Override
+    public Fragment getItem(int position) {
+        return fragmentList.get(position);
+    }
 
     @Override
     public int getCount() {
-        return 3;
+        return fragmentList.size();
     }
 
     @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == object;
+    public CharSequence getPageTitle(int position) {
+        return titleList.get(position);
     }
-
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        View view = View.inflate(mContext, R.layout.item_view_pager, null);
-
-        TextView textView = view.findViewById(R.id.tv);
-        textView.setText(view + "");
-        container.addView(view);
-        return view;
-    }
-
 }

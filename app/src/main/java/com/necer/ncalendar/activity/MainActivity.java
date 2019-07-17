@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tvVersion = (TextView) findViewById(R.id.tv_version);
         tvVersion.setText("版本：" + Utils.getCurrentVersion(this));
 
+
     }
 
 
@@ -99,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, TestViewPagerActivity.class));
     }
 
+    public void general(View view) {
+        startActivity(new Intent(this, TestGeneralActivity.class));
+    }
 
 
     private Intent getNewIntent(Class<? extends BaseActivity> clazz, SelectedModel selectedModel, String title) {

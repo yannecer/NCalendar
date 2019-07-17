@@ -7,7 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 2
-        versionName "4.1.2"
+        versionName "4.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,4 +28,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation project(':ncalendar')
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
 }
