@@ -95,8 +95,8 @@ implementation 'com.necer.ncalendar:ncalendar:4.2.0'
 #### 注意
 
 
-- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部TargetView可以是除ScrollView、ListView、GridView之外的任意View，处理滑动的内容请使用RecyclerView和NestedScrollView等实现了NestedScrollingChild的View
-- 如果布局文件中，内部实际滑动的TargetView有多个父View，恰好也有实现了```NestedScrollingChild```的父View，则需要给实际滑动的子View设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
+- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部```TargetView```可以是除```ScrollView```、```ListView```、```GridView```之外的任意```View```，处理滑动的内容请使用```RecyclerView```和NestedScrollView```等实现了```NestedScrollingChild```的```View```
+- 如果布局文件中，内部实际滑动的```TargetView```有多个父```View```，恰好也有实现了```NestedScrollingChild```的父View，则需要给实际滑动的子```View```设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
 
 
 
