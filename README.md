@@ -15,7 +15,7 @@
  - 支持日历和列表之间添加view
  - 支持替换农历、颜色等
  - 支持自定义日历页面
-
+ - 支持内部TargetView为任意View
 
 ## 效果图 
 |miui9|miui10|emui|
@@ -31,9 +31,11 @@
 |![](https://github.com/yannecer/NCalendar/blob/master/app/111.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/222.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/TicketPainter.png)|
 
 
-|demo功能预览|
-|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/demo.png)|
+|ViewPger|普通View|demo功能预览|
+|:---:|:---:|:---:|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/viewpager.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/general.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/demo.png)|
+
+
 
 
 ## 下载demo：
@@ -46,7 +48,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.1.2'
+implementation 'com.necer.ncalendar:ncalendar:4.2.0'
 
 ```
 
@@ -92,10 +94,9 @@ implementation 'com.necer.ncalendar:ncalendar:4.1.2'
 
 #### 注意
 
-- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部只能有一个子view，需要一个实现了```NestedScrollingChild```的子类，
-如```RecyclerView```，```NestedScrollView```等，不必是直接子类，可以使用其他布局嵌套一个```NestedScrollingChild```
-- 如果布局文件中，内部的子view有多个父view，恰好也有实现了```NestedScrollingChild```的父view，则需要给真实滑动的子view设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
-- 新版的代码已经将NestedScrollingChild2改成了NestedScrollingChild，如果出现滑动异常，则需要给实际滑动的view设置tag（“@string/factual_scroll_view”）
+
+- NCalendar（Miui9Calendar、Miui10Calendar、EmuiCalendar）内部TargetView可以是除ScrollView、ListView、GridView之外的任意View，处理滑动的内容请使用RecyclerView和NestedScrollView等实现了NestedScrollingChild的View
+- 如果布局文件中，内部实际滑动的TargetView有多个父View，恰好也有实现了```NestedScrollingChild```的父View，则需要给实际滑动的子View设置tag（“@string/factual_scroll_view”），不然可能会出现滑动异常，此种情况在下拉刷新中比较常见
 
 
 
@@ -356,6 +357,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 
 
 ## 更新日志
+* 4.2.0<br/> 支持任意非滑动的View，ViewPger等
 * 4.1.2<br/> 完善LigaturePainter
 * 4.1.1<br/> 修改选中模式为枚举，demo增加了两种自定义CalendarPainter
 * 4.1.0<br/> 优化onDraw效率、修改CalendarPainter回调参数、新增多选日期数量
