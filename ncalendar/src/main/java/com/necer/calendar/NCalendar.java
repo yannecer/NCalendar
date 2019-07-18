@@ -66,8 +66,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     private Attrs attrs;
 
-    private boolean isNestedScrollEnable = true;
-
     public NCalendar(@NonNull Context context) {
         this(context, null);
     }
