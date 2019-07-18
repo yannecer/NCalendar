@@ -18,7 +18,7 @@
  - 支持内部TargetView为任意View
 
 ## 效果图 
-|miui9|miui10|emui|
+|Miui9Calendar|Miui10Calendar|EmuiCalendar|
 |:---:|:---:|:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|
 
