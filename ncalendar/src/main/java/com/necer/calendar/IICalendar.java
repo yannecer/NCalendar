@@ -9,11 +9,14 @@ import com.necer.listener.OnCalendarStateChangedListener;
  */
 public interface IICalendar extends ICalendar {
 
-    //回到周状态
+    //回到周状态 只能从月->周
     void toWeek();
 
-    //回到月状态
+    //回到月状态 可以从周回到月或者从拉伸回到周
     void toMonth();
+
+    //回到拉伸状态 只能从月->拉伸
+    void toStretch();
 
     //设置周滑动到周位置固定
     void setWeekHoldEnable(boolean isWeekHoldEnable);

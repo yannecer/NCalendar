@@ -17,12 +17,15 @@ import java.util.Map;
 
 public class TestStretchActivity extends AppCompatActivity {
 
+
+    private Miui10Calendar miui10Calendar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stretch);
 
-        Miui10Calendar miui10Calendar = findViewById(R.id.miui10Calendar);
+        miui10Calendar = findViewById(R.id.miui10Calendar);
         miui10Calendar.setMonthStretchEnable(true);
 
 
@@ -42,4 +45,5 @@ public class TestStretchActivity extends AppCompatActivity {
         innerPainter.setStretchStrMap(strMap);
 
     }
+
 }

@@ -2,7 +2,6 @@ package com.necer.calendar;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -205,13 +203,13 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         int childLayoutY = (int) childView.getY();
 
         if ((calendarState == CalendarState.MONTH || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY <= monthHeight && childLayoutY >= monthHeight * 4 / 5) {
-            autoToMonthState();
+            autoToMonthBySetY();
         } else if ((calendarState == CalendarState.MONTH || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY <= monthHeight * 4 / 5) {
-            autoToWeekState();
+            autoToWeekBySetY();
         } else if ((calendarState == CalendarState.WEEK || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY < weekHeight * 2) {
-            autoToWeekState();
+            autoToWeekBySetY();
         } else if ((calendarState == CalendarState.WEEK || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY >= weekHeight * 2 && childLayoutY <= monthHeight) {
-            autoToMonthState();
+            autoToMonthBySetY();
         } else if (childLayoutY < monthHeight + (stretchMonthHeight - monthHeight) / 2 && childLayoutY >= monthHeight) {
             autoToMonthFromStretch();
         } else if (childLayoutY >= monthHeight + (stretchMonthHeight - monthHeight) / 2) {
@@ -219,7 +217,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         }
     }
 
-    //自动从拉伸到月状态
+    //自动从拉伸到月状态 通过改变高度
     private void autoToMonthFromStretch() {
         float monthCalendarStart = monthCalendar.getLayoutParams().height;
         float monthCalendarEnd = monthHeight;
@@ -233,7 +231,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     }
 
-    //自动从月到拉伸状态
+    //自动从月到拉伸状态  通过改变高度
     private void autoToStretchFromMonth() {
         float monthCalendarStart = monthCalendar.getLayoutParams().height;
         float monthCalendarEnd = stretchMonthHeight;
@@ -248,8 +246,8 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
 
-    //自动滑动到周
-    private void autoToWeekState() {
+    //自动滑动到周 通过setY 月->周
+    private void autoToWeekBySetY() {
         float monthCalendarStart = monthCalendar.getY();//起始位置
         float monthCalendarEnd = getMonthCalendarAutoWeekEndY();
 
@@ -263,8 +261,8 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     }
 
-    //自动滑动到月
-    private void autoToMonthState() {
+    //自动滑动到月 通过setY 周->月
+    private void autoToMonthBySetY() {
         float monthCalendarStart = monthCalendar.getY();//起始位置
         float monthCalendarEnd = 0;
         monthValueAnimator.setFloatValues(monthCalendarStart, monthCalendarEnd);
@@ -515,14 +513,23 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     @Override
     public void toWeek() {
         if (calendarState == CalendarState.MONTH) {
-            autoToWeekState();
+            autoToWeekBySetY();
         }
     }
 
     @Override
     public void toMonth() {
         if (calendarState == CalendarState.WEEK) {
-            autoToMonthState();
+            autoToMonthBySetY();
+        } else if (calendarState == CalendarState.MONTH_STRETCH) {
+            autoToMonthFromStretch();
+        }
+    }
+
+    @Override
+    public void toStretch() {
+        if (calendarState == CalendarState.MONTH) {
+            autoToStretchFromMonth();
         }
     }
 
@@ -684,7 +691,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         if (animation == monthValueAnimator) {
             float animatedValue = (float) animation.getAnimatedValue();
             monthCalendar.setY(animatedValue);
-
         } else if (animation == monthStretchValueAnimator) {
             float animatedValue = (float) animation.getAnimatedValue();
             ViewGroup.LayoutParams layoutParams = monthCalendar.getLayoutParams();
