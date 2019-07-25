@@ -58,6 +58,13 @@
         <activity
             android:name=".activity.TestGeneralActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".activity.TestStretchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <activity
+            android:name=".activity.TestActviity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
 
 
     </application>

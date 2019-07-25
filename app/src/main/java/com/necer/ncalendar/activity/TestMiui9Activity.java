@@ -13,6 +13,7 @@ import com.necer.calendar.Miui9Calendar;
 import com.necer.enumeration.CalendarState;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
+import com.necer.listener.OnCalendarScrollingListener;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.RecyclerViewAdapter;
 
@@ -63,6 +64,13 @@ public class TestMiui9Activity extends BaseActivity {
                 Log.d(TAG, year + "年" + month + "月");
                 Log.d(TAG, "当前页面选中：：" + currectSelectList);
                 Log.d(TAG, "全部选中：：" + allSelectList);
+            }
+        });
+
+        miui9Calendar.setOnCalendarScrollingListener(new OnCalendarScrollingListener() {
+            @Override
+            public void onCalendarScrolling(int dy) {
+                Log.d(TAG, "onCalendarScrolling：：" + dy);
             }
         });
 

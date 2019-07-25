@@ -104,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, TestGeneralActivity.class));
     }
 
+    public void stretch(View view) {
+        startActivity(new Intent(this, TestStretchActivity.class));
+    }
+
 
     private Intent getNewIntent(Class<? extends BaseActivity> clazz, SelectedModel selectedModel, String title) {
         Intent intent = new Intent(this, clazz);

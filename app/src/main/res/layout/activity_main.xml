@@ -4,28 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<FrameLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="#000000" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_2"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginLeft="50dp"-->
-    <!--android:background="#111eee" />-->
-
-
-    <!--</FrameLayout>-->
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -168,31 +146,56 @@
         android:text="周日历固定 hold" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="addView"
         android:text="日历和子view之间添加view" />
 
-
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="custom_painter"
-        android:text="自定义页面（两种效果）" />
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="viewpager"
-        android:text="嵌套ViewPager"
-        android:textAllCaps="false" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="viewpager"
+            android:text="嵌套ViewPager"
+            android:textAllCaps="false" />
 
-    <Button
-        android:layout_width="wrap_content"
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="general"
+            android:text="嵌套普通View"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="general"
-        android:text="嵌套普通View"
-        android:textAllCaps="false" />
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="custom_painter"
+            android:text="自定义页面（两种效果）" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="stretch"
+            android:text="日历拉伸"
+            android:textAllCaps="false" />
+
+
+    </LinearLayout>
 
 
     <TextView

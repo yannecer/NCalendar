@@ -30,8 +30,8 @@ public class AttrsUtil {
         attrs.selectCircleColor = ta.getColor(R.styleable.NCalendar_selectCircleColor, context.getResources().getColor(R.color.selectCircleColor));
         attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, CalendarUtil.sp2px(context, 18));
         attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, CalendarUtil.sp2px(context, 10));
-        attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, CalendarUtil.sp2px(context, 15));
-        attrs.holidayDistance = ta.getDimension(R.styleable.NCalendar_holidayDistance, CalendarUtil.sp2px(context, 15));
+        attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, CalendarUtil.dp2px(context, 15));
+        attrs.holidayDistance = ta.getDimension(R.styleable.NCalendar_holidayDistance, CalendarUtil.dp2px(context, 15));
         attrs.holidayTextSize = ta.getDimension(R.styleable.NCalendar_holidayTextSize, CalendarUtil.sp2px(context, 10));
         attrs.selectCircleRadius = ta.getDimension(R.styleable.NCalendar_selectCircleRadius, CalendarUtil.dp2px(context, 22));
         attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, true);
@@ -40,10 +40,10 @@ public class AttrsUtil {
         attrs.pointColor = ta.getColor(R.styleable.NCalendar_pointColor, context.getResources().getColor(R.color.pointColor));
         attrs.hollowCircleColor = ta.getColor(R.styleable.NCalendar_hollowCircleColor, context.getResources().getColor(R.color.hollowCircleColor));
         attrs.hollowCircleStroke = ta.getDimension(R.styleable.NCalendar_hollowCircleStroke, CalendarUtil.dp2px(context, 1));
-        attrs.monthCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, CalendarUtil.dp2px(context, 300));
+        attrs.calendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, CalendarUtil.dp2px(context, 300));
+        attrs.stretchCalendarHeight = (int) ta.getDimension(R.styleable.NCalendar_stretchCalendarHeight, CalendarUtil.dp2px(context, 450));
         attrs.duration = ta.getInt(R.styleable.NCalendar_duration, 240);
         attrs.isShowHoliday = ta.getBoolean(R.styleable.NCalendar_isShowHoliday, true);
-        attrs.isWeekHold = ta.getBoolean(R.styleable.NCalendar_isWeekHold, false);
         attrs.holidayColor = ta.getColor(R.styleable.NCalendar_holidayColor, context.getResources().getColor(R.color.holidayColor));
         attrs.workdayColor = ta.getColor(R.styleable.NCalendar_workdayColor, context.getResources().getColor(R.color.workdayColor));
         attrs.todaySelectContrastColor = ta.getColor(R.styleable.NCalendar_todaySelectContrastColor, context.getResources().getColor(R.color.white));
@@ -56,6 +56,11 @@ public class AttrsUtil {
         attrs.alphaColor = ta.getInt(R.styleable.NCalendar_alphaColor, 90);
         attrs.disabledAlphaColor = ta.getInt(R.styleable.NCalendar_disabledAlphaColor, 50);
         attrs.disabledString = ta.getString(R.styleable.NCalendar_disabledString);
+
+
+        attrs.stretchTextSize = ta.getDimension(R.styleable.NCalendar_stretchTextSize, CalendarUtil.sp2px(context, 10));
+        attrs.stretchTextDistance = ta.getDimension(R.styleable.NCalendar_stretchTextDistance, CalendarUtil.dp2px(context, 32));
+        attrs.stretchTextColor = ta.getColor(R.styleable.NCalendar_stretchTextColor, context.getResources().getColor(R.color.stretchTextColor));
 
         ta.recycle();
 

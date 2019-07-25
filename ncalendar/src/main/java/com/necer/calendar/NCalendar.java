@@ -2,6 +2,7 @@ package com.necer.calendar;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.necer.enumeration.MultipleNumModel;
 import com.necer.enumeration.SelectedModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
+import com.necer.listener.OnCalendarScrollingListener;
 import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnEndAnimatorListener;
@@ -47,28 +50,28 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     protected int weekHeight;//周日历的高度
     protected int monthHeight;//月日历的高度,是日历整个的高
-
+    protected int stretchMonthHeight;//月日历拉伸的高度
     protected CalendarState calendarState;//默认月
     private OnCalendarStateChangedListener onCalendarStateChangedListener;
+    private OnCalendarScrollingListener onCalendarScrollingListener;
 
     protected View childView;//NCalendar内部包含的直接子view，直接子view并不一定是NestScrillChild
     private View targetView;//实际滑动的view 当targetView==null时，子view没有NestScrillChild或者NestScrillChild不可见，此时滑动交给onTochEvent处理
 
     protected Rect monthRect;//月日历大小的矩形
     protected Rect weekRect;//周日历大小的矩形 ，用于判断点击事件是否在日历的范围内
+    protected Rect stretchMonthRect;
 
-    private boolean isWeekHold;//是否需要周状态定
+    private boolean isWeekHoldEnable;//是否需要周状态定
+    private boolean isMonthStretchEnable;//月日历是否可拉伸
 
     private boolean isInflateFinish;//是否加载完成，
 
     protected ValueAnimator monthValueAnimator;//月日历动画
+    protected ValueAnimator monthStretchValueAnimator;//月日历动画
     protected ValueAnimator childViewValueAnimator;
 
     private Attrs attrs;
-
-    public NCalendar(@NonNull Context context) {
-        this(context, null);
-    }
 
     public NCalendar(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
@@ -81,10 +84,15 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         this.attrs = AttrsUtil.getAttrs(context, attrs);
 
         int duration = this.attrs.duration;
-        monthHeight = this.attrs.monthCalendarHeight;
+        monthHeight = this.attrs.calendarHeight;
+        stretchMonthHeight = this.attrs.stretchCalendarHeight;
+
+        if (monthHeight >= stretchMonthHeight) {
+            throw new RuntimeException("日历拉伸之后的高度必须大于正常高度，日历默认的正常高度为300dp");
+        }
+
         calendarState = CalendarState.valueOf(this.attrs.defaultCalendar);
         weekHeight = monthHeight / 5;
-        isWeekHold = this.attrs.isWeekHold;
 
         monthCalendar = new MonthCalendar(context, attrs);
         weekCalendar = new WeekCalendar(context, attrs);
@@ -97,29 +105,34 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         addView(monthCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, monthHeight));
         addView(weekCalendar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, weekHeight));
 
-        monthValueAnimator = new ValueAnimator();
-        monthValueAnimator.setDuration(duration);
-        monthValueAnimator.addUpdateListener(this);
-        monthValueAnimator.addListener(onEndAnimatorListener);
+        monthValueAnimator = getValueAnimator(duration);
+        monthStretchValueAnimator = getValueAnimator(duration);
 
-        childViewValueAnimator = new ValueAnimator();
-        childViewValueAnimator.setDuration(duration);
-        childViewValueAnimator.addUpdateListener(this);
+        childViewValueAnimator = getValueAnimator(duration);
         childViewValueAnimator.addListener(onEndAnimatorListener);
 
+
+    }
+
+    private ValueAnimator getValueAnimator(int duration) {
+        ValueAnimator valueAnimator = new ValueAnimator();
+        valueAnimator.setDuration(duration);
+        valueAnimator.addUpdateListener(this);
+        return valueAnimator;
     }
 
 
     private OnMWDateChangeListener onMWDateChangeListener = new OnMWDateChangeListener() {
         @Override
         public void onMwDateChange(BaseCalendar baseCalendar, final LocalDate localDate, List<LocalDate> dateList) {
-            if (baseCalendar == monthCalendar && calendarState == CalendarState.MONTH) {
+            int childViewY = (int) childView.getY();
+            if (baseCalendar == monthCalendar && (childViewY == monthHeight || childViewY == stretchMonthHeight)) {
                 //交换数据，保证月周选中数据同步
                 weekCalendar.exchangeSelectDateList(dateList);
                 //月日历变化,改变周的选中
                 weekCalendar.jump(localDate, false);
 
-            } else if (baseCalendar == weekCalendar && calendarState == CalendarState.WEEK) {
+            } else if (baseCalendar == weekCalendar && childViewY == weekHeight) {
                 //交换数据，保证月周选中数据同步
                 monthCalendar.exchangeSelectDateList(dateList);
                 //周日历变化，改变月的选中
@@ -175,24 +188,63 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         int paddingRight = getPaddingRight();
 
         weekCalendar.layout(0 + paddingLeft, 0, measuredWidth - paddingRight, weekHeight);
-        monthCalendar.layout(0 + paddingLeft, 0, measuredWidth - paddingRight, monthHeight);
+
+        if (childView.getY() >= monthHeight) {
+            monthCalendar.layout(0 + paddingLeft, 0, measuredWidth - paddingRight, stretchMonthHeight);
+        } else {
+            monthCalendar.layout(0 + paddingLeft, 0, measuredWidth - paddingRight, monthHeight);
+        }
         childView.layout(0 + paddingLeft, monthHeight, measuredWidth - paddingRight, childView.getMeasuredHeight() + monthHeight);
+
 
     }
 
 
     //自动滑动到适当的位置
     private void autoScroll() {
-        float childLayoutY = childView.getY();
-        if (calendarState == CalendarState.MONTH && monthHeight - childLayoutY < weekHeight) {
+        int childLayoutY = (int) childView.getY();
+
+        if ((calendarState == CalendarState.MONTH || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY <= monthHeight && childLayoutY >= monthHeight * 4 / 5) {
             autoToMonthState();
-        } else if (calendarState == CalendarState.MONTH && monthHeight - childLayoutY >= weekHeight) {
+        } else if ((calendarState == CalendarState.MONTH || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY <= monthHeight * 4 / 5) {
             autoToWeekState();
-        } else if (calendarState == CalendarState.WEEK && childLayoutY < weekHeight * 2) {
+        } else if ((calendarState == CalendarState.WEEK || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY < weekHeight * 2) {
             autoToWeekState();
-        } else if (calendarState == CalendarState.WEEK && childLayoutY >= weekHeight * 2) {
+        } else if ((calendarState == CalendarState.WEEK || calendarState == CalendarState.MONTH_STRETCH) && childLayoutY >= weekHeight * 2 && childLayoutY <= monthHeight) {
             autoToMonthState();
+        } else if (childLayoutY < monthHeight + (stretchMonthHeight - monthHeight) / 2 && childLayoutY >= monthHeight) {
+            autoToMonthFromStretch();
+        } else if (childLayoutY >= monthHeight + (stretchMonthHeight - monthHeight) / 2) {
+            autoToStretchFromMonth();
         }
+    }
+
+    //自动从拉伸到月状态
+    private void autoToMonthFromStretch() {
+        float monthCalendarStart = monthCalendar.getLayoutParams().height;
+        float monthCalendarEnd = monthHeight;
+        monthStretchValueAnimator.setFloatValues(monthCalendarStart, monthCalendarEnd);
+        monthStretchValueAnimator.start();
+
+        float childViewStart = childView.getY();
+        float childViewEnd = monthHeight;
+        childViewValueAnimator.setFloatValues(childViewStart, childViewEnd);
+        childViewValueAnimator.start();
+
+    }
+
+    //自动从月到拉伸状态
+    private void autoToStretchFromMonth() {
+        float monthCalendarStart = monthCalendar.getLayoutParams().height;
+        float monthCalendarEnd = stretchMonthHeight;
+        monthStretchValueAnimator.setFloatValues(monthCalendarStart, monthCalendarEnd);
+        monthStretchValueAnimator.start();
+
+        float childViewStart = childView.getY();
+        float childViewEnd = stretchMonthHeight;
+        childViewValueAnimator.setFloatValues(childViewStart, childViewEnd);
+        childViewValueAnimator.start();
+
     }
 
 
@@ -252,51 +304,116 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
-        //只有都在都在周状态下，才允许子View Fling滑动
-        return !(isChildWeekState() && isMonthCalendarWeekState());
+        return false;
     }
 
     @Override
     public void onStopNestedScroll(View target) {
-        //该方法手指抬起的时候回调，此时根据此刻的位置，自动滑动到相应的状态，
-        //如果已经在对应的位置上，则不执行动画，
-        if (isMonthCalendarMonthState() && isChildMonthState() && calendarState == CalendarState.WEEK) {
-            setCalenadrState();
-        } else if (isMonthCalendarWeekState() && isChildWeekState() && calendarState == CalendarState.MONTH) {
-            setCalenadrState();
-        } else if (!isChildMonthState() && !isChildWeekState()) {
-            //不是周状态也不是月状态时，自动滑动
+        //该方法 在 View 类中11758行 actionMasked == MotionEvent.ACTION_DOWN down的时候会执行
+        //此时 childViewY 必为 3个标志位之一，判断不为这三个数值就自动滑动
+
+        int childViewY = (int) childView.getY();
+
+        if (childViewY != monthHeight && childViewY != weekHeight && childViewY != stretchMonthHeight) {
             autoScroll();
+        } else {
+            setCalenadrState();
         }
     }
 
     /**
-     * 手势滑动的逻辑，做了简单处理，2种状态，都以ChildLayout滑动的状态判断
-     * 1、向上滑动未到周状态
-     * 2、向下滑动未到月状态
+     * 手势滑动的逻辑，
+     * 1、起始位置 根据滑动的方向判断是月周切换还是月、拉伸切换
+     * 2、起始条件触发后，根据childView的位置执行不同的逻辑 setY 和 拉伸高度
      */
     protected void gestureMove(int dy, int[] consumed) {
         float monthCalendarY = monthCalendar.getY();
-        float childLayoutY = childView.getY();
+        float childViewY = childView.getY();
 
-        if (dy > 0 && !isChildWeekState()) {
+        ViewGroup.LayoutParams layoutParams = monthCalendar.getLayoutParams();
+        int realMonthHeight = layoutParams.height;
+
+        if (dy > 0 && childViewY == monthHeight && monthCalendarY == 0) {
+            //setY  起始位置 月->周的过程
+            if (isMonthStretchEnable && realMonthHeight != monthHeight) {
+                layoutParams.height = monthHeight;
+                monthCalendar.setLayoutParams(layoutParams);
+            }
+
             monthCalendar.setY(-getGestureMonthUpOffset(dy) + monthCalendarY);
-            childView.setY(-getGestureChildUpOffset(dy) + childLayoutY);
-            if (consumed != null) consumed[1] = dy;
-        } else if (dy < 0 && isWeekHold && isChildWeekState()) {
-            //不操作，
+            childView.setY(-getGestureChildUpOffset(dy) + childViewY);
 
-        } else if (dy < 0 && !isChildMonthState() && (targetView == null ? true : !targetView.canScrollVertically(-1))) {
-            monthCalendar.setY(getGestureMonthDownOffset(dy) + monthCalendarY);
-            childView.setY(getGestureChildDownOffset(dy) + childLayoutY);
             if (consumed != null) consumed[1] = dy;
+            scrolling(dy);
+
+        } else if (dy < 0 && childViewY == monthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
+            //拉伸  起始位置 月->拉伸的过程
+            float monthOffset = getOffset(-dy, stretchMonthHeight - realMonthHeight);
+            layoutParams.height = (int) (layoutParams.height + monthOffset);
+            monthCalendar.setLayoutParams(layoutParams);
+
+            float childOffset = getOffset(-dy, stretchMonthHeight - childViewY);
+            childView.setY(childViewY + childOffset);
+
+            if (consumed != null) consumed[1] = dy;
+            scrolling(dy);
+
+        } else if (dy > 0 && childViewY <= monthHeight && childViewY != weekHeight) {
+            //setY  持续过程  月->周的过程
+            if (isMonthStretchEnable && realMonthHeight != monthHeight) {
+                //由于滑动过程中可能存在从拉伸状态直接滑到周的状态，引起monthCalendar的高度还没有到monthHeight就向上滑动，所以在这里判断一下，高度正常之后才上滑
+                layoutParams.height = monthHeight;
+                monthCalendar.setLayoutParams(layoutParams);
+            }
+
+            monthCalendar.setY(-getGestureMonthUpOffset(dy) + monthCalendarY);
+            childView.setY(-getGestureChildUpOffset(dy) + childViewY);
+
+            if (consumed != null) consumed[1] = dy;
+            scrolling(dy);
+
+        } else if (dy < 0 && childViewY <= monthHeight && childViewY >= weekHeight && (isWeekHoldEnable ? consumed == null : true) && (targetView == null ? true : !targetView.canScrollVertically(-1))) {
+            //setY  持续过程  周->月的过程
+            if (isMonthStretchEnable && realMonthHeight != monthHeight) {
+                layoutParams.height = monthHeight;
+                monthCalendar.setLayoutParams(layoutParams);
+            }
+
+            monthCalendar.setY(getGestureMonthDownOffset(dy) + monthCalendarY);
+            childView.setY(getGestureChildDownOffset(dy) + childViewY);
+
+            if (consumed != null) consumed[1] = dy;
+            scrolling(dy);
+
+        } else if (dy < 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
+            //拉伸  持续过程  月->拉伸的过程
+            float monthOffset = getOffset(-dy, stretchMonthHeight - realMonthHeight);
+            layoutParams.height = (int) (layoutParams.height + monthOffset);
+            monthCalendar.setLayoutParams(layoutParams);
+
+            float childOffset = getOffset(-dy, stretchMonthHeight - childViewY);
+            childView.setY(childViewY + childOffset);
+
+            if (consumed != null) consumed[1] = dy;
+            scrolling(dy);
+
+        } else if (dy > 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
+            //拉伸  持续过程 拉伸->月的过程
+            float monthOffset = getOffset(-dy, stretchMonthHeight - realMonthHeight);
+            layoutParams.height = (int) (layoutParams.height + monthOffset);
+            monthCalendar.setLayoutParams(layoutParams);
+
+            float childOffset = getOffset(-dy, stretchMonthHeight - childViewY);
+            childView.setY(childViewY + childOffset);
+
+            if (consumed != null) consumed[1] = dy;
+            scrolling(dy);
         }
 
-        setWeekVisible(dy > 0);
     }
 
 
-    private int dowmY;
+    private int downY;
     private int downX;
     private int lastY;//上次的y
     private int verticalY = 50;//竖直方向上滑动的临界值，大于这个值认为是竖直滑动
@@ -309,20 +426,21 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                dowmY = (int) ev.getY();
+                downY = (int) ev.getY();
                 downX = (int) ev.getX();
-                lastY = dowmY;
+                lastY = downY;
                 targetView = ViewUtil.getTargetView(getContext(), childView);
                 break;
             case MotionEvent.ACTION_MOVE:
                 int y = (int) ev.getY();
-                int absY = Math.abs(dowmY - y);
-                boolean inCalendar = isInCalendar(downX, dowmY);
+                int absY = Math.abs(downY - y);
+                boolean inCalendar = isInCalendar(downX, downY);
                 if ((absY > verticalY && inCalendar) || targetView == null && absY > verticalY) {
                     //onInterceptTouchEvent返回true，触摸事件交给当前的onTouchEvent处理
                     return true;
                 }
                 break;
+
         }
         return super.onInterceptTouchEvent(ev);
     }
@@ -360,18 +478,21 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     private boolean isInCalendar(int x, int y) {
         if (calendarState == CalendarState.MONTH) {
             return monthRect.contains(x, y);
-        } else {
+        } else if (calendarState == CalendarState.WEEK) {
             return weekRect.contains(x, y);
+        } else if (calendarState == CalendarState.MONTH_STRETCH) {
+            return stretchMonthRect.contains(x, y);
         }
+        return false;
     }
 
 
     @Override
     public void jumpDate(String formatDate) {
-        if (calendarState == CalendarState.MONTH) {
-            monthCalendar.jumpDate(formatDate);
-        } else {
+        if (calendarState == CalendarState.WEEK) {
             weekCalendar.jumpDate(formatDate);
+        } else {
+            monthCalendar.jumpDate(formatDate);
         }
     }
 
@@ -384,10 +505,10 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public void toToday() {
-        if (calendarState == CalendarState.MONTH) {
-            monthCalendar.toToday();
-        } else {
+        if (calendarState == CalendarState.WEEK) {
             weekCalendar.toToday();
+        } else {
+            monthCalendar.toToday();
         }
     }
 
@@ -422,19 +543,19 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public void toNextPager() {
-        if (calendarState == CalendarState.MONTH) {
-            monthCalendar.toNextPager();
-        } else if (calendarState == CalendarState.WEEK) {
+        if (calendarState == CalendarState.WEEK) {
             weekCalendar.toNextPager();
+        } else {
+            monthCalendar.toNextPager();
         }
     }
 
     @Override
     public void toLastPager() {
-        if (calendarState == CalendarState.MONTH) {
-            monthCalendar.toLastPager();
-        } else if (calendarState == CalendarState.WEEK) {
+        if (calendarState == CalendarState.WEEK) {
             weekCalendar.toLastPager();
+        } else {
+            monthCalendar.toLastPager();
         }
     }
 
@@ -472,6 +593,11 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     @Override
     public void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener) {
         this.onCalendarStateChangedListener = onCalendarStateChangedListener;
+    }
+
+    @Override
+    public void setOnCalendarScrollingListener(OnCalendarScrollingListener onCalendarScrollingListener) {
+        this.onCalendarScrollingListener = onCalendarScrollingListener;
     }
 
     @Override
@@ -513,30 +639,37 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     public List<LocalDate> getAllSelectDateList() {
         if (calendarState == CalendarState.WEEK) {
             return weekCalendar.getAllSelectDateList();
-        } else if (calendarState == CalendarState.MONTH) {
+        } else {
             return monthCalendar.getAllSelectDateList();
         }
-        return null;
     }
 
     @Override
     public List<LocalDate> getCurrectSelectDateList() {
         if (calendarState == CalendarState.WEEK) {
             return weekCalendar.getCurrectSelectDateList();
-        } else if (calendarState == CalendarState.MONTH) {
+        } else {
             return monthCalendar.getCurrectSelectDateList();
         }
-        return null;
     }
 
     @Override
     public List<LocalDate> getCurrectDateList() {
         if (calendarState == CalendarState.WEEK) {
             return weekCalendar.getCurrectDateList();
-        } else if (calendarState == CalendarState.MONTH) {
+        } else {
             return monthCalendar.getCurrectDateList();
         }
-        return null;
+    }
+
+    @Override
+    public void setWeekHoldEnable(boolean isWeekHoldEnable) {
+        this.isWeekHoldEnable = isWeekHoldEnable;
+    }
+
+    @Override
+    public void setMonthStretchEnable(boolean isMonthStretchEnable) {
+        this.isMonthStretchEnable = isMonthStretchEnable;
     }
 
     //修复id重复
@@ -550,19 +683,20 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         if (animation == monthValueAnimator) {
             float animatedValue = (float) animation.getAnimatedValue();
-            float top = monthCalendar.getY();
-            float i = animatedValue - top;
-            float y = monthCalendar.getY();
-            monthCalendar.setY(i + y);
+            monthCalendar.setY(animatedValue);
 
+        } else if (animation == monthStretchValueAnimator) {
+            float animatedValue = (float) animation.getAnimatedValue();
+            ViewGroup.LayoutParams layoutParams = monthCalendar.getLayoutParams();
+            layoutParams.height = (int) animatedValue;
+            monthCalendar.setLayoutParams(layoutParams);
         } else if (animation == childViewValueAnimator) {
             float animatedValue = (float) animation.getAnimatedValue();
             float top = childView.getY();
             float i = animatedValue - top;
-            float y = childView.getY();
-            childView.setY(i + y);
+            childView.setY(animatedValue);
 
-            setWeekVisible(-i > 0);
+            scrolling((int) -i);
 
         }
     }
@@ -571,23 +705,24 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         @Override
         public void onAnimationEnd(Animator animation) {
             super.onAnimationEnd(animation);
-            if (animation == childViewValueAnimator) {
-                setCalenadrState();
-            }
+            setCalenadrState();
         }
     };
 
     //设置日历的状态、月周的显示及状态回调
     private void setCalenadrState() {
-        if (isMonthCalendarWeekState() && isChildWeekState() && calendarState == CalendarState.MONTH) {
+
+        int childViewY = (int) childView.getY();
+
+        if (childViewY == weekHeight && calendarState != CalendarState.WEEK) {
             calendarState = CalendarState.WEEK;
             weekCalendar.setVisibility(VISIBLE);
             monthCalendar.setVisibility(INVISIBLE);
-
             if (onCalendarStateChangedListener != null) {
                 onCalendarStateChangedListener.onCalendarStateChange(calendarState);
             }
-        } else if (isMonthCalendarMonthState() && isChildMonthState() && calendarState == CalendarState.WEEK) {
+
+        } else if (childViewY == monthHeight && calendarState != CalendarState.MONTH) {
             calendarState = CalendarState.MONTH;
             weekCalendar.setVisibility(INVISIBLE);
             monthCalendar.setVisibility(VISIBLE);
@@ -599,27 +734,39 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             if (onCalendarStateChangedListener != null) {
                 onCalendarStateChangedListener.onCalendarStateChange(calendarState);
             }
+        } else if (childViewY == stretchMonthHeight && calendarState != CalendarState.MONTH_STRETCH) {
+            calendarState = CalendarState.MONTH_STRETCH;
+            weekCalendar.setVisibility(INVISIBLE);
+            monthCalendar.setVisibility(VISIBLE);
+
+            //重新设置周的显示 展开月日历上面可能有选中的日期，需要下次折叠时周日历的显示要正确
+            LocalDate pivot = monthCalendar.getPivotDate();
+            weekCalendar.jump(pivot, false);
+
+            if (onCalendarStateChangedListener != null) {
+                onCalendarStateChangedListener.onCalendarStateChange(calendarState);
+            }
         }
+
     }
 
-    //childView周状态的条件
+    //childView周状态的条件 容错状态
     protected boolean isChildWeekState() {
         return childView.getY() <= weekHeight;
     }
 
-    //childView月状态的条件
-    protected boolean isChildMonthState() {
-        return childView.getY() >= monthHeight;
-    }
-
-    //月日历周状态
+    //月日历周状态 容错状态
     protected boolean isMonthCalendarWeekState() {
         return monthCalendar.getY() <= -monthCalendar.getPivotDistanceFromTop();
     }
 
-    //月日历月状态
-    protected boolean isMonthCalendarMonthState() {
-        return monthCalendar.getY() >= 0;
+    //滑动中 包含跟随手势和自动滑动
+    protected void scrolling(int dy) {
+        setWeekVisible(dy > 0);
+
+        if (onCalendarScrollingListener != null) {
+            onCalendarScrollingListener.onCalendarScrolling(dy);
+        }
     }
 
     @Override
@@ -630,6 +777,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             weekCalendar.setVisibility(calendarState == CalendarState.MONTH ? INVISIBLE : VISIBLE);
             monthRect = new Rect(0, 0, monthCalendar.getMeasuredWidth(), monthCalendar.getMeasuredHeight());
             weekRect = new Rect(0, 0, weekCalendar.getMeasuredWidth(), weekCalendar.getMeasuredHeight());
+            stretchMonthRect = new Rect(0, 0, monthCalendar.getMeasuredWidth(), stretchMonthHeight);
             monthCalendar.setY(calendarState == CalendarState.MONTH ? 0 : getMonthYOnWeekState(weekCalendar.getFirstDate()));
             childView.setY(calendarState == CalendarState.MONTH ? monthHeight : weekHeight);
             isInflateFinish = true;

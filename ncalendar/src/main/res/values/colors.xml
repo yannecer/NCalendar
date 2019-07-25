@@ -12,6 +12,7 @@
     <color name="holidayColor">#39AF81</color>
     <color name="workdayColor">#EC7230</color>
     <color name="pointColor">#B2B2B2</color>
+    <color name="stretchTextColor">#666666</color>
     <color name="hollowCircleColor">#B2B2B2</color>
     <color name="white">#ffffff</color>
     <color name="disabledColor">#999999</color>

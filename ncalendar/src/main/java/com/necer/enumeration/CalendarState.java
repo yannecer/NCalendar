@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public enum CalendarState implements Serializable {
 
-    WEEK(100), MONTH(101);
+    WEEK(100), MONTH(101),MONTH_STRETCH(102);
 
     private int value;
 
@@ -25,6 +25,8 @@ public enum CalendarState implements Serializable {
                 return CalendarState.WEEK;
             case 101:
                 return CalendarState.MONTH;
+            case 102:
+                return CalendarState.MONTH_STRETCH;
             default:
                 return null;
         }

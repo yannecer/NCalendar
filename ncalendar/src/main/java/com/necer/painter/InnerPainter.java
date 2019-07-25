@@ -1,6 +1,7 @@
 package com.necer.painter;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.text.TextUtils;
@@ -34,6 +35,7 @@ public class InnerPainter implements CalendarPainter {
     private List<LocalDate> mPointList;
     private Map<LocalDate, String> mReplaceLunarStrMap;
     private Map<LocalDate, Integer> mReplaceLunarColorMap;
+    private Map<LocalDate, String> mStretchStrMap;
 
     private ICalendar mCalendar;
 
@@ -47,6 +49,7 @@ public class InnerPainter implements CalendarPainter {
         mWorkdayList = new ArrayList<>();
         mReplaceLunarStrMap = new HashMap<>();
         mReplaceLunarColorMap = new HashMap<>();
+        mStretchStrMap = new HashMap<>();
 
         List<String> holidayList = CalendarUtil.getHolidayList();
         for (int i = 0; i < holidayList.size(); i++) {
@@ -81,6 +84,7 @@ public class InnerPainter implements CalendarPainter {
             drawPoint(canvas, rectF, false, noAlphaColor, localDate);
             drawHolidays(canvas, rectF, false, noAlphaColor, localDate);
         }
+        drawStretchText(canvas, rectF, noAlphaColor, localDate);
     }
 
     @Override
@@ -97,22 +101,25 @@ public class InnerPainter implements CalendarPainter {
             drawPoint(canvas, rectF, false, noAlphaColor, localDate);
             drawHolidays(canvas, rectF, false, noAlphaColor, localDate);
         }
+        drawStretchText(canvas, rectF, noAlphaColor, localDate);
     }
 
     @Override
     public void onDrawLastOrNextMonth(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectDateList) {
         if (selectDateList.contains(localDate)) {
-            drawSelectBg(canvas, rectF, noAlphaColor, false);
+            drawSelectBg(canvas, rectF, mAttrs.alphaColor, false);
             drawSolar(canvas, rectF, localDate, mAttrs.alphaColor, true, false);
             drawLunar(canvas, rectF, false, mAttrs.alphaColor, localDate);
             drawPoint(canvas, rectF, false, mAttrs.alphaColor, localDate);
             drawHolidays(canvas, rectF, false, mAttrs.alphaColor, localDate);
+
         } else {
             drawSolar(canvas, rectF, localDate, mAttrs.alphaColor, false, false);
             drawLunar(canvas, rectF, false, mAttrs.alphaColor, localDate);
             drawPoint(canvas, rectF, false, mAttrs.alphaColor, localDate);
             drawHolidays(canvas, rectF, false, mAttrs.alphaColor, localDate);
         }
+        drawStretchText(canvas, rectF, mAttrs.alphaColor, localDate);
     }
 
     @Override
@@ -121,6 +128,7 @@ public class InnerPainter implements CalendarPainter {
         drawLunar(canvas, rectF, false, mAttrs.disabledAlphaColor, localDate);
         drawPoint(canvas, rectF, false, mAttrs.disabledAlphaColor, localDate);
         drawHolidays(canvas, rectF, false, mAttrs.disabledAlphaColor, localDate);
+        drawStretchText(canvas, rectF, mAttrs.disabledAlphaColor, localDate);
     }
 
 
@@ -147,7 +155,7 @@ public class InnerPainter implements CalendarPainter {
     }
 
     //绘制农历
-    private void drawLunar(Canvas canvas, RectF rec, boolean isTodaySelect, int alphaColor, LocalDate localDate) {
+    private void drawLunar(Canvas canvas, RectF rectF, boolean isTodaySelect, int alphaColor, LocalDate localDate) {
         if (mAttrs.isShowLunar) {
             CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
             //优先顺序 替换的文字、农历节日、节气、公历节日、正常农历日期
@@ -171,7 +179,7 @@ public class InnerPainter implements CalendarPainter {
             mTextPaint.setColor(color == null ? (isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.lunarTextColor) : color);
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
             mTextPaint.setAlpha(alphaColor);
-            canvas.drawText(lunarString, rec.centerX(), rec.centerY() + mAttrs.lunarDistance, mTextPaint);
+            canvas.drawText(lunarString, rectF.centerX(), rectF.centerY() + mAttrs.lunarDistance, mTextPaint);
         }
     }
 
@@ -187,18 +195,32 @@ public class InnerPainter implements CalendarPainter {
     }
 
     //绘制节假日
-    private void drawHolidays(Canvas canvas, RectF rectF, boolean isTodaySelect, int alphaColor, LocalDate date) {
+    private void drawHolidays(Canvas canvas, RectF rectF, boolean isTodaySelect, int alphaColor, LocalDate localDate) {
         if (mAttrs.isShowHoliday) {
             int[] holidayLocation = getHolidayLocation(rectF.centerX(), rectF.centerY());
             mTextPaint.setTextSize(mAttrs.holidayTextSize);
-            if (mHolidayList.contains(date)) {
+            if (mHolidayList.contains(localDate)) {
                 mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.holidayColor);
                 mTextPaint.setAlpha(alphaColor);
                 canvas.drawText("休", holidayLocation[0], holidayLocation[1], mTextPaint);
-            } else if (mWorkdayList.contains(date)) {
+            } else if (mWorkdayList.contains(localDate)) {
                 mTextPaint.setColor(isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.workdayColor);
                 mTextPaint.setAlpha(alphaColor);
                 canvas.drawText("班", holidayLocation[0], holidayLocation[1], mTextPaint);
+            }
+        }
+    }
+
+    //绘制拉伸的文字
+    private void drawStretchText(Canvas canvas, RectF rectF, int alphaColor, LocalDate localDate) {
+        float v = rectF.centerY() + mAttrs.stretchTextDistance;
+        if (v <= rectF.bottom) {//超出当前矩形 不绘制
+            String stretchText = mStretchStrMap.get(localDate);
+            if (!TextUtils.isEmpty(stretchText)) {
+                mTextPaint.setTextSize(mAttrs.stretchTextSize);
+                mTextPaint.setColor(mAttrs.stretchTextColor);
+                mTextPaint.setAlpha(alphaColor);
+                canvas.drawText(stretchText, rectF.centerX(), rectF.centerY() + mAttrs.stretchTextDistance, mTextPaint);
             }
         }
     }
@@ -338,4 +360,19 @@ public class InnerPainter implements CalendarPainter {
         mCalendar.notifyCalendar();
     }
 
+
+    public void setStretchStrMap(Map<String, String> stretchStrMap) {
+        mStretchStrMap.clear();
+        for (String key : stretchStrMap.keySet()) {
+            LocalDate localDate;
+            try {
+                localDate = new LocalDate(key);
+
+            } catch (Exception e) {
+                throw new RuntimeException("setStretchStrMap的参数需要 yyyy-MM-dd 格式的日期");
+            }
+            mStretchStrMap.put(localDate, stretchStrMap.get(key));
+        }
+        mCalendar.notifyCalendar();
+    }
 }

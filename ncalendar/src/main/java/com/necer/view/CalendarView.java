@@ -59,21 +59,19 @@ public abstract class CalendarView extends View {
             for (int j = 0; j < 7; j++) {
                 RectF rectF = mRectFList.get(i * 7 + j);
                 //矩形确定位置
-                if (rectF.isEmpty()) {
-                    float width = getMeasuredWidth();
-                    float height = getMeasuredHeight();
-                    //为每个矩形确定位置
-                    if (mLineNum == 5 || mLineNum == 1) {
-                        //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
-                        float rectHeight = height / mLineNum;
-                        rectF.set(j * width / 7, i * rectHeight, j * width / 7 + width / 7, i * rectHeight + rectHeight);
-                    } else {
-                        //6行的月份，要第一行和最后一行矩形的中心分别和和5行月份第一行和最后一行矩形的中心对齐
-                        //5行一个矩形高度 mHeight/5, 画图可知,4个5行矩形的高度等于5个6行矩形的高度  故：6行的每一个矩形高度是  (mHeight/5)*4/5
-                        float rectHeight5 = height / 5;
-                        float rectHeight6 = (height / 5) * 4 / 5;
-                        rectF.set(j * width / 7, i * rectHeight6 + (rectHeight5 - rectHeight6) / 2, j * width / 7 + width / 7, i * rectHeight6 + rectHeight6 + (rectHeight5 - rectHeight6) / 2);
-                    }
+                float width = getMeasuredWidth();
+                float height = getMeasuredHeight();
+                //为每个矩形确定位置
+                if (mLineNum == 5 || mLineNum == 1) {
+                    //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
+                    float rectHeight = height / mLineNum;
+                    rectF.set(j * width / 7, i * rectHeight, j * width / 7 + width / 7, i * rectHeight + rectHeight);
+                } else {
+                    //6行的月份，要第一行和最后一行矩形的中心分别和和5行月份第一行和最后一行矩形的中心对齐
+                    //5行一个矩形高度 mHeight/5, 画图可知,4个5行矩形的高度等于5个6行矩形的高度  故：6行的每一个矩形高度是  (mHeight/5)*4/5
+                    float rectHeight5 = height / 5;
+                    float rectHeight6 = (height / 5) * 4 / 5;
+                    rectF.set(j * width / 7, i * rectHeight6 + (rectHeight5 - rectHeight6) / 2, j * width / 7 + width / 7, i * rectHeight6 + rectHeight6 + (rectHeight5 - rectHeight6) / 2);
                 }
 
                 //开始绘制

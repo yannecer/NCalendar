@@ -33,6 +33,7 @@ public class TestWeekHoldActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         miui9Calendar = findViewById(R.id.miui9Calendar);
 
+        miui9Calendar.setWeekHoldEnable(true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this);

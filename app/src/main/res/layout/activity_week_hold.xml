@@ -19,7 +19,7 @@
             android:layout_marginTop="30dp"
             android:onClick="monthCalendar"
             android:padding="15dp"
-            android:text="日历"
+            android:text="点击展开日历"
             android:textColor="#ffffff" />
 
 
@@ -38,8 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:textColor="@color/white" />
-
-
     </RelativeLayout>
 
 
@@ -48,8 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:calendarHeight="300dp"
-        app:defaultCalendar="month"
-        app:isWeekHold="true">
+        app:defaultCalendar="month">
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
@@ -58,9 +55,10 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:tag="@string/factual_scroll_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="#cccccc"
+                android:tag="@string/factual_scroll_view" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -8,8 +8,8 @@ public class Attrs {
 
 
     //指示圆点的位置
-    public static final int UP = 200;//再公历日期上面
-    public static final int DOWN = 201;//再公历日期下面
+    public static final int UP = 200;//在公历日期上面
+    public static final int DOWN = 201;//在公历日期下面
 
     //周的第一天
     public static final int SUNDAY = 300;//周的第一天 周日
@@ -48,10 +48,10 @@ public class Attrs {
     public int firstDayOfWeek;
     public int defaultCalendar;
 
-    public int monthCalendarHeight;
+    public int calendarHeight;//正常日历的高度
+    public int stretchCalendarHeight;//拉伸后日历的高度
     public int duration;
 
-    public boolean isWeekHold;
     public boolean isShowHoliday;
     public int holidayColor;
     public float holidayTextSize;
@@ -66,6 +66,10 @@ public class Attrs {
 
     public int todaySelectContrastColor;//当天被选中的对比色，选中当前的农历，原定等颜色
     public int bgCalendarColor;//日历背景
+
+    public float stretchTextSize; //拉伸显示的字体大小
+    public int stretchTextColor; //拉伸显示的字体颜色
+    public float stretchTextDistance; //拉伸显示的字体距离矩形中心的距离
 
 
 }

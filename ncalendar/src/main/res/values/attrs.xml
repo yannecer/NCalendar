@@ -27,13 +27,13 @@
         <attr name="disabledString" format="string" />
 
         <attr name="calendarHeight" format="dimension" />
+        <attr name="stretchCalendarHeight" format="dimension" />
         <attr name="duration" format="integer" />
 
         <attr name="alphaColor" format="integer" />
         <attr name="disabledAlphaColor" format="integer" />
 
 
-        <attr name="isWeekHold" format="boolean" />
         <attr name="isShowHoliday" format="boolean" />
         <attr name="holidayColor" format="color" />
         <attr name="workdayColor" format="color" />
@@ -63,6 +63,10 @@
             <enum name="bottom_right" value="402" />
             <enum name="bottom_left" value="403" />
         </attr>
+
+        <attr name="stretchTextSize" format="dimension" />
+        <attr name="stretchTextDistance" format="dimension" />
+        <attr name="stretchTextColor" format="color" />
 
     </declare-styleable>
 </resources>
