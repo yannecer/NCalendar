@@ -49,7 +49,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.3.0'
+implementation 'com.necer.ncalendar:ncalendar:4.3.1'
 
 ```
 
@@ -185,11 +185,14 @@ implementation 'com.necer.ncalendar:ncalendar:4.3.0'
 #### 折叠月周日历miui9，miui10，emui 拥有的api
 ```
 
-    //回到周状态
+     //回到周状态 只能从月->周
     void toWeek();
 
-    //回到月状态
+    //回到月状态 可以从周回到月或者从拉伸回到周
     void toMonth();
+
+    //回到拉伸状态 只能从月->拉伸
+    void toStretch();
 
     //设置周滑动到周位置固定
     void setWeekHoldEnable(boolean isWeekHoldEnable);
@@ -208,6 +211,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.3.0'
 
     //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图  CalendarState.MONTH_STRETCH==日历拉伸状态
     CalendarState getCalendarState();
+
 ```
 
 
