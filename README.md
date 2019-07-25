@@ -103,7 +103,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.3.0'
 
 ### 交流群
 
-技术交流QQ群：127278900
+技术交流QQ群：127278900 (请先仔细看文档，然后再进群发问，上方加粗字体有下载demo链接)
 ### 主要Api
 
 #### 月日历、周日历、折叠月周日历共同拥有的api
