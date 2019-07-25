@@ -206,7 +206,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.3.0'
     //设置日历状态
     void setCalendarState(CalendarState calendarState);
 
-    //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图
+    //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图  CalendarState.MONTH_STRETCH==日历拉伸状态
     CalendarState getCalendarState();
 ```
 
