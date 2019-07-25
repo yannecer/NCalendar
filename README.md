@@ -41,8 +41,8 @@
 |:---:|
 |![](https://github.com/yannecer/NCalendar/blob/master/app/Stretch.gif)|
 
-## 下载demo：
-[下载demo](https://github.com/yannecer/NCalendar/releases/download/4.2.0/4.2.0.apk)
+# 下载demo：
+[下载demo](https://github.com/yannecer/NCalendar/releases/download/4.3.0/4.3.0.apk)
 
 
 ## 使用方法
@@ -103,7 +103,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.3.0'
 
 ### 交流群
 
-技术交流QQ群：127278900
+技术交流QQ群：127278900 (请先仔细看文档，然后再进群发问，上方加粗字体有下载demo链接)
 ### 主要Api
 
 #### 月日历、周日历、折叠月周日历共同拥有的api
@@ -206,7 +206,7 @@ implementation 'com.necer.ncalendar:ncalendar:4.3.0'
     //设置日历状态
     void setCalendarState(CalendarState calendarState);
 
-    //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图
+    //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图  CalendarState.MONTH_STRETCH==日历拉伸状态
     CalendarState getCalendarState();
 ```
 
