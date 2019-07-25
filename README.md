@@ -16,6 +16,7 @@
  - 支持替换农历、颜色等
  - 支持自定义日历页面
  - 支持内部TargetView为任意View
+ - 支持日历拉伸功能
 
 ## 效果图 
 |Miui9Calendar|Miui10Calendar|EmuiCalendar|
@@ -36,7 +37,9 @@
 |![](https://github.com/yannecer/NCalendar/blob/master/app/viewpager.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/general.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/demo.png)|
 
 
-
+|日历拉伸|
+|:---:|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/Stretch.gif)|
 
 ## 下载demo：
 [下载demo](https://github.com/yannecer/NCalendar/releases/download/4.2.0/4.2.0.apk)
@@ -46,7 +49,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.2.0'
+implementation 'com.necer.ncalendar:ncalendar:4.3.0'
 
 ```
 
@@ -166,9 +169,6 @@ implementation 'com.necer.ncalendar:ncalendar:4.2.0'
     //设置点击了不可用日期监听
     void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener);
 
-    //获取xml参数
-    Attrs getAttrs();
-
     //获取绘制类
     CalendarPainter getCalendarPainter();
 
@@ -185,16 +185,25 @@ implementation 'com.necer.ncalendar:ncalendar:4.2.0'
 #### 折叠月周日历miui9，miui10，emui 拥有的api
 ```
 
-    //折叠回到周状态
+    //回到周状态
     void toWeek();
 
-    //展开回到月状态
+    //回到月状态
     void toMonth();
+
+    //设置周滑动到周位置固定
+    void setWeekHoldEnable(boolean isWeekHoldEnable);
+
+    //设置月状态下 下拉拉伸
+    void setMonthStretchEnable(boolean isMonthStretchEnable);
 
     //日历月周状态变化回调
     void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener);
 
-     //设置日历状态
+    //日历 月 周 拉伸 状态滑动监听
+    void setOnCalendarScrollingListener(OnCalendarScrollingListener onCalendarScrollingListener);
+
+    //设置日历状态
     void setCalendarState(CalendarState calendarState);
 
     //获取当前日历的状态  CalendarState.MONTH==月视图     CalendarState.WEEK==周视图
@@ -240,6 +249,22 @@ colorMap.put("2019-01-23", Color.GREEN);
 colorMap.put("2019-01-24", Color.parseColor("#000000"));
 innerPainter.setReplaceLunarColorMap(colorMap);
 ```
+#### 添加日历拉伸之后的文字显示
+```
+日历支持拉伸之后显示一行文字 
+此功能为默认 CalendarPainter 类 InnerPainter 的功能，如果设置了自定义 CalendarPainter ，没有此方法，需要自己实现
+
+InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
+innerPainter.setPointList(pointList);
+
+Map<String, String> strMap = new HashMap<>();
+strMap.put("2019-07-01", "测试");
+strMap.put("2019-07-19", "测试1");
+strMap.put("2019-07-25", "测试2");
+innerPainter.setStretchStrMap(strMap);
+```
+
+
 
 ### CalendarPainter
 
@@ -345,16 +370,18 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |duration|integer| 日历自动滑动的时间
 |isShowLunar| boolean |是否显示农历
 |isShowHoliday|boolean| 是否显示法定节假日
-|isWeekHold|boolean| 周状态是否固定，默认不固定
 |isDefaultSelect|boolean| 是否默认选中（只对单个月日历或者周日历有效）
 |defaultCalendar|enum| 默认视图 week 或者 month
 |pointLocation|enum| 指示点的文职 up（在公历的上方） 或者 down（在公历的下方） 默认是up
 |firstDayOfWeek|enum| 一周开始的星期天还是星期一 sunday 或者 monday 默认是sunday
 |holidayLocation|enum| 法定节假日相对公历日期的位置 top_right（右上方）、top_left（左上方）、bottom_right（右下方）、bottom_left（左下方）
-
+|stretchTextSize|dimension| 拉伸之后显示字体的大小
+|stretchTextColor|color| 拉伸之后显示字体的颜色
+|stretchTextDistance|dimension| 拉伸显示的字体距离矩形中心的距离
 
 
 ## 更新日志
+* 4.2.0<br/> 增加日历拉伸功能
 * 4.2.0<br/> 支持任意非滑动的View，ViewPger等
 * 4.1.2<br/> 完善LigaturePainter
 * 4.1.1<br/> 修改选中模式为枚举，demo增加了两种自定义CalendarPainter
