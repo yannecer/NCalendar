@@ -69,7 +69,7 @@ public class TestMiui9Activity extends BaseActivity {
 
         miui9Calendar.setOnCalendarScrollingListener(new OnCalendarScrollingListener() {
             @Override
-            public void onCalendarScrolling(int dy) {
+            public void onCalendarScrolling(float dy) {
                 Log.d(TAG, "onCalendarScrolling：：" + dy);
             }
         });

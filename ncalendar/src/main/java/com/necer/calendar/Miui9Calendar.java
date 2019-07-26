@@ -19,7 +19,7 @@ public class Miui9Calendar extends MiuiCalendar {
     }
 
     @Override
-    protected float getGestureMonthUpOffset(int dy) {
+    protected float getGestureMonthUpOffset(float dy) {
         float maxOffset;
         if (calendarState == CalendarState.MONTH) {
             //月  月日历有选中则选中为 中心点，如果没有选中则第一行
@@ -32,20 +32,20 @@ public class Miui9Calendar extends MiuiCalendar {
     }
 
     @Override
-    protected float getGestureMonthDownOffset(int dy) {
+    protected float getGestureMonthDownOffset(float dy) {
         float maxOffset = Math.abs(monthCalendar.getY());
         return getOffset(Math.abs(dy), maxOffset);
     }
 
     @Override
-    protected float getGestureChildDownOffset(int dy) {
+    protected float getGestureChildDownOffset(float dy) {
         float maxOffset = monthHeight - childView.getY();
         return getOffset(Math.abs(dy), maxOffset);
     }
 
 
     @Override
-    protected float getGestureChildUpOffset(int dy) {
+    protected float getGestureChildUpOffset(float dy) {
         float maxOffset = childView.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }

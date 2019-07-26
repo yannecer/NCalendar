@@ -33,23 +33,23 @@ public class EmuiCalendar extends NCalendar {
     }
 
     @Override
-    protected float getGestureMonthUpOffset(int dy) {
+    protected float getGestureMonthUpOffset(float dy) {
         return getGestureChildUpOffset(dy);
     }
 
     @Override
-    protected float getGestureMonthDownOffset(int dy) {
+    protected float getGestureMonthDownOffset(float dy) {
         return getGestureChildDownOffset(dy);
     }
 
     @Override
-    protected float getGestureChildDownOffset(int dy) {
+    protected float getGestureChildDownOffset(float dy) {
         float maxOffset = monthHeight - childView.getY();
         return getOffset(Math.abs(dy), maxOffset);
     }
 
     @Override
-    protected float getGestureChildUpOffset(int dy) {
+    protected float getGestureChildUpOffset(float dy) {
         float maxOffset = childView.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }
