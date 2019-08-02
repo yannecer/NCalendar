@@ -179,7 +179,7 @@ public abstract class CalendarView extends View {
         List<LocalDate> currentSelectDateList = new ArrayList<>();
         for (int i = 0; i < mDateList.size(); i++) {
             LocalDate localDate = mDateList.get(i);
-            if (mAllSelectListDate != null && isEqualsMonthOrWeek(localDate, mInitialDate) && mAllSelectListDate.contains(localDate)) {
+            if (mAllSelectListDate != null && mAllSelectListDate.contains(localDate)) {
                 currentSelectDateList.add(localDate);
             }
         }
