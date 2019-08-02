@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.necer.enumeration.SelectedModel;
 import com.necer.ncalendar.R;
+import com.necer.ncalendar.TestActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -106,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void stretch(View view) {
         startActivity(new Intent(this, TestStretchActivity.class));
+    }
+
+    public void test(View view) {
+        startActivity(new Intent(this, TestActivity.class));
     }
 
 

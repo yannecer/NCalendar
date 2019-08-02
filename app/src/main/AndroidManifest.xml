@@ -63,7 +63,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
         <activity
-            android:name=".activity.TestActviity"
+            android:name=".TestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
 
