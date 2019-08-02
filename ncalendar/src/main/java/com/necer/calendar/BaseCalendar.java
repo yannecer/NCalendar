@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Toast;
 
 import com.necer.adapter.BaseCalendarAdapter;
@@ -99,7 +100,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             throw new RuntimeException("日期区间必须包含初始化日期");
         }
 
-        BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, mStartDate, mEndDate, mInitializeDate, mAttrs.firstDayOfWeek);
+        BaseCalendarAdapter calendarAdapter = getCalendarAdapter(mContext, mStartDate, mEndDate, mInitializeDate, mAttrs);
         int currItem = calendarAdapter.getCurrItem();
         setAdapter(calendarAdapter);
         setCurrentItem(currItem);
@@ -288,13 +289,13 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     @Override
     public void notifyCalendar() {
         for (int i = 0; i < getChildCount(); i++) {
-            CalendarView calendarView = (CalendarView) getChildAt(i);
-            if (calendarView != null) {
+            View childAt = getChildAt(i);
+            if (childAt != null && childAt instanceof CalendarView) {
+                CalendarView calendarView = (CalendarView) childAt;
                 calendarView.invalidate();
             }
         }
     }
-
 
     //日期边界处理
     private LocalDate getAvailableDate(LocalDate localDate) {
@@ -447,7 +448,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     //回去viewpager的adapter
-    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek);
+    protected abstract BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs);
 
     //两个日期的相差数量
     protected abstract int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type);

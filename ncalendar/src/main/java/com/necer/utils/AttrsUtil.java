@@ -62,6 +62,8 @@ public class AttrsUtil {
         attrs.stretchTextDistance = ta.getDimension(R.styleable.NCalendar_stretchTextDistance, CalendarUtil.dp2px(context, 32));
         attrs.stretchTextColor = ta.getColor(R.styleable.NCalendar_stretchTextColor, context.getResources().getColor(R.color.stretchTextColor));
 
+        attrs.isAllMonthSixLine = ta.getBoolean(R.styleable.NCalendar_isAllMonthSixLine, false);
+
         ta.recycle();
 
         return attrs;

@@ -5,10 +5,8 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
@@ -18,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.necer.R;
 import com.necer.enumeration.CalendarState;
 import com.necer.enumeration.MultipleNumModel;
 import com.necer.enumeration.SelectedModel;
@@ -95,6 +94,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         monthCalendar = new MonthCalendar(context, attrs);
         weekCalendar = new WeekCalendar(context, attrs);
+
+        monthCalendar.setId(R.id.N_monthCalendar);
+        weekCalendar.setId(R.id.N_weekCalendar);
 
         setCalendarPainter(new InnerPainter(this));
 
@@ -188,7 +190,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         weekCalendar.layout(0 + paddingLeft, 0, measuredWidth - paddingRight, weekHeight);
 
-        if (childView.getY() >= monthHeight) {
+        if (childView.getY() >= monthHeight && isMonthStretchEnable) {
             monthCalendar.layout(0 + paddingLeft, 0, measuredWidth - paddingRight, stretchMonthHeight);
         } else {
             monthCalendar.layout(0 + paddingLeft, 0, measuredWidth - paddingRight, monthHeight);
@@ -312,11 +314,13 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         //此时 childViewY 必为 3个标志位之一，判断不为这三个数值就自动滑动
 
         int childViewY = (int) childView.getY();
+        int monthCalendarY = (int) monthCalendar.getY();
 
-        if (childViewY != monthHeight && childViewY != weekHeight && childViewY != stretchMonthHeight) {
+        if ((childViewY != monthHeight && childViewY != weekHeight && childViewY != stretchMonthHeight) ||
+                (monthCalendarY != 0 && monthCalendarY != monthCalendar.getPivotDistanceFromTop())) {
             autoScroll();
         } else {
-            setCalenadrState();
+            callBackCalenadarState();
         }
     }
 
@@ -546,6 +550,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public void setCalendarState(CalendarState calendarState) {
+        if (calendarState == CalendarState.MONTH_STRETCH) {
+            throw new RuntimeException("不允许直接设置成CalendarState.MONTH_STRETCH，可以设置成CalendarState.WEEK或者CalendarState.MONTH");
+        }
         this.calendarState = calendarState;
     }
 
@@ -680,11 +687,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         this.isMonthStretchEnable = isMonthStretchEnable;
     }
 
-    //修复id重复
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        super.onRestoreInstanceState(null);
-    }
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
@@ -712,12 +714,12 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         @Override
         public void onAnimationEnd(Animator animation) {
             super.onAnimationEnd(animation);
-            setCalenadrState();
+            callBackCalenadarState();
         }
     };
 
     //设置日历的状态、月周的显示及状态回调
-    private void setCalenadrState() {
+    private void callBackCalenadarState() {
 
         int childViewY = (int) childView.getY();
 
@@ -781,7 +783,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         super.dispatchDraw(canvas);
         if (!isInflateFinish) {
             monthCalendar.setVisibility(calendarState == CalendarState.MONTH ? VISIBLE : INVISIBLE);
-            weekCalendar.setVisibility(calendarState == CalendarState.MONTH ? INVISIBLE : VISIBLE);
+            weekCalendar.setVisibility(calendarState == CalendarState.WEEK ? VISIBLE : INVISIBLE);
             monthRect = new RectF(0, 0, monthCalendar.getMeasuredWidth(), monthCalendar.getMeasuredHeight());
             weekRect = new RectF(0, 0, weekCalendar.getMeasuredWidth(), weekCalendar.getMeasuredHeight());
             stretchMonthRect = new RectF(0, 0, monthCalendar.getMeasuredWidth(), stretchMonthHeight);

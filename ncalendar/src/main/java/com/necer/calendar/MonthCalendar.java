@@ -24,8 +24,8 @@ public class MonthCalendar extends BaseCalendar {
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
-        return new MonthCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs) {
+        return new MonthCalendarAdapter(context, startDate, endDate, initializeDate, attrs);
     }
 
     @Override

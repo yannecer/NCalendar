@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.necer.utils.Attrs;
 import com.necer.view.CalendarView;
 
 import org.joda.time.LocalDate;
@@ -21,15 +22,15 @@ public abstract class BaseCalendarAdapter extends PagerAdapter {
     protected int mCount;//总页数
     protected int mCurr;//当前位置
     protected LocalDate mInitializeDate;
-    protected int mFirstDayOfWeek;
+    protected Attrs mAttrs;
 
 
-    public BaseCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
+    public BaseCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs) {
         this.mContext = context;
         this.mInitializeDate = initializeDate;
-        this.mCount = getIntervalCount(startDate, endDate, firstDayOfWeek) + 1;
-        this.mCurr = getIntervalCount(startDate, initializeDate, firstDayOfWeek);
-        this.mFirstDayOfWeek = firstDayOfWeek;
+        this.mCount = getIntervalCount(startDate, endDate, attrs.firstDayOfWeek) + 1;
+        this.mCurr = getIntervalCount(startDate, initializeDate, attrs.firstDayOfWeek);
+        this.mAttrs = attrs;
     }
 
     @Override

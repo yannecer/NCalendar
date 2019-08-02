@@ -158,11 +158,11 @@ public class CalendarUtil {
     }
 
     /**
-     * @param localDate 今天
-     * @param type      300，周日，301周一
+     * @param localDate
+     * @param weekType  300，周日，301周一
      * @return
      */
-    public static List<LocalDate> getMonthCalendar(LocalDate localDate, int type) {
+    public static List<LocalDate> getMonthCalendar(LocalDate localDate, int weekType, boolean isAllMonthSixLine) {
 
         LocalDate lastMonthDate = localDate.plusMonths(-1);//上个月
         LocalDate nextMonthDate = localDate.plusMonths(1);//下个月
@@ -176,7 +176,7 @@ public class CalendarUtil {
 
 
         //周一开始的
-        if (type == Attrs.MONDAY) {
+        if (weekType == Attrs.MONDAY) {
 
             //周一开始的
             for (int i = 0; i < firstDayOfWeek - 1; i++) {
@@ -222,6 +222,26 @@ public class CalendarUtil {
                 dateList.add(date);
             }
         }
+
+        //是否所有月份都6行
+        if (isAllMonthSixLine && dateList.size() == 35) {
+            LocalDate endLocalDate = dateList.get(dateList.size() - 1);
+            int dayOfMonth = endLocalDate.getDayOfMonth();
+            //如果是当月最后一天，直接加上下个月的7天，如果不是当月了，已经是下月了，就顺着下月数7天
+            if (dayOfMonth == days) {
+                for (int i = 0; i < 7; i++) {
+                    LocalDate date = new LocalDate(nextMonthDate.getYear(), nextMonthDate.getMonthOfYear(), i + 1);
+                    dateList.add(date);
+                }
+            } else {
+                for (int i = 0; i < 7; i++) {
+                    LocalDate date = new LocalDate(nextMonthDate.getYear(), nextMonthDate.getMonthOfYear(), dayOfMonth + i + 1);
+                    dateList.add(date);
+                }
+            }
+        }
+
+
         return dateList;
 
     }

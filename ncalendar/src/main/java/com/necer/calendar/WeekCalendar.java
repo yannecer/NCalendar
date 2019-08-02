@@ -24,8 +24,8 @@ public class WeekCalendar extends BaseCalendar {
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
-        return new WeekCalendarAdapter(context, startDate, endDate, initializeDate, firstDayOfWeek);
+    protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs) {
+        return new WeekCalendarAdapter(context, startDate, endDate, initializeDate, attrs);
     }
 
     @Override

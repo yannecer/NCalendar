@@ -71,5 +71,7 @@ public class Attrs {
     public int stretchTextColor; //拉伸显示的字体颜色
     public float stretchTextDistance; //拉伸显示的字体距离矩形中心的距离
 
+    public boolean isAllMonthSixLine;//月是否都6行
+
 
 }

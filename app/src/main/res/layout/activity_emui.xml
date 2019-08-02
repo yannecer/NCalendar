@@ -78,6 +78,7 @@
         app:selectCircleColor="#F29B38"
         app:solarHolidayTextColor="#F29B38"
         app:solarTermTextColor="#F29B38"
+        app:isAllMonthSixLine="true"
         app:todaySolarTextColor="#F29B38">
 
         <android.support.v4.widget.NestedScrollView
@@ -91,6 +92,8 @@
                 android:layout_margin="15dp"
                 android:background="#f5f5f5"
                 android:textColor="#333333"
+                android:text="测试"
+                android:gravity="center"
                 android:textSize="13sp" />
 
         </android.support.v4.widget.NestedScrollView>

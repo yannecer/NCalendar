@@ -3,6 +3,7 @@ package com.necer.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
 import com.necer.view.MonthView;
@@ -18,14 +19,14 @@ import java.util.List;
 public class MonthCalendarAdapter extends BaseCalendarAdapter {
 
 
-    public MonthCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, int firstDayOfWeek) {
-        super(context, startDate, endDate, initializeDate, firstDayOfWeek);
+    public MonthCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs) {
+        super(context, startDate, endDate, initializeDate, attrs);
     }
 
     @Override
     protected CalendarView getCalendarView(ViewGroup container, int position) {
         LocalDate localDate = mInitializeDate.plusMonths(position - mCurr);
-        List<LocalDate> dateList = CalendarUtil.getMonthCalendar(localDate, mFirstDayOfWeek);
+        List<LocalDate> dateList = CalendarUtil.getMonthCalendar(localDate, mAttrs.firstDayOfWeek, mAttrs.isAllMonthSixLine);
         return new MonthView(mContext, container, localDate, dateList);
     }
 
