@@ -382,6 +382,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |stretchTextSize|dimension| 拉伸之后显示字体的大小
 |stretchTextColor|color| 拉伸之后显示字体的颜色
 |stretchTextDistance|dimension| 拉伸显示的字体距离矩形中心的距离
+|stretchCalendarHeight|dimension| 拉伸之后的高度
 |isAllMonthSixLine|boolean| 是否每个月份都占用6行，默认为flase
 
 
