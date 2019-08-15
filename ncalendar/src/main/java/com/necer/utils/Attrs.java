@@ -31,6 +31,8 @@ public class Attrs {
     public int lunarHolidayTextColor;
     public int solarTermTextColor;
     public int selectCircleColor;
+    public int selectSolarTextColorColor;//选中公历颜色
+    public int selectLunarTextColor;//选中农历颜色
     public float solarTextSize;
     public float lunarTextSize;
     public float lunarDistance;//农历到文字中心的距离

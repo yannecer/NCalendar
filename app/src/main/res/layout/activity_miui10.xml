@@ -29,6 +29,8 @@
         app:holidayColor="#519EDC"
         app:lunarHolidayTextColor="#519EDC"
         app:pointLocation="down"
+        app:selectSolarTextColorColor="#00ff00"
+        app:selectLunarTextColor="#00ff00"
         app:selectCircleColor="#398FE9"
         app:solarHolidayTextColor="#519EDC"
         app:solarTermTextColor="#519EDC"

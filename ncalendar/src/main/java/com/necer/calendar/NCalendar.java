@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.NestedScrollingParent;
 import android.util.AttributeSet;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -305,7 +306,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
-        return false;
+        return childView.getY() != weekHeight;
     }
 
     @Override
@@ -314,10 +315,8 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         //此时 childViewY 必为 3个标志位之一，判断不为这三个数值就自动滑动
 
         int childViewY = (int) childView.getY();
-        int monthCalendarY = (int) monthCalendar.getY();
 
-        if ((childViewY != monthHeight && childViewY != weekHeight && childViewY != stretchMonthHeight) ||
-                (monthCalendarY != 0 && monthCalendarY != monthCalendar.getPivotDistanceFromTop())) {
+        if (childViewY != monthHeight && childViewY != weekHeight && childViewY != stretchMonthHeight) {
             autoScroll();
         } else {
             callBackCalenadarState();

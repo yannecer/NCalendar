@@ -75,12 +75,12 @@ public class InnerPainter implements CalendarPainter {
         if (selectDateList.contains(localDate)) {
             drawSelectBg(canvas, rectF, noAlphaColor, true);
             drawSolar(canvas, rectF, localDate, noAlphaColor, true, true);
-            drawLunar(canvas, rectF, true, noAlphaColor, localDate);
+            drawLunar(canvas, rectF, localDate, noAlphaColor, true, true);
             drawPoint(canvas, rectF, true, noAlphaColor, localDate);
             drawHolidays(canvas, rectF, true, noAlphaColor, localDate);
         } else {
             drawSolar(canvas, rectF, localDate, noAlphaColor, false, true);
-            drawLunar(canvas, rectF, false, noAlphaColor, localDate);
+            drawLunar(canvas, rectF, localDate, noAlphaColor, false, true);
             drawPoint(canvas, rectF, false, noAlphaColor, localDate);
             drawHolidays(canvas, rectF, false, noAlphaColor, localDate);
         }
@@ -92,12 +92,12 @@ public class InnerPainter implements CalendarPainter {
         if (selectDateList.contains(localDate)) {
             drawSelectBg(canvas, rectF, noAlphaColor, false);
             drawSolar(canvas, rectF, localDate, noAlphaColor, true, false);
-            drawLunar(canvas, rectF, false, noAlphaColor, localDate);
+            drawLunar(canvas, rectF, localDate, noAlphaColor, true, false);
             drawPoint(canvas, rectF, false, noAlphaColor, localDate);
             drawHolidays(canvas, rectF, false, noAlphaColor, localDate);
         } else {
             drawSolar(canvas, rectF, localDate, noAlphaColor, false, false);
-            drawLunar(canvas, rectF, false, noAlphaColor, localDate);
+            drawLunar(canvas, rectF, localDate, noAlphaColor, false, false);
             drawPoint(canvas, rectF, false, noAlphaColor, localDate);
             drawHolidays(canvas, rectF, false, noAlphaColor, localDate);
         }
@@ -109,13 +109,12 @@ public class InnerPainter implements CalendarPainter {
         if (selectDateList.contains(localDate)) {
             drawSelectBg(canvas, rectF, mAttrs.alphaColor, false);
             drawSolar(canvas, rectF, localDate, mAttrs.alphaColor, true, false);
-            drawLunar(canvas, rectF, false, mAttrs.alphaColor, localDate);
+            drawLunar(canvas, rectF, localDate, mAttrs.alphaColor, true, false);
             drawPoint(canvas, rectF, false, mAttrs.alphaColor, localDate);
             drawHolidays(canvas, rectF, false, mAttrs.alphaColor, localDate);
-
         } else {
             drawSolar(canvas, rectF, localDate, mAttrs.alphaColor, false, false);
-            drawLunar(canvas, rectF, false, mAttrs.alphaColor, localDate);
+            drawLunar(canvas, rectF, localDate, mAttrs.alphaColor, false, false);
             drawPoint(canvas, rectF, false, mAttrs.alphaColor, localDate);
             drawHolidays(canvas, rectF, false, mAttrs.alphaColor, localDate);
         }
@@ -125,7 +124,7 @@ public class InnerPainter implements CalendarPainter {
     @Override
     public void onDrawDisableDate(Canvas canvas, RectF rectF, LocalDate localDate) {
         drawSolar(canvas, rectF, localDate, mAttrs.disabledAlphaColor, false, false);
-        drawLunar(canvas, rectF, false, mAttrs.disabledAlphaColor, localDate);
+        drawLunar(canvas, rectF, localDate, mAttrs.disabledAlphaColor, false, false);
         drawPoint(canvas, rectF, false, mAttrs.disabledAlphaColor, localDate);
         drawHolidays(canvas, rectF, false, mAttrs.disabledAlphaColor, localDate);
         drawStretchText(canvas, rectF, mAttrs.disabledAlphaColor, localDate);
@@ -145,7 +144,7 @@ public class InnerPainter implements CalendarPainter {
     //绘制公历
     private void drawSolar(Canvas canvas, RectF rectF, LocalDate date, int alphaColor, boolean isSelect, boolean isToday) {
         if (isSelect) {
-            mTextPaint.setColor(isToday ? mAttrs.todaySolarSelectTextColor : mAttrs.solarTextColor);
+            mTextPaint.setColor(isToday ? mAttrs.todaySolarSelectTextColor : mAttrs.selectSolarTextColorColor);
         } else {
             mTextPaint.setColor(isToday ? mAttrs.todaySolarTextColor : mAttrs.solarTextColor);
         }
@@ -155,8 +154,9 @@ public class InnerPainter implements CalendarPainter {
     }
 
     //绘制农历
-    private void drawLunar(Canvas canvas, RectF rectF, boolean isTodaySelect, int alphaColor, LocalDate localDate) {
+    private void drawLunar(Canvas canvas, RectF rectF, LocalDate localDate, int alphaColor, boolean isSelect, boolean isToday) {
         if (mAttrs.isShowLunar) {
+            boolean isTodaySelect = isSelect && isToday;
             CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
             //优先顺序 替换的文字、农历节日、节气、公历节日、正常农历日期
             String lunarString = mReplaceLunarStrMap.get(calendarDate.localDate);
@@ -176,7 +176,13 @@ public class InnerPainter implements CalendarPainter {
                 }
             }
             Integer color = mReplaceLunarColorMap.get(calendarDate.localDate);
-            mTextPaint.setColor(color == null ? (isTodaySelect ? mAttrs.todaySelectContrastColor : mAttrs.lunarTextColor) : color);
+            if (color == null) {
+                if (isSelect) {
+                    mTextPaint.setColor(isToday ? mAttrs.todaySelectContrastColor : mAttrs.selectLunarTextColor);
+                }
+            } else {
+                mTextPaint.setColor(color);
+            }
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
             mTextPaint.setAlpha(alphaColor);
             canvas.drawText(lunarString, rectF.centerX(), rectF.centerY() + mAttrs.lunarDistance, mTextPaint);
