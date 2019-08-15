@@ -49,7 +49,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.3.3'
+implementation 'com.necer.ncalendar:ncalendar:4.3.4'
 
 ```
 
@@ -384,9 +384,12 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |stretchTextDistance|dimension| 拉伸显示的字体距离矩形中心的距离
 |stretchCalendarHeight|dimension| 拉伸之后的高度
 |isAllMonthSixLine|boolean| 是否每个月份都占用6行，默认为flase
+|selectSolarTextColorColor|color| 选中公历颜色
+|selectLunarTextColor|color| 选中农历颜色
 
 
 ## 更新日志
+* 4.3.4<br/> 修复周状态下滑动卡顿的bug
 * 4.3.3<br/> 修复莫名跳转2099年的bug，增加是否每个月都是6行的属性
 * 4.3.2<br/> 增加日历拉伸功能
 * 4.2.0<br/> 支持任意非滑动的View，ViewPger等
