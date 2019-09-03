@@ -605,6 +605,12 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
     @Override
+    public void updateSlideDistance(int currentDistance) {
+        monthCalendar.updateSlideDistance(currentDistance);
+        weekCalendar.updateSlideDistance(currentDistance);
+    }
+
+    @Override
     public void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener) {
         this.onCalendarStateChangedListener = onCalendarStateChangedListener;
     }
@@ -771,7 +777,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     //滑动中 包含跟随手势和自动滑动
     protected void scrolling(float dy) {
         setWeekVisible(dy > 0);
-
+        updateSlideDistance((int) childView.getY());
         if (onCalendarScrollingListener != null) {
             onCalendarScrollingListener.onCalendarScrolling(dy);
         }

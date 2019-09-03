@@ -4,12 +4,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
 import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
+import com.necer.view.CalendarView;
+import com.necer.view.MonthView;
 
 import org.joda.time.LocalDate;
 
@@ -26,6 +30,7 @@ public class InnerPainter implements CalendarPainter {
     private Attrs mAttrs;
     protected Paint mTextPaint;
     protected Paint mCirclePaint;
+    protected Paint mBgPaint;
 
     private int noAlphaColor = 255;
 
@@ -59,6 +64,11 @@ public class InnerPainter implements CalendarPainter {
         for (int i = 0; i < workdayList.size(); i++) {
             mWorkdayList.add(new LocalDate(workdayList.get(i)));
         }
+
+        mBgPaint = getPaint();
+        mBgPaint.setTextSize(100);
+        mBgPaint.setColor(Color.BLUE);
+        mBgPaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
 
@@ -69,6 +79,22 @@ public class InnerPainter implements CalendarPainter {
         return paint;
     }
 
+
+    @Override
+    public void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
+        Log.e("aa", "InnerPainter:calendarView:" + calendarView);
+        Log.e("aa", "InnerPainter:localDate:" + localDate);
+        Log.e("aa", "InnerPainter:totalDistance:" + totalDistance);
+        Log.e("aa", "InnerPainter:currentDistance:" + currentDistance);
+        Log.e("aa", "InnerPainter:rectF:" + rectF.bottom);
+
+        if (calendarView instanceof MonthView) {
+           // canvas.drawRect(rectF,mBgPaint);
+            canvas.drawText(localDate.getMonthOfYear() + "", rectF.centerX(), getBaseLineY(rectF), mBgPaint);
+
+        }
+
+    }
 
     @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectDateList) {

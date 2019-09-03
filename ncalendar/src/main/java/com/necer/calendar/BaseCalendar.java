@@ -389,12 +389,22 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return mCalendarPainter;
     }
 
+
+    @Override
+    public void updateSlideDistance(int currentDistance) {
+        CalendarView currectCalendarView = findViewWithTag(getCurrentItem());
+        if (currectCalendarView != null) {
+            currectCalendarView.updateSlideDistance(currentDistance);
+        }
+    }
+
     //月周切换时交换数据，保证月日历和周日历有相同的选中日期
     public void exchangeSelectDateList(List<LocalDate> dateList) {
         mAllSelectDateList.clear();
         mAllSelectDateList.addAll(dateList);
         notifyCalendar();
     }
+
 
     public void setOnMWDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
         this.mOnMWDateChangeListener = onMWDateChangeListener;

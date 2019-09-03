@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import com.necer.entity.CalendarDate;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
+import com.necer.view.CalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -40,6 +41,11 @@ public class LigaturePainter implements CalendarPainter {
         paint.setDither(true);
         paint.setTextAlign(Paint.Align.CENTER);
         return paint;
+    }
+
+    @Override
+    public void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
+
     }
 
     @Override

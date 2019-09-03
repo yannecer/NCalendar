@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
+import com.necer.view.CalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -26,6 +27,11 @@ public class StretchPainter implements CalendarPainter {
         mTextPaint.setColor(Color.parseColor("#000000"));
     }
 
+
+    @Override
+    public void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
+
+    }
 
     @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {

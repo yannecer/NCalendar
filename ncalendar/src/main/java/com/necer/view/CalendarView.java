@@ -3,6 +3,7 @@ package com.necer.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,11 +28,14 @@ public abstract class CalendarView extends View {
     private int mLineNum;//行数
     protected LocalDate mInitialDate;//当前页面的初始化日期
     protected List<RectF> mRectFList;//点击用的矩形集合
+    protected RectF mBgRectF;//日历背景集合
     protected List<LocalDate> mDateList;//页面的数据集合
     private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
     protected BaseCalendar mCalendar;
     protected LocalDate mStartDate;
     protected LocalDate mEndDate;
+
+    private int mCurrentDistance;//折叠日历滑动当前的距离
 
     public CalendarView(Context context, ViewGroup container, LocalDate initialDate, List<LocalDate> dateList) {
         super(context);
@@ -49,11 +53,31 @@ public abstract class CalendarView extends View {
         for (int i = 0; i < mDateList.size(); i++) {
             mRectFList.add(new RectF());
         }
+        mBgRectF = new RectF();
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        CalendarPainter calendarPainter = mCalendar.getCalendarPainter();
+        //绘制背景
+        drawBg(canvas, calendarPainter);
+        //绘制日期
+        drawDate(canvas, calendarPainter);
+    }
+
+    //绘制背景
+    private void drawBg(Canvas canvas, CalendarPainter calendarPainter) {
+        mBgRectF.set(0f, 0f, getMeasuredWidth(), getMeasuredHeight());
+        Log.e("aa", "drawBg:::" + getMeasuredHeight());
+        calendarPainter.onDrawCalendarBackground(this, canvas, mBgRectF, getMiddleLocalDate(), getMeasuredHeight(), mCurrentDistance);
+
+    }
+
+
+    //绘制日期
+    private void drawDate(Canvas canvas, CalendarPainter calendarPainter) {
 
         for (int i = 0; i < mLineNum; i++) {
             for (int j = 0; j < 7; j++) {
@@ -75,7 +99,6 @@ public abstract class CalendarView extends View {
                 }
 
                 //开始绘制
-                CalendarPainter calendarPainter = mCalendar.getCalendarPainter();
                 LocalDate localDate = mDateList.get(i * 7 + j);
                 //在可用区间内的正常绘制，
                 if (!(localDate.isBefore(mStartDate) || localDate.isAfter(mEndDate))) {
@@ -184,6 +207,11 @@ public abstract class CalendarView extends View {
             }
         }
         return currentSelectDateList;
+    }
+
+    public void updateSlideDistance(int currentDistance) {
+        this.mCurrentDistance = currentDistance;
+        invalidate();
     }
 
     //获取当前页面的日期

@@ -91,4 +91,7 @@ public interface ICalendar {
     //获取当前页面的数据 如果是月周折叠日历 周状态下获取的是一周的数据，月状态下获取的一月的数据
     List<LocalDate> getCurrectDateList();
 
+
+    void updateSlideDistance(int currentDistance);
+
 }
