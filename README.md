@@ -49,7 +49,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.3.4'
+implementation 'com.necer.ncalendar:ncalendar:4.3.6'
 
 ```
 
@@ -280,6 +280,9 @@ innerPainter.setStretchStrMap(strMap);
 InnerPainter 实现了设置圆点、替换农历等方法，还可以实现更多方法，如多选，多标记等，
 
 
+    //绘制月日历或这日历背景，如数字背景等 
+    void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance);
+
     //绘制今天的日期
     void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList);
 
@@ -386,9 +389,15 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |isAllMonthSixLine|boolean| 是否每个月份都占用6行，默认为flase
 |selectSolarTextColorColor|color| 选中公历颜色
 |selectLunarTextColor|color| 选中农历颜色
+|isShowNumberBackground|boolean| 是否显示数字背景
+|numberBackgroundTextSize|dimension| 数字背景字体大小
+|numberBackgroundTextColor|color| 数字背景字体颜色
+|numberBackgroundAlphaColor|integer| 数字背景字体透明度0-255
+
 
 
 ## 更新日志
+* 4.3.6<br/> 增加数字背景以及渐变效果
 * 4.3.4<br/> 修复周状态下滑动卡顿的bug
 * 4.3.3<br/> 修复莫名跳转2099年的bug，增加是否每个月都是6行的属性
 * 4.3.2<br/> 增加日历拉伸功能
