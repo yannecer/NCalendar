@@ -22,6 +22,7 @@ import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.view.CalendarView;
+import com.necer.view.MonthView;
 
 import org.joda.time.LocalDate;
 
@@ -261,10 +262,16 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
                 LocalDate middleLocalDate = currectCalendarView.getMiddleLocalDate();
                 List<LocalDate> currentSelectDateList = currectCalendarView.getCurrentSelectDateList();
                 LocalDate yearMonthLocalDate;
-                if (currentSelectDateList.size() == 0) {
-                    yearMonthLocalDate = middleLocalDate;
+
+                if (BaseCalendar.this instanceof MonthCalendar) {
+                    //月日历返回初始化的月份
+                    yearMonthLocalDate = currectCalendarView.getInitialDate();
                 } else {
-                    yearMonthLocalDate = currentSelectDateList.get(0);
+                    if (currentSelectDateList.size() == 0) {
+                        yearMonthLocalDate = middleLocalDate;
+                    } else {
+                        yearMonthLocalDate = currentSelectDateList.get(0);
+                    }
                 }
 
                 if (mOnMWDateChangeListener != null) {
