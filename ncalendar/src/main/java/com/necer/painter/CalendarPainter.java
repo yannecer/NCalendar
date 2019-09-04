@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CalendarPainter {
 
-
+    //绘制月日历或这日历背景，如数字背景等
     void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance);
 
     //绘制今天的日期
