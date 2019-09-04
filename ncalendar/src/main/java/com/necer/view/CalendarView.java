@@ -3,7 +3,6 @@ package com.necer.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -70,9 +69,7 @@ public abstract class CalendarView extends View {
     //绘制背景
     private void drawBg(Canvas canvas, CalendarPainter calendarPainter) {
         mBgRectF.set(0f, 0f, getMeasuredWidth(), getMeasuredHeight());
-        Log.e("aa", "drawBg:::" + getMeasuredHeight());
         calendarPainter.onDrawCalendarBackground(this, canvas, mBgRectF, getMiddleLocalDate(), getMeasuredHeight(), mCurrentDistance);
-
     }
 
 
