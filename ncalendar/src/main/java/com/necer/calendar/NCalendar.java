@@ -606,8 +606,8 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public void updateSlideDistance(int currentDistance) {
-        monthCalendar.updateSlideDistance(currentDistance);
-        weekCalendar.updateSlideDistance(currentDistance);
+        monthCalendar.updateSlideDistance(currentDistance - weekHeight);
+        weekCalendar.updateSlideDistance(currentDistance - weekHeight);
     }
 
     @Override
@@ -796,6 +796,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             childView.setY(calendarState == CalendarState.MONTH ? monthHeight : weekHeight);
             isInflateFinish = true;
         }
+        updateSlideDistance((int) childView.getY());
     }
 
     //获取月日历自动到周状态的y值

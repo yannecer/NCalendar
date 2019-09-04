@@ -19,6 +19,7 @@
         <attr name="selectCircleRadius" format="dimension" />
         <attr name="isShowLunar" format="boolean" />
 
+
         <attr name="pointSize" format="dimension" />
         <attr name="pointDistance" format="dimension" />
         <attr name="pointColor" format="color" />
@@ -70,6 +71,12 @@
         <attr name="stretchTextSize" format="dimension" />
         <attr name="stretchTextDistance" format="dimension" />
         <attr name="stretchTextColor" format="color" />
+
+
+        <attr name="isShowNumberBackground" format="boolean" />
+        <attr name="numberBackgroundTextSize" format="dimension" />
+        <attr name="numberBackgroundTextColor" format="color" />
+        <attr name="numberBackgroundAlphaColor" format="integer" />
 
     </declare-styleable>
 </resources>

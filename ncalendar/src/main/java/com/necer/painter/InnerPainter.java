@@ -1,12 +1,9 @@
 package com.necer.painter;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
@@ -30,7 +27,6 @@ public class InnerPainter implements CalendarPainter {
     private Attrs mAttrs;
     protected Paint mTextPaint;
     protected Paint mCirclePaint;
-    protected Paint mBgPaint;
 
     private int noAlphaColor = 255;
 
@@ -64,11 +60,6 @@ public class InnerPainter implements CalendarPainter {
         for (int i = 0; i < workdayList.size(); i++) {
             mWorkdayList.add(new LocalDate(workdayList.get(i)));
         }
-
-        mBgPaint = getPaint();
-        mBgPaint.setTextSize(100);
-        mBgPaint.setColor(Color.BLUE);
-        mBgPaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
 
@@ -82,16 +73,12 @@ public class InnerPainter implements CalendarPainter {
 
     @Override
     public void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-        Log.e("aa", "InnerPainter:calendarView:" + calendarView);
-        Log.e("aa", "InnerPainter:localDate:" + localDate);
-        Log.e("aa", "InnerPainter:totalDistance:" + totalDistance);
-        Log.e("aa", "InnerPainter:currentDistance:" + currentDistance);
-        Log.e("aa", "InnerPainter:rectF:" + rectF.bottom);
-
-        if (calendarView instanceof MonthView) {
-           // canvas.drawRect(rectF,mBgPaint);
-            canvas.drawText(localDate.getMonthOfYear() + "", rectF.centerX(), getBaseLineY(rectF), mBgPaint);
-
+        if (calendarView instanceof MonthView && mAttrs.isShowNumberBackground) {
+            mTextPaint.setTextSize(mAttrs.numberBackgroundTextSize);
+            mTextPaint.setColor(mAttrs.numberBackgroundTextColor);
+            int alphaColor = mAttrs.numberBackgroundAlphaColor * currentDistance / totalDistance;
+            mTextPaint.setAlpha(alphaColor);
+            canvas.drawText(localDate.getMonthOfYear() + "", rectF.centerX(), getBaseLineY(rectF), mTextPaint);
         }
 
     }
@@ -258,11 +245,12 @@ public class InnerPainter implements CalendarPainter {
     }
 
     //canvas.drawText的基准线
-    private int getBaseLineY(RectF rectF) {
+    private float getBaseLineY(RectF rectF) {
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         float top = fontMetrics.top;
         float bottom = fontMetrics.bottom;
-        int baseLineY = (int) (rectF.centerY() - top / 2 - bottom / 2);
+        // int baseLineY = (int) (rectF.centerY() - top / 2 - bottom / 2);
+        float baseLineY = rectF.centerY() - (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.top;
         return baseLineY;
     }
 

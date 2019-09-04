@@ -76,4 +76,10 @@ public class Attrs {
     public boolean isAllMonthSixLine;//月是否都6行
 
 
+    public boolean isShowNumberBackground; //是否显示数字背景
+    public float numberBackgroundTextSize; //数字背景字体大小
+    public int numberBackgroundTextColor; //数字背景字体颜色
+    public int numberBackgroundAlphaColor;//数字背景字体透明度
+
+
 }

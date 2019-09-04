@@ -59,12 +59,15 @@ public class AttrsUtil {
         attrs.disabledAlphaColor = ta.getInt(R.styleable.NCalendar_disabledAlphaColor, 50);
         attrs.disabledString = ta.getString(R.styleable.NCalendar_disabledString);
 
-
         attrs.stretchTextSize = ta.getDimension(R.styleable.NCalendar_stretchTextSize, CalendarUtil.sp2px(context, 10));
         attrs.stretchTextDistance = ta.getDimension(R.styleable.NCalendar_stretchTextDistance, CalendarUtil.dp2px(context, 32));
         attrs.stretchTextColor = ta.getColor(R.styleable.NCalendar_stretchTextColor, context.getResources().getColor(R.color.stretchTextColor));
 
         attrs.isAllMonthSixLine = ta.getBoolean(R.styleable.NCalendar_isAllMonthSixLine, false);
+        attrs.isShowNumberBackground = ta.getBoolean(R.styleable.NCalendar_isShowNumberBackground, false);
+        attrs.numberBackgroundTextSize = ta.getDimension(R.styleable.NCalendar_numberBackgroundTextSize, CalendarUtil.sp2px(context, 260));
+        attrs.numberBackgroundTextColor = ta.getColor(R.styleable.NCalendar_numberBackgroundTextColor, context.getResources().getColor(R.color.todaySolarTextColor));
+        attrs.numberBackgroundAlphaColor = ta.getInt(R.styleable.NCalendar_numberBackgroundAlphaColor, 50);
 
         ta.recycle();
 
