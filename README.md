@@ -49,7 +49,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.3.7'
+implementation 'com.necer.ncalendar:ncalendar:4.3.8'
 
 ```
 
@@ -393,10 +393,11 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |numberBackgroundTextSize|dimension| 数字背景字体大小
 |numberBackgroundTextColor|color| 数字背景字体颜色
 |numberBackgroundAlphaColor|integer| 数字背景字体透明度0-255
-
+|isLastNextMonthClickEnable|boolean| 月日历上下月是否可点击
 
 
 ## 更新日志
+* 4.3.8<br/> 新增月日历上下月是否可点击的属性 isLastNextMonthClickEnable
 * 4.3.7<br/> 修复选中月初月末，实际月份回调bug
 * 4.3.6<br/> 增加数字背景以及渐变效果
 * 4.3.4<br/> 修复周状态下滑动卡顿的bug
