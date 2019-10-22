@@ -81,5 +81,7 @@ public class Attrs {
     public int numberBackgroundTextColor; //数字背景字体颜色
     public int numberBackgroundAlphaColor;//数字背景字体透明度
 
+    public boolean isLastNextMonthClickEnable;//月日历上下月是否可点击
+
 
 }

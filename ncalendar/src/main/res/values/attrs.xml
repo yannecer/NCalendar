@@ -39,6 +39,7 @@
 
         <attr name="isShowHoliday" format="boolean" />
         <attr name="isAllMonthSixLine" format="boolean" />
+        <attr name="isLastNextMonthClickEnable" format="boolean" />
         <attr name="holidayColor" format="color" />
         <attr name="workdayColor" format="color" />
         <attr name="todaySelectContrastColor" format="color" />

@@ -212,11 +212,15 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     public void onClickLastMonthDate(LocalDate localDate) {
-        jump(localDate, true);
+        if (mAttrs.isLastNextMonthClickEnable) {
+            jump(localDate, true);
+        }
     }
 
     public void onClickNextMonthDate(LocalDate localDate) {
-        jump(localDate, true);
+        if (mAttrs.isLastNextMonthClickEnable) {
+            jump(localDate, true);
+        }
     }
 
     public void jump(LocalDate localDate, boolean isDraw) {

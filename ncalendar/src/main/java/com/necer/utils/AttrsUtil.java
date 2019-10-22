@@ -69,6 +69,7 @@ public class AttrsUtil {
         attrs.numberBackgroundTextColor = ta.getColor(R.styleable.NCalendar_numberBackgroundTextColor, context.getResources().getColor(R.color.todaySolarTextColor));
         attrs.numberBackgroundAlphaColor = ta.getInt(R.styleable.NCalendar_numberBackgroundAlphaColor, 50);
 
+        attrs.isLastNextMonthClickEnable = ta.getBoolean(R.styleable.NCalendar_isLastNextMonthClickEnable, true);
         ta.recycle();
 
         return attrs;
