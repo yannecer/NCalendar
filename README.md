@@ -49,7 +49,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:4.3.6'
+implementation 'com.necer.ncalendar:ncalendar:4.3.7'
 
 ```
 
@@ -397,6 +397,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 
 
 ## 更新日志
+* 4.3.7<br/> 修复选中月初月末，实际月份回调bug
 * 4.3.6<br/> 增加数字背景以及渐变效果
 * 4.3.4<br/> 修复周状态下滑动卡顿的bug
 * 4.3.3<br/> 修复莫名跳转2099年的bug，增加是否每个月都是6行的属性
