@@ -373,6 +373,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |holidayDistance| dimension |法定节假日到公历的距离
 |pointDistance| dimension |小圆点到公历的距离
 |hollowCircleStroke| dimension |空心圆的宽度
+|hollowCircleColor| color |空心圆的边框颜色
 |calendarHeight| dimension |日历的高度
 |duration|integer| 日历自动滑动的时间
 |isShowLunar| boolean |是否显示农历
