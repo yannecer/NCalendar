@@ -2,7 +2,7 @@ package com.necer.utils;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.v4.view.NestedScrollingChild;
+import androidx.core.view.NestedScrollingChild;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;

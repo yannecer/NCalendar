@@ -1,17 +1,13 @@
 package com.necer.calendar;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.necer.enumeration.CalendarState;
-import com.necer.utils.Attrs;
-import com.necer.utils.AttrsUtil;
 
 import org.joda.time.LocalDate;
-
-import java.util.List;
 
 /**
  * 华为日历

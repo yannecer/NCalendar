@@ -48,19 +48,19 @@
         app:calendarHeight="300dp"
         app:defaultCalendar="month">
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#cccccc"
                 android:tag="@string/factual_scroll_view" />
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </com.necer.calendar.Miui9Calendar>

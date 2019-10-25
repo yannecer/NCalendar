@@ -1,13 +1,11 @@
 package com.necer.ncalendar.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.necer.calendar.Miui10Calendar;
 import com.necer.ncalendar.R;
-import com.necer.ncalendar.painter.StretchPainter;
 import com.necer.painter.InnerPainter;
 
 import java.util.Arrays;

@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray">
@@ -55,7 +55,7 @@
             </LinearLayout>
 
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
     </com.necer.calendar.Miui10Calendar>
