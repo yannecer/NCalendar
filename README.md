@@ -360,6 +360,8 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |bgChildColor|color| 日历包含子view的背景
 |todaySelectContrastColor|color| 今天被选中是其他元素的对比色，比如 农历，圆点等
 |pointColor| color |小圆点的颜色
+|pointSize| dimension |小圆点的大小
+|pointDistance| dimension |小圆点到公历的距离
 |alphaColor| integer |不是本月的日期颜色的透明度0-255
 |disabledAlphaColor| integer |日期区间之外的地日颜色的透明度0-255
 |disabledString| string |点击日期区间之外的日期提示语
@@ -371,7 +373,6 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 |lunarDistance| dimension|农历日期到公历字体的距离
 |holidayTextSize| dimension|法定节假日字体的大小
 |holidayDistance| dimension |法定节假日到公历的距离
-|pointDistance| dimension |小圆点到公历的距离
 |hollowCircleStroke| dimension |空心圆的宽度
 |hollowCircleColor| color |空心圆的边框颜色
 |calendarHeight| dimension |日历的高度
