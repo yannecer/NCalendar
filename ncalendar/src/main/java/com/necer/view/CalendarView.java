@@ -21,7 +21,7 @@ import java.util.List;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public abstract class CalendarView extends View {
+public abstract class CalendarView extends View implements ICalendarView{
 
 
     private int mLineNum;//行数
@@ -124,13 +124,14 @@ public abstract class CalendarView extends View {
     }
 
 
-    //获取当前页面的初始化日期
+
+    @Override
     public LocalDate getInitialDate() {
         return mInitialDate;
     }
 
 
-    //获取中间的日期，周日历以中间的日期判断当前页面的年和月
+    @Override
     public LocalDate getMiddleLocalDate() {
         return mDateList.get((mDateList.size() / 2) + 1);
     }
@@ -161,7 +162,7 @@ public abstract class CalendarView extends View {
     });
 
 
-    //选中的日期到顶部的距离
+    @Override
     public int getDistanceFromTop(LocalDate localDate) {
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
@@ -177,7 +178,7 @@ public abstract class CalendarView extends View {
     }
 
 
-    //获取折叠的中心点 如果有当前页面有选中 返回选中的日期，如果没有选中看是否包含今天，如果没有就返回当前页面第一个日期
+    @Override
     public LocalDate getPivotDate() {
         LocalDate today = new LocalDate();
         if (getCurrentSelectDateList().size() != 0) {
@@ -189,12 +190,12 @@ public abstract class CalendarView extends View {
         }
     }
 
-    //获取中心点到顶部的距离
+    @Override
     public int getPivotDistanceFromTop() {
         return getDistanceFromTop(getPivotDate());
     }
 
-    //获取当前页面选中的日期
+    @Override
     public List<LocalDate> getCurrentSelectDateList() {
         List<LocalDate> currentSelectDateList = new ArrayList<>();
         for (int i = 0; i < mDateList.size(); i++) {
@@ -206,14 +207,21 @@ public abstract class CalendarView extends View {
         return currentSelectDateList;
     }
 
+    @Override
     public void updateSlideDistance(int currentDistance) {
         this.mCurrentDistance = currentDistance;
         invalidate();
     }
 
-    //获取当前页面的日期
+    @Override
     public List<LocalDate> getCurrentDateList() {
         return mDateList;
+    }
+
+
+    @Override
+    public void notifyCalendarView() {
+        invalidate();
     }
 
     //处理当前页面的点击事件
