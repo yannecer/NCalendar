@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.necer.R;
+import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.CalendarState;
 import com.necer.enumeration.MultipleNumModel;
 import com.necer.enumeration.SelectedModel;
@@ -28,6 +29,7 @@ import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnEndAnimatorListener;
 import com.necer.listener.OnMWDateChangeListener;
+import com.necer.painter.CalendarAdapter;
 import com.necer.painter.CalendarPainter;
 import com.necer.painter.InnerPainter;
 import com.necer.utils.Attrs;
@@ -653,6 +655,17 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     @Override
     public Attrs getAttrs() {
         return attrs;
+    }
+
+
+    @Override
+    public void setCalendarBuild(CalendarBuild calendarBuild) {
+
+    }
+
+    @Override
+    public void setCalendarAdapter(CalendarAdapter calendarAdapter) {
+
     }
 
     @Override

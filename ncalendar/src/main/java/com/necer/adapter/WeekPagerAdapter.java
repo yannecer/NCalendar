@@ -3,6 +3,7 @@ package com.necer.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import com.necer.enumeration.CalendarBuild;
 import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
@@ -16,15 +17,17 @@ import java.util.List;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public class WeekCalendarAdapter extends BaseCalendarAdapter {
-    public WeekCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs) {
-        super(context, startDate, endDate, initializeDate, attrs);
+public class WeekPagerAdapter extends BasePagerAdapter {
+
+
+    public WeekPagerAdapter(Context context, CalendarBuild calendarBuild, LocalDate initializeDate, int count, int currIndex, int firstDayOfWeek, boolean isAllMonthSixLine) {
+        super(context, calendarBuild, initializeDate, count, currIndex, firstDayOfWeek, isAllMonthSixLine);
     }
 
     @Override
     protected CalendarView getCalendarView(ViewGroup container, int position) {
-        LocalDate localDate = mInitializeDate.plusDays((position - mCurr) * 7);
-        List<LocalDate> dateList = CalendarUtil.getWeekCalendar(localDate, mAttrs.firstDayOfWeek);
+        LocalDate localDate = mInitializeDate.plusDays((position - mCurrIndex) * 7);
+        List<LocalDate> dateList = CalendarUtil.getWeekCalendar(localDate, mFirstDayOfWeek);
         return new WeekView(mContext, container, localDate, dateList);
     }
 

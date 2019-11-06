@@ -1,12 +1,15 @@
 package com.necer.calendar;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 
-import com.necer.adapter.BaseCalendarAdapter;
-import com.necer.adapter.MonthCalendarAdapter;
+import com.necer.adapter.BasePagerAdapter;
+import com.necer.adapter.MonthPagerAdapter;
+import com.necer.enumeration.CalendarBuild;
 import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
 
@@ -23,8 +26,8 @@ public class MonthCalendar extends BaseCalendar {
     }
 
     @Override
-    protected BaseCalendarAdapter getCalendarAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs) {
-        return new MonthCalendarAdapter(context, startDate, endDate, initializeDate, attrs);
+    protected BasePagerAdapter getPagerAdapter(Context context, CalendarBuild calendarBuild, LocalDate initializeDate, int count, int currIndex, int firstDayOfWeek, boolean isAllMonthSixLine) {
+        return new MonthPagerAdapter(context, calendarBuild,initializeDate, count, currIndex, firstDayOfWeek, isAllMonthSixLine) ;
     }
 
     @Override

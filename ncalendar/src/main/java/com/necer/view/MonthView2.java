@@ -13,9 +13,10 @@ import java.util.List;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public class MonthView extends CalendarView {
-    public MonthView(Context context, ViewGroup container, LocalDate initialDate, List<LocalDate> dateList) {
+public class MonthView2 extends CalendarView2 {
+    public MonthView2(Context context, ViewGroup container, LocalDate initialDate, List<LocalDate> dateList) {
         super(context, container, initialDate, dateList);
+
     }
 
     @Override

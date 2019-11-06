@@ -1,10 +1,12 @@
 package com.necer.calendar;
 
+import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.MultipleNumModel;
 import com.necer.enumeration.SelectedModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
+import com.necer.painter.CalendarAdapter;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 
@@ -94,4 +96,8 @@ public interface ICalendar {
     //更新折叠日历的滑动距离
     void updateSlideDistance(int currentDistance);
 
+
+    void setCalendarAdapter(CalendarAdapter calendarAdapter);
+
+    void setCalendarBuild(CalendarBuild calendarBuild);
 }
