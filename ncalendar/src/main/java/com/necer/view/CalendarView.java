@@ -32,9 +32,19 @@ public class CalendarView extends View implements ICalendarView {
 
     private int mCurrentDistance;//折叠日历滑动当前的距离
 
+    protected List<LocalDate> mDateList;
+    protected List<RectF> mRectFList;
+
     public CalendarView(Context context, CalendarHelper calendarHelper) {
         super(context);
         mCalendarHelper = calendarHelper;
+        mDateList = calendarHelper.getDateList();
+        mRectFList = new ArrayList<>();
+
+        for (int i = 0; i < mDateList.size(); i++) {
+            mRectFList.add(new RectF());
+        }
+
     }
 
 
@@ -59,30 +69,69 @@ public class CalendarView extends View implements ICalendarView {
     //绘制日期
     private void drawDate(Canvas canvas, CalendarPainter calendarPainter) {
 
-        List<RectF> rectFList = mCalendarHelper.getRectFList();
-        List<LocalDate> dateList = mCalendarHelper.getDateList();
 
-        for (int i = 0; i < rectFList.size(); i++) {
+        int lineNum = mCalendarHelper.getLineNum();
 
-            LocalDate localDate = dateList.get(i);
-            RectF rectF = rectFList.get(i);
 
-            if (mCalendarHelper.isAvailableDate(localDate)) { //可用的日期
-                if (mCalendarHelper.isCurrentMonthOrWeek(localDate)) {  //当月日期
-                    if (CalendarUtil.isToday(localDate)) {  //当天
-                        calendarPainter.onDrawToday(canvas, rectF, localDate, mCalendarHelper.getAllSelectListDate());
-                    } else { //非当天的当月日期
-                        calendarPainter.onDrawCurrentMonthOrWeek(canvas, rectF, localDate, mCalendarHelper.getAllSelectListDate());
-                    }
-                } else { //上下月日期
-                    calendarPainter.onDrawLastOrNextMonth(canvas, rectF, localDate, mCalendarHelper.getAllSelectListDate());
+        for (int i = 0; i < lineNum; i++) {
+            for (int j = 0; j < 7; j++) {
+                int index = i * 7 + j;
+                RectF rectF = mRectFList.get(index);
+                //矩形确定位置
+                float width = getMeasuredWidth();
+                float height = getMeasuredHeight();
+                //为每个矩形确定位置
+                if (lineNum == 5 || lineNum == 1) {
+                    //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
+                    float rectHeight = height / lineNum;
+                    rectF.set(j * width / 7, i * rectHeight, j * width / 7 + width / 7, i * rectHeight + rectHeight);
+                } else {
+                    //6行的月份，要第一行和最后一行矩形的中心分别和和5行月份第一行和最后一行矩形的中心对齐
+                    //5行一个矩形高度 mHeight/5, 画图可知,4个5行矩形的高度等于5个6行矩形的高度  故：6行的每一个矩形高度是  (mHeight/5)*4/5
+                    float rectHeight5 = height / 5;
+                    float rectHeight6 = (height / 5) * 4 / 5;
+                    rectF.set(j * width / 7, i * rectHeight6 + (rectHeight5 - rectHeight6) / 2, j * width / 7 + width / 7, i * rectHeight6 + rectHeight6 + (rectHeight5 - rectHeight6) / 2);
                 }
-            } else { //不可用日期
-                calendarPainter.onDrawDisableDate(canvas, rectF, localDate);
+
+                //
+                LocalDate localDate = mDateList.get(index);
+                if (mCalendarHelper.isAvailableDate(localDate)) { //可用的日期
+                    if (mCalendarHelper.isCurrentMonthOrWeek(localDate)) {  //当月日期
+                        if (CalendarUtil.isToday(localDate)) {  //当天
+                            calendarPainter.onDrawToday(canvas, rectF, localDate, mCalendarHelper.getAllSelectListDate());
+                        } else { //非当天的当月日期
+                            calendarPainter.onDrawCurrentMonthOrWeek(canvas, rectF, localDate, mCalendarHelper.getAllSelectListDate());
+                        }
+                    } else { //上下月日期
+                        calendarPainter.onDrawLastOrNextMonth(canvas, rectF, localDate, mCalendarHelper.getAllSelectListDate());
+                    }
+                } else { //不可用日期
+                    calendarPainter.onDrawDisableDate(canvas, rectF, localDate);
+                }
+
             }
         }
-
     }
+
+    private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            for (int i = 0; i < mRectFList.size(); i++) {
+                RectF rectF = mRectFList.get(i);
+                if (rectF.contains((int) e.getX(), (int) e.getY())) {
+                    LocalDate clickDate = mDateList.get(i);
+                    mCalendarHelper.dealClickDate(clickDate);
+                    break;
+                }
+            }
+            return true;
+        }
+    });
 
 
     @Override
@@ -98,7 +147,7 @@ public class CalendarView extends View implements ICalendarView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return mCalendarHelper.getGestureDetector().onTouchEvent(event);
+        return mGestureDetector.onTouchEvent(event);
     }
 
     @Override
@@ -125,6 +174,8 @@ public class CalendarView extends View implements ICalendarView {
     @Override
     public void updateSlideDistance(int currentDistance) {
         this.mCurrentDistance = currentDistance;
+
+        Log.e("updateSlideDistance", "updateSlideDistance::33333:;");
         invalidate();
     }
 
@@ -136,6 +187,8 @@ public class CalendarView extends View implements ICalendarView {
     @Override
     public void notifyCalendarView() {
         invalidate();
+
+        Log.e("invalidate", "invalidate:::;");
     }
 
     //周或者月的第一天

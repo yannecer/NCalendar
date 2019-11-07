@@ -29,7 +29,7 @@ public class CalendarHelper {
     private BaseCalendar mCalendar;
 
     private CalendarType mCalendarType;
-    protected List<RectF> mRectFList;
+
 
     protected LocalDate mStartDate;
     protected LocalDate mEndDate;
@@ -49,7 +49,7 @@ public class CalendarHelper {
 
         mLineNum = mDateList.size() / 7;
 
-        mRectFList = getLocationRectFList();
+        //mRectFList = getLocationRectFList();
 
         mAllSelectListDate = mCalendar.getAllSelectDateList();
         mStartDate = mCalendar.getStartDate();
@@ -57,7 +57,7 @@ public class CalendarHelper {
 
         mBgRectF = new RectF(0f, 0f, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
 
-        mGestureDetector = new GestureDetector(calendar.getContext(), simpleOnGestureListener);
+        // mGestureDetector = new GestureDetector(calendar.getContext(), simpleOnGestureListener);
     }
 
 
@@ -73,8 +73,12 @@ public class CalendarHelper {
         return mCalendarType;
     }
 
-    public List<RectF> getRectFList() {
-        return mRectFList;
+//    public List<RectF> getRectFList() {
+//        return mRectFList;
+//    }
+
+    public int getCalendarHeight() {
+        return mCalendar.getMeasuredHeight();
     }
 
     public LocalDate getStartDate() {
@@ -154,7 +158,6 @@ public class CalendarHelper {
     }
 
     public void dealClickDate(LocalDate localDate) {
-
         if (mCalendarType == CalendarType.MONTH && CalendarUtil.isLastMonth(localDate, mInitialDate)) {
             mCalendar.onClickLastMonthDate(localDate);
         } else if (mCalendarType == CalendarType.MONTH && CalendarUtil.isNextMonth(localDate, mInitialDate)) {
@@ -173,59 +176,6 @@ public class CalendarHelper {
         }
     }
 
-
-    public GestureDetector getGestureDetector() {
-        return mGestureDetector;
-    }
-
-    private GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            for (int i = 0; i < mRectFList.size(); i++) {
-                RectF rectF = mRectFList.get(i);
-                if (rectF.contains((int) e.getX(), (int) e.getY())) {
-                    LocalDate clickDate = mDateList.get(i);
-                    dealClickDate(clickDate);
-                    break;
-                }
-            }
-            return true;
-        }
-    };
-
-
-    private List<RectF> getLocationRectFList() {
-        List<RectF> rectFList = new ArrayList<>();
-        for (int i = 0; i < mLineNum; i++) {
-            for (int j = 0; j < 7; j++) {
-                RectF rectF = new RectF();
-                //矩形确定位置
-                float width = mCalendar.getMeasuredWidth();
-                float height = mCalendar.getMeasuredHeight();
-                //为每个矩形确定位置
-                if (mLineNum == 5 || mLineNum == 1) {
-                    //5行的月份，5行矩形平分view的高度  mLineNum==1是周的情况
-                    float rectHeight = height / mLineNum;
-                    rectF.set(j * width / 7, i * rectHeight, j * width / 7 + width / 7, i * rectHeight + rectHeight);
-                } else {
-                    //6行的月份，要第一行和最后一行矩形的中心分别和和5行月份第一行和最后一行矩形的中心对齐
-                    //5行一个矩形高度 mHeight/5, 画图可知,4个5行矩形的高度等于5个6行矩形的高度  故：6行的每一个矩形高度是  (mHeight/5)*4/5
-                    float rectHeight5 = height / 5;
-                    float rectHeight6 = (height / 5) * 4 / 5;
-                    rectF.set(j * width / 7, i * rectHeight6 + (rectHeight5 - rectHeight6) / 2, j * width / 7 + width / 7, i * rectHeight6 + rectHeight6 + (rectHeight5 - rectHeight6) / 2);
-                }
-                rectFList.add(rectF);
-            }
-        }
-        return rectFList;
-    }
-
-
     public boolean isAvailableDate(LocalDate localDate) {
         return mCalendar.isAvailable(localDate);
     }
@@ -236,15 +186,6 @@ public class CalendarHelper {
         } else {
             return mDateList.contains(localDate);
         }
-    }
-
-
-
-
-    public void notifyPager(Canvas canvas, View view) {
-
-
-
     }
 
 }

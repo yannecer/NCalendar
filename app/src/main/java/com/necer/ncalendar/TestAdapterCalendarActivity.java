@@ -27,10 +27,12 @@ public class TestAdapterCalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_month_adapter);
 
 
-      //  MonthCalendar monthCalendar = findViewById(R.id.monthCalendar);
+//        MonthCalendar monthCalendar = findViewById(R.id.monthCalendar);
+//        monthCalendar.setCalendarAdapter(new TestAdapter());
+
       //  WeekCalendar weekCalendar = findViewById(R.id.weekCalendar);
 
-     //   monthCalendar.setCalendarAdapter(new TestAdapter());
+     //
       //  weekCalendar.setCalendarAdapter(new TestAdapter());
 
 
@@ -44,7 +46,7 @@ public class TestAdapterCalendarActivity extends AppCompatActivity {
     public static class TestAdapter extends CalendarAdapter {
 
         @Override
-        public View getCalendarView(Context context) {
+        public View getCalendarItemView(Context context) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_calendar, null);
             return view;
         }

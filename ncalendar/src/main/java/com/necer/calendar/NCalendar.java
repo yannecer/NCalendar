@@ -7,11 +7,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.NestedScrollingParent;
+
 import android.util.AttributeSet;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -608,6 +611,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public void updateSlideDistance(int currentDistance) {
+
+        Log.e("updateSlideDistance", "updateSlideDistance::iiii::");
+
         monthCalendar.updateSlideDistance(currentDistance - weekHeight);
         weekCalendar.updateSlideDistance(currentDistance - weekHeight);
     }
@@ -656,7 +662,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     public Attrs getAttrs() {
         return attrs;
     }
-
 
 
     @Override
@@ -806,6 +811,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             childView.setY(calendarState == CalendarState.MONTH ? monthHeight : weekHeight);
             isInflateFinish = true;
         }
+        // TODO: 2019/11/7 有问题，会导致一直回调
         updateSlideDistance((int) childView.getY());
     }
 

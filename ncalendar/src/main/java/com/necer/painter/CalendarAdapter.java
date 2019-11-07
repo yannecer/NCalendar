@@ -14,7 +14,10 @@ import java.util.List;
 public abstract class CalendarAdapter {
 
 
-    public abstract View getCalendarView(Context context);
+    public abstract View getCalendarItemView(Context context);
+    public View getCalendarBgView(Context context){
+        return null;
+    }
 
     public abstract void onBindToadyView(View view, LocalDate localDate, List<LocalDate> selectedDateList);
 
@@ -23,6 +26,5 @@ public abstract class CalendarAdapter {
     public abstract void onBindLastOrNextMonthView(View view, LocalDate localDate, List<LocalDate> selectedDateList);
 
     public abstract void onBindDisableDateView(View view, LocalDate localDate);
-
 
 }
