@@ -658,14 +658,11 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
 
-    @Override
-    public void setCalendarBuild(CalendarBuild calendarBuild) {
-
-    }
 
     @Override
     public void setCalendarAdapter(CalendarAdapter calendarAdapter) {
-
+        monthCalendar.setCalendarAdapter(calendarAdapter);
+        weekCalendar.setCalendarAdapter(calendarAdapter);
     }
 
     @Override

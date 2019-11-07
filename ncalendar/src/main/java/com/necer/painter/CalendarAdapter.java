@@ -9,15 +9,20 @@ import com.necer.R;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 public abstract class CalendarAdapter {
 
 
     public abstract View getCalendarView(Context context);
 
-    public abstract void onBindToadyView(View view, LocalDate localDate, boolean isCheck);
+    public abstract void onBindToadyView(View view, LocalDate localDate, List<LocalDate> selectedDateList);
 
-    public abstract void onBindCurrentMonthOrWeekView(View view, LocalDate localDate,boolean isCheck);
+    public abstract void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, List<LocalDate> selectedDateList);
 
+    public abstract void onBindLastOrNextMonthView(View view, LocalDate localDate, List<LocalDate> selectedDateList);
+
+    public abstract void onBindDisableDateView(View view, LocalDate localDate);
 
 
 }

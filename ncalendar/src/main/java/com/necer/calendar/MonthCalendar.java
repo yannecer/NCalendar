@@ -26,8 +26,8 @@ public class MonthCalendar extends BaseCalendar {
     }
 
     @Override
-    protected BasePagerAdapter getPagerAdapter(Context context, CalendarBuild calendarBuild, LocalDate initializeDate, int count, int currIndex, int firstDayOfWeek, boolean isAllMonthSixLine) {
-        return new MonthPagerAdapter(context, calendarBuild,initializeDate, count, currIndex, firstDayOfWeek, isAllMonthSixLine) ;
+    protected BasePagerAdapter getPagerAdapter(Context context, BaseCalendar baseCalendar) {
+        return new MonthPagerAdapter(context,baseCalendar);
     }
 
     @Override

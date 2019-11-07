@@ -154,7 +154,6 @@ public class CalendarUtil {
      */
     public static boolean isToday(LocalDate date) {
         return new LocalDate().equals(date);
-
     }
 
     /**

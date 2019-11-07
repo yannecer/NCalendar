@@ -7,10 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.necer.calendar.Miui10Calendar;
 import com.necer.calendar.MonthCalendar;
+import com.necer.calendar.WeekCalendar;
 import com.necer.painter.CalendarAdapter;
 
 import org.joda.time.LocalDate;
+
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +27,17 @@ public class TestAdapterCalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_month_adapter);
 
 
-        MonthCalendar monthCalendar = findViewById(R.id.monthCalendar);
+      //  MonthCalendar monthCalendar = findViewById(R.id.monthCalendar);
+      //  WeekCalendar weekCalendar = findViewById(R.id.weekCalendar);
 
-        monthCalendar.setCalendarAdapter(new TestAdapter());
+     //   monthCalendar.setCalendarAdapter(new TestAdapter());
+      //  weekCalendar.setCalendarAdapter(new TestAdapter());
+
+
+        Miui10Calendar miui10Calendar = findViewById(R.id.miui10Calendar);
+        miui10Calendar.setMonthStretchEnable(true);
+        miui10Calendar.setCalendarAdapter(new TestAdapter());
+
     }
 
 
@@ -38,19 +50,45 @@ public class TestAdapterCalendarActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindToadyView(View view, LocalDate localDate, boolean isCheck) {
-            TextView textView = view.findViewById(R.id.tv_item);
-            textView.setText(localDate.getDayOfMonth()+"");
-            view.setBackgroundColor(isCheck ? Color.parseColor("#ff00ff") : Color.parseColor("#ffffff"));
-
+        public void onBindToadyView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+            TextView tv_item = view.findViewById(R.id.tv_item);
+            tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
+            tv_item.setTextColor(selectedDateList.contains(localDate) ? Color.RED : Color.BLACK);
         }
 
         @Override
-        public void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, boolean isCheck) {
-            TextView textView = view.findViewById(R.id.tv_item);
-            textView.setText(localDate.getDayOfMonth()+"");
-            view.setBackgroundColor(isCheck ? Color.parseColor("#ff00ff") : Color.parseColor("#ffffff"));
+        public void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+            TextView tv_item = view.findViewById(R.id.tv_item);
+            tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
+            tv_item.setBackgroundColor(selectedDateList.contains(localDate) ? Color.RED : Color.WHITE);
+        }
+
+        @Override
+        public void onBindLastOrNextMonthView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+            TextView tv_item = view.findViewById(R.id.tv_item);
+            tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
+            tv_item.setTextColor(Color.GREEN);
+        }
+
+        @Override
+        public void onBindDisableDateView(View view, LocalDate localDate) {
 
         }
+
+//        @Override
+//        public void onBindToadyView(View view, LocalDate localDate, boolean isCheck) {
+//            TextView textView = view.findViewById(R.id.tv_item);
+//            textView.setText(localDate.getDayOfMonth()+"");
+//            view.setBackgroundColor(isCheck ? Color.parseColor("#ff00ff") : Color.parseColor("#ffffff"));
+//
+//        }
+//
+//        @Override
+//        public void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, boolean isCheck) {
+//            TextView textView = view.findViewById(R.id.tv_item);
+//            textView.setText(localDate.getDayOfMonth()+"");
+//            view.setBackgroundColor(isCheck ? Color.parseColor("#ff00ff") : Color.parseColor("#ffffff"));
+//
+//        }
     }
 }

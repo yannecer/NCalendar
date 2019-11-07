@@ -26,10 +26,9 @@ public class WeekCalendar extends BaseCalendar {
     }
 
     @Override
-    protected BasePagerAdapter getPagerAdapter(Context context, CalendarBuild calendarBuild, LocalDate initializeDate, int count, int currIndex, int firstDayOfWeek, boolean isAllMonthSixLine) {
-        return new WeekPagerAdapter(context, calendarBuild, initializeDate, count, currIndex, firstDayOfWeek, isAllMonthSixLine);
+    protected BasePagerAdapter getPagerAdapter(Context context, BaseCalendar baseCalendar) {
+        return new WeekPagerAdapter(context, baseCalendar);
     }
-
 
     @Override
     protected int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type) {

@@ -9,6 +9,7 @@
         android:id="@+id/tv_item"
         android:layout_width="wrap_content"
         android:text="asdf"
+        android:padding="5dp"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -99,5 +99,4 @@ public interface ICalendar {
 
     void setCalendarAdapter(CalendarAdapter calendarAdapter);
 
-    void setCalendarBuild(CalendarBuild calendarBuild);
 }

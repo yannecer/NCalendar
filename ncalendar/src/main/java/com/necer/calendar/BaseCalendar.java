@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -67,6 +68,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     private CalendarAdapter mCalendarAdapter;
 
+    private int mCalendarPagerSize;//日历总页数
+    private int mCalendarCurrIndex;//日历当前页码
+
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -118,13 +122,14 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             throw new IllegalArgumentException("日期区间必须包含初始化日期");
         }
 
-        int count = getTwoDateCount(mStartDate, mEndDate, mFirstDayOfWeek) + 1;
-        int currIndex = getTwoDateCount(mStartDate, mInitializeDate, mFirstDayOfWeek);
+        mCalendarPagerSize = getTwoDateCount(mStartDate, mEndDate, mFirstDayOfWeek) + 1;
+        mCalendarCurrIndex = getTwoDateCount(mStartDate, mInitializeDate, mFirstDayOfWeek);
 
-        BasePagerAdapter calendarAdapter = getPagerAdapter(mContext, mCalendarBuild, mInitializeDate, count, currIndex, mFirstDayOfWeek, mIsAllMonthSixLine);
+        BasePagerAdapter calendarAdapter = getPagerAdapter(mContext, this);
         setAdapter(calendarAdapter);
-        setCurrentItem(currIndex);
+        setCurrentItem(mCalendarCurrIndex);
     }
+
 
     @Override
     public void setDateInterval(String startFormatDate, String endFormatDate) {
@@ -390,7 +395,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     //点击的日期是否可用
-    protected boolean isAvailable(LocalDate localDate) {
+    public boolean isAvailable(LocalDate localDate) {
         return !localDate.isBefore(mStartDate) && !localDate.isAfter(mEndDate);
     }
 
@@ -404,21 +409,49 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return mEndDate;
     }
 
+
+    public LocalDate getInitializeDate() {
+        return mInitializeDate;
+    }
+
+    public int getCalendarCurrIndex() {
+        return mCalendarCurrIndex;
+    }
+
+    public int getCalendarPagerSize() {
+        return mCalendarPagerSize;
+    }
+
+    public int getFirstDayOfWeek() {
+        return mFirstDayOfWeek;
+    }
+
+    public boolean isAllMonthSixLine() {
+        return mIsAllMonthSixLine;
+    }
+
+    public CalendarBuild getCalendarBuild() {
+        return mCalendarBuild;
+    }
+
     //设置绘制类
     @Override
     public void setCalendarPainter(CalendarPainter calendarPainter) {
+        this.mCalendarBuild = CalendarBuild.DRAW;
         this.mCalendarPainter = calendarPainter;
         notifyCalendar();
     }
 
-    @Override
-    public void setCalendarBuild(CalendarBuild calendarBuild) {
-        this.mCalendarBuild = calendarBuild;
-    }
+
 
     @Override
     public void setCalendarAdapter(CalendarAdapter calendarAdapter) {
+
+        Log.e("CalendarView","CalendarView：set：：：");
+
+        this.mCalendarBuild = CalendarBuild.ADAPTER;
         this.mCalendarAdapter = calendarAdapter;
+        notifyCalendar();
     }
 
     public CalendarAdapter getCalendarAdapter() {
@@ -502,7 +535,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     //回去viewpager的adapter
-    protected abstract BasePagerAdapter getPagerAdapter(Context context, CalendarBuild calendarBuild, LocalDate initializeDate, int count, int currIndex, int firstDayOfWeek, boolean isAllMonthSixLine);
+    protected abstract BasePagerAdapter getPagerAdapter(Context context, BaseCalendar baseCalendar);
 
     //两个日期的相差数量
     protected abstract int getTwoDateCount(LocalDate startDate, LocalDate endDate, int type);

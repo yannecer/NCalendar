@@ -4,9 +4,11 @@ import android.content.Context;
 
 import androidx.viewpager.widget.PagerAdapter;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarBuild;
 import com.necer.utils.Attrs;
 import com.necer.view.CalendarView;
@@ -23,34 +25,23 @@ public abstract class BasePagerAdapter extends PagerAdapter {
 
 
     protected Context mContext;
-    protected int mCount;//总页数
-    protected int mCurrIndex;//总页数
+    protected int mPageSize;//总页数
+    protected int mPageCurrIndex;
     protected LocalDate mInitializeDate;
-    protected int mFirstDayOfWeek;
-    protected boolean mIsAllMonthSixLine;
-    protected CalendarBuild mCalendarBuild;
 
-    public BasePagerAdapter(Context context, CalendarBuild calendarBuild, LocalDate initializeDate, int count, int currIndex, int firstDayOfWeek, boolean isAllMonthSixLine) {
+    protected BaseCalendar mCalendar;
+
+    public BasePagerAdapter(Context context, BaseCalendar baseCalendar) {
         this.mContext = context;
-        this.mCalendarBuild = calendarBuild;
-        this.mInitializeDate = initializeDate;
-        this.mCount = count;
-        this.mCurrIndex = currIndex;
-        this.mFirstDayOfWeek = firstDayOfWeek;
-        this.mIsAllMonthSixLine = isAllMonthSixLine;
+        this.mCalendar = baseCalendar;
+        this.mInitializeDate = baseCalendar.getInitializeDate();
+        this.mPageSize = baseCalendar.getCalendarPagerSize();
+        this.mPageCurrIndex = baseCalendar.getCalendarCurrIndex();
     }
-
-//    public BasePagerAdapter(Context context, LocalDate startDate, LocalDate endDate, LocalDate initializeDate, Attrs attrs) {
-//        this.mContext = context;
-//        this.mInitializeDate = initializeDate;
-//        this.mCount = getIntervalCount(startDate, endDate, attrs.firstDayOfWeek) + 1;
-//        this.mCurr = getIntervalCount(startDate, initializeDate, attrs.firstDayOfWeek);
-//        this.mAttrs = attrs;
-//    }
 
     @Override
     public int getCount() {
-        return mCount;
+        return mPageSize;
     }
 
 
@@ -74,7 +65,6 @@ public abstract class BasePagerAdapter extends PagerAdapter {
 
     protected abstract ICalendarView getCalendarView(ViewGroup container, int position);
 
-    protected abstract int getIntervalCount(LocalDate startDate, LocalDate endDate, int weekFirstDayType);
 
 
 }

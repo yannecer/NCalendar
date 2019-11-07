@@ -5,9 +5,35 @@
     android:layout_height="match_parent">
 
 
-    <com.necer.calendar.MonthCalendar
-        android:id="@+id/monthCalendar"
+    <com.necer.calendar.Miui10Calendar
+        android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:text="ceshi "/>
+        </androidx.core.widget.NestedScrollView>
+
+    </com.necer.calendar.Miui10Calendar>
+
+
+<!--    <com.necer.calendar.MonthCalendar-->
+<!--        android:id="@+id/monthCalendar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"/>-->
+
+
+<!--    <com.necer.calendar.WeekCalendar-->
+<!--        android:id="@+id/weekCalendar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"/>-->
+
 
 </LinearLayout>
