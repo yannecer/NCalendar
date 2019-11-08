@@ -276,6 +276,8 @@ innerPainter.setStretchStrMap(strMap);
 
 ### 自定义
 
+## 项目提供两种方式自定义，Canvas绘制和适配器传入View，两种方式都能实现，方法类似，具体参见下面的链接
+
 - [ 绘制接口 CalendarPainter](https://github.com/yannecer/NCalendar/blob/master/CalendarPainter.md)
 - [适配器抽象类 CalendarAdapter](https://github.com/yannecer/NCalendar/blob/master/CalendarAdapter.md)
 
