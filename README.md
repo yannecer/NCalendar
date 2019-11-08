@@ -17,6 +17,7 @@
  - 支持自定义日历页面
  - 支持内部TargetView为任意View
  - 支持日历拉伸功能
+ - 支持适配器模式自定义日历
 
 ## 效果图 
 |Miui9Calendar|Miui10Calendar|EmuiCalendar|
@@ -52,7 +53,7 @@
 implementation 'com.necer.ncalendar:ncalendar:4.3.8'
 
 
-implementation 'com.necer.ncalendar:ncalendar:4.3.9'   项目升级到androidx
+implementation 'com.necer.ncalendar:ncalendar:4.4.0'   项目升级到androidx
 
 ```
 
@@ -402,6 +403,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 
 
 ## 更新日志
+* 4.4.0<br/> 新增适配器模式自定义页面
 * 4.3.8<br/> 新增月日历上下月是否可点击的属性 isLastNextMonthClickEnable
 * 4.3.7<br/> 修复选中月初月末，实际月份回调bug
 * 4.3.6<br/> 增加数字背景以及渐变效果
