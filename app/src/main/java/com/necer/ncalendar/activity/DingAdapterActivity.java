@@ -38,7 +38,7 @@ public class DingAdapterActivity extends AppCompatActivity {
 
         ICalendar miui10Calendar = findViewById(R.id.miui10Calendar);
         miui10Calendar.setCalendarAdapter(new DingAdapter());
-        miui10Calendar.setSelectedMode(SelectedModel.MULTIPLE);
+       // miui10Calendar.setSelectedMode(SelectedModel.MULTIPLE);
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
