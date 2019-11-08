@@ -51,6 +51,9 @@
 ```
 implementation 'com.necer.ncalendar:ncalendar:4.3.8'
 
+
+implementation 'com.necer.ncalendar:ncalendar:4.3.9'   项目升级到androidx
+
 ```
 
 #### 月周切换
