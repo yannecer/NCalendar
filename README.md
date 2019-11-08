@@ -281,7 +281,9 @@ innerPainter.setStretchStrMap(strMap);
 - [ 绘制接口 CalendarPainter](https://github.com/yannecer/NCalendar/blob/master/CalendarPainter.md)
 - [适配器抽象类 CalendarAdapter](https://github.com/yannecer/NCalendar/blob/master/CalendarAdapter.md)
 ```
+
 写好之后调用下面的方法设置、两中方式取其一，如果同时设置，后面设置的生效
+
 CalendarPainter  ---> setCalendarPainter(CalendarPainter calendarPainter);
 CalendarAdapter  ---> setCalendarAdapter(CalendarAdapter calendarAdapter);
 
