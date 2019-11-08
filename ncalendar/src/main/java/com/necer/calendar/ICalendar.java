@@ -22,8 +22,8 @@ public interface ICalendar {
     /**
      * 设置选中模式
      *
-     * @param selectedMode SINGLE_SELECTED-单个默认选中  默认模式
-     *                     SINGLE_UNSELECTED-单个不选中
+     * @param selectedMode SINGLE_SELECTED-单个 默认选中  默认模式 每页都会有一个选中
+     *                     SINGLE_UNSELECTED-单个 默认不选中 点击选中
      *                     MULTIPLE-多选
      */
     void setSelectedMode(SelectedModel selectedMode);
@@ -38,65 +38,154 @@ public interface ICalendar {
     void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel);
 
 
-    //默认选中时，是否翻页选中第一个，只在selectedMode==SINGLE_SELECTED有效
+    /**
+     * 默认选中时，是否翻页选中第一个，只在selectedMode==SINGLE_SELECTED有效
+     *
+     * @param isDefaultSelectFitst
+     */
     void setDefaultSelectFitst(boolean isDefaultSelectFitst);
 
 
-    //跳转日期
+    /**
+     * 跳转日期
+     *
+     * @param formatDate 必须为 yyyy-MM-dd 的字符串
+     */
     void jumpDate(String formatDate);
 
-    //上一页 上一周 上一月
+    /**
+     * 上一页 上一周 上一月
+     */
     void toLastPager();
 
-    //下一页 下一周 下一月
+    /**
+     * 下一页 下一周 下一月
+     */
     void toNextPager();
 
-    //回到今天
+    /**
+     * 回到今天
+     */
     void toToday();
 
-    //设置自定义绘制类
+    /**
+     * 设置自定义绘制类
+     *
+     * @param calendarPainter 实现CalendarPainter接口，自定义绘制
+     */
     void setCalendarPainter(CalendarPainter calendarPainter);
 
-    //刷新日历
+    /**
+     * 设置自定义适配器 继承CalendarAdapter，实现对应方法，自定义
+     *
+     * @param calendarAdapter
+     */
+    void setCalendarAdapter(CalendarAdapter calendarAdapter);
+
+    /**
+     * 刷新日历
+     */
     void notifyCalendar();
 
-    //设置初始化日期
+    /**
+     * 设置初始化日期
+     *
+     * @param formatInitializeDate 必须为 yyyy-MM-dd 的字符串
+     */
     void setInitializeDate(String formatInitializeDate);
 
-    //设置初始化日期和可用区间
+    /**
+     * 设置初始化日期和可用区间  必须为 yyyy-MM-dd 的字符串
+     *
+     * @param startFormatDate
+     * @param endFormatDate
+     * @param formatInitializeDate
+     */
     void setDateInterval(String startFormatDate, String endFormatDate, String formatInitializeDate);
 
-    //设置可用区间
+    /**
+     * 设置可用区间 必须为 yyyy-MM-dd 的字符串
+     *
+     * @param startFormatDate
+     * @param endFormatDate
+     */
     void setDateInterval(String startFormatDate, String endFormatDate);
 
-    //单选日期变化监听
+    /**
+     * 单选日期变化监听
+     *
+     * @param onCalendarChangedListener
+     */
     void setOnCalendarChangedListener(OnCalendarChangedListener onCalendarChangedListener);
 
-    //多选日期变化监听
+    /**
+     * 多选日期变化监听
+     *
+     * @param onCalendarMultipleChangedListener
+     */
     void setOnCalendarMultipleChangedListener(OnCalendarMultipleChangedListener onCalendarMultipleChangedListener);
 
-    //设置点击了不可用日期监听
+    /**
+     * 设置点击了不可用日期监听
+     *
+     * @param onClickDisableDateListener
+     */
     void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener);
 
-    //获取xml参数
+    /**
+     * 获取xml参数
+     *
+     * @return
+     */
     Attrs getAttrs();
 
-    //获取绘制类
+    /**
+     * 获取绘制类
+     *
+     * @return
+     */
     CalendarPainter getCalendarPainter();
 
-    //获取全部选中的日期集合
+    /**
+     * 获取适配器
+     *
+     * @return
+     */
+    CalendarAdapter getCalendarAdapter();
+
+    /**
+     * 获取全部选中的日期集合
+     *
+     * @return
+     */
     List<LocalDate> getAllSelectDateList();
 
-    //获取当前页面选中的日期集合
+    /**
+     * 获取当前页面选中的日期集合
+     *
+     * @return
+     */
     List<LocalDate> getCurrectSelectDateList();
 
-    //获取当前页面的数据 如果是月周折叠日历 周状态下获取的是一周的数据，月状态下获取的一月的数据
+    /**
+     * 获取当前页面的日期集合 如果是月周折叠日历 周状态下获取的是一周的数据，月状态下获取的一月的数据
+     *
+     * @return
+     */
     List<LocalDate> getCurrectDateList();
 
-    //更新折叠日历的滑动距离
+    /**
+     * 月周折叠日历滑动过程中的滑动距离
+     *
+     * @param currentDistance
+     */
     void updateSlideDistance(int currentDistance);
 
-
-    void setCalendarAdapter(CalendarAdapter calendarAdapter);
+    /**
+     * 设置日历上下月能否点击
+     *
+     * @param enable
+     */
+    void setLastNextMonthClickEnable(boolean enable);
 
 }

@@ -14,14 +14,12 @@ import androidx.core.view.NestedScrollingParent;
 
 import android.util.AttributeSet;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.necer.R;
-import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.CalendarState;
 import com.necer.enumeration.MultipleNumModel;
 import com.necer.enumeration.SelectedModel;
@@ -548,6 +546,11 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
     @Override
+    public CalendarAdapter getCalendarAdapter() {
+        return monthCalendar.getCalendarAdapter();
+    }
+
+    @Override
     public CalendarState getCalendarState() {
         return calendarState;
     }
@@ -611,9 +614,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public void updateSlideDistance(int currentDistance) {
-
-        Log.e("updateSlideDistance", "updateSlideDistance::iiii::");
-
         monthCalendar.updateSlideDistance(currentDistance - weekHeight);
         weekCalendar.updateSlideDistance(currentDistance - weekHeight);
     }
@@ -656,6 +656,12 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     public void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel) {
         monthCalendar.setMultipleNum(multipleNum, multipleNumModel);
         weekCalendar.setMultipleNum(multipleNum, multipleNumModel);
+    }
+
+    @Override
+    public void setLastNextMonthClickEnable(boolean enable) {
+        monthCalendar.setLastNextMonthClickEnable(enable);
+        weekCalendar.setLastNextMonthClickEnable(enable);
     }
 
     @Override
@@ -811,8 +817,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             childView.setY(calendarState == CalendarState.MONTH ? monthHeight : weekHeight);
             isInflateFinish = true;
         }
-        // TODO: 2019/11/7 有问题，会导致一直回调
-        updateSlideDistance((int) childView.getY());
     }
 
     //获取月日历自动到周状态的y值

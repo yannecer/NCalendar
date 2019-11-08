@@ -11,6 +11,7 @@ import com.necer.calendar.ICalendar;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
+import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -70,7 +71,7 @@ public class TicketPainter implements CalendarPainter {
 
 
     @Override
-    public void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
+    public void onDrawCalendarBackground(ICalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
 
     }
 

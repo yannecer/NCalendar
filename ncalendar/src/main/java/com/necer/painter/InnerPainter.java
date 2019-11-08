@@ -7,9 +7,11 @@ import android.text.TextUtils;
 
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
+import com.necer.enumeration.CalendarType;
 import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
+import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -71,15 +73,14 @@ public class InnerPainter implements CalendarPainter {
 
 
     @Override
-    public void onDrawCalendarBackground(CalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-//        if (calendarView instanceof MonthView && mAttrs.isShowNumberBackground) {
-//            mTextPaint.setTextSize(mAttrs.numberBackgroundTextSize);
-//            mTextPaint.setColor(mAttrs.numberBackgroundTextColor);
-//            int alphaColor = mAttrs.numberBackgroundAlphaColor * currentDistance / totalDistance;
-//            mTextPaint.setAlpha(alphaColor);
-//            canvas.drawText(localDate.getMonthOfYear() + "", rectF.centerX(), getBaseLineY(rectF), mTextPaint);
-//        }
-
+    public void onDrawCalendarBackground(ICalendarView iCalendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
+        if (iCalendarView.getCalendarType() == CalendarType.MONTH && mAttrs.isShowNumberBackground) {
+            mTextPaint.setTextSize(mAttrs.numberBackgroundTextSize);
+            mTextPaint.setColor(mAttrs.numberBackgroundTextColor);
+            int alphaColor = mAttrs.numberBackgroundAlphaColor * currentDistance / totalDistance;
+            mTextPaint.setAlpha(alphaColor);
+            canvas.drawText(localDate.getMonthOfYear() + "", rectF.centerX(), getBaseLineY(rectF), mTextPaint);
+        }
     }
 
     @Override

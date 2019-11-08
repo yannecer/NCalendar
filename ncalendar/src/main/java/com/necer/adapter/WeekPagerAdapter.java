@@ -1,15 +1,9 @@
 package com.necer.adapter;
 
 import android.content.Context;
-import android.view.ViewGroup;
 
 import com.necer.calendar.BaseCalendar;
-import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.CalendarType;
-import com.necer.helper.CalendarHelper;
-import com.necer.view.CalendarView;
-import com.necer.view.CalendarView2;
-import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -25,23 +19,14 @@ public class WeekPagerAdapter extends BasePagerAdapter {
     }
 
     @Override
-    protected ICalendarView getCalendarView(ViewGroup container, int position) {
+    protected LocalDate getPageInitializeDate(int position) {
         LocalDate localDate = mInitializeDate.plusDays((position - mPageCurrIndex) * 7);
-       // List<LocalDate> dateList = CalendarUtil.getWeekCalendar(localDate, mFirstDayOfWeek);
-        //return new CalendarView(mContext, container, localDate, dateList);
+        return localDate;
+    }
 
-        if (mCalendar.getCalendarBuild() == CalendarBuild.DRAW) {
-            // return new MonthView(mContext, container, localDate, dateList);
-
-            // return new CalendarView(mContext, container, localDate, dateList, CalendarType.MONTH);
-            return new CalendarView(mContext, new CalendarHelper((BaseCalendar) container, localDate, CalendarType.WEEK));
-        } else {
-            // return new MonthView2(mContext, container, localDate, dateList);
-            return new CalendarView2(mContext, new CalendarHelper((BaseCalendar) container, localDate, CalendarType.WEEK));
-        }
-
-
-        //return new CalendarView(mContext,new CalendarHelper((BaseCalendar) container,localDate, CalendarType.WEEK));
+    @Override
+    protected CalendarType getCalendarType() {
+        return CalendarType.WEEK;
     }
 
 }

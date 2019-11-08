@@ -4,14 +4,14 @@ import android.content.Context;
 
 import androidx.viewpager.widget.PagerAdapter;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarBuild;
-import com.necer.utils.Attrs;
+import com.necer.enumeration.CalendarType;
 import com.necer.view.CalendarView;
+import com.necer.view.CalendarView2;
 import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
@@ -57,14 +57,31 @@ public abstract class BasePagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ICalendarView iCalendarView = getCalendarView(container, position);
+        ICalendarView iCalendarView;
+        LocalDate pageInitializeDate = getPageInitializeDate(position);
+        if (mCalendar.getCalendarBuild() == CalendarBuild.DRAW) {
+            iCalendarView = new CalendarView(mContext, mCalendar, pageInitializeDate, getCalendarType());
+        } else {
+            iCalendarView = new CalendarView2(mContext, mCalendar, pageInitializeDate, getCalendarType());
+        }
         ((View) iCalendarView).setTag(position);
         container.addView((View) iCalendarView);
         return iCalendarView;
     }
 
-    protected abstract ICalendarView getCalendarView(ViewGroup container, int position);
+    /**
+     * 每个页面的初始化日期
+     *
+     * @return
+     */
+    protected abstract LocalDate getPageInitializeDate(int position);
 
+    /**
+     * 获取是周日历还是月日历
+     *
+     * @return
+     */
+    protected abstract CalendarType getCalendarType();
 
 
 }

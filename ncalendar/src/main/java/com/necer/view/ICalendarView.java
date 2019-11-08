@@ -1,5 +1,7 @@
 package com.necer.view;
 
+import com.necer.enumeration.CalendarType;
+
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface ICalendarView {
      *
      * @return
      */
-    LocalDate getInitialDate();
+    LocalDate getPagerInitialDate();
 
     /**
      * 获取中间的日期，周日历以中间的日期判断当前页面的年和月
@@ -72,5 +74,7 @@ public interface ICalendarView {
 
 
     LocalDate getFirstDate();
+
+    CalendarType getCalendarType();
 
 }

@@ -1,19 +1,13 @@
 package com.necer.view;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 
+import com.necer.calendar.BaseCalendar;
+import com.necer.enumeration.CalendarType;
 import com.necer.helper.CalendarHelper;
 import com.necer.painter.CalendarAdapter;
 import com.necer.utils.CalendarUtil;
@@ -29,19 +23,17 @@ import java.util.List;
 public class CalendarView2 extends FrameLayout implements ICalendarView {
 
     private CalendarHelper mCalendarHelper;
-    private int mCurrentDistance;//折叠日历滑动当前的距离
-
     private CalendarAdapter mCalendarAdapter;
-
     private GridCalendarView mGridCalendarView;
+    private View mCalendarBackgroundView;
     private List<LocalDate> mDateList;
 
 
-    public CalendarView2(Context context, CalendarHelper calendarHelper) {
+    public CalendarView2(Context context, BaseCalendar calendar, LocalDate initialDate, CalendarType calendarType) {
         super(context);
 
-        mCalendarHelper = calendarHelper;
-        mCalendarAdapter = calendarHelper.getCalendarAdapter();
+        mCalendarHelper = new CalendarHelper(calendar, initialDate, calendarType);
+        mCalendarAdapter = mCalendarHelper.getCalendarAdapter();
         mDateList = mCalendarHelper.getDateList();
 
         float height = mCalendarHelper.getCalendarHeight();
@@ -53,39 +45,42 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
             setPadding(0, padding, 0, padding);
         }
 
-        View calendarBgView = mCalendarAdapter.getCalendarBgView(context);
-        if (calendarBgView != null) {
-            addView(calendarBgView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mCalendarBackgroundView = mCalendarAdapter.getCalendarBackgroundView(context);
+        if (mCalendarBackgroundView != null) {
+            mCalendarAdapter.onBindCalendarBackgroundView(this, mCalendarBackgroundView, getMiddleLocalDate(), mCalendarHelper.getCalendarHeight(), mCalendarHelper.getInitialDistance());
+            addView(mCalendarBackgroundView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
 
         List<View> viewList = new ArrayList<>();
-
         for (int i = 0; i < mDateList.size(); i++) {
             View calendarItem = mCalendarAdapter.getCalendarItemView(context);
             bindView(calendarItem, mDateList.get(i));
             viewList.add(calendarItem);
         }
-        mGridCalendarView = new GridCalendarView(context, viewList, new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mCalendarHelper.dealClickDate(mDateList.get(position));
-            }
-        });
-
+        mGridCalendarView = new GridCalendarView(context, viewList);
         addView(mGridCalendarView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     @Override
-    public LocalDate getInitialDate() {
-        return mCalendarHelper.getInitialDate();
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mCalendarHelper.resetRectFSize();
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mCalendarHelper.onTouchEvent(event);
+    }
+
+    @Override
+    public LocalDate getPagerInitialDate() {
+        return mCalendarHelper.getPagerInitialDate();
+    }
 
     @Override
     public LocalDate getMiddleLocalDate() {
         return mCalendarHelper.getMiddleLocalDate();
     }
-
 
     @Override
     public int getDistanceFromTop(LocalDate localDate) {
@@ -109,10 +104,9 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
 
     @Override
     public void updateSlideDistance(int currentDistance) {
-        this.mCurrentDistance = currentDistance;
-        //  notifyCalendarView();
-
-        Log.e("updateSlideDistance", "updateSlideDistance::111111::");
+        if (mCalendarBackgroundView != null) {
+            mCalendarAdapter.onBindCalendarBackgroundView(this, mCalendarBackgroundView, getMiddleLocalDate(), mCalendarHelper.getCalendarHeight(), currentDistance);
+        }
     }
 
     @Override
@@ -122,8 +116,7 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
 
     @Override
     public void notifyCalendarView() {
-
-        for (int i = 0; i < mDateList.size(); i++) {
+        for (int i = 0; i < mGridCalendarView.getChildCount(); i++) {
             View view = mGridCalendarView.getChildAt(i);
             if (view != null) {
                 bindView(view, mDateList.get(i));
@@ -152,5 +145,11 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
     public LocalDate getFirstDate() {
         return mCalendarHelper.getFirstDate();
     }
+
+    @Override
+    public CalendarType getCalendarType() {
+        return mCalendarHelper.getCalendarType();
+    }
+
 
 }

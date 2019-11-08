@@ -1,15 +1,9 @@
 package com.necer.adapter;
 
 import android.content.Context;
-import android.view.ViewGroup;
 
 import com.necer.calendar.BaseCalendar;
-import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.CalendarType;
-import com.necer.helper.CalendarHelper;
-import com.necer.view.CalendarView;
-import com.necer.view.CalendarView2;
-import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -24,24 +18,13 @@ public class MonthPagerAdapter extends BasePagerAdapter {
     }
 
     @Override
-    protected ICalendarView getCalendarView(ViewGroup container, int position) {
+    protected LocalDate getPageInitializeDate(int position) {
         LocalDate localDate = mInitializeDate.plusMonths(position - mPageCurrIndex);
+        return localDate;
+    }
 
-        // return new MonthView(mContext, container, localDate, dateList);
-
-
-        //Log.e("CalendarBuild::", "CalendarBuild:222::" + calendarBuild);
-       // Log.e("CalendarBuild::", "CalendarBuild:333::" + mCalendarBuild);
-
-        if (mCalendar.getCalendarBuild() == CalendarBuild.DRAW) {
-            // return new MonthView(mContext, container, localDate, dateList);
-
-            // return new CalendarView(mContext, container, localDate, dateList, CalendarType.MONTH);
-            return new CalendarView(mContext, new CalendarHelper((BaseCalendar) container, localDate, CalendarType.MONTH));
-        } else {
-            // return new MonthView2(mContext, container, localDate, dateList);
-            return new CalendarView2(mContext, new CalendarHelper((BaseCalendar) container, localDate, CalendarType.MONTH));
-        }
-        // return new MonthView2(mContext, container, localDate, dateList);
+    @Override
+    protected CalendarType getCalendarType() {
+        return CalendarType.MONTH;
     }
 }

@@ -9,7 +9,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -70,6 +69,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     private int mCalendarPagerSize;//日历总页数
     private int mCalendarCurrIndex;//日历当前页码
+    private boolean mIsLastNextMonthClickEnable;//上下月是否可点击
 
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
@@ -86,6 +86,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         mCalendarBgColor = mAttrs.bgCalendarColor;
         mFirstDayOfWeek = mAttrs.firstDayOfWeek;
         mIsAllMonthSixLine = mAttrs.isAllMonthSixLine;
+        mIsLastNextMonthClickEnable = mAttrs.isLastNextMonthClickEnable;
 
         setBackgroundColor(mCalendarBgColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
@@ -171,7 +172,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             return;
         }
         if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {//每页单个选中
-            LocalDate initialDate = iCalendarView.getInitialDate();//当前页面初始化的日期
+            LocalDate initialDate = iCalendarView.getPagerInitialDate();//当前页面初始化的日期
             LocalDate lastDate = mAllSelectDateList.get(0);//上个页面选中的日期
             //当前面页面的初始值和上个页选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
             int currNum = getTwoDateCount(lastDate, initialDate, mFirstDayOfWeek);//得出两个页面相差几个
@@ -236,13 +237,13 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     public void onClickLastMonthDate(LocalDate localDate) {
-        if (mAttrs.isLastNextMonthClickEnable) {
+        if (mIsLastNextMonthClickEnable) {
             jump(localDate, true);
         }
     }
 
     public void onClickNextMonthDate(LocalDate localDate) {
-        if (mAttrs.isLastNextMonthClickEnable) {
+        if (mIsLastNextMonthClickEnable) {
             jump(localDate, true);
         }
     }
@@ -256,7 +257,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
         mIsJumpClick = true;
         ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
-        int indexOffset = getTwoDateCount(localDate, iCalendarView.getInitialDate(), mFirstDayOfWeek);//得出两个页面相差几个
+        int indexOffset = getTwoDateCount(localDate, iCalendarView.getPagerInitialDate(), mFirstDayOfWeek);//得出两个页面相差几个
         if (mSelectedModel == SelectedModel.MULTIPLE) {
             //多选  点击的日期不清除，只翻页，如果需要清除，等到翻页之后再次点击
             if (!mAllSelectDateList.contains(localDate) && isDraw) {
@@ -293,7 +294,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
                 if (BaseCalendar.this instanceof MonthCalendar) {
                     //月日历返回初始化的月份
-                    yearMonthLocalDate = iCalendarView.getInitialDate();
+                    yearMonthLocalDate = iCalendarView.getPagerInitialDate();
                 } else {
                     if (currentSelectDateList.size() == 0) {
                         yearMonthLocalDate = middleLocalDate;
@@ -443,17 +444,14 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
 
-
     @Override
     public void setCalendarAdapter(CalendarAdapter calendarAdapter) {
-
-        Log.e("CalendarView","CalendarView：set：：：");
-
         this.mCalendarBuild = CalendarBuild.ADAPTER;
         this.mCalendarAdapter = calendarAdapter;
         notifyCalendar();
     }
 
+    @Override
     public CalendarAdapter getCalendarAdapter() {
         return mCalendarAdapter;
     }
@@ -575,6 +573,11 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return mAttrs;
     }
 
+
+    @Override
+    public void setLastNextMonthClickEnable(boolean enable) {
+        this.mIsLastNextMonthClickEnable = enable;
+    }
 
     @Override
     public void setSelectedMode(SelectedModel selectedMode) {
