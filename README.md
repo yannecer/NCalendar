@@ -276,8 +276,8 @@ innerPainter.setStretchStrMap(strMap);
 
 ### 自定义
 
-[### 绘制接口 CalendarPainter](https://github.com/yannecer/NCalendar/blob/master/CalendarPainter.md)
-[### 适配器抽象类 CalendarAdapter](https://github.com/yannecer/NCalendar/blob/master/CalendarAdapter.md)
+- [ 绘制接口 CalendarPainter](https://github.com/yannecer/NCalendar/blob/master/CalendarPainter.md)
+- [适配器抽象类 CalendarAdapter](https://github.com/yannecer/NCalendar/blob/master/CalendarAdapter.md)
 
 
 
