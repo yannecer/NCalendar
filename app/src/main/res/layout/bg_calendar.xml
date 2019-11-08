@@ -8,8 +8,9 @@
     <TextView
         android:id="@+id/tv_bg"
         android:layout_width="wrap_content"
-        android:textSize="50dp"
-        android:textStyle="bold"
+        android:textSize="260sp"
+        android:text="11"
+        android:textColor="#55398FE9"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

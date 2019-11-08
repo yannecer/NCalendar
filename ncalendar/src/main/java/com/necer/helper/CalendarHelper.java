@@ -23,8 +23,6 @@ public class CalendarHelper {
 
     private CalendarType mCalendarType;
 
-    protected LocalDate mStartDate;
-    protected LocalDate mEndDate;
     protected RectF mBgRectF;//日历背景
     private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
     protected List<LocalDate> mDateList;//页面的数据集合
@@ -44,14 +42,16 @@ public class CalendarHelper {
         mRectFList = getLocationRectFList();
 
         mAllSelectListDate = mCalendar.getAllSelectDateList();
-        mStartDate = mCalendar.getStartDate();
-        mEndDate = mCalendar.getEndDate();
 
         mBgRectF = new RectF(0f, 0f, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
 
-        mGestureDetector = new GestureDetector(calendar.getContext(), simpleOnGestureListener);
+        mGestureDetector = new GestureDetector(calendar.getContext(), mSimpleOnGestureListener);
     }
 
+    /**
+     * 分配空间
+     * @return
+     */
     private List<RectF> getLocationRectFList() {
         List<RectF> rectFList = new ArrayList<>();
         for (int i = 0; i < mDateList.size(); i++) {
@@ -61,11 +61,20 @@ public class CalendarHelper {
     }
 
 
+    /**
+     * 获取当前的位置，拉伸日历时会变化，其他状态不会变
+     * @param lineIndex
+     * @param columnIndex
+     * @return
+     */
     public RectF getRealRectF(int lineIndex, int columnIndex) {
         int index = lineIndex * 7 + columnIndex;
         return resetRectFSize(mRectFList.get(index), lineIndex, columnIndex);
     }
 
+    /**
+     * 重新确定位置，拉伸日历用到
+     */
     public void resetRectFSize() {
         for (int i = 0; i < mLineNum; i++) {
             for (int j = 0; j < 7; j++) {
@@ -106,21 +115,10 @@ public class CalendarHelper {
         return mCalendarType;
     }
 
-    public List<RectF> getRectFList() {
-        return mRectFList;
-    }
-
     public int getCalendarHeight() {
         return mCalendar.getMeasuredHeight();
     }
 
-    public LocalDate getStartDate() {
-        return mStartDate;
-    }
-
-    public LocalDate getEndDate() {
-        return mEndDate;
-    }
 
     public RectF getBgRectF() {
         return mBgRectF;
@@ -146,6 +144,11 @@ public class CalendarHelper {
         return mDateList.get((mDateList.size() / 2) + 1);
     }
 
+    /**
+     * localDate 到顶部的距离
+     * @param localDate
+     * @return
+     */
     public int getDistanceFromTop(LocalDate localDate) {
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
@@ -160,6 +163,10 @@ public class CalendarHelper {
         return monthCalendarOffset;
     }
 
+    /**
+     * 获取中心点 ，即月周切换的中心日期
+     * @return
+     */
     public LocalDate getPivotDate() {
         LocalDate today = new LocalDate();
         if (getCurrentSelectDateList().size() != 0) {
@@ -171,6 +178,10 @@ public class CalendarHelper {
         }
     }
 
+    /**
+     * 中心点到顶部的距离
+     * @return
+     */
     public int getPivotDistanceFromTop() {
         return getDistanceFromTop(getPivotDate());
     }
@@ -227,7 +238,7 @@ public class CalendarHelper {
     }
 
 
-    private GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
+    private GestureDetector.SimpleOnGestureListener mSimpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
             return true;

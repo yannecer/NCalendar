@@ -80,7 +80,12 @@ public class CalendarUtil {
                 spVal, context.getResources().getDisplayMetrics());
     }
 
-    //是否同月
+    /**
+     * 两个日期是否同月
+     * @param date1
+     * @param date2
+     * @return
+     */
     public static boolean isEqualsMonth(LocalDate date1, LocalDate date2) {
         return date1.getYear() == date2.getYear() && date1.getMonthOfYear() == date2.getMonthOfYear();
     }
@@ -278,7 +283,11 @@ public class CalendarUtil {
     }
 
 
-    //转化一周从周日开始
+    /**
+     * 转化一周从周日开始
+     * @param date
+     * @return
+     */
     public static LocalDate getSunFirstDayOfWeek(LocalDate date) {
         if (date.dayOfWeek().get() == 7) {
             return date;
@@ -287,13 +296,21 @@ public class CalendarUtil {
         }
     }
 
-    //转化一周从周一开始
+    /**
+     * 转化一周从周一开始
+     * @param date
+     * @return
+     */
     public static LocalDate getMonFirstDayOfWeek(LocalDate date) {
         return date.dayOfWeek().withMinimumValue();
     }
 
 
-    //获取CalendarDate  CalendarDate包含需要显示的信息 农历，节气等
+    /**
+     * 获取CalendarDate  CalendarDate包含需要显示的信息 农历，节气等
+     * @param localDate
+     * @return
+     */
     public static CalendarDate getCalendarDate(LocalDate localDate) {
         CalendarDate calendarDate = new CalendarDate();
         int solarYear = localDate.getYear();

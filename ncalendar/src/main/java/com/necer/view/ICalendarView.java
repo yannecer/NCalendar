@@ -70,11 +70,23 @@ public interface ICalendarView {
     List<LocalDate> getCurrentDateList();
 
 
+    /**
+     * 刷新当前页面
+     */
     void notifyCalendarView();
 
 
+    /**
+     * 获取当前页面的第一个数据
+     * @return
+     */
     LocalDate getFirstDate();
 
+    /**
+     * 获取日历的类型
+     * @return CalendarType.MONTH -> 月日历
+     *         CalendarType.WEEK -> 周日历
+     */
     CalendarType getCalendarType();
 
 }

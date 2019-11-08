@@ -113,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, TestActivity.class));
     }
 
+    public void testAdapter(View view) {
+        startActivity(new Intent(this, TestAdapterActivity.class));
+    }
+
 
     private Intent getNewIntent(Class<? extends BaseActivity> clazz, SelectedModel selectedModel, String title) {
         Intent intent = new Intent(this, clazz);
@@ -120,5 +124,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("title", title);
         return intent;
     }
+
+
 
 }

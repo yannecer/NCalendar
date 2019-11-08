@@ -15,7 +15,6 @@ import com.necer.utils.CalendarUtil;
 
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

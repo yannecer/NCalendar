@@ -9,9 +9,28 @@ import java.io.Serializable;
  */
 public class CalendarDate implements Serializable {
 
-    public LocalDate localDate;//公历日期
-    public Lunar lunar;//农历
-    public String solarHoliday;//公历节日
-    public String lunarHoliday;//农历节日
-    public String solarTerm;//节气
+    /**
+     * 公历日期
+     */
+    public LocalDate localDate;
+
+    /**
+     * 农历
+     */
+    public Lunar lunar;
+
+    /**
+     * 公历节日
+     */
+    public String solarHoliday;
+
+    /**
+     * 农历节日
+     */
+    public String lunarHoliday;
+
+    /**
+     * 节气
+     */
+    public String solarTerm;
 }
