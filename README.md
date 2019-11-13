@@ -53,7 +53,7 @@
 implementation 'com.necer.ncalendar:ncalendar:4.3.8'
 
 
-implementation 'com.necer.ncalendar:ncalendar:4.4.0'   项目升级到androidx
+implementation 'com.necer.ncalendar:ncalendar:4.4.1'   项目升级到androidx
 
 ```
 
@@ -139,7 +139,11 @@ implementation 'com.necer.ncalendar:ncalendar:4.4.0'   项目升级到androidx
 
     //跳转日期
     void jumpDate(String formatDate);
-
+    void jumpDate(int year, int month, int day);
+    
+    //跳转月份
+    void jumpMonth(int year, int month);
+    
     //上一页 上一周 上一月
     void toLastPager();
 
@@ -389,6 +393,7 @@ CalendarDate calendarDate = CalendarUtil.getCalendarDate(LocalDate localDate);
 
 
 ## 更新日志
+* 4.4.1<br/> 新增跳转月份的方法
 * 4.4.0<br/> 新增适配器模式自定义页面
 * 4.3.8<br/> 新增月日历上下月是否可点击的属性 isLastNextMonthClickEnable
 * 4.3.7<br/> 修复选中月初月末，实际月份回调bug
