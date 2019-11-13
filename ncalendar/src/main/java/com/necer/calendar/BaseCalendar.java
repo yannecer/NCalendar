@@ -390,6 +390,29 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         jump(jumpDate, true);
     }
 
+
+    @Override
+    public void jumpDate(int year, int month, int day) {
+        LocalDate jumpDate;
+        try {
+            jumpDate = new LocalDate(year, month, day);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
+        }
+        jump(jumpDate, true);
+    }
+
+    @Override
+    public void jumpMonth(int year, int month) {
+        LocalDate jumpDate;
+        try {
+            jumpDate = new LocalDate(year, month, 1);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
+        }
+        jump(jumpDate, false);
+    }
+
     @Override
     public List<LocalDate> getAllSelectDateList() {
         return mAllSelectDateList;

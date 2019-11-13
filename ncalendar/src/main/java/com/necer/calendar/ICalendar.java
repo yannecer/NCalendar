@@ -54,6 +54,24 @@ public interface ICalendar {
     void jumpDate(String formatDate);
 
     /**
+     * 跳转日期
+     *
+     * @param year
+     * @param month
+     * @param day
+     */
+    void jumpDate(int year, int month, int day);
+
+    /**
+     * 跳转日期，跳转到对应月份
+     *
+     * @param year
+     * @param month
+     */
+    void jumpMonth(int year, int month);
+
+
+    /**
      * 上一页 上一周 上一月
      */
     void toLastPager();

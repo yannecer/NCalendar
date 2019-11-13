@@ -502,6 +502,24 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
     @Override
+    public void jumpDate(int year, int month, int day) {
+        if (calendarState == CalendarState.WEEK) {
+            weekCalendar.jumpDate(year, month, day);
+        } else {
+            monthCalendar.jumpDate(year, month, day);
+        }
+    }
+
+    @Override
+    public void jumpMonth(int year, int month) {
+        if (calendarState == CalendarState.WEEK) {
+            weekCalendar.jumpMonth(year, month);
+        } else {
+            monthCalendar.jumpMonth(year, month);
+        }
+    }
+
+    @Override
     public void setInitializeDate(String formatDate) {
         monthCalendar.setInitializeDate(formatDate);
         weekCalendar.setInitializeDate(formatDate);
