@@ -38,6 +38,20 @@ import java.util.List;
  */
 public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
+
+
+    //5.0
+    //修改部分参数命名
+    //增加多选预置 取消不取消
+    //重写InnerPainter
+    //增加日期变化行为参数  1、点击选中  2、点击跳转（上下月的情况） 3、滑动翻页 4、api跳转 等
+    //跳转日期不用post
+    //优化adapter模式
+
+
+
+
+
     private Context mContext;
     private Attrs mAttrs;
 
