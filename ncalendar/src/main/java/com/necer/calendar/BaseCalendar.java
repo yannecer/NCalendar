@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
 
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -25,6 +24,7 @@ import com.necer.painter.InnerPainter;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
+import com.necer.view.CalendarViewPager;
 import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
@@ -36,18 +36,17 @@ import java.util.List;
  * Created by necer on 2018/9/11.
  * qq群：127278900
  */
-public abstract class BaseCalendar extends ViewPager implements ICalendar {
+public abstract class BaseCalendar extends CalendarViewPager implements ICalendar {
 
 
 
     //5.0
     //修改部分参数命名
-    //增加多选预置 取消不取消
+    //增加多选预置 可取消可不取消
     //重写InnerPainter
     //增加日期变化行为参数  1、点击选中  2、点击跳转（上下月的情况） 3、滑动翻页 4、api跳转 等
     //跳转日期不用post
     //优化adapter模式
-
 
 
 

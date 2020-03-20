@@ -38,6 +38,7 @@
         app:selectCircleColor="#398FE9"
         app:solarHolidayTextColor="#519EDC"
         app:solarTermTextColor="#519EDC"
+        app:solarTextColor="@color/colorAccent"
         app:todaySolarTextColor="#398FE9">
 
 

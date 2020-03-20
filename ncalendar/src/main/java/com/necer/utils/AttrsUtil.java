@@ -30,7 +30,7 @@ public class AttrsUtil {
         attrs.solarTermTextColor = ta.getColor(R.styleable.NCalendar_solarTermTextColor, context.getResources().getColor(R.color.solarTermTextColor));
 
         attrs.selectCircleColor = ta.getColor(R.styleable.NCalendar_selectCircleColor, context.getResources().getColor(R.color.selectCircleColor));
-        attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, CalendarUtil.sp2px(context, 18));
+        attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, context.getResources().getDimension(R.dimen.solarTextSize));
         attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, CalendarUtil.sp2px(context, 10));
         attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, CalendarUtil.dp2px(context, 15));
         attrs.holidayDistance = ta.getDimension(R.styleable.NCalendar_holidayDistance, CalendarUtil.dp2px(context, 15));

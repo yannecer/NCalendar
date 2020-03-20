@@ -62,13 +62,10 @@
             android:name=".activity.TestStretchActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-        <activity
-            android:name=".TestActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+<!--        <activity-->
+<!--            android:name=".TestActivity"-->
+<!--            android:configChanges="orientation|screenSize|keyboardHidden" />-->
 
-        <activity
-            android:name=".TestAdapterCalendarActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
 
         <activity
             android:name=".activity.GeneralAdapterActivity"
