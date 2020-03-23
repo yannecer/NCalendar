@@ -7,7 +7,7 @@
     <color name="lunarHolidayTextColor">#B2B2B2</color>
     <color name="solarHolidayTextColor">#B2B2B2</color>
     <color name="hintColor">#999999</color>
-    <color name="selectCircleColor">#39AF81</color>
+    <color name="checkedColor">#39AF81</color>
     <color name="todaySolarTextColor">#39AF81</color>
     <color name="holidayColor">#39AF81</color>
     <color name="workdayColor">#EC7230</color>
@@ -16,6 +16,5 @@
     <color name="hollowCircleColor">#B2B2B2</color>
     <color name="white">#ffffff</color>
     <color name="disabledColor">#999999</color>
-
 
 </resources>

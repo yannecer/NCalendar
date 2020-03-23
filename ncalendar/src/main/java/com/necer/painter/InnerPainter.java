@@ -1,16 +1,19 @@
 package com.necer.painter;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
+import com.necer.R;
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
 import com.necer.enumeration.CalendarType;
 import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
-import com.necer.view.CalendarView;
 import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
@@ -26,13 +29,13 @@ import java.util.Map;
 public class InnerPainter implements CalendarPainter {
 
     private Attrs mAttrs;
-    protected Paint mTextPaint;
-    protected Paint mCirclePaint;
+    private Paint mTextPaint;
+    private Paint mCirclePaint;
 
     private int noAlphaColor = 255;
 
-    protected List<LocalDate> mHolidayList;
-    protected List<LocalDate> mWorkdayList;
+    private List<LocalDate> mHolidayList;
+    private List<LocalDate> mWorkdayList;
 
     private List<LocalDate> mPointList;
     private Map<LocalDate, String> mReplaceLunarStrMap;
@@ -41,7 +44,10 @@ public class InnerPainter implements CalendarPainter {
 
     private ICalendar mCalendar;
 
-    public InnerPainter(ICalendar calendar) {
+    private Drawable mCheckedBackground;
+    private Drawable mTodayCheckedBackground;
+
+    public InnerPainter(Context context, ICalendar calendar) {
         this.mAttrs = calendar.getAttrs();
         this.mCalendar = calendar;
         mTextPaint = getPaint();
@@ -52,6 +58,9 @@ public class InnerPainter implements CalendarPainter {
         mReplaceLunarStrMap = new HashMap<>();
         mReplaceLunarColorMap = new HashMap<>();
         mStretchStrMap = new HashMap<>();
+
+        mCheckedBackground = context.getResources().getDrawable(mAttrs.checkedBackground);
+        mTodayCheckedBackground = context.getResources().getDrawable(mAttrs.todayCheckedBackground);
 
         List<String> holidayList = CalendarUtil.getHolidayList();
         for (int i = 0; i < holidayList.size(); i++) {
@@ -115,6 +124,7 @@ public class InnerPainter implements CalendarPainter {
             drawHolidays(canvas, rectF, false, noAlphaColor, localDate);
         }
         drawStretchText(canvas, rectF, noAlphaColor, localDate);
+
     }
 
     @Override
@@ -144,13 +154,21 @@ public class InnerPainter implements CalendarPainter {
     }
 
 
+
+
+
     //选中背景
     private void drawSelectBg(Canvas canvas, RectF rectF, int alphaColor, boolean isToday) {
-        mCirclePaint.setStyle(isToday ? Paint.Style.FILL_AND_STROKE : Paint.Style.STROKE);
-        mCirclePaint.setStrokeWidth(mAttrs.hollowCircleStroke);
-        mCirclePaint.setColor(isToday ? mAttrs.selectCircleColor : mAttrs.hollowCircleColor);
-        mCirclePaint.setAlpha(alphaColor);
-        canvas.drawCircle(rectF.centerX(), rectF.centerY(), mAttrs.selectCircleRadius, mCirclePaint);
+        // mCirclePaint.setStyle(isToday ? Paint.Style.FILL_AND_STROKE : Paint.Style.STROKE);
+//        mCirclePaint.setStrokeWidth(mAttrs.hollowCircleStroke);
+////        mCirclePaint.setColor(isToday ? mAttrs.selectCircleColor : mAttrs.hollowCircleColor);
+////        mCirclePaint.setAlpha(alphaColor);
+
+        Rect rect = new Rect((int) (rectF.centerX() - mCheckedBackground.getIntrinsicWidth() / 2), (int) (rectF.centerY() - mCheckedBackground.getIntrinsicHeight() / 2), (int) (rectF.centerX() + mCheckedBackground.getIntrinsicWidth() / 2), (int) (rectF.centerY() + mCheckedBackground.getIntrinsicHeight() / 2));
+        mCheckedBackground.setBounds(rect);
+        mCheckedBackground.draw(canvas);
+
+        //    canvas.drawCircle(rectF.centerX(), rectF.centerY(), mAttrs.selectCircleRadius, mCirclePaint);
     }
 
 

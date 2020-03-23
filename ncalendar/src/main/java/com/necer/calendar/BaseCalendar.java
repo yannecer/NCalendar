@@ -495,7 +495,7 @@ public abstract class BaseCalendar extends CalendarViewPager implements ICalenda
     @Override
     public CalendarPainter getCalendarPainter() {
         if (mCalendarPainter == null) {
-            mCalendarPainter = new InnerPainter(this);
+            mCalendarPainter = new InnerPainter(getContext(),this);
         }
         return mCalendarPainter;
     }

@@ -1,5 +1,6 @@
 package com.necer.ncalendar.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;

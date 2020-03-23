@@ -25,7 +25,6 @@
         <attr name="pointColor" format="color" />
 
         <attr name="hollowCircleColor" format="color" />
-        <attr name="hollowCircleStroke" format="dimension" />
 
         <attr name="disabledString" format="string" />
 
@@ -78,6 +77,10 @@
         <attr name="numberBackgroundTextSize" format="dimension" />
         <attr name="numberBackgroundTextColor" format="color" />
         <attr name="numberBackgroundAlphaColor" format="integer" />
+
+
+        <attr name="checkedBackground" format="reference" />
+        <attr name="todayCheckedBackground" format="reference" />
 
     </declare-styleable>
 </resources>

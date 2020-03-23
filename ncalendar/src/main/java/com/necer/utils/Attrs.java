@@ -1,5 +1,7 @@
 package com.necer.utils;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by necer on 2017/6/13.
  */
@@ -36,7 +38,6 @@ public class Attrs {
     public float solarTextSize;
     public float lunarTextSize;
     public float lunarDistance;//农历到文字中心的距离
-    public float selectCircleRadius;
     public boolean isShowLunar;
 
 
@@ -82,6 +83,10 @@ public class Attrs {
     public int numberBackgroundAlphaColor;//数字背景字体透明度
 
     public boolean isLastNextMonthClickEnable;//月日历上下月是否可点击
+
+
+    public int todayCheckedBackground;//选中当天的checkedBackground
+    public int checkedBackground;//选中其他日期的checkedBackground
 
 
 }

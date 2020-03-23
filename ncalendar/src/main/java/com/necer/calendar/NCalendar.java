@@ -102,7 +102,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         monthCalendar.setId(R.id.N_monthCalendar);
         weekCalendar.setId(R.id.N_weekCalendar);
 
-        setCalendarPainter(new InnerPainter(this));
+        setCalendarPainter(new InnerPainter(getContext(),this));
 
         monthCalendar.setOnMWDateChangeListener(onMWDateChangeListener);
         weekCalendar.setOnMWDateChangeListener(onMWDateChangeListener);

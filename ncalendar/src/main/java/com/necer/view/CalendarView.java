@@ -9,7 +9,6 @@ import android.view.View;
 import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarType;
 import com.necer.helper.CalendarHelper;
-import com.necer.painter.CalendarAdapter;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
 
