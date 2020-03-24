@@ -2,12 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:orientation="vertical">
 
     <com.necer.calendar.EmuiCalendar
         android:layout_width="match_parent"
-        app:solarTextColor="#ff00ff"
         android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView

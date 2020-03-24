@@ -3,8 +3,9 @@
     android:shape="oval"
     android:useLevel="false">
 
-    <solid android:color="@color/checkedColor" />
+    <solid android:color="@color/N_white" />
+
     <size
-        android:width="@dimen/checkedCircleRadius"
-        android:height="@dimen/checkedCircleRadius" />
+        android:width="@dimen/N_pointSize"
+        android:height="@dimen/N_pointSize" />
 </shape>

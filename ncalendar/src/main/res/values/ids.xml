@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="id" name="N_monthCalendar"/>
-    <item type="id" name="N_weekCalendar"/>
+    <item name="N_monthCalendar" type="id" />
+    <item name="N_weekCalendar" type="id" />
 </resources>

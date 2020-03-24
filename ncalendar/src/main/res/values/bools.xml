@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="N_isShowHoliday">true</bool>
+    <bool name="N_isShowLunar">true</bool>
+    <bool name="N_isAllMonthSixLine">false</bool>
+    <bool name="N_isShowNumberBackground">false</bool>
+    <bool name="N_isLastNextMonthClickEnable">true</bool>
+</resources>

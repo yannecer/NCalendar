@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <dimen name="solarTextSize">18sp</dimen>
-    <dimen name="checkedCircleRadius">44dp</dimen>
-    <dimen name="checkedHollowCircleStroke">1dp</dimen>
-
-
-</resources>

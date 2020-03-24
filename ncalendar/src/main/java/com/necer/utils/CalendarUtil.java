@@ -21,23 +21,6 @@ public class CalendarUtil {
 
 
 
-
-    /**
-     * dp转px
-     */
-    public static float dp2px(Context context, int dpVal) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dpVal, context.getResources().getDisplayMetrics());
-    }
-
-    /**
-     * sp转px
-     */
-    public static float sp2px(Context context, float spVal) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                spVal, context.getResources().getDisplayMetrics());
-    }
-
     /**
      * 两个日期是否同月
      */

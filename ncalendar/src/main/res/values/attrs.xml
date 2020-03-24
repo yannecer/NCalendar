@@ -1,50 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="NCalendar">
-        <attr name="solarTextColor" format="color" />
-        <attr name="lunarTextColor" format="color" />
-        <attr name="solarHolidayTextColor" format="color" />
-        <attr name="lunarHolidayTextColor" format="color" />
-        <attr name="solarTermTextColor" format="color" />
-        <attr name="selectCircleColor" format="color" />
-        <attr name="selectSolarTextColorColor" format="color" />
-        <attr name="selectLunarTextColor" format="color" />
-        <attr name="todaySolarTextColor" format="color" />
-        <attr name="todaySolarSelectTextColor" format="color" />
+
         <attr name="solarTextSize" format="dimension" />
+        <attr name="todayCheckedSolarTextColor" format="color" />
+        <attr name="todayUnCheckedSolarTextColor" format="color" />
+        <attr name="defaultCheckedSolarTextColor" format="color" />
+        <attr name="defaultUnCheckedSolarTextColor" format="color" />
+
+        <attr name="isShowLunar" format="boolean" />
+        <attr name="todayCheckedLunarTextColor" format="color" />
+        <attr name="todayUnCheckedLunarTextColor" format="color" />
+        <attr name="defaultCheckedLunarTextColor" format="color" />
+        <attr name="defaultUnCheckedLunarTextColor" format="color" />
         <attr name="lunarTextSize" format="dimension" />
         <attr name="lunarDistance" format="dimension" />
-        <attr name="holidayTextSize" format="dimension" />
-        <attr name="holidayDistance" format="dimension" />
-        <attr name="selectCircleRadius" format="dimension" />
-        <attr name="isShowLunar" format="boolean" />
 
 
         <attr name="pointSize" format="dimension" />
         <attr name="pointDistance" format="dimension" />
-        <attr name="pointColor" format="color" />
+        <attr name="todayCheckedPoint" format="reference" />
+        <attr name="todayUnCheckedPoint" format="reference" />
+        <attr name="defaultCheckedPoint" format="reference" />
+        <attr name="defaultUnCheckedPoint" format="reference" />
 
-        <attr name="hollowCircleColor" format="color" />
+        <attr name="todayCheckedHoliday" format="reference" />
+        <attr name="todayUnCheckedHoliday" format="reference" />
+        <attr name="defaultCheckedHoliday" format="reference" />
+        <attr name="defaultUnCheckedHoliday" format="reference" />
+
+        <attr name="todayCheckedWorkday" format="reference" />
+        <attr name="todayUnCheckedWorkday" format="reference" />
+        <attr name="defaultCheckedWorkday" format="reference" />
+        <attr name="defaultUnCheckedWorkday" format="reference" />
+
+
+        <attr name="holidayText" format="string" />
+        <attr name="workdayText" format="string" />
+        <attr name="holidayWorkdayTextSize" format="dimension" />
+        <attr name="holidayWorkdayDistance" format="dimension" />
+        <attr name="todayCheckedHolidayTextColor" format="color" />
+        <attr name="todayUnCheckedHolidayTextColor" format="color" />
+        <attr name="defaultCheckedHolidayTextColor" format="color" />
+        <attr name="defaultUnCheckedHolidayTextColor" format="color" />
+        <attr name="todayCheckedWorkdayTextColor" format="color" />
+        <attr name="todayUnCheckedWorkdayTextColor" format="color" />
+        <attr name="defaultCheckedWorkdayTextColor" format="color" />
+        <attr name="defaultUnCheckedWorkdayTextColor" format="color" />
+
 
         <attr name="disabledString" format="string" />
 
         <attr name="calendarHeight" format="dimension" />
         <attr name="stretchCalendarHeight" format="dimension" />
-        <attr name="duration" format="integer" />
+        <attr name="animationDuration" format="integer" />
 
-        <attr name="alphaColor" format="integer" />
+        <attr name="lastNextMothAlphaColor" format="integer" />
         <attr name="disabledAlphaColor" format="integer" />
 
 
         <attr name="isShowHoliday" format="boolean" />
         <attr name="isAllMonthSixLine" format="boolean" />
         <attr name="isLastNextMonthClickEnable" format="boolean" />
-        <attr name="holidayColor" format="color" />
-        <attr name="workdayColor" format="color" />
-        <attr name="todaySelectContrastColor" format="color" />
         <attr name="disabledColor" format="color" />
         <attr name="bgCalendarColor" format="color" />
-
 
         <attr name="defaultCalendar" format="enum">
             <enum name="week" value="100" />
@@ -61,7 +80,7 @@
             <enum name="monday" value="301" />
         </attr>
 
-        <attr name="holidayLocation" format="enum">
+        <attr name="holidayWorkdayLocation" format="enum">
             <enum name="top_right" value="400" />
             <enum name="top_left" value="401" />
             <enum name="bottom_right" value="402" />
@@ -79,7 +98,7 @@
         <attr name="numberBackgroundAlphaColor" format="integer" />
 
 
-        <attr name="checkedBackground" format="reference" />
+        <attr name="defaultCheckedBackground" format="reference" />
         <attr name="todayCheckedBackground" format="reference" />
 
     </declare-styleable>

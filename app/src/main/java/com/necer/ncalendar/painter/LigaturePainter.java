@@ -32,7 +32,7 @@ public class LigaturePainter implements CalendarPainter {
         mTextPaint = getPaint();
         mBgPaint = getPaint();
 
-        mCircleRadius = CalendarUtil.dp2px(context, 20);
+        //mCircleRadius = CalendarUtil.dp2px(context, 20);
         mBgPaint.setColor(Color.parseColor("#ff7575"));
     }
 
@@ -134,7 +134,7 @@ public class LigaturePainter implements CalendarPainter {
 
     //绘制公历
     private void drawSolar(Canvas canvas, RectF rectF, LocalDate date, boolean isSelected, boolean isCurrectMonthOrWeek) {
-        mTextPaint.setTextSize(CalendarUtil.dp2px(mContext, 18));
+   //     mTextPaint.setTextSize(CalendarUtil.dp2px(mContext, 18));
         mTextPaint.setColor(isSelected ? Color.WHITE : Color.BLACK);
         mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
         canvas.drawText(date.getDayOfMonth() + "", rectF.centerX(), rectF.centerY(), mTextPaint);
@@ -142,11 +142,11 @@ public class LigaturePainter implements CalendarPainter {
 
     //绘制农历
     private void drawLunar(Canvas canvas, RectF rectF, LocalDate date, boolean isSelected, boolean isCurrectMonthOrWeek) {
-        mTextPaint.setTextSize(CalendarUtil.dp2px(mContext, 10));
+       // mTextPaint.setTextSize(CalendarUtil.dp2px(mContext, 10));
         CalendarDate calendarDate = CalendarUtil.getCalendarDate(date);
         mTextPaint.setColor(isSelected ? Color.WHITE : Color.GRAY);
         mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
-        canvas.drawText(calendarDate.lunar.lunarOnDrawStr, rectF.centerX(), rectF.centerY() + CalendarUtil.dp2px(mContext, 12), mTextPaint);
+    //    canvas.drawText(calendarDate.lunar.lunarOnDrawStr, rectF.centerX(), rectF.centerY() + CalendarUtil.dp2px(mContext, 12), mTextPaint);
     }
 
 }

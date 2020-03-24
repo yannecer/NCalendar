@@ -26,21 +26,7 @@
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:holidayColor="#519EDC"
-        app:lunarHolidayTextColor="#519EDC"
-        app:pointLocation="down"
-        app:isShowNumberBackground="true"
-        app:numberBackgroundAlphaColor="100"
-        app:numberBackgroundTextSize="250sp"
-        app:numberBackgroundTextColor="#398FE9"
-        app:selectSolarTextColorColor="#00ff00"
-        app:selectLunarTextColor="#00ff00"
-        app:selectCircleColor="#398FE9"
-        app:solarHolidayTextColor="#519EDC"
-        app:solarTermTextColor="#519EDC"
-        app:checkedBackground="@drawable/bg_checked_ding"
-        app:solarTextColor="@color/colorAccent"
-        app:todaySolarTextColor="#398FE9">
+       >
 
 
         <androidx.core.widget.NestedScrollView

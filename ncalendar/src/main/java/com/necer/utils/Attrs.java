@@ -25,49 +25,77 @@ public class Attrs {
     public static final int BOTTOM_LEFT = 403;//左下方
 
 
-    public int solarTextColor;
-    public int todaySolarTextColor;
-    public int todaySolarSelectTextColor;
-    public int lunarTextColor;
-    public int solarHolidayTextColor;
-    public int lunarHolidayTextColor;
-    public int solarTermTextColor;
-    public int selectCircleColor;
-    public int selectSolarTextColorColor;//选中公历颜色
-    public int selectLunarTextColor;//选中农历颜色
-    public float solarTextSize;
+    //公立日期属性
+    public int todayCheckedSolarTextColor;//当天选中的公历字体颜色
+    public int todayUnCheckedSolarTextColor;//当天不选中的公历字体颜色
+    public int defaultCheckedSolarTextColor; //默认选中的公历字体颜色
+    public int defaultUnCheckedSolarTextColor;//默认不选中公历字体颜色
+    public float solarTextSize; //公历字体大小
+
+
+    //标记日期属性
+    public int todayCheckedPoint;//当天选中标记
+    public int todayUnCheckedPoint;//当天不选中标记
+    public int defaultCheckedPoint;//默认选中标记
+    public int defaultUnCheckedPoint;//默认不选中标记
+    public int pointLocation; //0 在上面 1在下面
+    public float pointDistance;//圆点到文字中心的距离
+
+
+    //节假日日期属性  drawable
+    public Drawable todayCheckedHoliday; //当天选中节假日
+    public Drawable todayUnCheckedHoliday;//当天不选中节假日
+    public Drawable defaultCheckedHoliday;//默认选中节假日
+    public Drawable defaultUnCheckedHoliday;//默认不选中节假日
+    public Drawable todayCheckedWorkday; //当天选中工作日
+    public Drawable todayUnCheckedWorkday;//当天不选中工作日
+    public Drawable defaultCheckedWorkday;//默认选中工作日
+    public Drawable defaultUnCheckedWorkday;//默认不选中工作日
+
+    //节假日日期属性  text
+    public boolean isShowHoliday; //是否显示节假日和工作日标记
+    public String holidayText;//节假日文字
+    public String workdayText;//工作日文字
+    public float holidayWorkdayTextSize; //字体大小
+    public float holidayWorkdayDistance;//文字距离中心距离
+    public int holidayWorkdayLocation; //文字的位置
+    public int todayCheckedHolidayTextColor;//当天选中的节假日字体颜色
+    public int todayUnCheckedHolidayTextColor;//当天选中的节假日字体颜色
+    public int defaultCheckedHolidayTextColor;//默认选中的节假日字体颜色
+    public int defaultUnCheckedHolidayTextColor;//默认选中的节假日字体颜色
+    public int todayCheckedWorkdayTextColor;//当天选中的工作日字体颜色
+    public int todayUnCheckedWorkdayTextColor;//当天选中的工作日颜色
+    public int defaultCheckedWorkdayTextColor;//默认选中的工作日字体颜色
+    public int defaultUnCheckedWorkdayTextColor;//默认选中的工作日字体颜色
+
+    //农历属性
+    public boolean isShowLunar;//是否显示农历
+    public int todayCheckedLunarTextColor;//当天选中农历颜色
+    public int todayUnCheckedLunarTextColor;//当天不选中农历颜色
+    public int defaultCheckedLunarTextColor;//默认选中农历颜色
+    public int defaultUnCheckedLunarTextColor;//默认不选中农历颜色
     public float lunarTextSize;
     public float lunarDistance;//农历到文字中心的距离
-    public boolean isShowLunar;
 
 
-    public float pointSize;
-    public float pointDistance;//圆点到文字中心的距离
-    public int pointColor;
-    public int pointLocation; //0 在上面 1在下面
-    public int hollowCircleColor;
-    public float hollowCircleStroke;
+    //上下月
+    public int lastNextMothAlphaColor;//上下月月的颜色透明度
 
-    public int firstDayOfWeek;
-    public int defaultCalendar;
 
-    public int calendarHeight;//正常日历的高度
+    public int firstDayOfWeek;//日历一周开始是周日或周一
+
+    //折叠日历相关
+    public int defaultCalendar; //折叠日历的默认展示日历
+    public int calendarHeight;//折叠日历的高度
     public int stretchCalendarHeight;//拉伸后日历的高度
-    public int duration;
+    public int animationDuration; //折叠日历动画时间
 
-    public boolean isShowHoliday;
-    public int holidayColor;
-    public float holidayTextSize;
-    public float holidayDistance;
-    public int holidayLocation;
-    public int workdayColor;
 
-    public int alphaColor;//不在同一月的颜色透明度
+
     public int disabledAlphaColor;//不可用的日期颜色透明度
     public String disabledString;//点击不可用的日期提示语
 
 
-    public int todaySelectContrastColor;//当天被选中的对比色，选中当前的农历，原定等颜色
     public int bgCalendarColor;//日历背景
 
     public float stretchTextSize; //拉伸显示的字体大小
@@ -84,9 +112,8 @@ public class Attrs {
 
     public boolean isLastNextMonthClickEnable;//月日历上下月是否可点击
 
-
     public int todayCheckedBackground;//选中当天的checkedBackground
-    public int checkedBackground;//选中其他日期的checkedBackground
+    public int defaultCheckedBackground;//选中其他日期的checkedBackground
 
 
 }

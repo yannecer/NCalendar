@@ -24,7 +24,7 @@ public class StretchPainter implements CalendarPainter {
         mBgPaint = getPaint();
         mTextPaint = getPaint();
         mBgPaint.setColor(Color.parseColor("#ff7575"));
-        mTextPaint.setTextSize(CalendarUtil.dp2px(context, 10));
+      //  mTextPaint.setTextSize(CalendarUtil.dp2px(context, 10));
         mTextPaint.setColor(Color.parseColor("#000000"));
     }
 

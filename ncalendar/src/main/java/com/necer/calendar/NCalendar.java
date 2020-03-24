@@ -85,7 +85,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         setMotionEventSplittingEnabled(false);
         this.attrs = AttrsUtil.getAttrs(context, attrs);
 
-        int duration = this.attrs.duration;
+        int duration = this.attrs.animationDuration;
         monthHeight = this.attrs.calendarHeight;
         stretchMonthHeight = this.attrs.stretchCalendarHeight;
 

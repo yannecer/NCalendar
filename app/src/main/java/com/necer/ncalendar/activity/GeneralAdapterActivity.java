@@ -82,7 +82,7 @@ public class GeneralAdapterActivity extends AppCompatActivity {
             setLunar(view, localDate);
 
             if (selectedDateList.contains(localDate)) {
-                ll_content.setBackgroundResource(R.drawable.bg_checked_today);
+                ll_content.setBackgroundResource(R.drawable.bg_checked);
             } else {
                 ll_content.setBackgroundResource(R.drawable.bg_unchecked);
             }
