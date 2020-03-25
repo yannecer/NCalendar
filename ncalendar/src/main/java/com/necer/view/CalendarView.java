@@ -2,10 +2,17 @@ package com.necer.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.necer.R;
 import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarType;
 import com.necer.helper.CalendarHelper;
@@ -17,7 +24,8 @@ import org.joda.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by necer on 2018/9/11.
+ * @author necer
+ * @date 2018/9/11
  * qq群：127278900
  */
 public class CalendarView extends View implements ICalendarView {
@@ -38,7 +46,6 @@ public class CalendarView extends View implements ICalendarView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         CalendarPainter calendarPainter = mCalendarHelper.getCalendarPainter();
         //绘制背景
         drawBg(canvas, calendarPainter);

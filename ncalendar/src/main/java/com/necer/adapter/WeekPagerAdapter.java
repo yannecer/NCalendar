@@ -8,7 +8,9 @@ import com.necer.enumeration.CalendarType;
 import org.joda.time.LocalDate;
 
 /**
- * Created by necer on 2018/9/11.
+ *
+ * @author necer
+ * @date 2018/9/11
  * qq群：127278900
  */
 public class WeekPagerAdapter extends BasePagerAdapter {

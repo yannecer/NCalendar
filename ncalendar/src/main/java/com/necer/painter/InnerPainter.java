@@ -8,6 +8,8 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
+import androidx.core.content.ContextCompat;
+
 import com.necer.R;
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
@@ -24,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * @author necer
  * @date 2019/1/3
  */
@@ -69,13 +70,13 @@ public class InnerPainter implements CalendarPainter {
         mReplaceLunarColorMap = new HashMap<>();
         mStretchStrMap = new HashMap<>();
 
-        mDefaultCheckedBackground = context.getResources().getDrawable(mAttrs.defaultCheckedBackground);
-        mTodayCheckedBackground = context.getResources().getDrawable(mAttrs.todayCheckedBackground);
+        mDefaultCheckedBackground = ContextCompat.getDrawable(context, mAttrs.defaultCheckedBackground);
+        mTodayCheckedBackground = ContextCompat.getDrawable(context, mAttrs.todayCheckedBackground);
 
-        mDefaultCheckedPoint = context.getResources().getDrawable(mAttrs.defaultCheckedPoint);
-        mDefaultUnCheckedPoint = context.getResources().getDrawable(mAttrs.defaultUnCheckedPoint);
-        mTodayCheckedPoint = context.getResources().getDrawable(mAttrs.todayCheckedPoint);
-        mTodayUnCheckedPoint = context.getResources().getDrawable(mAttrs.todayUnCheckedPoint);
+        mDefaultCheckedPoint = ContextCompat.getDrawable(context, mAttrs.defaultCheckedPoint);
+        mDefaultUnCheckedPoint = ContextCompat.getDrawable(context, mAttrs.defaultUnCheckedPoint);
+        mTodayCheckedPoint = ContextCompat.getDrawable(context, mAttrs.todayCheckedPoint);
+        mTodayUnCheckedPoint = ContextCompat.getDrawable(context, mAttrs.todayUnCheckedPoint);
 
 
         List<String> holidayList = CalendarUtil.getHolidayList();
@@ -99,12 +100,12 @@ public class InnerPainter implements CalendarPainter {
 
     @Override
     public void onDrawCalendarBackground(ICalendarView iCalendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-        if (iCalendarView.getCalendarType() == CalendarType.MONTH && mAttrs.isShowNumberBackground) {
+        if (iCalendarView.getCalendarType() == CalendarType.MONTH && mAttrs.showNumberBackground) {
             mTextPaint.setTextSize(mAttrs.numberBackgroundTextSize);
             mTextPaint.setColor(mAttrs.numberBackgroundTextColor);
             int alphaColor = mAttrs.numberBackgroundAlphaColor * currentDistance / totalDistance;
             mTextPaint.setAlpha(alphaColor);
-            canvas.drawText(String.valueOf(localDate.getMonthOfYear()), rectF.centerX(), getTextBaseLineY(rectF.centerY()), mTextPaint);
+            canvas.drawText(localDate.getMonthOfYear()+"", rectF.centerX(), getTextBaseLineY(rectF.centerY()), mTextPaint);
         }
     }
 

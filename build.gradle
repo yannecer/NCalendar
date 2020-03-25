@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.6.1'
 
         //上传jcenter相关插件
         classpath 'com.novoda:bintray-release:0.9'

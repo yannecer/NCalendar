@@ -9,7 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 /**
- * Created by necer on 2020/3/20.
+ *
+ * @author necer
+ * @date 2020/3/20
  */
 public class CalendarViewPager extends ViewPager {
 
