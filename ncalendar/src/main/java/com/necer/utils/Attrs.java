@@ -3,117 +3,366 @@ package com.necer.utils;
 import android.graphics.drawable.Drawable;
 
 /**
- * Created by necer on 2017/6/13.
+ * @author necer
+ * @date 2017/6/13
  */
 
 public class Attrs {
 
 
-    //指示圆点的位置
-    public static final int UP = 200;//在公历日期上面
-    public static final int DOWN = 201;//在公历日期下面
+    /**
+     * 指示圆点的位置
+     * 在公历日期上面
+     */
+    public static final int UP = 200;
+    /**
+     * 指示圆点的位置
+     * 在公历日期下面
+     */
+    public static final int DOWN = 201;
 
-    //周的第一天
-    public static final int SUNDAY = 300;//周的第一天 周日
-    public static final int MONDAY = 301;//周的第一天 周一
-
-
-    //节假日的位置
-    public static final int TOP_RIGHT = 400; //右上方
-    public static final int TOP_LEFT = 401; //左上方
-    public static final int BOTTOM_RIGHT = 402;//右下方
-    public static final int BOTTOM_LEFT = 403;//左下方
-
-
-    //公立日期属性
-    public int todayCheckedSolarTextColor;//当天选中的公历字体颜色
-    public int todayUnCheckedSolarTextColor;//当天不选中的公历字体颜色
-    public int defaultCheckedSolarTextColor; //默认选中的公历字体颜色
-    public int defaultUnCheckedSolarTextColor;//默认不选中公历字体颜色
-    public float solarTextSize; //公历字体大小
-
-
-    //标记日期属性
-    public int todayCheckedPoint;//当天选中标记
-    public int todayUnCheckedPoint;//当天不选中标记
-    public int defaultCheckedPoint;//默认选中标记
-    public int defaultUnCheckedPoint;//默认不选中标记
-    public int pointLocation; //0 在上面 1在下面
-    public float pointDistance;//圆点到文字中心的距离
+    /**
+     * 周的第一天
+     * 周日
+     */
+    public static final int SUNDAY = 300;
+    /**
+     * 周的第一天
+     * 周一
+     */
+    public static final int MONDAY = 301;
 
 
-    //节假日日期属性  drawable
-    public Drawable todayCheckedHoliday; //当天选中节假日
-    public Drawable todayUnCheckedHoliday;//当天不选中节假日
-    public Drawable defaultCheckedHoliday;//默认选中节假日
-    public Drawable defaultUnCheckedHoliday;//默认不选中节假日
-    public Drawable todayCheckedWorkday; //当天选中工作日
-    public Drawable todayUnCheckedWorkday;//当天不选中工作日
-    public Drawable defaultCheckedWorkday;//默认选中工作日
-    public Drawable defaultUnCheckedWorkday;//默认不选中工作日
+    /**
+     * 节假日的位置
+     * 右上方
+     */
+    public static final int TOP_RIGHT = 400;
+    /**
+     * 节假日的位置
+     * 左上方
+     */
+    public static final int TOP_LEFT = 401;
+    /**
+     * 节假日的位置
+     * 右下方
+     */
+    public static final int BOTTOM_RIGHT = 402;
+    /**
+     * 节假日的位置
+     * 左下方
+     */
+    public static final int BOTTOM_LEFT = 403;
 
-    //节假日日期属性  text
-    public boolean isShowHoliday; //是否显示节假日和工作日标记
-    public String holidayText;//节假日文字
-    public String workdayText;//工作日文字
-    public float holidayWorkdayTextSize; //字体大小
-    public float holidayWorkdayDistance;//文字距离中心距离
-    public int holidayWorkdayLocation; //文字的位置
-    public int todayCheckedHolidayTextColor;//当天选中的节假日字体颜色
-    public int todayUnCheckedHolidayTextColor;//当天选中的节假日字体颜色
-    public int defaultCheckedHolidayTextColor;//默认选中的节假日字体颜色
-    public int defaultUnCheckedHolidayTextColor;//默认选中的节假日字体颜色
-    public int todayCheckedWorkdayTextColor;//当天选中的工作日字体颜色
-    public int todayUnCheckedWorkdayTextColor;//当天选中的工作日颜色
-    public int defaultCheckedWorkdayTextColor;//默认选中的工作日字体颜色
-    public int defaultUnCheckedWorkdayTextColor;//默认选中的工作日字体颜色
 
-    //农历属性
-    public boolean isShowLunar;//是否显示农历
-    public int todayCheckedLunarTextColor;//当天选中农历颜色
-    public int todayUnCheckedLunarTextColor;//当天不选中农历颜色
-    public int defaultCheckedLunarTextColor;//默认选中农历颜色
-    public int defaultUnCheckedLunarTextColor;//默认不选中农历颜色
+    /**
+     * 公历日期属性
+     * 当天选中的公历字体颜色
+     */
+    public int todayCheckedSolarTextColor;
+    /**
+     * 公历日期属性
+     * 当天不选中的公历字体颜色
+     */
+    public int todayUnCheckedSolarTextColor;
+    /**
+     * 公历日期属性
+     * 默认选中的公历字体颜色
+     */
+    public int defaultCheckedSolarTextColor;
+    /**
+     * 公历日期属性
+     * 默认不选中公历字体颜色
+     */
+    public int defaultUnCheckedSolarTextColor;
+    /**
+     * 公历日期属性
+     * 公历字体大小
+     */
+    public float solarTextSize;
+
+
+    /**
+     * 标记日期属性
+     * 当天选中标记
+     */
+    public int todayCheckedPoint;
+    /**
+     * 标记日期属性
+     * 当天不选中标记
+     */
+    public int todayUnCheckedPoint;
+    /**
+     * 标记日期属性
+     * 默认选中标记
+     */
+    public int defaultCheckedPoint;
+    /**
+     * 标记日期属性
+     * 默认不选中标记
+     */
+    public int defaultUnCheckedPoint;
+    /**
+     * 标记日期属性
+     * 0 在上面 1在下面
+     */
+    public int pointLocation;
+    /**
+     * 标记日期属性
+     * 标记点到文字中心的距离
+     */
+    public float pointDistance;
+
+
+    /**
+     * 节假日日期属性  drawable
+     * 当天选中节假日
+     */
+    public Drawable todayCheckedHoliday;
+    /**
+     * 节假日日期属性  drawable
+     * 当天不选中节假日
+     */
+    public Drawable todayUnCheckedHoliday;
+    /**
+     * 节假日日期属性  drawable
+     * 默认选中节假日
+     */
+    public Drawable defaultCheckedHoliday;
+    /**
+     * 节假日日期属性  drawable
+     * 默认不选中节假日
+     */
+    public Drawable defaultUnCheckedHoliday;
+    /**
+     * 节假日日期属性  drawable
+     * 当天选中工作日
+     */
+    public Drawable todayCheckedWorkday;
+    /**
+     * 节假日日期属性  drawable
+     * 当天不选中工作日
+     */
+    public Drawable todayUnCheckedWorkday;
+    /**
+     * 节假日日期属性  drawable
+     * 默认选中工作日
+     */
+    public Drawable defaultCheckedWorkday;
+    /**
+     * 节假日日期属性  drawable
+     * 默认不选中工作日
+     */
+    public Drawable defaultUnCheckedWorkday;
+
+
+    /**
+     * 节假日日期属性  text
+     * 是否显示节假日和工作日标记
+     */
+    public boolean showHoliday;
+    /**
+     * 节假日日期属性  text
+     * 节假日文字
+     */
+    public String holidayText;
+    /**
+     * 节假日日期属性  text
+     * 工作日文字
+     */
+    public String workdayText;
+    /**
+     * 节假日日期属性  text
+     * 字体大小
+     */
+    public float holidayWorkdayTextSize;
+    /**
+     * 节假日日期属性  text
+     * 文字距离中心距离
+     */
+    public float holidayWorkdayDistance;
+    /**
+     * 节假日日期属性  text
+     * 文字的位置
+     */
+    public int holidayWorkdayLocation;
+    /**
+     * 节假日日期属性  text
+     * 当天选中的节假日字体颜色
+     */
+    public int todayCheckedHolidayTextColor;
+    /**
+     * 节假日日期属性  text
+     * 当天选中的节假日字体颜色
+     */
+    public int todayUnCheckedHolidayTextColor;
+    /**
+     * 节假日日期属性  text
+     * 默认选中的节假日字体颜色
+     */
+    public int defaultCheckedHolidayTextColor;
+    /**
+     * 节假日日期属性  text
+     * 默认选中的节假日字体颜色
+     */
+    public int defaultUnCheckedHolidayTextColor;
+    /**
+     * 节假日日期属性  text
+     * 当天选中的工作日字体颜色
+     */
+    public int todayCheckedWorkdayTextColor;
+    /**
+     * 节假日日期属性  text
+     * 当天选中的工作日颜色
+     */
+    public int todayUnCheckedWorkdayTextColor;
+    /**
+     * 节假日日期属性  text
+     * 默认选中的工作日字体颜色
+     */
+    public int defaultCheckedWorkdayTextColor;
+    /**
+     * 节假日日期属性  text
+     * 默认选中的工作日字体颜色
+     */
+    public int defaultUnCheckedWorkdayTextColor;
+
+
+    /**
+     * 农历属性
+     * 是否显示农历
+     */
+    public boolean showLunar;
+    /**
+     * 农历属性
+     * 当天选中农历颜色
+     */
+    public int todayCheckedLunarTextColor;
+    /**
+     * 农历属性
+     * 当天不选中农历颜色
+     */
+    public int todayUnCheckedLunarTextColor;
+    /**
+     * 农历属性
+     * 默认选中农历颜色
+     */
+    public int defaultCheckedLunarTextColor;
+    /**
+     * 农历属性
+     * 默认不选中农历颜色
+     */
+    public int defaultUnCheckedLunarTextColor;
+    /**
+     * 农历属性
+     * 农历字体大小
+     */
     public float lunarTextSize;
-    public float lunarDistance;//农历到文字中心的距离
+    /**
+     * 农历属性
+     * 农历到文字中心的距离
+     */
+    public float lunarDistance;
 
 
-    //上下月
-    public int lastNextMothAlphaColor;//上下月月的颜色透明度
+    /**
+     * 上下月月的颜色透明度
+     */
+    public int lastNextMothAlphaColor;
 
 
-    public int firstDayOfWeek;//日历一周开始是周日或周一
-
-    //折叠日历相关
-    public int defaultCalendar; //折叠日历的默认展示日历
-    public int calendarHeight;//折叠日历的高度
-    public int stretchCalendarHeight;//拉伸后日历的高度
-    public int animationDuration; //折叠日历动画时间
+    /**
+     * 日历一周开始是周日或周一
+     */
+    public int firstDayOfWeek;
 
 
+    /**
+     * 折叠日历属性
+     * 折叠日历的默认展示日历
+     */
+    public int defaultCalendar;
+    /**
+     * 折叠日历属性
+     * 折叠日历的高度
+     */
+    public int calendarHeight;
+    /**
+     * 折叠日历属性
+     * 拉伸后日历的高度
+     */
+    public int stretchCalendarHeight;
+    /**
+     * 折叠日历属性
+     * 折叠日历动画时间
+     */
+    public int animationDuration;
 
-    public int disabledAlphaColor;//不可用的日期颜色透明度
-    public String disabledString;//点击不可用的日期提示语
+
+    /**
+     * 不可用的日期颜色透明度
+     */
+    public int disabledAlphaColor;
+    /**
+     * 点击不可用的日期提示语
+     */
+    public String disabledString;
 
 
-    public int bgCalendarColor;//日历背景
+    /**
+     * 日历背景
+     */
+    public int bgCalendarColor;
 
-    public float stretchTextSize; //拉伸显示的字体大小
-    public int stretchTextColor; //拉伸显示的字体颜色
-    public float stretchTextDistance; //拉伸显示的字体距离矩形中心的距离
+    /**
+     * 拉伸显示的字体大小
+     */
+    public float stretchTextSize;
+    /**
+     * 拉伸显示的字体颜色
+     */
+    public int stretchTextColor;
+    /**
+     * 拉伸显示的字体距离矩形中心的距离
+     */
+    public float stretchTextDistance;
 
-    public boolean isAllMonthSixLine;//月是否都6行
+    /**
+     * 月是否都6行
+     */
+    public boolean allMonthSixLine;
 
 
-    public boolean isShowNumberBackground; //是否显示数字背景
-    public float numberBackgroundTextSize; //数字背景字体大小
-    public int numberBackgroundTextColor; //数字背景字体颜色
-    public int numberBackgroundAlphaColor;//数字背景字体透明度
+    /**
+     * 是否显示数字背景
+     */
+    public boolean showNumberBackground;
+    /**
+     * 数字背景字体大小
+     */
+    public float numberBackgroundTextSize;
+    /**
+     * 数字背景字体颜色
+     */
+    public int numberBackgroundTextColor;
+    /**
+     * 数字背景字体透明度
+     */
+    public int numberBackgroundAlphaColor;
 
-    public boolean isLastNextMonthClickEnable;//月日历上下月是否可点击
+    /**
+     * 月日历上下月是否可点击
+     */
+    public boolean lastNextMonthClickEnable;
 
-    public int todayCheckedBackground;//选中当天的checkedBackground
-    public int defaultCheckedBackground;//选中其他日期的checkedBackground
+    /**
+     * 选中当天的checkedBackground
+     */
+    public int todayCheckedBackground;
+    /**
+     * 选中其他日期的checkedBackground
+     */
+    public int defaultCheckedBackground;
 
 
 }

@@ -40,7 +40,7 @@ public class AttrsUtil {
         attrs.defaultCheckedWorkday = ta.getDrawable(R.styleable.NCalendar_defaultCheckedWorkday);
         attrs.defaultUnCheckedWorkday = ta.getDrawable(R.styleable.NCalendar_defaultUnCheckedWorkday);
 
-        attrs.isShowHoliday = ta.getBoolean(R.styleable.NCalendar_isShowHoliday, context.getResources().getBoolean(R.bool.N_isShowHoliday));
+        attrs.showHoliday = ta.getBoolean(R.styleable.NCalendar_showHoliday, context.getResources().getBoolean(R.bool.N_isShowHoliday));
         attrs.holidayWorkdayTextSize = ta.getDimension(R.styleable.NCalendar_holidayWorkdayTextSize, context.getResources().getDimension(R.dimen.N_holidayWorkdayTextSize));
         attrs.holidayWorkdayDistance = ta.getDimension(R.styleable.NCalendar_holidayWorkdayDistance, context.getResources().getDimension(R.dimen.N_holidayWorkdayDistance));
         attrs.holidayWorkdayLocation = ta.getInt(R.styleable.NCalendar_holidayWorkdayLocation, Attrs.TOP_RIGHT);
@@ -56,7 +56,7 @@ public class AttrsUtil {
         attrs.defaultUnCheckedWorkdayTextColor = ta.getColor(R.styleable.NCalendar_defaultUnCheckedWorkdayTextColor, context.getResources().getColor(R.color.N_workdayTextColor));
 
 
-        attrs.isShowLunar = ta.getBoolean(R.styleable.NCalendar_isShowLunar, context.getResources().getBoolean(R.bool.N_isShowLunar));
+        attrs.showLunar = ta.getBoolean(R.styleable.NCalendar_showLunar, context.getResources().getBoolean(R.bool.N_isShowLunar));
         attrs.todayCheckedLunarTextColor = ta.getColor(R.styleable.NCalendar_todayCheckedLunarTextColor, context.getResources().getColor(R.color.N_white));
         attrs.todayUnCheckedLunarTextColor = ta.getColor(R.styleable.NCalendar_todayUnCheckedLunarTextColor, context.getResources().getColor(R.color.N_todayCheckedColor));
         attrs.defaultCheckedLunarTextColor = ta.getColor(R.styleable.NCalendar_defaultCheckedLunarTextColor, context.getResources().getColor(R.color.N_defaultLunarTextColor));
@@ -80,13 +80,13 @@ public class AttrsUtil {
         attrs.stretchTextDistance = ta.getDimension(R.styleable.NCalendar_stretchTextDistance, context.getResources().getDimension(R.dimen.N_stretchTextDistance));
         attrs.stretchTextColor = ta.getColor(R.styleable.NCalendar_stretchTextColor, context.getResources().getColor(R.color.N_stretchTextColor));
 
-        attrs.isAllMonthSixLine = ta.getBoolean(R.styleable.NCalendar_isAllMonthSixLine, context.getResources().getBoolean(R.bool.N_isAllMonthSixLine));
-        attrs.isShowNumberBackground = ta.getBoolean(R.styleable.NCalendar_isShowNumberBackground, context.getResources().getBoolean(R.bool.N_isShowNumberBackground));
+        attrs.allMonthSixLine = ta.getBoolean(R.styleable.NCalendar_allMonthSixLine, context.getResources().getBoolean(R.bool.N_isAllMonthSixLine));
+        attrs.showNumberBackground = ta.getBoolean(R.styleable.NCalendar_showNumberBackground, context.getResources().getBoolean(R.bool.N_isShowNumberBackground));
         attrs.numberBackgroundTextSize = ta.getDimension(R.styleable.NCalendar_numberBackgroundTextSize, context.getResources().getDimension(R.dimen.N_numberBackgroundTextSize));
         attrs.numberBackgroundTextColor = ta.getColor(R.styleable.NCalendar_numberBackgroundTextColor, context.getResources().getColor(R.color.N_todaySolarUnCheckedTextColor));
         attrs.numberBackgroundAlphaColor = ta.getInt(R.styleable.NCalendar_numberBackgroundAlphaColor, context.getResources().getInteger(R.integer.N_numberBackgroundAlphaColor));
 
-        attrs.isLastNextMonthClickEnable = ta.getBoolean(R.styleable.NCalendar_isLastNextMonthClickEnable, context.getResources().getBoolean(R.bool.N_isLastNextMonthClickEnable));
+        attrs.lastNextMonthClickEnable = ta.getBoolean(R.styleable.NCalendar_lastNextMonthClickEnable, context.getResources().getBoolean(R.bool.N_isLastNextMonthClickEnable));
         attrs.todayCheckedBackground = ta.getResourceId(R.styleable.NCalendar_todayCheckedBackground, R.drawable.n_bg_checked_today);
         attrs.defaultCheckedBackground = ta.getResourceId(R.styleable.NCalendar_defaultCheckedBackground, R.drawable.n_bg_checked_default);
 

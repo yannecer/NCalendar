@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by necer on 2019/1/3.
+ *
+ * @author necer
+ * @date 2019/1/3
  */
 public class InnerPainter implements CalendarPainter {
 
@@ -182,12 +184,12 @@ public class InnerPainter implements CalendarPainter {
         mTextPaint.setColor(color);
         mTextPaint.setAlpha(alphaColor);
         mTextPaint.setTextSize(mAttrs.solarTextSize);
-        canvas.drawText(date.getDayOfMonth() + "", rectF.centerX(), mAttrs.isShowLunar ? rectF.centerY() : getTextBaseLineY(rectF.centerY()), mTextPaint);
+        canvas.drawText(date.getDayOfMonth() + "", rectF.centerX(), mAttrs.showLunar ? rectF.centerY() : getTextBaseLineY(rectF.centerY()), mTextPaint);
     }
 
     //绘制农历
     private void drawLunar(Canvas canvas, RectF rectF, LocalDate localDate, int color, int alphaColor) {
-        if (mAttrs.isShowLunar) {
+        if (mAttrs.showLunar) {
             CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
             //农历部分文字展示优先顺序 替换的文字、农历节日、节气、公历节日、正常农历日期
             String lunarString;
@@ -226,7 +228,7 @@ public class InnerPainter implements CalendarPainter {
 
     //绘制节假日
     private void drawHolidayWorkday(Canvas canvas, RectF rectF, LocalDate localDate, Drawable holidayDrawable, Drawable workdayDrawable, int holidayTextColor, int workdayTextColor, int alphaColor) {
-        if (mAttrs.isShowHoliday) {
+        if (mAttrs.showHoliday) {
             int[] holidayLocation = getHolidayLocation(rectF.centerX(), rectF.centerY());
             if (mHolidayList.contains(localDate)) {
                 if (holidayDrawable == null) {
