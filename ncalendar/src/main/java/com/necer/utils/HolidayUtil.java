@@ -10,7 +10,7 @@ public class HolidayUtil {
 
 
     /**
-     * 根据国历获取假期
+     * 根据公历获取假期
      *
      * @return
      */

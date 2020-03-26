@@ -1,6 +1,7 @@
 package com.necer.view;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
     private List<LocalDate> mDateList;
     private int mCurrentDistance = -1;
     private GridCalendarAdapter mGridCalendarAdapter;
+    private GridCalendarView gridCalendarView;
 
 
     public CalendarView2(Context context, BaseCalendar calendar, LocalDate initialDate, CalendarType calendarType) {
@@ -59,8 +61,15 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
             viewList.add(calendarItem);
         }
 
-        GridCalendarView gridCalendarView = new GridCalendarView(context);
+        gridCalendarView = new GridCalendarView(context);
         mGridCalendarAdapter = new GridCalendarAdapter(viewList, this);
+        mGridCalendarAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+               // bindView(calendarItemView,position);
+            }
+        });
         gridCalendarView.setAdapter(mGridCalendarAdapter);
 
         addView(gridCalendarView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -121,7 +130,7 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
     }
 
     @Override
-    public List<LocalDate> getCurrentSelectDateList() {
+    public List<LocalDate> getCurrPagerCheckDateList() {
         return mCalendarHelper.getCurrentSelectDateList();
     }
 
@@ -134,7 +143,7 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
     }
 
     @Override
-    public List<LocalDate> getCurrentDateList() {
+    public List<LocalDate> getCurrPagerDateList() {
         return mCalendarHelper.getCurrentDateList();
     }
 
@@ -145,12 +154,20 @@ public class CalendarView2 extends FrameLayout implements ICalendarView {
             int currentDistance = mCurrentDistance == -1 ? mCalendarHelper.getInitialDistance() : mCurrentDistance;
             mCalendarAdapter.onBindCalendarBackgroundView(this, mCalendarBackgroundView, getMiddleLocalDate(), mCalendarHelper.getCalendarHeight(), currentDistance);
         }
+
+//        可行？
+//        int childCount = gridCalendarView.getChildCount();
+//        for (int i = 0; i < childCount; i++) {
+//            bindView(gridCalendarView.getChildAt(i),i);
+//        }
+
+
     }
 
     //周或者月的第一天
     @Override
-    public LocalDate getFirstDate() {
-        return mCalendarHelper.getFirstDate();
+    public LocalDate getCurrPagerFirstDate() {
+        return mCalendarHelper.getCurrPagerFirstDate();
     }
 
     @Override

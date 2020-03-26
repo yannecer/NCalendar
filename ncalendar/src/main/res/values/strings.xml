@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">calendar</string>
-    <string name="factual_scroll_view">factual_scroll_view</string>
+    <string name="N_factual_scroll_view">factual_scroll_view</string>
     <string name="N_holidayText">休</string>
     <string name="N_workdayText">班</string>
+    <string name="N_disabledString">日期超出许可范围</string>
 </resources>

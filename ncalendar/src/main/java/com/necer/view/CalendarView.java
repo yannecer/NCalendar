@@ -2,17 +2,10 @@ package com.necer.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
-import com.necer.R;
 import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarType;
 import com.necer.helper.CalendarHelper;
@@ -119,7 +112,7 @@ public class CalendarView extends View implements ICalendarView {
     }
 
     @Override
-    public List<LocalDate> getCurrentSelectDateList() {
+    public List<LocalDate> getCurrPagerCheckDateList() {
         return mCalendarHelper.getCurrentSelectDateList();
     }
 
@@ -130,7 +123,7 @@ public class CalendarView extends View implements ICalendarView {
     }
 
     @Override
-    public List<LocalDate> getCurrentDateList() {
+    public List<LocalDate> getCurrPagerDateList() {
         return mCalendarHelper.getCurrentDateList();
     }
 
@@ -141,8 +134,8 @@ public class CalendarView extends View implements ICalendarView {
 
     //周或者月的第一天
     @Override
-    public LocalDate getFirstDate() {
-        return mCalendarHelper.getFirstDate();
+    public LocalDate getCurrPagerFirstDate() {
+        return mCalendarHelper.getCurrPagerFirstDate();
     }
 
     @Override

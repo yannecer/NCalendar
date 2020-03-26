@@ -15,6 +15,8 @@ import com.necer.utils.CalendarUtil;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 /**
  * Created by necer on 2018/9/11.
  * qq群：127278900
@@ -39,6 +41,5 @@ public class WeekCalendar extends BaseCalendar {
     protected LocalDate getIntervalDate(LocalDate localDate, int count) {
         return localDate.plusWeeks(count);
     }
-
 
 }

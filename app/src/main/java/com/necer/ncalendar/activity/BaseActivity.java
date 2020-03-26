@@ -5,18 +5,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.necer.enumeration.SelectedModel;
+import com.necer.enumeration.CheckModel;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected final static String TAG = "NECER";
     protected String title;
-    protected SelectedModel selectedModel;
+    protected CheckModel checkModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        selectedModel = (SelectedModel) getIntent().getSerializableExtra("selectedModel");
+        checkModel = (CheckModel) getIntent().getSerializableExtra("selectedModel");
         title = getIntent().getStringExtra("title");
 
         ActionBar supportActionBar = getSupportActionBar();

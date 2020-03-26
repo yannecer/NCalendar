@@ -55,7 +55,7 @@ public interface ICalendarView {
      *
      * @return
      */
-    List<LocalDate> getCurrentSelectDateList();
+    List<LocalDate> getCurrPagerCheckDateList();
 
     /**
      * 月周切换时滑动的距离
@@ -70,7 +70,7 @@ public interface ICalendarView {
      *
      * @return
      */
-    List<LocalDate> getCurrentDateList();
+    List<LocalDate> getCurrPagerDateList();
 
 
     /**
@@ -83,7 +83,7 @@ public interface ICalendarView {
      * 获取当前页面的第一个数据
      * @return
      */
-    LocalDate getFirstDate();
+    LocalDate getCurrPagerFirstDate();
 
     /**
      * 获取日历的类型

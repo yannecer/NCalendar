@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.necer.calendar.Miui10Calendar;
-import com.necer.enumeration.SelectedModel;
+import com.necer.enumeration.CheckModel;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.painter.LigaturePainter;
 import com.necer.ncalendar.painter.TicketPainter;
@@ -28,7 +28,7 @@ public class CustomCalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom);
         miui10Calendar = findViewById(R.id.miui10Calendar);
-        miui10Calendar.setSelectedMode(SelectedModel.MULTIPLE);
+        miui10Calendar.setCheckMode(CheckModel.MULTIPLE);
         LigaturePainter painter = new LigaturePainter(this);
         miui10Calendar.setCalendarPainter(painter);
 

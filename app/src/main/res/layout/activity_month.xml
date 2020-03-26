@@ -52,6 +52,12 @@
             android:layout_weight="1"
             android:onClick="today"
             android:text="今天" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="jumpMonth"
+            android:text="跳转月 2019-04" />
 
     </LinearLayout>
 

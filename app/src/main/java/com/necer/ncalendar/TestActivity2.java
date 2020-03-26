@@ -3,6 +3,14 @@ package com.necer.ncalendar;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.necer.MyLog;
+import com.necer.calendar.BaseCalendar;
+import com.necer.calendar.MonthCalendar;
+import com.necer.enumeration.DateChangeBehavior;
+import com.necer.listener.OnCalendarChangedListener;
+
+import org.joda.time.LocalDate;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,10 +25,14 @@ public class TestActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_test2);
 
 
-        float dimension = getResources().getDimension(R.dimen.N_calendarHeight);
-        float N_pppp = getResources().getInteger(R.integer.N_animationDuration);
+       MonthCalendar monthCalendar = findViewById(R.id.monthCalendar);
+       monthCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+           @Override
+           public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
+               MyLog.d("onCalendarChange:::"+localDate);
+           }
 
-        Log.e("float", "float::" + dimension);
-        Log.e("float", "float::" + N_pppp);
+       });
+
     }
 }

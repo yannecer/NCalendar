@@ -1,6 +1,7 @@
 package com.necer.listener;
 
 import com.necer.calendar.BaseCalendar;
+import com.necer.enumeration.DateChangeBehavior;
 
 import org.joda.time.LocalDate;
 
@@ -9,5 +10,5 @@ import org.joda.time.LocalDate;
  */
 
 public interface OnCalendarChangedListener {
-    void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate);
+    void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior);
 }

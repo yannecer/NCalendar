@@ -41,7 +41,7 @@ public class CalendarHelper {
 
         mRectFList = getLocationRectFList();
 
-        mAllSelectListDate = mCalendar.getAllSelectDateList();
+        mAllSelectListDate = mCalendar.getAllCheckedDateList();
 
         mBgRectF = new RectF(0f, 0f, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
 
@@ -152,13 +152,13 @@ public class CalendarHelper {
     public int getDistanceFromTop(LocalDate localDate) {
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
-        int selectIndex = mDateList.indexOf(localDate) / 7;
+        int checkedIndex = mDateList.indexOf(localDate) / 7;
         if (mLineNum == 5) {
             //5行的月份
-            monthCalendarOffset = mCalendar.getMeasuredHeight() / 5 * selectIndex;
+            monthCalendarOffset = mCalendar.getMeasuredHeight() / 5 * checkedIndex;
         } else {
             int rectHeight6 = (mCalendar.getMeasuredHeight() / 5) * 4 / 5;
-            monthCalendarOffset = rectHeight6 * selectIndex;
+            monthCalendarOffset = rectHeight6 * checkedIndex;
         }
         return monthCalendarOffset;
     }
@@ -207,12 +207,12 @@ public class CalendarHelper {
         } else if (mCalendarType == CalendarType.MONTH && CalendarUtil.isNextMonth(localDate, mPagerInitialDate)) {
             mCalendar.onClickNextMonthDate(localDate);
         } else {
-            mCalendar.onClickCurrectMonthOrWeekDate(localDate);
+            mCalendar.onClickCurrentMonthOrWeekDate(localDate);
         }
     }
 
 
-    public LocalDate getFirstDate() {
+    public LocalDate getCurrPagerFirstDate() {
         if (mCalendarType == CalendarType.MONTH) {
             return new LocalDate(mPagerInitialDate.getYear(), mPagerInitialDate.getMonthOfYear(), 1);
         } else {

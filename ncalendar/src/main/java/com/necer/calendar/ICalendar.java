@@ -1,8 +1,7 @@
 package com.necer.calendar;
 
-import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.MultipleNumModel;
-import com.necer.enumeration.SelectedModel;
+import com.necer.enumeration.CheckModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
@@ -22,11 +21,11 @@ public interface ICalendar {
     /**
      * 设置选中模式
      *
-     * @param selectedMode SINGLE_SELECTED-单个 默认选中  默认模式 每页都会有一个选中
-     *                     SINGLE_UNSELECTED-单个 默认不选中 点击选中
-     *                     MULTIPLE-多选
+     * @param checkModel SINGLE_DEFAULT_CHECKED-单个 默认每页选中  默认模式 每页都会有一个选中
+     *                   SINGLE_DEFAULT_UNCHECKED-单个 默认不选中 点击、跳转选中
+     *                   MULTIPLE-多选
      */
-    void setSelectedMode(SelectedModel selectedMode);
+    void setCheckMode(CheckModel checkModel);
 
     /**
      * 多选个数和模式
@@ -39,11 +38,11 @@ public interface ICalendar {
 
 
     /**
-     * 默认选中时，是否翻页选中第一个，只在selectedMode==SINGLE_SELECTED有效
+     * 默认选中时，是否翻页选中第一个，只在checkModel==SINGLE_DEFAULT_CHECKED有效
      *
-     * @param isDefaultSelectFitst
+     * @param isDefaultCheckedFirstDate
      */
-    void setDefaultSelectFitst(boolean isDefaultSelectFitst);
+    void setDefaultCheckedFirstDate(boolean isDefaultCheckedFirstDate);
 
 
     /**
@@ -176,21 +175,21 @@ public interface ICalendar {
      *
      * @return
      */
-    List<LocalDate> getAllSelectDateList();
+    List<LocalDate> getAllCheckedDateList();
 
     /**
      * 获取当前页面选中的日期集合
      *
      * @return
      */
-    List<LocalDate> getCurrectSelectDateList();
+    List<LocalDate> getCurrPagerCheckDateList();
 
     /**
      * 获取当前页面的日期集合 如果是月周折叠日历 周状态下获取的是一周的数据，月状态下获取的一月的数据
      *
      * @return
      */
-    List<LocalDate> getCurrectDateList();
+    List<LocalDate> getCurrPagerDateList();
 
     /**
      * 月周折叠日历滑动过程中的滑动距离
@@ -205,5 +204,12 @@ public interface ICalendar {
      * @param enable
      */
     void setLastNextMonthClickEnable(boolean enable);
+
+
+    /**
+     * 设置日历是否可以左右滑动
+     * @param scrollEnable
+     */
+    void setScrollEnable(boolean scrollEnable);
 
 }
