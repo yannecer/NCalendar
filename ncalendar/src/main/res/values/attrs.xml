@@ -8,7 +8,7 @@
         <attr name="defaultCheckedSolarTextColor" format="color" />
         <attr name="defaultUnCheckedSolarTextColor" format="color" />
 
-        <attr name="isShowLunar" format="boolean" />
+        <attr name="showLunar" format="boolean" />
         <attr name="todayCheckedLunarTextColor" format="color" />
         <attr name="todayUnCheckedLunarTextColor" format="color" />
         <attr name="defaultCheckedLunarTextColor" format="color" />
@@ -59,9 +59,9 @@
         <attr name="disabledAlphaColor" format="integer" />
 
 
-        <attr name="isShowHoliday" format="boolean" />
-        <attr name="isAllMonthSixLine" format="boolean" />
-        <attr name="isLastNextMonthClickEnable" format="boolean" />
+        <attr name="showHoliday" format="boolean" />
+        <attr name="allMonthSixLine" format="boolean" />
+        <attr name="lastNextMonthClickEnable" format="boolean" />
         <attr name="disabledColor" format="color" />
         <attr name="bgCalendarColor" format="color" />
 
@@ -92,7 +92,7 @@
         <attr name="stretchTextColor" format="color" />
 
 
-        <attr name="isShowNumberBackground" format="boolean" />
+        <attr name="showNumberBackground" format="boolean" />
         <attr name="numberBackgroundTextSize" format="dimension" />
         <attr name="numberBackgroundTextColor" format="color" />
         <attr name="numberBackgroundAlphaColor" format="integer" />

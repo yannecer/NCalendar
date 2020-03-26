@@ -8,6 +8,8 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
+import androidx.core.content.ContextCompat;
+
 import com.necer.R;
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
@@ -24,7 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by necer on 2019/1/3.
+ * @author necer
+ * @date 2019/1/3
  */
 public class InnerPainter implements CalendarPainter {
 
@@ -67,13 +70,13 @@ public class InnerPainter implements CalendarPainter {
         mReplaceLunarColorMap = new HashMap<>();
         mStretchStrMap = new HashMap<>();
 
-        mDefaultCheckedBackground = context.getResources().getDrawable(mAttrs.defaultCheckedBackground);
-        mTodayCheckedBackground = context.getResources().getDrawable(mAttrs.todayCheckedBackground);
+        mDefaultCheckedBackground = ContextCompat.getDrawable(context, mAttrs.defaultCheckedBackground);
+        mTodayCheckedBackground = ContextCompat.getDrawable(context, mAttrs.todayCheckedBackground);
 
-        mDefaultCheckedPoint = context.getResources().getDrawable(mAttrs.defaultCheckedPoint);
-        mDefaultUnCheckedPoint = context.getResources().getDrawable(mAttrs.defaultUnCheckedPoint);
-        mTodayCheckedPoint = context.getResources().getDrawable(mAttrs.todayCheckedPoint);
-        mTodayUnCheckedPoint = context.getResources().getDrawable(mAttrs.todayUnCheckedPoint);
+        mDefaultCheckedPoint = ContextCompat.getDrawable(context, mAttrs.defaultCheckedPoint);
+        mDefaultUnCheckedPoint = ContextCompat.getDrawable(context, mAttrs.defaultUnCheckedPoint);
+        mTodayCheckedPoint = ContextCompat.getDrawable(context, mAttrs.todayCheckedPoint);
+        mTodayUnCheckedPoint = ContextCompat.getDrawable(context, mAttrs.todayUnCheckedPoint);
 
 
         List<String> holidayList = CalendarUtil.getHolidayList();
@@ -97,12 +100,12 @@ public class InnerPainter implements CalendarPainter {
 
     @Override
     public void onDrawCalendarBackground(ICalendarView iCalendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-        if (iCalendarView.getCalendarType() == CalendarType.MONTH && mAttrs.isShowNumberBackground) {
+        if (iCalendarView.getCalendarType() == CalendarType.MONTH && mAttrs.showNumberBackground) {
             mTextPaint.setTextSize(mAttrs.numberBackgroundTextSize);
             mTextPaint.setColor(mAttrs.numberBackgroundTextColor);
             int alphaColor = mAttrs.numberBackgroundAlphaColor * currentDistance / totalDistance;
             mTextPaint.setAlpha(alphaColor);
-            canvas.drawText(String.valueOf(localDate.getMonthOfYear()), rectF.centerX(), getTextBaseLineY(rectF.centerY()), mTextPaint);
+            canvas.drawText(localDate.getMonthOfYear()+"", rectF.centerX(), getTextBaseLineY(rectF.centerY()), mTextPaint);
         }
     }
 
@@ -182,12 +185,12 @@ public class InnerPainter implements CalendarPainter {
         mTextPaint.setColor(color);
         mTextPaint.setAlpha(alphaColor);
         mTextPaint.setTextSize(mAttrs.solarTextSize);
-        canvas.drawText(date.getDayOfMonth() + "", rectF.centerX(), mAttrs.isShowLunar ? rectF.centerY() : getTextBaseLineY(rectF.centerY()), mTextPaint);
+        canvas.drawText(date.getDayOfMonth() + "", rectF.centerX(), mAttrs.showLunar ? rectF.centerY() : getTextBaseLineY(rectF.centerY()), mTextPaint);
     }
 
     //绘制农历
     private void drawLunar(Canvas canvas, RectF rectF, LocalDate localDate, int color, int alphaColor) {
-        if (mAttrs.isShowLunar) {
+        if (mAttrs.showLunar) {
             CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
             //农历部分文字展示优先顺序 替换的文字、农历节日、节气、公历节日、正常农历日期
             String lunarString;
@@ -226,7 +229,7 @@ public class InnerPainter implements CalendarPainter {
 
     //绘制节假日
     private void drawHolidayWorkday(Canvas canvas, RectF rectF, LocalDate localDate, Drawable holidayDrawable, Drawable workdayDrawable, int holidayTextColor, int workdayTextColor, int alphaColor) {
-        if (mAttrs.isShowHoliday) {
+        if (mAttrs.showHoliday) {
             int[] holidayLocation = getHolidayLocation(rectF.centerX(), rectF.centerY());
             if (mHolidayList.contains(localDate)) {
                 if (holidayDrawable == null) {

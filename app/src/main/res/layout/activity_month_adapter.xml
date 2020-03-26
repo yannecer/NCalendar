@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultCalendar="week"
-        app:isShowNumberBackground="true"
+        app:showNumberBackground="true"
         app:numberBackgroundAlphaColor="100"
         app:numberBackgroundTextSize="250sp"
         app:numberBackgroundTextColor="#398FE9">

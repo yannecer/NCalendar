@@ -5,12 +5,20 @@ import android.graphics.Canvas;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.necer.R;
 import com.necer.adapter.BasePagerAdapter;
 import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.MultipleNumModel;
@@ -98,10 +106,12 @@ public abstract class BaseCalendar extends CalendarViewPager implements ICalenda
 
         mCalendarBgColor = mAttrs.bgCalendarColor;
         mFirstDayOfWeek = mAttrs.firstDayOfWeek;
-        mIsAllMonthSixLine = mAttrs.isAllMonthSixLine;
-        mIsLastNextMonthClickEnable = mAttrs.isLastNextMonthClickEnable;
+        mIsAllMonthSixLine = mAttrs.allMonthSixLine;
+        mIsLastNextMonthClickEnable = mAttrs.lastNextMonthClickEnable;
 
-        setBackgroundColor(mCalendarBgColor);
+      //  setBackgroundColor(Color.YELLOW);
+
+
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(final int position) {

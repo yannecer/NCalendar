@@ -10,7 +10,8 @@ import org.joda.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by necer on 2019/1/3.
+ * @author necer
+ * @date 2019/1/3
  */
 public interface CalendarPainter {
 
