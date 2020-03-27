@@ -1,12 +1,14 @@
 package com.necer.view;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListAdapter;
@@ -35,6 +37,7 @@ public class CalendarView2 extends GridView implements ICalendarView {
     private CalendarAdapter mCalendarAdapter;
     private List<LocalDate> mDateList;
     private int mCurrentDistance = -1;
+    private BaseAdapter gridViewAdapter;
 
 
     public CalendarView2(Context context, BaseCalendar calendar, LocalDate initialDate, CalendarType calendarType) {
@@ -61,8 +64,8 @@ public class CalendarView2 extends GridView implements ICalendarView {
             viewList.add(calendarItem);
         }
 
-        ListAdapter adapter = new GridCalendarAdapter(viewList);
-        setAdapter(adapter);
+        gridViewAdapter = new GridCalendarAdapter(viewList);
+        setAdapter(gridViewAdapter);
 
     }
 
@@ -86,24 +89,21 @@ public class CalendarView2 extends GridView implements ICalendarView {
     }
 
     //刷新view
-    public void bindView() {
-        for (int i = 0; i < getChildCount(); i++) {
-            LocalDate localDate = mDateList.get(i);
-            View view = getChildAt(i);
+    public void bindView(int position,View itemView) {
+            LocalDate localDate = mDateList.get(position);
             if (mCalendarHelper.isAvailableDate(localDate)) {
                 if (mCalendarHelper.isCurrentMonthOrWeek(localDate)) {  //当月日期
                     if (CalendarUtil.isToday(localDate)) {  //当天
-                        mCalendarAdapter.onBindToadyView(view, localDate, mCalendarHelper.getAllSelectListDate());
+                        mCalendarAdapter.onBindToadyView(itemView, localDate, mCalendarHelper.getAllSelectListDate());
                     } else { //不是当天的当月其他日期
-                        mCalendarAdapter.onBindCurrentMonthOrWeekView(view, localDate, mCalendarHelper.getAllSelectListDate());
+                        mCalendarAdapter.onBindCurrentMonthOrWeekView(itemView, localDate, mCalendarHelper.getAllSelectListDate());
                     }
                 } else {  //不是当月的日期
-                    mCalendarAdapter.onBindLastOrNextMonthView(view, localDate, mCalendarHelper.getAllSelectListDate());
+                    mCalendarAdapter.onBindLastOrNextMonthView(itemView, localDate, mCalendarHelper.getAllSelectListDate());
                 }
             } else { //日期区间之外的日期
-                mCalendarAdapter.onBindDisableDateView(view, localDate);
+                mCalendarAdapter.onBindDisableDateView(itemView, localDate);
             }
-        }
     }
 
     @Override
@@ -160,7 +160,7 @@ public class CalendarView2 extends GridView implements ICalendarView {
 
     @Override
     public void notifyCalendarView() {
-        bindView();
+        gridViewAdapter.notifyDataSetChanged();
     }
 
     //周或者月的第一天

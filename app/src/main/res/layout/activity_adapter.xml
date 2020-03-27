@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
@@ -14,6 +15,7 @@
     <com.necer.calendar.Miui10Calendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
+        app:showNumberBackground="true"
         android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
