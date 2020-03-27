@@ -1,6 +1,7 @@
 package com.necer.view;
 
 import com.necer.enumeration.CalendarType;
+import com.necer.painter.CalendarBackground;
 
 import org.joda.time.LocalDate;
 

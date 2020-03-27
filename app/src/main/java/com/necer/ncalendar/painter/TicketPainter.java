@@ -71,11 +71,6 @@ public class TicketPainter implements CalendarPainter {
 
 
     @Override
-    public void onDrawCalendarBackground(ICalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-
-    }
-
-    @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
         drawSelectBg(canvas, rectF, selectedDateList.contains(localDate), true);
         drawSolar(canvas, rectF, localDate, selectedDateList.contains(localDate), true);

@@ -34,6 +34,8 @@
         <attr name="defaultCheckedWorkday" format="reference" />
         <attr name="defaultUnCheckedWorkday" format="reference" />
 
+        <attr name="calendarBackground" format="reference" />
+
 
         <attr name="holidayText" format="string" />
         <attr name="workdayText" format="string" />
@@ -63,7 +65,6 @@
         <attr name="allMonthSixLine" format="boolean" />
         <attr name="lastNextMonthClickEnable" format="boolean" />
         <attr name="disabledColor" format="color" />
-        <attr name="bgCalendarColor" format="color" />
 
         <attr name="defaultCalendar" format="enum">
             <enum name="week" value="100" />

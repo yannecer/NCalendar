@@ -1,5 +1,6 @@
 package com.necer.helper;
 
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -7,6 +8,7 @@ import android.view.MotionEvent;
 import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarType;
 import com.necer.painter.CalendarAdapter;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
 
@@ -18,15 +20,15 @@ import java.util.List;
 public class CalendarHelper {
 
     private int mLineNum;//行数
-    protected LocalDate mPagerInitialDate;//当前页面的初始化日期
+    private LocalDate mPagerInitialDate;//当前页面的初始化日期
     private BaseCalendar mCalendar;
 
     private CalendarType mCalendarType;
 
-    protected RectF mBgRectF;//日历背景
-    private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
-    protected List<LocalDate> mDateList;//页面的数据集合
-    protected List<RectF> mRectFList;
+    private Rect mBackgroundRect;//日历背景
+    private List<LocalDate> mTotalCheckedListDate;//当前页面选中的日期
+    private List<LocalDate> mDateList;//页面的数据集合
+    private List<RectF> mRectFList;
     private GestureDetector mGestureDetector;
 
     public CalendarHelper(BaseCalendar calendar, LocalDate pagerInitialDate, CalendarType calendarType) {
@@ -41,15 +43,16 @@ public class CalendarHelper {
 
         mRectFList = getLocationRectFList();
 
-        mAllSelectListDate = mCalendar.getAllCheckedDateList();
+        mTotalCheckedListDate = mCalendar.getTotalCheckedDateList();
 
-        mBgRectF = new RectF(0f, 0f, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
+        mBackgroundRect = new Rect(0, 0, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
 
         mGestureDetector = new GestureDetector(calendar.getContext(), mSimpleOnGestureListener);
     }
 
     /**
      * 分配空间
+     *
      * @return
      */
     private List<RectF> getLocationRectFList() {
@@ -63,6 +66,7 @@ public class CalendarHelper {
 
     /**
      * 获取当前的位置，拉伸日历时会变化，其他状态不会变
+     *
      * @param lineIndex
      * @param columnIndex
      * @return
@@ -120,12 +124,16 @@ public class CalendarHelper {
     }
 
 
-    public RectF getBgRectF() {
-        return mBgRectF;
+    public Rect getBackgroundRectF() {
+        return mBackgroundRect;
     }
 
     public CalendarPainter getCalendarPainter() {
         return mCalendar.getCalendarPainter();
+    }
+
+    public CalendarBackground getCalendarBackground() {
+        return mCalendar.getCalendarBackground();
     }
 
     public CalendarAdapter getCalendarAdapter() {
@@ -133,7 +141,7 @@ public class CalendarHelper {
     }
 
     public List<LocalDate> getAllSelectListDate() {
-        return mAllSelectListDate;
+        return mTotalCheckedListDate;
     }
 
     public List<LocalDate> getDateList() {
@@ -146,6 +154,7 @@ public class CalendarHelper {
 
     /**
      * localDate 到顶部的距离
+     *
      * @param localDate
      * @return
      */
@@ -165,6 +174,7 @@ public class CalendarHelper {
 
     /**
      * 获取中心点 ，即月周切换的中心日期
+     *
      * @return
      */
     public LocalDate getPivotDate() {
@@ -180,6 +190,7 @@ public class CalendarHelper {
 
     /**
      * 中心点到顶部的距离
+     *
      * @return
      */
     public int getPivotDistanceFromTop() {
@@ -190,7 +201,7 @@ public class CalendarHelper {
         List<LocalDate> currentSelectDateList = new ArrayList<>();
         for (int i = 0; i < mDateList.size(); i++) {
             LocalDate localDate = mDateList.get(i);
-            if (mAllSelectListDate != null && mAllSelectListDate.contains(localDate)) {
+            if (mTotalCheckedListDate != null && mTotalCheckedListDate.contains(localDate)) {
                 currentSelectDateList.add(localDate);
             }
         }

@@ -13,10 +13,8 @@ public class GridCalendarAdapter extends BaseAdapter {
 
 
     private List<View> viewList;
-    private CalendarView2 calendarView;
-    public GridCalendarAdapter(List<View> viewList, CalendarView2 calendarView) {
+    public GridCalendarAdapter(List<View> viewList) {
         this.viewList = viewList;
-        this.calendarView = calendarView;
     }
 
     @Override
@@ -40,7 +38,6 @@ public class GridCalendarAdapter extends BaseAdapter {
         int realHeight = parent.getMeasuredHeight() - parent.getPaddingBottom() - parent.getPaddingTop();
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, realHeight / (viewList.size() / 7));
         calendarItemView.setLayoutParams(params);
-        calendarView.bindView(calendarItemView,position);
         return calendarItemView;
     }
 }

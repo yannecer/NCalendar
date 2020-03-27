@@ -58,19 +58,5 @@ public interface CalendarPainter {
 
     }
 
-    /**
-     * 绘制月日历或这日历背景，如数字背景等
-     *
-     * @param iCalendarView   ICalendarView 日历页面，可判断是月日历或者周日历
-     * @param canvas          画布
-     * @param rectF           当前日历的背景得位置矩形
-     * @param localDate       当前日历的中心日期
-     * @param totalDistance   滑动的全部距离
-     * @param currentDistance 当前位置的距离
-     */
-    default void onDrawCalendarBackground(ICalendarView iCalendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-
-    }
-
 
 }

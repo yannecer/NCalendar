@@ -50,31 +50,13 @@ public class DingAdapterActivity extends AppCompatActivity {
     }
 
 
+
     public static class DingAdapter extends CalendarAdapter {
         @Override
         public View getCalendarItemView(Context context) {
             return LayoutInflater.from(context).inflate(R.layout.item_calendar, null);
         }
 
-        @Override
-        public View getCalendarBackgroundView(Context context) {
-            return LayoutInflater.from(context).inflate(R.layout.bg_calendar, null);
-        }
-
-        @Override
-        public void onBindCalendarBackgroundView(ICalendarView iCalendarView, View calendarBackgroundView, LocalDate localDate, int totalDistance, int currentDistance) {
-            super.onBindCalendarBackgroundView(iCalendarView, calendarBackgroundView, localDate, totalDistance, currentDistance);
-            if (iCalendarView.getCalendarType() == CalendarType.MONTH) {
-                TextView tv_bg = calendarBackgroundView.findViewById(R.id.tv_bg);
-                if (totalDistance != 0) {
-                    float i = (float) currentDistance / (float) totalDistance;
-                    tv_bg.setAlpha(i);
-                    tv_bg.setText(String.valueOf(localDate.getMonthOfYear()));
-
-                    Log.e("onBindCalenww", "onBindCalendarBackgroundView:::" + localDate);
-                }
-            }
-        }
 
         @Override
         public void onBindToadyView(View view, LocalDate localDate, List<LocalDate> totalCheckedDateList) {

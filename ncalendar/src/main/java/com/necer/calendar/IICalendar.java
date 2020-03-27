@@ -3,6 +3,7 @@ package com.necer.calendar;
 import com.necer.enumeration.CalendarState;
 import com.necer.listener.OnCalendarScrollingListener;
 import com.necer.listener.OnCalendarStateChangedListener;
+import com.necer.painter.CalendarBackground;
 
 /**
  * 折叠日历特有的功能接口
@@ -66,5 +67,9 @@ public interface IICalendar extends ICalendar {
      */
     CalendarState getCalendarState();
 
+
+    void setMonthCalendarBackground(CalendarBackground calendarBackground);
+
+    void setWeekCalendarBackground(CalendarBackground calendarBackground);
 
 }

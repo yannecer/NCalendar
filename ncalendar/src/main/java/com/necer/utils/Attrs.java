@@ -310,11 +310,6 @@ public class Attrs {
 
 
     /**
-     * 日历背景
-     */
-    public int bgCalendarColor;
-
-    /**
      * 拉伸显示的字体大小
      */
     public float stretchTextSize;
@@ -363,6 +358,9 @@ public class Attrs {
      * 选中其他日期的checkedBackground
      */
     public int defaultCheckedBackground;
+
+
+    public Drawable calendarBackground;
 
 
 }

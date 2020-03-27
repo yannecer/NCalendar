@@ -2,15 +2,24 @@ package com.necer.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.necer.R;
 import com.necer.calendar.BaseCalendar;
+import com.necer.drawable.TextDrawable;
 import com.necer.enumeration.CalendarType;
 import com.necer.helper.CalendarHelper;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
+import com.necer.utils.DrawableUtil;
 
 import org.joda.time.LocalDate;
 
@@ -39,24 +48,27 @@ public class CalendarView extends View implements ICalendarView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        CalendarPainter calendarPainter = mCalendarHelper.getCalendarPainter();
+
         //绘制背景
-        drawBg(canvas, calendarPainter);
+        CalendarBackground calendarBackground = mCalendarHelper.getCalendarBackground();
+        drawBackground(canvas, calendarBackground);
+
         //绘制日期
-        drawDate(canvas, calendarPainter);
+        CalendarPainter calendarPainter = mCalendarHelper.getCalendarPainter();
+        drawDates(canvas, calendarPainter);
     }
 
     //绘制背景
-    private void drawBg(Canvas canvas, CalendarPainter calendarPainter) {
-        RectF bgRectF = mCalendarHelper.getBgRectF();
-        bgRectF.set(0f, 0f, getMeasuredWidth(), getMeasuredHeight());
+    private void drawBackground(Canvas canvas, CalendarBackground calendarBackground) {
         int currentDistance = mCurrentDistance == -1 ? mCalendarHelper.getInitialDistance() : mCurrentDistance;
-        calendarPainter.onDrawCalendarBackground(this, canvas, bgRectF, getMiddleLocalDate(), mCalendarHelper.getCalendarHeight(), currentDistance);
+        Drawable backgroundDrawable = calendarBackground.getBackgroundDrawable(mCalendarHelper.getMiddleLocalDate(), currentDistance, mCalendarHelper.getCalendarHeight());
+        Rect backgroundRectF = mCalendarHelper.getBackgroundRectF();
+        backgroundDrawable.setBounds(DrawableUtil.getDrawableBounds(backgroundRectF.centerX(), backgroundRectF.centerY(), backgroundDrawable));
+        backgroundDrawable.draw(canvas);
     }
 
-
     //绘制日期
-    private void drawDate(Canvas canvas, CalendarPainter calendarPainter) {
+    private void drawDates(Canvas canvas, CalendarPainter calendarPainter) {
 
         for (int i = 0; i < mCalendarHelper.getLineNum(); i++) {
             for (int j = 0; j < 7; j++) {
@@ -79,6 +91,8 @@ public class CalendarView extends View implements ICalendarView {
             }
         }
     }
+
+
 
     @Override
     public LocalDate getPagerInitialDate() {
@@ -142,5 +156,6 @@ public class CalendarView extends View implements ICalendarView {
     public CalendarType getCalendarType() {
         return mCalendarHelper.getCalendarType();
     }
+
 
 }

@@ -1,6 +1,7 @@
 package com.necer.calendar;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -11,15 +12,18 @@ import com.necer.R;
 import com.necer.adapter.BasePagerAdapter;
 import com.necer.enumeration.CalendarBuild;
 import com.necer.enumeration.DateChangeBehavior;
-import com.necer.enumeration.MultipleNumModel;
+import com.necer.enumeration.MultipleCountModel;
 import com.necer.enumeration.CheckModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnMWDateChangeListener;
 import com.necer.painter.CalendarAdapter;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.CalendarPainter;
 import com.necer.painter.InnerPainter;
+import com.necer.painter.NumBackground;
+import com.necer.painter.WhiteBackground;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.view.ICalendarView;
@@ -69,13 +73,14 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     protected CalendarPainter mCalendarPainter;
     private List<LocalDate> mTotalCheckedDateList;
 
-    private MultipleNumModel mMultipleNumModel;//多选数量模式
-    private int mMultipleNum;//多选个数
+    private MultipleCountModel mMultipleCountModel;//多选数量模式
+    private int mMultipleCount;//多选个数
 
     private int mFirstDayOfWeek;//日历的周一开始、周日开始
     private boolean mAllMonthSixLine;//月日历是否都是6行
 
     private CalendarBuild mCalendarBuild;
+    private CalendarBackground mCalendarBackground;
 
     private CalendarAdapter mCalendarAdapter;
 
@@ -98,8 +103,13 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         mEndDate = new LocalDate("2099-12-31");
 
         //背景颜色
-        int calendarBgColor = mAttrs.bgCalendarColor;
-        setBackgroundColor(calendarBgColor);
+        if (mAttrs.showNumberBackground) {
+            mCalendarBackground = new NumBackground(mAttrs.numberBackgroundTextSize, mAttrs.numberBackgroundTextColor, mAttrs.numberBackgroundAlphaColor);
+        } else if (mAttrs.calendarBackground != null) {
+            mCalendarBackground = (localDate, currentDistance, totalDistance) -> mAttrs.calendarBackground;
+        } else {
+            mCalendarBackground = new WhiteBackground();
+        }
 
         mFirstDayOfWeek = mAttrs.firstDayOfWeek;
         mAllMonthSixLine = mAttrs.allMonthSixLine;
@@ -246,7 +256,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         }
     }
 
-    public void jump(LocalDate localDate, boolean isCheck) {
+    protected void jump(LocalDate localDate, boolean isCheck) {
         //判断日期是否合法
         if (!isAvailable(localDate)) {
             if (getVisibility() == VISIBLE) {
@@ -262,9 +272,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             if (isCheck) {
                 if (mCheckModel == CheckModel.MULTIPLE) {
                     if (!mTotalCheckedDateList.contains(localDate)) {
-                        if (mTotalCheckedDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_CLEAR) {
+                        if (mTotalCheckedDateList.size() == mMultipleCount && mMultipleCountModel == MultipleCountModel.FULL_CLEAR) {
                             mTotalCheckedDateList.clear();
-                        } else if (mTotalCheckedDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_REMOVE_FIRST) {
+                        } else if (mTotalCheckedDateList.size() == mMultipleCount && mMultipleCountModel == MultipleCountModel.FULL_REMOVE_FIRST) {
                             mTotalCheckedDateList.remove(0);
                         }
                         mTotalCheckedDateList.add(localDate);
@@ -406,7 +416,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     @Override
-    public List<LocalDate> getAllCheckedDateList() {
+    public List<LocalDate> getTotalCheckedDateList() {
         return mTotalCheckedDateList;
     }
 
@@ -609,10 +619,10 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     @Override
-    public void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel) {
+    public void setMultipleCount(int multipleCount, MultipleCountModel multipleCountModel) {
         this.mCheckModel = CheckModel.MULTIPLE;
-        this.mMultipleNumModel = multipleNumModel;
-        this.mMultipleNum = multipleNum;
+        this.mMultipleCountModel = multipleCountModel;
+        this.mMultipleCount = multipleCount;
     }
 
 
@@ -628,5 +638,16 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     @Override
     public void setScrollEnable(boolean scrollEnable) {
         this.mScrollEnable = scrollEnable;
+    }
+
+
+    @Override
+    public void setCalendarBackground(CalendarBackground calendarBackground) {
+        this.mCalendarBackground = calendarBackground;
+    }
+
+    @Override
+    public CalendarBackground getCalendarBackground() {
+        return mCalendarBackground;
     }
 }

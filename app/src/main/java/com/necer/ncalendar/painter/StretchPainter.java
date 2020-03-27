@@ -30,11 +30,6 @@ public class StretchPainter implements CalendarPainter {
 
 
     @Override
-    public void onDrawCalendarBackground(ICalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-
-    }
-
-    @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {
         canvas.drawRect(rectF, mBgPaint);
         canvas.drawText(localDate.getDayOfMonth() + "", rectF.centerX(), getBaseLineY(rectF), mTextPaint);

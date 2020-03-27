@@ -16,6 +16,7 @@ import com.necer.entity.CalendarDate;
 import com.necer.enumeration.CalendarType;
 import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
+import com.necer.utils.DrawableUtil;
 import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
@@ -97,18 +98,6 @@ public class InnerPainter implements CalendarPainter {
         return paint;
     }
 
-
-    @Override
-    public void onDrawCalendarBackground(ICalendarView iCalendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-        if (iCalendarView.getCalendarType() == CalendarType.MONTH && mAttrs.showNumberBackground) {
-            mTextPaint.setTextSize(mAttrs.numberBackgroundTextSize);
-            mTextPaint.setColor(mAttrs.numberBackgroundTextColor);
-            int alphaColor = mAttrs.numberBackgroundAlphaColor * currentDistance / totalDistance;
-            mTextPaint.setAlpha(alphaColor);
-            canvas.drawText(localDate.getMonthOfYear()+"", rectF.centerX(), getTextBaseLineY(rectF.centerY()), mTextPaint);
-        }
-    }
-
     @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> checkedDateList) {
         if (checkedDateList.contains(localDate)) {
@@ -173,7 +162,7 @@ public class InnerPainter implements CalendarPainter {
 
     //选中背景
     private void drawCheckedBackground(Canvas canvas, Drawable drawable, RectF rectF, int alphaColor) {
-        Rect drawableBounds = getDrawableBounds((int) rectF.centerX(), (int) rectF.centerY(), drawable);
+        Rect drawableBounds = DrawableUtil.getDrawableBounds((int) rectF.centerX(), (int) rectF.centerY(), drawable);
         drawable.setBounds(drawableBounds);
         drawable.setAlpha(alphaColor);
         drawable.draw(canvas);
@@ -220,7 +209,7 @@ public class InnerPainter implements CalendarPainter {
     private void drawPoint(Canvas canvas, RectF rectF, LocalDate date, Drawable drawable, int alphaColor) {
         if (mPointList.contains(date)) {
             float centerY = mAttrs.pointLocation == Attrs.DOWN ? (rectF.centerY() + mAttrs.pointDistance) : (rectF.centerY() - mAttrs.pointDistance);
-            Rect drawableBounds = getDrawableBounds((int) rectF.centerX(), (int) centerY, drawable);
+            Rect drawableBounds = DrawableUtil.getDrawableBounds((int) rectF.centerX(), (int) centerY, drawable);
             drawable.setBounds(drawableBounds);
             drawable.setAlpha(alphaColor);
             drawable.draw(canvas);
@@ -237,7 +226,7 @@ public class InnerPainter implements CalendarPainter {
                     mTextPaint.setColor(holidayTextColor);
                     canvas.drawText(TextUtils.isEmpty(mAttrs.holidayText) ? mContext.getString(R.string.N_holidayText) : mAttrs.holidayText, holidayLocation[0], getTextBaseLineY(holidayLocation[1]), mTextPaint);
                 } else {
-                    Rect drawableBounds = getDrawableBounds(holidayLocation[0], holidayLocation[1], holidayDrawable);
+                    Rect drawableBounds = DrawableUtil.getDrawableBounds(holidayLocation[0], holidayLocation[1], holidayDrawable);
                     holidayDrawable.setBounds(drawableBounds);
                     holidayDrawable.setAlpha(alphaColor);
                     holidayDrawable.draw(canvas);
@@ -248,7 +237,7 @@ public class InnerPainter implements CalendarPainter {
                     mTextPaint.setColor(workdayTextColor);
                     canvas.drawText(TextUtils.isEmpty(mAttrs.workdayText) ? mContext.getString(R.string.N_workdayText) : mAttrs.workdayText, holidayLocation[0], getTextBaseLineY(holidayLocation[1]), mTextPaint);
                 } else {
-                    Rect drawableBounds = getDrawableBounds(holidayLocation[0], holidayLocation[1], workdayDrawable);
+                    Rect drawableBounds = DrawableUtil.getDrawableBounds(holidayLocation[0], holidayLocation[1], workdayDrawable);
                     workdayDrawable.setBounds(drawableBounds);
                     workdayDrawable.setAlpha(alphaColor);
                     workdayDrawable.draw(canvas);
@@ -277,13 +266,6 @@ public class InnerPainter implements CalendarPainter {
         return centerY - (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.top;
     }
 
-    //获取绘制Drawable的矩形
-    private Rect getDrawableBounds(int centerX, int centerY, Drawable drawable) {
-        return new Rect(centerX - drawable.getIntrinsicWidth() / 2,
-                centerY - drawable.getIntrinsicHeight() / 2,
-                centerX + drawable.getIntrinsicWidth() / 2,
-                centerY + drawable.getIntrinsicHeight() / 2);
-    }
 
     //Holiday的位置
     private int[] getHolidayLocation(float centerX, float centerY) {

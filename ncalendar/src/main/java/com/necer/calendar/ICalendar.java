@@ -1,11 +1,12 @@
 package com.necer.calendar;
 
-import com.necer.enumeration.MultipleNumModel;
+import com.necer.enumeration.MultipleCountModel;
 import com.necer.enumeration.CheckModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.painter.CalendarAdapter;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.Attrs;
 
@@ -30,11 +31,11 @@ public interface ICalendar {
     /**
      * 多选个数和模式
      *
-     * @param multipleNum      多选个数
-     * @param multipleNumModel FULL_CLEAR-超过清除所有
-     *                         FULL_REMOVE_FIRST-超过清除第一个
+     * @param multipleCount      多选个数
+     * @param multipleCountModel FULL_CLEAR-超过清除所有
+     *                           FULL_REMOVE_FIRST-超过清除第一个
      */
-    void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel);
+    void setMultipleCount(int multipleCount, MultipleCountModel multipleCountModel);
 
 
     /**
@@ -175,7 +176,7 @@ public interface ICalendar {
      *
      * @return
      */
-    List<LocalDate> getAllCheckedDateList();
+    List<LocalDate> getTotalCheckedDateList();
 
     /**
      * 获取当前页面选中的日期集合
@@ -208,8 +209,15 @@ public interface ICalendar {
 
     /**
      * 设置日历是否可以左右滑动
+     *
      * @param scrollEnable
      */
     void setScrollEnable(boolean scrollEnable);
+
+
+    void setCalendarBackground(CalendarBackground calendarBackground) throws IllegalAccessException;
+
+    CalendarBackground getCalendarBackground() throws IllegalAccessException;
+
 
 }

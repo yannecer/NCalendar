@@ -16,29 +16,6 @@ public abstract class CalendarAdapter {
 
 
     /**
-     * 获取日历背景View，可用于做背景渐变等，不需要可不用实现
-     *
-     * @param context
-     * @return
-     */
-    public View getCalendarBackgroundView(Context context) {
-        return null;
-    }
-
-    /**
-     * 绑定日历背景View，不需要可不用实现
-     *
-     * @param iCalendarView          ICalendarView 日历页面，可判断是月日历或者周日历
-     * @param calendarBackgroundView 日历View，即是getCalendarBackgroundView获取的view
-     * @param localDate
-     * @param totalDistance          滑动的全部距离
-     * @param currentDistance        当前位置的距离
-     */
-    public void onBindCalendarBackgroundView(ICalendarView iCalendarView, View calendarBackgroundView, LocalDate localDate, int totalDistance, int currentDistance) {
-
-    }
-
-    /**
      * 获取日历item的View
      *
      * @param context

@@ -1,8 +1,11 @@
 package com.necer.ncalendar.activity;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 import android.widget.TextView;
 
@@ -14,6 +17,7 @@ import com.necer.enumeration.DateChangeBehavior;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.InnerPainter;
 import com.necer.utils.CalendarUtil;
 
@@ -50,6 +54,17 @@ public class TestMiui10Activity extends BaseActivity {
         miui10Calendar.setCheckMode(checkModel);
         InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
         innerPainter.setPointList(pointList);
+
+
+//        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+//        miui10Calendar.setMonthCalendarBackground(new CalendarBackground() {
+//            @Override
+//            public Drawable getBackgroundDrawable(LocalDate localDate, int currentDistance, int totalDistance) {
+//                return drawable;
+//            }
+//        });
+
+
 
         Map<String, String> strMap = new HashMap<>();
         strMap.put("2019-01-25", "测试");

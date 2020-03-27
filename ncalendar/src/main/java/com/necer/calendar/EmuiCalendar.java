@@ -66,6 +66,4 @@ public class EmuiCalendar extends NCalendar {
             weekCalendar.setVisibility(INVISIBLE);
         }
     }
-
-
 }
