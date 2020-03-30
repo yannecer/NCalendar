@@ -1,7 +1,6 @@
 package com.necer.calendar;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -44,23 +43,12 @@ import androidx.viewpager.widget.ViewPager;
 public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
 
-    //5.0
-    //修改部分参数命名
-    //增加多选预置 可取消可不取消
-    //重写InnerPainter
-    //增加日期变化行为参数  1、点击选中  2、点击跳转（上下月的情况） 3、滑动翻页 4、api跳转 等
-    //跳转日期不用post
-    //优化adapter模式
-
-
-    //变更
-    //1、单选重复点击会重复回调
-
-
     private Context mContext;
     private Attrs mAttrs;
     private boolean mScrollEnable = true;
     private CheckModel mCheckModel;//选中模式
+    private final static String mDefaultStartDate = "1901-01-01";
+    private final static String mDefaultEndDateDate = "2099-12-31";
 
     private boolean mDefaultCheckedFirstDate;//默认选择时，翻页选中第一个日期
 
@@ -99,8 +87,8 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         mDateChangeBehavior = DateChangeBehavior.INITIALIZE;
         mTotalCheckedDateList = new ArrayList<>();
         mInitializeDate = new LocalDate();
-        mStartDate = new LocalDate("1901-01-01");
-        mEndDate = new LocalDate("2099-12-31");
+        mStartDate = new LocalDate(mDefaultStartDate);
+        mEndDate = new LocalDate(mDefaultEndDateDate);
 
         //背景颜色
         if (mAttrs.showNumberBackground) {
@@ -143,11 +131,11 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             throw new IllegalArgumentException("startDate必须在endDate之前");
         }
 
-        if (mStartDate.isBefore(new LocalDate("1901-01-01"))) {
+        if (mStartDate.isBefore(new LocalDate(mDefaultStartDate))) {
             throw new IllegalArgumentException("startDate必须在1901-01-01之后");
         }
 
-        if (mEndDate.isAfter(new LocalDate("2099-12-31"))) {
+        if (mEndDate.isAfter(new LocalDate(mDefaultEndDateDate))) {
             throw new IllegalArgumentException("endDate必须在2099-12-31之前");
         }
 
@@ -506,7 +494,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
 
-    public void setOnMWDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
+    protected void setOnMWDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
         this.mOnMWDateChangeListener = onMWDateChangeListener;
     }
 
