@@ -26,7 +26,6 @@ public class TestStretchActivity extends AppCompatActivity {
         miui10Calendar = findViewById(R.id.miui10Calendar);
         miui10Calendar.setMonthStretchEnable(true);
 
-
         List<String> pointList = Arrays.asList("2019-07-01", "2019-07-19", "2019-07-25", "2019-05-23", "2019-01-01", "2018-12-23");
 
         InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();

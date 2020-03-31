@@ -226,25 +226,23 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
 
     public void onClickCurrentMonthOrWeekDate(LocalDate localDate) {
-        mDateChangeBehavior = DateChangeBehavior.CLICK;
-        jump(localDate, true);
+        jump(localDate, true, DateChangeBehavior.CLICK);
     }
 
     public void onClickLastMonthDate(LocalDate localDate) {
         if (mLastNextMonthClickEnable && mScrollEnable) {
-            mDateChangeBehavior = DateChangeBehavior.CLICK_PAGE;
-            jump(localDate, true);
+            jump(localDate, true, DateChangeBehavior.CLICK_PAGE);
         }
     }
 
     public void onClickNextMonthDate(LocalDate localDate) {
         if (mLastNextMonthClickEnable && mScrollEnable) {
-            mDateChangeBehavior = DateChangeBehavior.CLICK_PAGE;
-            jump(localDate, true);
+            jump(localDate, true, DateChangeBehavior.CLICK_PAGE);
         }
     }
 
-    protected void jump(LocalDate localDate, boolean isCheck) {
+    protected void jump(LocalDate localDate, boolean isCheck, DateChangeBehavior dateChangeBehavior) {
+        this.mDateChangeBehavior = dateChangeBehavior;
         //判断日期是否合法
         if (!isAvailable(localDate)) {
             if (getVisibility() == VISIBLE) {
@@ -318,6 +316,10 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
 
+//    public void setDateChangeBehavior(DateChangeBehavior dateChangeBehavior) {
+//        this.mDateChangeBehavior = dateChangeBehavior;
+//    }
+
     @Override
     public void notifyCalendar() {
         for (int i = 0; i < getChildCount(); i++) {
@@ -360,14 +362,12 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     @Override
     public void toToday() {
-        mDateChangeBehavior = DateChangeBehavior.API;
-        jump(new LocalDate(), true);
+        jump(new LocalDate(), true,DateChangeBehavior.API);
     }
 
 
     @Override
     public void jumpDate(String formatDate) {
-        mDateChangeBehavior = DateChangeBehavior.API;
         LocalDate jumpDate;
         try {
             jumpDate = new LocalDate(formatDate);
@@ -375,32 +375,30 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             throw new IllegalArgumentException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
         }
 
-        jump(jumpDate, true);
+        jump(jumpDate, true,DateChangeBehavior.API);
     }
 
 
     @Override
     public void jumpDate(int year, int month, int day) {
-        mDateChangeBehavior = DateChangeBehavior.API;
         LocalDate jumpDate;
         try {
             jumpDate = new LocalDate(year, month, day);
         } catch (Exception e) {
             throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
         }
-        jump(jumpDate, true);
+        jump(jumpDate, true,DateChangeBehavior.API);
     }
 
     @Override
     public void jumpMonth(int year, int month) {
-        mDateChangeBehavior = DateChangeBehavior.API;
         LocalDate jumpDate;
         try {
             jumpDate = new LocalDate(year, month, 1);
         } catch (Exception e) {
             throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
         }
-        jump(jumpDate, mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED);
+        jump(jumpDate, mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED,DateChangeBehavior.API);
     }
 
     @Override
@@ -554,14 +552,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     //相差count之后的的日期
     protected abstract LocalDate getIntervalDate(LocalDate localDate, int count);
 
-//    @Override
-//    protected void dispatchDraw(Canvas canvas) {
-//        super.dispatchDraw(canvas);
-//        if (!mIsInflateFinish) {
-//            drawView(getCurrentItem());
-//            mIsInflateFinish = true;
-//        }
-//    }
 
     @Override
     public List<LocalDate> getCurrPagerCheckDateList() {
@@ -599,6 +589,11 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         if (mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED) {
             mTotalCheckedDateList.add(mInitializeDate);
         }
+    }
+
+    @Override
+    public CheckModel getCheckModel() {
+        return mCheckModel;
     }
 
     @Override

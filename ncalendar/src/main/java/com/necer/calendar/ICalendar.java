@@ -28,6 +28,8 @@ public interface ICalendar {
      */
     void setCheckMode(CheckModel checkModel);
 
+    CheckModel getCheckModel();
+
     /**
      * 多选个数和模式
      *

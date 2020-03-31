@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 
 import com.necer.R;
 import com.necer.enumeration.CalendarState;
+import com.necer.enumeration.DateChangeBehavior;
 import com.necer.enumeration.MultipleCountModel;
 import com.necer.enumeration.CheckModel;
 import com.necer.listener.OnCalendarChangedListener;
@@ -113,13 +114,14 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
                 //交换数据，保证月周选中数据同步
                 weekCalendar.exchangeCheckedDateList(totalCheckedDateList);
                 //月日历变化,改变周的选中
-                weekCalendar.jump(localDate, false);
+                // weekCalendar.setDateChangeBehavior();
+                weekCalendar.jump(localDate, getCheckModel() == CheckModel.SINGLE_DEFAULT_CHECKED, DateChangeBehavior.API);
 
             } else if (baseCalendar == weekCalendar && childViewY == weekHeight) {
                 //交换数据，保证月周选中数据同步
                 monthCalendar.exchangeCheckedDateList(totalCheckedDateList);
                 //周日历变化，改变月的选中
-                monthCalendar.jump(localDate, false);
+                monthCalendar.jump(localDate, getCheckModel() == CheckModel.SINGLE_DEFAULT_CHECKED, DateChangeBehavior.API);
                 monthCalendar.post(() -> {
                     //此时需要根据月日历的选中日期调整值
                     // 跳转翻页需要时间，需要等待完成之后再调整，如果不这样直接获取位置信息，会出现老的数据，不能获取正确的数据
@@ -618,6 +620,12 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
     @Override
+    public CheckModel getCheckModel() {
+        return monthCalendar.getCheckModel();
+    }
+
+
+    @Override
     public void setDefaultCheckedFirstDate(boolean isDefaultSelectFitst) {
         monthCalendar.setDefaultCheckedFirstDate(isDefaultSelectFitst);
         weekCalendar.setDefaultCheckedFirstDate(isDefaultSelectFitst);
@@ -791,7 +799,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
             //重新设置周的显示 展开月日历上面可能有选中的日期，需要下次折叠时周日历的显示要正确
             LocalDate pivot = monthCalendar.getPivotDate();
-            weekCalendar.jump(pivot, false);
+            weekCalendar.jump(pivot, getCheckModel() == CheckModel.SINGLE_DEFAULT_CHECKED, DateChangeBehavior.API);
 
             if (onCalendarStateChangedListener != null) {
                 onCalendarStateChangedListener.onCalendarStateChange(calendarState);
@@ -803,7 +811,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
             //重新设置周的显示 展开月日历上面可能有选中的日期，需要下次折叠时周日历的显示要正确
             LocalDate pivot = monthCalendar.getPivotDate();
-            weekCalendar.jump(pivot, false);
+            weekCalendar.jump(pivot, getCheckModel() == CheckModel.SINGLE_DEFAULT_CHECKED, DateChangeBehavior.API);
 
             if (onCalendarStateChangedListener != null) {
                 onCalendarStateChangedListener.onCalendarStateChange(calendarState);

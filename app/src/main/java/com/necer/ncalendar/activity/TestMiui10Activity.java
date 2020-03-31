@@ -96,6 +96,7 @@ public class TestMiui10Activity extends BaseActivity {
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
                 Log.d(TAG, "   当前页面选中 " + localDate);
+                Log.d(TAG, "   dateChangeBehavior " + dateChangeBehavior);
 
                 if (localDate != null) {
                     CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
