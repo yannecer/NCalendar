@@ -128,19 +128,19 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         }
 
         if (mStartDate.isAfter(mEndDate)) {
-            throw new IllegalArgumentException("startDate必须在endDate之前");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_start_after_end));
         }
 
         if (mStartDate.isBefore(new LocalDate(mDefaultStartDate))) {
-            throw new IllegalArgumentException("startDate必须在1901-01-01之后");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_start_before_19010101));
         }
 
         if (mEndDate.isAfter(new LocalDate(mDefaultEndDateDate))) {
-            throw new IllegalArgumentException("endDate必须在2099-12-31之前");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_end_after_20991231));
         }
 
         if (mStartDate.isAfter(mInitializeDate) || mEndDate.isBefore(mInitializeDate)) {
-            throw new IllegalArgumentException("日期区间必须包含初始化日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_initialize_date_illegal));
         }
 
         mCalendarPagerSize = getTwoDateCount(mStartDate, mEndDate, mFirstDayOfWeek) + 1;
@@ -158,7 +158,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             mStartDate = new LocalDate(startFormatDate);
             mEndDate = new LocalDate(endFormatDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
         initAdapter();
     }
@@ -168,7 +168,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             mInitializeDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
         initAdapter();
     }
@@ -180,7 +180,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             mEndDate = new LocalDate(endFormatDate);
             mInitializeDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
         initAdapter();
     }
@@ -316,10 +316,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
 
-//    public void setDateChangeBehavior(DateChangeBehavior dateChangeBehavior) {
-//        this.mDateChangeBehavior = dateChangeBehavior;
-//    }
-
     @Override
     public void notifyCalendar() {
         for (int i = 0; i < getChildCount(); i++) {
@@ -362,7 +358,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     @Override
     public void toToday() {
-        jump(new LocalDate(), true,DateChangeBehavior.API);
+        jump(new LocalDate(), true, DateChangeBehavior.API);
     }
 
 
@@ -372,10 +368,10 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             jumpDate = new LocalDate(formatDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
 
-        jump(jumpDate, true,DateChangeBehavior.API);
+        jump(jumpDate, true, DateChangeBehavior.API);
     }
 
 
@@ -385,9 +381,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             jumpDate = new LocalDate(year, month, day);
         } catch (Exception e) {
-            throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
+            throw new IllegalArgumentException("");
         }
-        jump(jumpDate, true,DateChangeBehavior.API);
+        jump(jumpDate, true, DateChangeBehavior.API);
     }
 
     @Override
@@ -396,9 +392,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             jumpDate = new LocalDate(year, month, 1);
         } catch (Exception e) {
-            throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_jump));
         }
-        jump(jumpDate, mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED,DateChangeBehavior.API);
+        jump(jumpDate, mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED, DateChangeBehavior.API);
     }
 
     @Override

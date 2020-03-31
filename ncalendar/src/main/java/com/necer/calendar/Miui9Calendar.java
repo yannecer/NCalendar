@@ -12,7 +12,6 @@ import com.necer.enumeration.CalendarState;
  */
 public class Miui9Calendar extends MiuiCalendar {
 
-
     public Miui9Calendar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -42,12 +41,9 @@ public class Miui9Calendar extends MiuiCalendar {
         return getOffset(Math.abs(dy), maxOffset);
     }
 
-
     @Override
     protected float getGestureChildUpOffset(float dy) {
         float maxOffset = childView.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }
-
-
 }

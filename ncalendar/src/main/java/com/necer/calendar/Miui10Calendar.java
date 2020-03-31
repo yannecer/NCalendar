@@ -20,7 +20,6 @@ public class Miui10Calendar extends MiuiCalendar {
 
     /**
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return
      */
     @Override
     protected float getGestureMonthUpOffset(float dy) {
@@ -40,7 +39,6 @@ public class Miui10Calendar extends MiuiCalendar {
 
     /**
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return
      */
     @Override
     protected float getGestureMonthDownOffset(float dy) {
@@ -67,5 +65,4 @@ public class Miui10Calendar extends MiuiCalendar {
         float maxOffset = childView.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }
-
 }

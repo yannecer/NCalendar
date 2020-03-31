@@ -1,8 +1,10 @@
 package com.necer.calendar;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 
 import com.necer.enumeration.CalendarState;
@@ -20,7 +22,7 @@ public class EmuiCalendar extends NCalendar {
 
     @Override
     protected float getMonthCalendarAutoWeekEndY() {
-        return -monthHeight * 4 / 5;
+        return -monthHeight * 4.0f / 5.0f;
     }
 
     @Override

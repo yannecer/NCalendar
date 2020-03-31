@@ -54,10 +54,14 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     protected WeekCalendar weekCalendar;
     protected MonthCalendar monthCalendar;
 
-    protected int weekHeight;//周日历的高度
-    protected int monthHeight;//月日历的高度,是日历整个的高
-    protected int stretchMonthHeight;//月日历拉伸的高度
-    protected CalendarState calendarState;//默认月
+    //周日历的高度
+    protected int weekHeight;
+    //月日历的高度,是日历整个的高
+    protected int monthHeight;
+    //月日历拉伸的高度
+    protected int stretchMonthHeight;
+    //日历状态，默认月
+    protected CalendarState calendarState;
     private OnCalendarStateChangedListener onCalendarStateChangedListener;
     private OnCalendarScrollingListener onCalendarScrollingListener;
 
@@ -94,7 +98,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         stretchMonthHeight = this.attrs.stretchCalendarHeight;
 
         if (monthHeight >= stretchMonthHeight) {
-            throw new RuntimeException("日历拉伸之后的高度必须大于正常高度，日历默认的正常高度为300dp");
+            throw new RuntimeException(getContext().getString(R.string.N_stretch_month_height));
         }
 
         calendarState = CalendarState.valueOf(this.attrs.defaultCalendar);
@@ -114,7 +118,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
                 //交换数据，保证月周选中数据同步
                 weekCalendar.exchangeCheckedDateList(totalCheckedDateList);
                 //月日历变化,改变周的选中
-                // weekCalendar.setDateChangeBehavior();
                 weekCalendar.jump(localDate, getCheckModel() == CheckModel.SINGLE_DEFAULT_CHECKED, DateChangeBehavior.API);
 
             } else if (baseCalendar == weekCalendar && childViewY == weekHeight) {
@@ -175,7 +178,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     protected void onFinishInflate() {
         super.onFinishInflate();
         if (getChildCount() != 3) {
-            throw new RuntimeException("NCalendar中的有且只能有一个直接子view");
+            throw new RuntimeException(getContext().getString(R.string.N_NCalendar_child_num));
         }
 
         for (int i = 0; i < getChildCount(); i++) {
