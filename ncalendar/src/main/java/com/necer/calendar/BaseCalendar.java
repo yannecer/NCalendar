@@ -91,7 +91,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         mStartDate = new LocalDate(mDefaultStartDate);
         mEndDate = new LocalDate(mDefaultEndDateDate);
 
-        //背景颜色
+        //背景
         if (mAttrs.showNumberBackground) {
             mCalendarBackground = new NumBackground(mAttrs.numberBackgroundTextSize, mAttrs.numberBackgroundTextColor, mAttrs.numberBackgroundAlphaColor);
         } else if (mAttrs.calendarBackground != null) {

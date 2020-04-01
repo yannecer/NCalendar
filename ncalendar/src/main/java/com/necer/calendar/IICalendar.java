@@ -34,7 +34,7 @@ public interface IICalendar extends ICalendar {
     /**
      * 设置月状态下 是否可以下拉拉伸
      */
-    void setMonthStretchEnable(boolean isMonthStretchEnable);
+    void setStretchCalendarEnable(boolean isMonthStretchEnable);
 
     /**
      * 日历月周状态变化回调

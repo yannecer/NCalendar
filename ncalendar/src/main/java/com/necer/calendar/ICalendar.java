@@ -22,8 +22,8 @@ public interface ICalendar {
     /**
      * 设置选中模式
      *
-     * @param checkModel SINGLE_DEFAULT_CHECKED-单个 默认每页选中  默认模式 每页都会有一个选中
-     *                   SINGLE_DEFAULT_UNCHECKED-单个 默认不选中 点击、跳转选中
+     * @param checkModel SINGLE_DEFAULT_CHECKED-单选 默认每页选中  默认模式 每页都会有一个选中
+     *                   SINGLE_DEFAULT_UNCHECKED-单选 默认不选中 点击、跳转选中
      *                   MULTIPLE-多选
      */
     void setCheckMode(CheckModel checkModel);
@@ -204,7 +204,7 @@ public interface ICalendar {
 
 
     /**
-     * 获选模式下，初始化时选中的日期
+     * 多选模式下，初始化时选中的日期
      *
      * @param dateList 日期几何 yyyy-MM-dd
      */

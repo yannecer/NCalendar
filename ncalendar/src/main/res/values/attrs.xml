@@ -58,6 +58,7 @@
 
         <attr name="calendarHeight" format="dimension" />
         <attr name="stretchCalendarHeight" format="dimension" />
+        <attr name="stretchCalendarEnable" format="boolean" />
         <attr name="animationDuration" format="integer" />
 
         <attr name="lastNextMothAlphaColor" format="integer" />

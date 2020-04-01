@@ -73,7 +73,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     protected RectF stretchMonthRect;
 
     private boolean isWeekHoldEnable;//是否需要周状态定
-    private boolean isMonthStretchEnable;//月日历是否可拉伸
+    private boolean isStretchCalendarEnable;//月日历是否可拉伸
 
     private boolean isInflateFinish;//是否加载完成，
 
@@ -95,6 +95,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         int duration = this.attrs.animationDuration;
         monthHeight = this.attrs.calendarHeight;
+        isStretchCalendarEnable = this.attrs.stretchCalendarEnable;
         stretchMonthHeight = this.attrs.stretchCalendarHeight;
 
         if (monthHeight >= stretchMonthHeight) {
@@ -211,7 +212,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         weekCalendar.layout(paddingLeft, 0, measuredWidth - paddingRight, weekHeight);
 
-        if (childView.getY() >= monthHeight && isMonthStretchEnable) {
+        if (childView.getY() >= monthHeight && isStretchCalendarEnable) {
             monthCalendar.layout(paddingLeft, 0, measuredWidth - paddingRight, stretchMonthHeight);
         } else {
             monthCalendar.layout(paddingLeft, 0, measuredWidth - paddingRight, monthHeight);
@@ -357,7 +358,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         if (dy > 0 && childViewY == monthHeight && monthCalendarY == 0) {
             //setY  起始位置 月->周的过程
-            if (isMonthStretchEnable && realMonthHeight != monthHeight) {
+            if (isStretchCalendarEnable && realMonthHeight != monthHeight) {
                 layoutParams.height = monthHeight;
                 monthCalendar.setLayoutParams(layoutParams);
             }
@@ -370,7 +371,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             }
             scrolling(dy);
 
-        } else if (dy < 0 && childViewY == monthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
+        } else if (dy < 0 && childViewY == monthHeight && monthCalendarY == 0 && isStretchCalendarEnable) {
             //拉伸  起始位置 月->拉伸的过程
             float monthOffset = getOffset(-dy, stretchMonthHeight - realMonthHeight);
             layoutParams.height = (int) (layoutParams.height + monthOffset);
@@ -386,7 +387,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         } else if (dy > 0 && childViewY <= monthHeight && childViewY != weekHeight) {
             //setY  持续过程  月->周的过程
-            if (isMonthStretchEnable && realMonthHeight != monthHeight) {
+            if (isStretchCalendarEnable && realMonthHeight != monthHeight) {
                 //由于滑动过程中可能存在从拉伸状态直接滑到周的状态，引起monthCalendar的高度还没有到monthHeight就向上滑动，所以在这里判断一下，高度正常之后才上滑
                 layoutParams.height = monthHeight;
                 monthCalendar.setLayoutParams(layoutParams);
@@ -402,7 +403,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
         } else if (dy < 0 && childViewY <= monthHeight && childViewY >= weekHeight && (!(isWeekHoldEnable && calendarState == CalendarState.WEEK) || consumed == null) && (targetView == null || !targetView.canScrollVertically(-1))) {
             //setY  持续过程  周->月的过程
-            if (isMonthStretchEnable && realMonthHeight != monthHeight) {
+            if (isStretchCalendarEnable && realMonthHeight != monthHeight) {
                 layoutParams.height = monthHeight;
                 monthCalendar.setLayoutParams(layoutParams);
             }
@@ -415,7 +416,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             }
             scrolling(dy);
 
-        } else if (dy < 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
+        } else if (dy < 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isStretchCalendarEnable) {
             //拉伸  持续过程  月->拉伸的过程
             float monthOffset = getOffset(-dy, stretchMonthHeight - realMonthHeight);
             layoutParams.height = (int) (layoutParams.height + monthOffset);
@@ -429,7 +430,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             }
             scrolling(dy);
 
-        } else if (dy > 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
+        } else if (dy > 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isStretchCalendarEnable) {
             //拉伸  持续过程 拉伸->月的过程
             float monthOffset = getOffset(-dy, stretchMonthHeight - realMonthHeight);
             layoutParams.height = (int) (layoutParams.height + monthOffset);
@@ -773,8 +774,8 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     }
 
     @Override
-    public void setMonthStretchEnable(boolean isMonthStretchEnable) {
-        this.isMonthStretchEnable = isMonthStretchEnable;
+    public void setStretchCalendarEnable(boolean isMonthStretchEnable) {
+        this.isStretchCalendarEnable = isMonthStretchEnable;
     }
 
     @Override

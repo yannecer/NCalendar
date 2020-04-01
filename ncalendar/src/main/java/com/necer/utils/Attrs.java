@@ -11,6 +11,16 @@ public class Attrs {
 
 
     /**
+     * 今天选中的背景 shape
+     */
+    public int todayCheckedBackground;
+    /**
+     * 其他日期选中的背景 shape
+     */
+    public int defaultCheckedBackground;
+
+
+    /**
      * 指示圆点的位置
      * 在公历日期上面
      */
@@ -57,12 +67,12 @@ public class Attrs {
 
     /**
      * 公历日期属性
-     * 当天选中的公历字体颜色
+     * 今天选中的公历字体颜色
      */
     public int todayCheckedSolarTextColor;
     /**
      * 公历日期属性
-     * 当天不选中的公历字体颜色
+     * 今天不选中的公历字体颜色
      */
     public int todayUnCheckedSolarTextColor;
     /**
@@ -83,28 +93,28 @@ public class Attrs {
 
     /**
      * 公历日期属性
-     * 公历日期是否加粗
+     * 公历字体是否加粗
      */
     public boolean solarTextBold;
 
     /**
      * 标记日期属性
-     * 当天选中标记
+     * 今天选中时标记
      */
     public int todayCheckedPoint;
     /**
      * 标记日期属性
-     * 当天不选中标记
+     * 今天不选中时标记
      */
     public int todayUnCheckedPoint;
     /**
      * 标记日期属性
-     * 默认选中标记
+     * 默认选中时标记
      */
     public int defaultCheckedPoint;
     /**
      * 标记日期属性
-     * 默认不选中标记
+     * 默认不选中时标记
      */
     public int defaultUnCheckedPoint;
     /**
@@ -121,42 +131,42 @@ public class Attrs {
 
     /**
      * 节假日日期属性  drawable
-     * 当天选中节假日
+     * 今天选中时节假日
      */
     public Drawable todayCheckedHoliday;
     /**
      * 节假日日期属性  drawable
-     * 当天不选中节假日
+     * 今天不选中时节假日
      */
     public Drawable todayUnCheckedHoliday;
     /**
      * 节假日日期属性  drawable
-     * 默认选中节假日
+     * 默认选中时节假日
      */
     public Drawable defaultCheckedHoliday;
     /**
      * 节假日日期属性  drawable
-     * 默认不选中节假日
+     * 默认不选中时节假日
      */
     public Drawable defaultUnCheckedHoliday;
     /**
      * 节假日日期属性  drawable
-     * 当天选中工作日
+     * 今天选中时工作日
      */
     public Drawable todayCheckedWorkday;
     /**
      * 节假日日期属性  drawable
-     * 当天不选中工作日
+     * 今天不选中工作日
      */
     public Drawable todayUnCheckedWorkday;
     /**
      * 节假日日期属性  drawable
-     * 默认选中工作日
+     * 默认选中时工作日
      */
     public Drawable defaultCheckedWorkday;
     /**
      * 节假日日期属性  drawable
-     * 默认不选中工作日
+     * 默认不选中时工作日
      */
     public Drawable defaultUnCheckedWorkday;
 
@@ -200,42 +210,42 @@ public class Attrs {
     public int holidayWorkdayLocation;
     /**
      * 节假日日期属性  text
-     * 当天选中的节假日字体颜色
+     * 今天选中时节假日字体颜色
      */
     public int todayCheckedHolidayTextColor;
     /**
      * 节假日日期属性  text
-     * 当天选中的节假日字体颜色
+     * 今天未选中时节假日字体颜色
      */
     public int todayUnCheckedHolidayTextColor;
     /**
      * 节假日日期属性  text
-     * 默认选中的节假日字体颜色
+     * 默认选中时节假日字体颜色
      */
     public int defaultCheckedHolidayTextColor;
     /**
      * 节假日日期属性  text
-     * 默认选中的节假日字体颜色
+     * 默认未选中时节假日字体颜色
      */
     public int defaultUnCheckedHolidayTextColor;
     /**
      * 节假日日期属性  text
-     * 当天选中的工作日字体颜色
+     * 今天选中时工作日字体颜色
      */
     public int todayCheckedWorkdayTextColor;
     /**
      * 节假日日期属性  text
-     * 当天选中的工作日颜色
+     * 今天选中时工作日颜色
      */
     public int todayUnCheckedWorkdayTextColor;
     /**
      * 节假日日期属性  text
-     * 默认选中的工作日字体颜色
+     * 默认选中时工作日字体颜色
      */
     public int defaultCheckedWorkdayTextColor;
     /**
      * 节假日日期属性  text
-     * 默认选中的工作日字体颜色
+     * 默认选中时工作日字体颜色
      */
     public int defaultUnCheckedWorkdayTextColor;
 
@@ -247,22 +257,22 @@ public class Attrs {
     public boolean showLunar;
     /**
      * 农历属性
-     * 当天选中农历颜色
+     * 今天选中时农历颜色
      */
     public int todayCheckedLunarTextColor;
     /**
      * 农历属性
-     * 当天不选中农历颜色
+     * 今天不选中时农历颜色
      */
     public int todayUnCheckedLunarTextColor;
     /**
      * 农历属性
-     * 默认选中农历颜色
+     * 默认选中时农历颜色
      */
     public int defaultCheckedLunarTextColor;
     /**
      * 农历属性
-     * 默认不选中农历颜色
+     * 默认不选中时农历颜色
      */
     public int defaultUnCheckedLunarTextColor;
     /**
@@ -270,8 +280,6 @@ public class Attrs {
      * 农历字体大小
      */
     public float lunarTextSize;
-
-
     /**
      * 农历属性
      * 农历字体是否加粗
@@ -279,7 +287,7 @@ public class Attrs {
     public boolean lunarTextBold;
     /**
      * 农历属性
-     * 农历到文字中心的距离
+     * 农历文字到文字中心的距离
      */
     public float lunarDistance;
 
@@ -303,9 +311,14 @@ public class Attrs {
     public int defaultCalendar;
     /**
      * 折叠日历属性
-     * 折叠日历的高度
+     * 折叠日历月日历的高度
      */
     public int calendarHeight;
+    /**
+     * 折叠日历属性
+     * 是否可拉伸
+     */
+    public boolean stretchCalendarEnable;
     /**
      * 折叠日历属性
      * 拉伸后日历的高度
@@ -348,7 +361,7 @@ public class Attrs {
     public float stretchTextDistance;
 
     /**
-     * 月是否都6行
+     * 月日历是否全部6行
      */
     public boolean allMonthSixLine;
 
@@ -375,14 +388,6 @@ public class Attrs {
      */
     public boolean lastNextMonthClickEnable;
 
-    /**
-     * 选中当天的checkedBackground
-     */
-    public int todayCheckedBackground;
-    /**
-     * 选中其他日期的checkedBackground
-     */
-    public int defaultCheckedBackground;
 
     /**
      * 日历背景
