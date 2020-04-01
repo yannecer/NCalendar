@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="N_solarTextSize">17sp</dimen>
+    <dimen name="N_solarTextSize">18sp</dimen>
     <dimen name="N_lunarTextSize">10sp</dimen>
     <dimen name="N_lunarDistance">15dp</dimen>
     <dimen name="N_holidayWorkdayTextSize">10sp</dimen>

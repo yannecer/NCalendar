@@ -169,7 +169,7 @@ public class InnerPainter implements CalendarPainter {
         mTextPaint.setColor(color);
         mTextPaint.setAlpha(alphaColor);
         mTextPaint.setTextSize(mAttrs.solarTextSize);
-       // mTextPaint.setFakeBoldText(true);
+        mTextPaint.setFakeBoldText(mAttrs.solarTextBold);
         canvas.drawText(date.getDayOfMonth() + "", rectF.centerX(), mAttrs.showLunar ? rectF.centerY() : getTextBaseLineY(rectF.centerY()), mTextPaint);
     }
 
@@ -196,7 +196,7 @@ public class InnerPainter implements CalendarPainter {
             mTextPaint.setColor(replaceColor == null ? color : replaceColor);
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
             mTextPaint.setAlpha(alphaColor);
-          //  mTextPaint.setFakeBoldText(false);
+            mTextPaint.setFakeBoldText(mAttrs.lunarTextBold);
             canvas.drawText(lunarString, rectF.centerX(), rectF.centerY() + mAttrs.lunarDistance, mTextPaint);
         }
     }
@@ -215,7 +215,7 @@ public class InnerPainter implements CalendarPainter {
 
     //绘制节假日
     private void drawHolidayWorkday(Canvas canvas, RectF rectF, LocalDate localDate, Drawable holidayDrawable, Drawable workdayDrawable, int holidayTextColor, int workdayTextColor, int alphaColor) {
-        if (mAttrs.showHoliday) {
+        if (mAttrs.showHolidayWorkday) {
             int[] holidayLocation = getHolidayWorkdayLocation(rectF.centerX(), rectF.centerY());
             if (mHolidayList.contains(localDate)) {
                 if (holidayDrawable == null) {
@@ -232,6 +232,7 @@ public class InnerPainter implements CalendarPainter {
                 if (workdayDrawable == null) {
                     mTextPaint.setTextSize(mAttrs.holidayWorkdayTextSize);
                     mTextPaint.setColor(workdayTextColor);
+                    mTextPaint.setFakeBoldText(mAttrs.holidayWorkdayTextBold);
                     canvas.drawText(TextUtils.isEmpty(mAttrs.workdayText) ? mContext.getString(R.string.N_workdayText) : mAttrs.workdayText, holidayLocation[0], getTextBaseLineY(holidayLocation[1]), mTextPaint);
                 } else {
                     Rect drawableBounds = DrawableUtil.getDrawableBounds(holidayLocation[0], holidayLocation[1], workdayDrawable);
@@ -253,6 +254,7 @@ public class InnerPainter implements CalendarPainter {
                 mTextPaint.setTextSize(mAttrs.stretchTextSize);
                 mTextPaint.setColor(mAttrs.stretchTextColor);
                 mTextPaint.setAlpha(alphaColor);
+                mTextPaint.setFakeBoldText(mAttrs.stretchTextBold);
                 canvas.drawText(stretchText, rectF.centerX(), rectF.centerY() + mAttrs.stretchTextDistance, mTextPaint);
             }
         }

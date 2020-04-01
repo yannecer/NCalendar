@@ -405,6 +405,27 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         return mTotalCheckedDateList;
     }
 
+
+    @Override
+    public void setCheckedDates(List<String> dateList) {
+
+        if (mCheckModel != CheckModel.MULTIPLE) {
+            throw new RuntimeException(getContext().getString(R.string.N_set_checked_dates_illegal));
+        }
+
+        if (mMultipleCountModel != null && dateList.size() > mMultipleCount) {
+            throw new RuntimeException(getContext().getString(R.string.N_set_checked_dates_count_illegal));
+        }
+        mTotalCheckedDateList.clear();
+        try {
+            for (int i = 0; i < dateList.size(); i++) {
+                mTotalCheckedDateList.add(new LocalDate(dateList.get(i)));
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
+        }
+    }
+
     //点击的日期是否可用
     public boolean isAvailable(LocalDate localDate) {
         return !localDate.isBefore(mStartDate) && !localDate.isAfter(mEndDate);

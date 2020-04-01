@@ -286,7 +286,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     //自动滑动到月 通过setY 周->月
     private void autoToMonthBySetY() {
-        float monthCalendarStart = monthCalendar.getY();//起始位置
+        float monthCalendarStart = monthCalendar.getY();
         float monthCalendarEnd = 0;
         monthValueAnimator.setFloatValues(monthCalendarStart, monthCalendarEnd);
         monthValueAnimator.start();
@@ -400,7 +400,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             }
             scrolling(dy);
 
-        } else if (dy < 0 && childViewY <= monthHeight && childViewY >= weekHeight && (!isWeekHoldEnable || consumed == null) && (targetView == null || !targetView.canScrollVertically(-1))) {
+        } else if (dy < 0 && childViewY <= monthHeight && childViewY >= weekHeight && (!(isWeekHoldEnable && calendarState == CalendarState.WEEK) || consumed == null) && (targetView == null || !targetView.canScrollVertically(-1))) {
             //setY  持续过程  周->月的过程
             if (isMonthStretchEnable && realMonthHeight != monthHeight) {
                 layoutParams.height = monthHeight;
@@ -557,6 +557,14 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
         weekCalendar.setInitializeDate(formatDate);
     }
 
+    @Override
+    public void setCheckedDates(List<String> dateList) {
+        if (calendarState == CalendarState.WEEK) {
+            weekCalendar.setCheckedDates(dateList);
+        } else {
+            monthCalendar.setCheckedDates(dateList);
+        }
+    }
 
     @Override
     public void toToday() {
@@ -608,7 +616,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     @Override
     public void setCalendarState(CalendarState calendarState) {
         if (calendarState == CalendarState.MONTH_STRETCH) {
-            throw new RuntimeException("不允许直接设置成CalendarState.MONTH_STRETCH，可以设置成CalendarState.WEEK或者CalendarState.MONTH");
+            throw new RuntimeException(getContext().getString(R.string.N_calendarState_illegal));
         }
         this.calendarState = calendarState;
     }
@@ -924,12 +932,12 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     @Override
     public CalendarBackground getCalendarBackground() throws IllegalAccessException {
-        throw new IllegalAccessException("折叠日历不能使用此方法");
+        throw new IllegalAccessException(getContext().getString(R.string.N_NCalendar_calendar_background_illegal));
     }
 
     @Override
     public void setCalendarBackground(CalendarBackground calendarBackground) throws IllegalAccessException {
-        throw new IllegalAccessException("折叠日历请调用setMonthCalendarBackground()和setWeekCalendarBackground()");
+        throw new IllegalAccessException(getContext().getString(R.string.N_NCalendar_set_calendar_background_illegal));
     }
 
     @Override

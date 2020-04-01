@@ -203,4 +203,12 @@ public interface ICalendar {
     CalendarBackground getCalendarBackground() throws IllegalAccessException;
 
 
+    /**
+     * 获选模式下，初始化时选中的日期
+     *
+     * @param dateList 日期几何 yyyy-MM-dd
+     */
+    void setCheckedDates(List<String> dateList);
+
+
 }

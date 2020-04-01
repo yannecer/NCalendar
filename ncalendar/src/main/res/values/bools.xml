@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="N_showHoliday">true</bool>
+    <bool name="N_textBold">false</bool>
+    <bool name="N_showHolidayWorkday">true</bool>
     <bool name="N_showLunar">true</bool>
     <bool name="N_allMonthSixLine">false</bool>
     <bool name="N_showNumberBackground">false</bool>

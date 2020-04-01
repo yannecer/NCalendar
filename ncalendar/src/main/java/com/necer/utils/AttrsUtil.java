@@ -25,6 +25,7 @@ public class AttrsUtil {
         attrs.defaultCheckedSolarTextColor = ta.getColor(R.styleable.NCalendar_defaultCheckedSolarTextColor, ContextCompat.getColor(context, R.color.N_defaultSolarTextColor));
         attrs.defaultUnCheckedSolarTextColor = ta.getColor(R.styleable.NCalendar_defaultUnCheckedSolarTextColor, ContextCompat.getColor(context, R.color.N_defaultSolarTextColor));
         attrs.solarTextSize = ta.getDimension(R.styleable.NCalendar_solarTextSize, context.getResources().getDimension(R.dimen.N_solarTextSize));
+        attrs.solarTextBold = ta.getBoolean(R.styleable.NCalendar_solarTextBold, context.getResources().getBoolean(R.bool.N_textBold));
 
         attrs.pointLocation = ta.getInt(R.styleable.NCalendar_pointLocation, Attrs.UP);
         attrs.pointDistance = ta.getDimension(R.styleable.NCalendar_pointDistance, context.getResources().getDimension(R.dimen.N_pointDistance));
@@ -41,8 +42,10 @@ public class AttrsUtil {
         attrs.todayUnCheckedWorkday = ta.getDrawable(R.styleable.NCalendar_todayUnCheckedWorkday);
         attrs.defaultCheckedWorkday = ta.getDrawable(R.styleable.NCalendar_defaultCheckedWorkday);
         attrs.defaultUnCheckedWorkday = ta.getDrawable(R.styleable.NCalendar_defaultUnCheckedWorkday);
+        attrs.holidayWorkdayTextBold = ta.getBoolean(R.styleable.NCalendar_holidayWorkdayTextBold, context.getResources().getBoolean(R.bool.N_textBold));
 
-        attrs.showHoliday = ta.getBoolean(R.styleable.NCalendar_showHoliday, context.getResources().getBoolean(R.bool.N_showHoliday));
+
+        attrs.showHolidayWorkday = ta.getBoolean(R.styleable.NCalendar_showHoliday, context.getResources().getBoolean(R.bool.N_showHolidayWorkday));
         attrs.holidayWorkdayTextSize = ta.getDimension(R.styleable.NCalendar_holidayWorkdayTextSize, context.getResources().getDimension(R.dimen.N_holidayWorkdayTextSize));
         attrs.holidayWorkdayDistance = ta.getDimension(R.styleable.NCalendar_holidayWorkdayDistance, context.getResources().getDimension(R.dimen.N_holidayWorkdayDistance));
         attrs.holidayWorkdayLocation = ta.getInt(R.styleable.NCalendar_holidayWorkdayLocation, Attrs.TOP_RIGHT);
@@ -63,6 +66,7 @@ public class AttrsUtil {
         attrs.defaultCheckedLunarTextColor = ta.getColor(R.styleable.NCalendar_defaultCheckedLunarTextColor, ContextCompat.getColor(context, R.color.N_defaultLunarTextColor));
         attrs.defaultUnCheckedLunarTextColor = ta.getColor(R.styleable.NCalendar_defaultUnCheckedLunarTextColor, ContextCompat.getColor(context, R.color.N_defaultLunarTextColor));
         attrs.lunarTextSize = ta.getDimension(R.styleable.NCalendar_lunarTextSize, context.getResources().getDimension(R.dimen.N_lunarTextSize));
+        attrs.lunarTextBold = ta.getBoolean(R.styleable.NCalendar_lunarTextBold, context.getResources().getBoolean(R.bool.N_textBold));
         attrs.lunarDistance = ta.getDimension(R.styleable.NCalendar_lunarDistance, context.getResources().getDimension(R.dimen.N_lunarDistance));
 
         attrs.calendarHeight = (int) ta.getDimension(R.styleable.NCalendar_calendarHeight, context.getResources().getDimension(R.dimen.N_calendarHeight));
@@ -76,6 +80,7 @@ public class AttrsUtil {
         attrs.disabledString = ta.getString(R.styleable.NCalendar_disabledString);
 
         attrs.stretchTextSize = ta.getDimension(R.styleable.NCalendar_stretchTextSize, context.getResources().getDimension(R.dimen.N_stretchTextSize));
+        attrs.stretchTextBold = ta.getBoolean(R.styleable.NCalendar_stretchTextBold, context.getResources().getBoolean(R.bool.N_textBold));
         attrs.stretchTextDistance = ta.getDimension(R.styleable.NCalendar_stretchTextDistance, context.getResources().getDimension(R.dimen.N_stretchTextDistance));
         attrs.stretchTextColor = ta.getColor(R.styleable.NCalendar_stretchTextColor, ContextCompat.getColor(context, R.color.N_stretchTextColor));
 

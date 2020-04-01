@@ -81,6 +81,11 @@ public class Attrs {
      */
     public float solarTextSize;
 
+    /**
+     * 公历日期属性
+     * 公历日期是否加粗
+     */
+    public boolean solarTextBold;
 
     /**
      * 标记日期属性
@@ -160,7 +165,7 @@ public class Attrs {
      * 节假日日期属性  text
      * 是否显示节假日和工作日标记
      */
-    public boolean showHoliday;
+    public boolean showHolidayWorkday;
     /**
      * 节假日日期属性  text
      * 节假日文字
@@ -176,6 +181,13 @@ public class Attrs {
      * 字体大小
      */
     public float holidayWorkdayTextSize;
+
+
+    /**
+     * 节假日日期属性  text
+     * 是否加粗
+     */
+    public boolean holidayWorkdayTextBold;
     /**
      * 节假日日期属性  text
      * 文字距离中心距离
@@ -258,6 +270,13 @@ public class Attrs {
      * 农历字体大小
      */
     public float lunarTextSize;
+
+
+    /**
+     * 农历属性
+     * 农历字体是否加粗
+     */
+    public boolean lunarTextBold;
     /**
      * 农历属性
      * 农历到文字中心的距离
@@ -313,6 +332,12 @@ public class Attrs {
      * 拉伸显示的字体大小
      */
     public float stretchTextSize;
+
+    /**
+     * 拉伸字体加粗
+     */
+    public boolean stretchTextBold;
+
     /**
      * 拉伸显示的字体颜色
      */
@@ -359,7 +384,9 @@ public class Attrs {
      */
     public int defaultCheckedBackground;
 
-
+    /**
+     * 日历背景
+     */
     public Drawable calendarBackground;
 
 

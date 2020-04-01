@@ -14,6 +14,7 @@ import com.necer.calendar.Miui10Calendar;
 import com.necer.entity.CalendarDate;
 import com.necer.entity.Lunar;
 import com.necer.enumeration.DateChangeBehavior;
+import com.necer.enumeration.MultipleCountModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
@@ -54,6 +55,7 @@ public class TestMiui10Activity extends BaseActivity {
         miui10Calendar.setCheckMode(checkModel);
         InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
         innerPainter.setPointList(pointList);
+
 
 
 //        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);

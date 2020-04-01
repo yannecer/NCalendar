@@ -3,6 +3,7 @@
     <declare-styleable name="NCalendar">
 
         <attr name="solarTextSize" format="dimension" />
+        <attr name="solarTextBold" format="boolean" />
         <attr name="todayCheckedSolarTextColor" format="color" />
         <attr name="todayUnCheckedSolarTextColor" format="color" />
         <attr name="defaultCheckedSolarTextColor" format="color" />
@@ -14,6 +15,7 @@
         <attr name="defaultCheckedLunarTextColor" format="color" />
         <attr name="defaultUnCheckedLunarTextColor" format="color" />
         <attr name="lunarTextSize" format="dimension" />
+        <attr name="lunarTextBold" format="boolean" />
         <attr name="lunarDistance" format="dimension" />
 
 
@@ -39,6 +41,7 @@
 
         <attr name="holidayText" format="string" />
         <attr name="workdayText" format="string" />
+        <attr name="holidayWorkdayTextBold" format="boolean" />
         <attr name="holidayWorkdayTextSize" format="dimension" />
         <attr name="holidayWorkdayDistance" format="dimension" />
         <attr name="todayCheckedHolidayTextColor" format="color" />
@@ -89,6 +92,7 @@
         </attr>
 
         <attr name="stretchTextSize" format="dimension" />
+        <attr name="stretchTextBold" format="boolean" />
         <attr name="stretchTextDistance" format="dimension" />
         <attr name="stretchTextColor" format="color" />
 

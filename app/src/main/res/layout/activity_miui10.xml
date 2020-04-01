@@ -27,22 +27,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:showNumberBackground="true"
-       >
+        app:solarTextBold="true">
 
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:background="@android:color/darker_gray"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/bg_miui10"
                 android:orientation="vertical"
                 android:padding="15dp">
