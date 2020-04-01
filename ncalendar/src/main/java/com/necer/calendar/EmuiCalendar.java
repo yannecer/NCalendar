@@ -12,8 +12,10 @@ import com.necer.enumeration.CalendarState;
 import org.joda.time.LocalDate;
 
 /**
- * 华为日历
- * Created by necer on 2018/11/14.
+ * 仿华为日历
+ *
+ * @author necer
+ * @date 2018/11/14
  */
 public class EmuiCalendar extends NCalendar {
     public EmuiCalendar(@NonNull Context context, @Nullable AttributeSet attrs) {

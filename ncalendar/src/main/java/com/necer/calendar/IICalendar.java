@@ -7,6 +7,7 @@ import com.necer.painter.CalendarBackground;
 
 /**
  * 折叠日历特有的功能接口
+ * @author necer
  */
 public interface IICalendar extends ICalendar {
 

@@ -17,17 +17,24 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author necer
+ */
 public class CalendarHelper {
 
-    private int mLineNum;//行数
-    private LocalDate mPagerInitialDate;//当前页面的初始化日期
+    //行数
+    private int mLineNum;
+    //当前页面的初始化日期
+    private LocalDate mPagerInitialDate;
     private BaseCalendar mCalendar;
 
     private CalendarType mCalendarType;
-
-    private Rect mBackgroundRect;//日历背景
-    private List<LocalDate> mTotalCheckedListDate;//当前页面选中的日期
-    private List<LocalDate> mDateList;//页面的数据集合
+    //日历背景矩形
+    private Rect mBackgroundRect;
+    //当前页面选中的日期
+    private List<LocalDate> mTotalCheckedListDate;
+    //页面的数据集合
+    private List<LocalDate> mDateList;
     private List<RectF> mRectFList;
     private GestureDetector mGestureDetector;
 
@@ -47,13 +54,32 @@ public class CalendarHelper {
 
         mBackgroundRect = new Rect(0, 0, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
 
+        GestureDetector.SimpleOnGestureListener mSimpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                for (int i = 0; i < mRectFList.size(); i++) {
+                    RectF rectF = mRectFList.get(i);
+                    if (rectF.contains((int) e.getX(), (int) e.getY())) {
+                        LocalDate clickDate = mDateList.get(i);
+                        dealClickDate(clickDate);
+                        break;
+                    }
+                }
+                return true;
+            }
+        };
         mGestureDetector = new GestureDetector(calendar.getContext(), mSimpleOnGestureListener);
     }
 
     /**
      * 分配空间
      *
-     * @return
+     * @return 返回每个日期的绘制矩形集合
      */
     private List<RectF> getLocationRectFList() {
         List<RectF> rectFList = new ArrayList<>();
@@ -67,9 +93,9 @@ public class CalendarHelper {
     /**
      * 获取当前的位置，拉伸日历时会变化，其他状态不会变
      *
-     * @param lineIndex
-     * @param columnIndex
-     * @return
+     * @param lineIndex   行
+     * @param columnIndex 列
+     * @return 返回所属行列的矩形
      */
     public RectF getRealRectF(int lineIndex, int columnIndex) {
         int index = lineIndex * 7 + columnIndex;
@@ -88,7 +114,7 @@ public class CalendarHelper {
         }
     }
 
-    public RectF resetRectFSize(RectF rectF, int lineIndex, int columnIndex) {
+    private RectF resetRectFSize(RectF rectF, int lineIndex, int columnIndex) {
         //矩形重新确定确定位置
         float width = mCalendar.getMeasuredWidth();
         float height = mCalendar.getMeasuredHeight();
@@ -153,10 +179,8 @@ public class CalendarHelper {
     }
 
     /**
-     * localDate 到顶部的距离
-     *
-     * @param localDate
-     * @return
+     * @param localDate 日期
+     * @return localDate 到顶部的距离
      */
     public int getDistanceFromTop(LocalDate localDate) {
         int monthCalendarOffset;
@@ -173,9 +197,7 @@ public class CalendarHelper {
     }
 
     /**
-     * 获取中心点 ，即月周切换的中心日期
-     *
-     * @return
+     * @return 获取中心点 ，即月周切换的中心日期
      */
     public LocalDate getPivotDate() {
         LocalDate today = new LocalDate();
@@ -189,9 +211,7 @@ public class CalendarHelper {
     }
 
     /**
-     * 中心点到顶部的距离
-     *
-     * @return
+     * @return 中心点到顶部的距离
      */
     public int getPivotDistanceFromTop() {
         return getDistanceFromTop(getPivotDate());
@@ -212,7 +232,7 @@ public class CalendarHelper {
         return mDateList;
     }
 
-    public void dealClickDate(LocalDate localDate) {
+    private void dealClickDate(LocalDate localDate) {
         if (mCalendarType == CalendarType.MONTH && CalendarUtil.isLastMonth(localDate, mPagerInitialDate)) {
             mCalendar.onClickLastMonthDate(localDate);
         } else if (mCalendarType == CalendarType.MONTH && CalendarUtil.isNextMonth(localDate, mPagerInitialDate)) {
@@ -249,30 +269,8 @@ public class CalendarHelper {
     }
 
 
-    private GestureDetector.SimpleOnGestureListener mSimpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            for (int i = 0; i < mRectFList.size(); i++) {
-                RectF rectF = mRectFList.get(i);
-                if (rectF.contains((int) e.getX(), (int) e.getY())) {
-                    LocalDate clickDate = mDateList.get(i);
-                    dealClickDate(clickDate);
-                    break;
-                }
-            }
-            return true;
-        }
-    };
-
     /**
      * 背景的初始位置为月日历的高度-周日的高度
-     *
-     * @return
      */
     public int getInitialDistance() {
         return mCalendar.getMeasuredHeight() * 4 / 5;

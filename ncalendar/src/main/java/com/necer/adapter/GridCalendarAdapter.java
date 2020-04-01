@@ -8,9 +8,12 @@ import android.widget.BaseAdapter;
 import com.necer.view.CalendarView2;
 
 import java.util.List;
+/**
+ * @author necer
+ * QQ群:127278900
+ */
 
 public class GridCalendarAdapter extends BaseAdapter {
-
 
     private List<View> viewList;
 

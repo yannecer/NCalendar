@@ -49,11 +49,11 @@ public class AttrsUtil {
         attrs.holidayText = ta.getString(R.styleable.NCalendar_holidayText);
         attrs.workdayText = ta.getString(R.styleable.NCalendar_workdayText);
         attrs.todayCheckedHolidayTextColor = ta.getColor(R.styleable.NCalendar_todayCheckedHolidayTextColor, ContextCompat.getColor(context, R.color.N_white));
-        attrs.todayUnCheckedHolidayTextColor = ta.getColor(R.styleable.NCalendar_todayCheckedHolidayTextColor, ContextCompat.getColor(context, R.color.N_holidayTextColor));
+        attrs.todayUnCheckedHolidayTextColor = ta.getColor(R.styleable.NCalendar_todayUnCheckedHolidayTextColor, ContextCompat.getColor(context, R.color.N_holidayTextColor));
         attrs.defaultCheckedHolidayTextColor = ta.getColor(R.styleable.NCalendar_defaultCheckedHolidayTextColor, ContextCompat.getColor(context, R.color.N_holidayTextColor));
-        attrs.defaultUnCheckedHolidayTextColor = ta.getColor(R.styleable.NCalendar_defaultCheckedHolidayTextColor, ContextCompat.getColor(context, R.color.N_holidayTextColor));
+        attrs.defaultUnCheckedHolidayTextColor = ta.getColor(R.styleable.NCalendar_defaultUnCheckedHolidayTextColor, ContextCompat.getColor(context, R.color.N_holidayTextColor));
         attrs.todayCheckedWorkdayTextColor = ta.getColor(R.styleable.NCalendar_todayCheckedWorkdayTextColor, ContextCompat.getColor(context, R.color.N_white));
-        attrs.todayUnCheckedWorkdayTextColor = ta.getColor(R.styleable.NCalendar_todayCheckedWorkdayTextColor, ContextCompat.getColor(context, R.color.N_workdayTextColor));
+        attrs.todayUnCheckedWorkdayTextColor = ta.getColor(R.styleable.NCalendar_todayUnCheckedWorkdayTextColor, ContextCompat.getColor(context, R.color.N_workdayTextColor));
         attrs.defaultCheckedWorkdayTextColor = ta.getColor(R.styleable.NCalendar_defaultCheckedWorkdayTextColor, ContextCompat.getColor(context, R.color.N_workdayTextColor));
         attrs.defaultUnCheckedWorkdayTextColor = ta.getColor(R.styleable.NCalendar_defaultUnCheckedWorkdayTextColor, ContextCompat.getColor(context, R.color.N_workdayTextColor));
 

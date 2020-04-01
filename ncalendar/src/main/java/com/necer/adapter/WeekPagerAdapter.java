@@ -22,8 +22,7 @@ public class WeekPagerAdapter extends BasePagerAdapter {
 
     @Override
     protected LocalDate getPageInitializeDate(int position) {
-        LocalDate localDate = mInitializeDate.plusDays((position - mPageCurrIndex) * 7);
-        return localDate;
+        return getInitializeDate().plusDays((position - getPageCurrIndex()) * 7);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.necer.adapter;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.view.View;
@@ -17,21 +18,21 @@ import com.necer.view.ICalendarView;
 import org.joda.time.LocalDate;
 
 /**
- * Created by necer on 2017/8/25.
+ * @author necer
+ * @date 2017/8/25
  * QQ群:127278900
  */
-
 public abstract class BasePagerAdapter extends PagerAdapter {
 
 
-    protected Context mContext;
-    protected int mPageSize;//总页数
-    protected int mPageCurrIndex;
-    protected LocalDate mInitializeDate;
+    private Context mContext;
+    private int mPageSize;
+    private int mPageCurrIndex;
+    private LocalDate mInitializeDate;
 
-    protected BaseCalendar mCalendar;
+    private BaseCalendar mCalendar;
 
-    public BasePagerAdapter(Context context, BaseCalendar baseCalendar) {
+    BasePagerAdapter(Context context, BaseCalendar baseCalendar) {
         this.mContext = context;
         this.mCalendar = baseCalendar;
         this.mInitializeDate = baseCalendar.getInitializeDate();
@@ -46,17 +47,19 @@ public abstract class BasePagerAdapter extends PagerAdapter {
 
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
     }
 
+
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ICalendarView iCalendarView;
         LocalDate pageInitializeDate = getPageInitializeDate(position);
         if (mCalendar.getCalendarBuild() == CalendarBuild.DRAW) {
@@ -69,17 +72,32 @@ public abstract class BasePagerAdapter extends PagerAdapter {
         return iCalendarView;
     }
 
+
+    int getPageCurrIndex() {
+        return mPageCurrIndex;
+    }
+
+    LocalDate getInitializeDate() {
+        return mInitializeDate;
+    }
+
+    public BaseCalendar getCalendar() {
+        return mCalendar;
+    }
+
+
     /**
      * 每个页面的初始化日期
      *
-     * @return
+     * @param position 当前的position
+     * @return 当前页面初始化的日期
      */
     protected abstract LocalDate getPageInitializeDate(int position);
 
     /**
      * 获取是周日历还是月日历
      *
-     * @return
+     * @return MONTH->月    WEEK->周
      */
     protected abstract CalendarType getCalendarType();
 

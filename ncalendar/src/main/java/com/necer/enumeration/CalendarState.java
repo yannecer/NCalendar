@@ -4,10 +4,25 @@ import java.io.Serializable;
 
 /**
  * 日历状态
+ *
+ * @author necer
  */
 public enum CalendarState implements Serializable {
 
-    WEEK(100), MONTH(101),MONTH_STRETCH(102);
+    /**
+     * 折叠日历周状态
+     */
+    WEEK(100),
+
+    /**
+     * 折叠日历月状态
+     */
+    MONTH(101),
+
+    /**
+     * 折叠日历月拉伸状态
+     */
+    MONTH_STRETCH(102);
 
     private int value;
 

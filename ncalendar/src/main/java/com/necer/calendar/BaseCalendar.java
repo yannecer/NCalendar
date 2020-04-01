@@ -37,7 +37,8 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 /**
- * Created by necer on 2018/9/11.
+ * @author necer
+ * @date 2018/9/11
  * qq群：127278900
  */
 public abstract class BaseCalendar extends ViewPager implements ICalendar {
@@ -109,6 +110,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
                 post(() -> drawView(position));
             }
 
+            @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_DRAGGING) {
                     mDateChangeBehavior = DateChangeBehavior.PAGE;
@@ -254,7 +256,8 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             }
         } else {
             ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
-            int indexOffset = getTwoDateCount(localDate, iCalendarView.getPagerInitialDate(), mFirstDayOfWeek);//得出两个页面相差几个
+            //得出两个页面相差几个
+            int indexOffset = getTwoDateCount(localDate, iCalendarView.getPagerInitialDate(), mFirstDayOfWeek);
             if (isCheck) {
                 if (mCheckModel == CheckModel.MULTIPLE) {
                     if (!mTotalCheckedDateList.contains(localDate)) {
@@ -305,7 +308,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         }
 
         //单选
-        if (mOnCalendarChangedListener != null && !(mCheckModel == CheckModel.MULTIPLE) && getVisibility() == VISIBLE) {
+        if (mOnCalendarChangedListener != null && mCheckModel != CheckModel.MULTIPLE && getVisibility() == VISIBLE) {
             mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currPagerCheckDateList.size() == 0 ? null : currPagerCheckDateList.get(0), mDateChangeBehavior);
         }
 
@@ -405,16 +408,6 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     //点击的日期是否可用
     public boolean isAvailable(LocalDate localDate) {
         return !localDate.isBefore(mStartDate) && !localDate.isAfter(mEndDate);
-    }
-
-    //获取区间开始日期
-    public LocalDate getStartDate() {
-        return mStartDate;
-    }
-
-    //获取区间结束日期
-    public LocalDate getEndDate() {
-        return mEndDate;
     }
 
 

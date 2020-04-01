@@ -365,7 +365,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             monthCalendar.setY(-getGestureMonthUpOffset(dy) + monthCalendarY);
             childView.setY(-getGestureChildUpOffset(dy) + childViewY);
 
-            if (consumed != null) consumed[1] = (int) dy;
+            if (consumed != null) {
+                consumed[1] = (int) dy;
+            }
             scrolling(dy);
 
         } else if (dy < 0 && childViewY == monthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
@@ -377,7 +379,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             float childOffset = getOffset(-dy, stretchMonthHeight - childViewY);
             childView.setY(childViewY + childOffset);
 
-            if (consumed != null) consumed[1] = (int) dy;
+            if (consumed != null) {
+                consumed[1] = (int) dy;
+            }
             scrolling(dy);
 
         } else if (dy > 0 && childViewY <= monthHeight && childViewY != weekHeight) {
@@ -391,7 +395,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             monthCalendar.setY(-getGestureMonthUpOffset(dy) + monthCalendarY);
             childView.setY(-getGestureChildUpOffset(dy) + childViewY);
 
-            if (consumed != null) consumed[1] = (int) dy;
+            if (consumed != null) {
+                consumed[1] = (int) dy;
+            }
             scrolling(dy);
 
         } else if (dy < 0 && childViewY <= monthHeight && childViewY >= weekHeight && (!isWeekHoldEnable || consumed == null) && (targetView == null || !targetView.canScrollVertically(-1))) {
@@ -404,7 +410,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             monthCalendar.setY(getGestureMonthDownOffset(dy) + monthCalendarY);
             childView.setY(getGestureChildDownOffset(dy) + childViewY);
 
-            if (consumed != null) consumed[1] = (int) dy;
+            if (consumed != null) {
+                consumed[1] = (int) dy;
+            }
             scrolling(dy);
 
         } else if (dy < 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
@@ -416,7 +424,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             float childOffset = getOffset(-dy, stretchMonthHeight - childViewY);
             childView.setY(childViewY + childOffset);
 
-            if (consumed != null) consumed[1] = (int) dy;
+            if (consumed != null) {
+                consumed[1] = (int) dy;
+            }
             scrolling(dy);
 
         } else if (dy > 0 && childViewY >= monthHeight && childViewY <= stretchMonthHeight && monthCalendarY == 0 && isMonthStretchEnable) {
@@ -428,7 +438,9 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
             float childOffset = getOffset(-dy, stretchMonthHeight - childViewY);
             childView.setY(childViewY + childOffset);
 
-            if (consumed != null) consumed[1] = (int) dy;
+            if (consumed != null) {
+                consumed[1] = (int) dy;
+            }
             scrolling(dy);
         }
 
@@ -437,9 +449,12 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
 
     private float downY;
     private float downX;
-    private float lastY;//上次的y
-    private float verticalY = 50.f;//竖直方向上滑动的临界值，大于这个值认为是竖直滑动
-    private boolean isFirstScroll = true; //第一次手势滑动，因为第一次滑动的偏移量大于verticalY，会出现猛的一划，这里只对第一次滑动做处理
+    //上次的y
+    private float lastY;
+    //竖直方向上滑动的临界值，大于这个值认为是竖直滑动
+    private float verticalY = 50.f;
+    //第一次手势滑动，因为第一次滑动的偏移量大于verticalY，会出现猛的一划，这里只对第一次滑动做处理
+    private boolean isFirstScroll = true;
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {

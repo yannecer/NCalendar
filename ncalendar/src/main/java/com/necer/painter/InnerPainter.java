@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
@@ -13,11 +14,9 @@ import androidx.core.content.ContextCompat;
 import com.necer.R;
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
-import com.necer.enumeration.CalendarType;
 import com.necer.utils.Attrs;
 import com.necer.utils.CalendarUtil;
 import com.necer.utils.DrawableUtil;
-import com.necer.view.ICalendarView;
 
 import org.joda.time.LocalDate;
 
@@ -63,7 +62,11 @@ public class InnerPainter implements CalendarPainter {
         this.mAttrs = calendar.getAttrs();
         this.mContext = context;
         this.mCalendar = calendar;
-        mTextPaint = getPaint();
+
+        mTextPaint = new Paint();
+        mTextPaint.setAntiAlias(true);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+
         mPointList = new ArrayList<>();
         mHolidayList = new ArrayList<>();
         mWorkdayList = new ArrayList<>();
@@ -79,7 +82,6 @@ public class InnerPainter implements CalendarPainter {
         mTodayCheckedPoint = ContextCompat.getDrawable(context, mAttrs.todayCheckedPoint);
         mTodayUnCheckedPoint = ContextCompat.getDrawable(context, mAttrs.todayUnCheckedPoint);
 
-
         List<String> holidayList = CalendarUtil.getHolidayList();
         for (int i = 0; i < holidayList.size(); i++) {
             mHolidayList.add(new LocalDate(holidayList.get(i)));
@@ -90,13 +92,6 @@ public class InnerPainter implements CalendarPainter {
         }
     }
 
-
-    private Paint getPaint() {
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setTextAlign(Paint.Align.CENTER);
-        return paint;
-    }
 
     @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> checkedDateList) {
@@ -174,6 +169,7 @@ public class InnerPainter implements CalendarPainter {
         mTextPaint.setColor(color);
         mTextPaint.setAlpha(alphaColor);
         mTextPaint.setTextSize(mAttrs.solarTextSize);
+       // mTextPaint.setFakeBoldText(true);
         canvas.drawText(date.getDayOfMonth() + "", rectF.centerX(), mAttrs.showLunar ? rectF.centerY() : getTextBaseLineY(rectF.centerY()), mTextPaint);
     }
 
@@ -200,6 +196,7 @@ public class InnerPainter implements CalendarPainter {
             mTextPaint.setColor(replaceColor == null ? color : replaceColor);
             mTextPaint.setTextSize(mAttrs.lunarTextSize);
             mTextPaint.setAlpha(alphaColor);
+          //  mTextPaint.setFakeBoldText(false);
             canvas.drawText(lunarString, rectF.centerX(), rectF.centerY() + mAttrs.lunarDistance, mTextPaint);
         }
     }
@@ -219,7 +216,7 @@ public class InnerPainter implements CalendarPainter {
     //绘制节假日
     private void drawHolidayWorkday(Canvas canvas, RectF rectF, LocalDate localDate, Drawable holidayDrawable, Drawable workdayDrawable, int holidayTextColor, int workdayTextColor, int alphaColor) {
         if (mAttrs.showHoliday) {
-            int[] holidayLocation = getHolidayLocation(rectF.centerX(), rectF.centerY());
+            int[] holidayLocation = getHolidayWorkdayLocation(rectF.centerX(), rectF.centerY());
             if (mHolidayList.contains(localDate)) {
                 if (holidayDrawable == null) {
                     mTextPaint.setTextSize(mAttrs.holidayWorkdayTextSize);
@@ -249,7 +246,8 @@ public class InnerPainter implements CalendarPainter {
     //绘制拉伸的文字
     private void drawStretchText(Canvas canvas, RectF rectF, int alphaColor, LocalDate localDate) {
         float v = rectF.centerY() + mAttrs.stretchTextDistance;
-        if (v <= rectF.bottom) {//超出当前矩形 不绘制
+        //超出当前矩形 不绘制
+        if (v <= rectF.bottom) {
             String stretchText = mStretchStrMap.get(localDate);
             if (!TextUtils.isEmpty(stretchText)) {
                 mTextPaint.setTextSize(mAttrs.stretchTextSize);
@@ -267,8 +265,8 @@ public class InnerPainter implements CalendarPainter {
     }
 
 
-    //Holiday的位置
-    private int[] getHolidayLocation(float centerX, float centerY) {
+    //HolidayWorkday的位置
+    private int[] getHolidayWorkdayLocation(float centerX, float centerY) {
         int[] location = new int[2];
         switch (mAttrs.holidayWorkdayLocation) {
             case Attrs.TOP_LEFT:
@@ -345,7 +343,6 @@ public class InnerPainter implements CalendarPainter {
             LocalDate localDate;
             try {
                 localDate = new LocalDate(key);
-
             } catch (Exception e) {
                 throw new RuntimeException("setReplaceLunarColorMap的参数需要 yyyy-MM-dd 格式的日期");
             }

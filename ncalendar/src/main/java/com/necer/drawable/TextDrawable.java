@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Created by necer on 2020/3/27.
+ *
+ * @author necer
+ * @date 2020/3/27
  */
 public class TextDrawable extends Drawable {
 

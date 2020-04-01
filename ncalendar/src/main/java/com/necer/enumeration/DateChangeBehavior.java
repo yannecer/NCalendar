@@ -4,12 +4,32 @@ import java.io.Serializable;
 
 /**
  * 日历日期变化行为
+ * @author necer
  */
 public enum DateChangeBehavior implements Serializable {
 
-    INITIALIZE,//初始化
-    CLICK,//点击
-    PAGE,//手势翻页和上一页、下一页
-    CLICK_PAGE,//点击上月/下月翻页
-    API //API跳转
+    /**
+     * 初始化
+     */
+    INITIALIZE,
+
+    /**
+     * 点击
+     */
+    CLICK,
+
+    /**
+     * 手势翻页和上一页、下一页
+     */
+    PAGE,
+
+    /**
+     * 点击上月、下月翻页选中
+     */
+    CLICK_PAGE,
+
+    /**
+     * API跳转
+     */
+    API
 }

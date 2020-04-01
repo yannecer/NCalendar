@@ -2,6 +2,9 @@ package com.necer.listener;
 
 import android.animation.Animator;
 
+/**
+ * @author necer
+ */
 public class OnEndAnimatorListener implements Animator.AnimatorListener {
     @Override
     public void onAnimationStart(Animator animation) {

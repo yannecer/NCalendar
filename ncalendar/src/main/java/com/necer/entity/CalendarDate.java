@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /***
  * 日历日期 包含公历、农历、节气、节日
+ * @author necer
  */
 public class CalendarDate implements Serializable {
 
