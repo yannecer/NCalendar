@@ -26,6 +26,9 @@
         <activity
             android:name=".activity.TestMiui10Activity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".TestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
 
         <activity
             android:name=".activity.TestEmuiActivity"
@@ -62,9 +65,9 @@
             android:name=".activity.TestStretchActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-<!--        <activity-->
-<!--            android:name=".TestActivity"-->
-<!--            android:configChanges="orientation|screenSize|keyboardHidden" />-->
+        <!--        <activity-->
+        <!--            android:name=".TestActivity"-->
+        <!--            android:configChanges="orientation|screenSize|keyboardHidden" />-->
 
 
         <activity

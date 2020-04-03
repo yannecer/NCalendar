@@ -1,6 +1,5 @@
 package com.necer.ncalendar;
 
-import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import com.google.android.material.tabs.TabLayout;
