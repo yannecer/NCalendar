@@ -134,8 +134,9 @@ implementation 'com.necer.ncalendar:ncalendar:5.0.0'   项目升级到androidx
 
 ```
 日历设置时间标记、替换文字的Api，只对InnerPainter有效，如果是自定义日历UI，则这些方法需要自己实现，可参考InnerPainter相关代码
-### [日历设置时间标记、替换文字](https://github.com/yannecer/NCalendar/wiki/%E6%97%A5%E5%8E%86%E8%AE%BE%E7%BD%AE%E6%A0%87%E8%AE%B0%E3%80%81%E6%9B%BF%E6%8D%A2%E6%96%87%E5%AD%97)
+
 ```
+### [日历设置时间标记、替换文字](https://github.com/yannecer/NCalendar/wiki/%E6%97%A5%E5%8E%86%E8%AE%BE%E7%BD%AE%E6%A0%87%E8%AE%B0%E3%80%81%E6%9B%BF%E6%8D%A2%E6%96%87%E5%AD%97)
 ***
 
 ## 自定义日历UI
