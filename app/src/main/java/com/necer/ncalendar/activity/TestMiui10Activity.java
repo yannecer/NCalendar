@@ -1,8 +1,11 @@
 package com.necer.ncalendar.activity;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 import android.widget.TextView;
 
@@ -10,9 +13,12 @@ import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.Miui10Calendar;
 import com.necer.entity.CalendarDate;
 import com.necer.entity.Lunar;
+import com.necer.enumeration.DateChangeBehavior;
+import com.necer.enumeration.MultipleCountModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.InnerPainter;
 import com.necer.utils.CalendarUtil;
 
@@ -46,9 +52,21 @@ public class TestMiui10Activity extends BaseActivity {
         List<String> pointList = Arrays.asList("2018-10-01", "2018-11-19", "2018-11-20", "2018-05-23", "2019-01-01", "2018-12-23");
 
         miui10Calendar = findViewById(R.id.miui10Calendar);
-        miui10Calendar.setSelectedMode(selectedModel);
+        miui10Calendar.setCheckMode(checkModel);
         InnerPainter innerPainter = (InnerPainter) miui10Calendar.getCalendarPainter();
         innerPainter.setPointList(pointList);
+
+
+
+//        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+//        miui10Calendar.setMonthCalendarBackground(new CalendarBackground() {
+//            @Override
+//            public Drawable getBackgroundDrawable(LocalDate localDate, int currentDistance, int totalDistance) {
+//                return drawable;
+//            }
+//        });
+
+
 
         Map<String, String> strMap = new HashMap<>();
         strMap.put("2019-01-25", "测试");
@@ -77,9 +95,10 @@ public class TestMiui10Activity extends BaseActivity {
 
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
                 Log.d(TAG, "   当前页面选中 " + localDate);
+                Log.d(TAG, "   dateChangeBehavior " + dateChangeBehavior);
 
                 if (localDate != null) {
                     CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
@@ -91,16 +110,17 @@ public class TestMiui10Activity extends BaseActivity {
                     tv_desc.setText("");
                 }
             }
+
         });
         miui10Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
-
-                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
                 Log.d(TAG, year + "年" + month + "月");
-                Log.d(TAG, "当前页面选中：：" + currectSelectList);
-                Log.d(TAG, "全部选中：：" + allSelectList);
+                Log.d(TAG, "当前页面选中：：" + currPagerCheckedList);
+                Log.d(TAG, "全部选中：：" + totalCheckedList);
             }
+
         });
 
 

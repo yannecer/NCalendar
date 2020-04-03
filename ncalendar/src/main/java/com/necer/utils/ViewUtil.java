@@ -12,7 +12,7 @@ import com.necer.R;
 public class ViewUtil {
 
     public static View getTargetView(Context context, View view) {
-        View targetView = view.findViewWithTag(context.getString(R.string.factual_scroll_view));
+        View targetView = view.findViewWithTag(context.getString(R.string.N_factual_scroll_view));
 
         if (targetView != null && isViewVisible(targetView)) {
             return targetView;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
+import com.necer.enumeration.DateChangeBehavior;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.painter.CalendarAdapter;
@@ -38,9 +39,10 @@ public class GeneralAdapterActivity extends AppCompatActivity {
 
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 Log.e("onCalendarChange", "onCalendarChange:::" + localDate);
             }
+
         });
 
     }
@@ -53,7 +55,7 @@ public class GeneralAdapterActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindToadyView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+        public void onBindToadyView(View view, LocalDate localDate, List<LocalDate> totalCheckedDateList) {
 
             View ll_content = view.findViewById(R.id.ll_content);
 
@@ -62,7 +64,7 @@ public class GeneralAdapterActivity extends AppCompatActivity {
             tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
 
             setLunar(view, localDate);
-            if (selectedDateList.contains(localDate)) {
+            if (totalCheckedDateList.contains(localDate)) {
                 ll_content.setBackgroundResource(R.drawable.bg_today_checked);
             } else {
                 ll_content.setBackgroundResource(R.drawable.bg_unchecked);
@@ -71,7 +73,7 @@ public class GeneralAdapterActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+        public void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, List<LocalDate> totalCheckedDateList) {
 
             View ll_content = view.findViewById(R.id.ll_content);
 
@@ -81,7 +83,7 @@ public class GeneralAdapterActivity extends AppCompatActivity {
 
             setLunar(view, localDate);
 
-            if (selectedDateList.contains(localDate)) {
+            if (totalCheckedDateList.contains(localDate)) {
                 ll_content.setBackgroundResource(R.drawable.bg_checked);
             } else {
                 ll_content.setBackgroundResource(R.drawable.bg_unchecked);
@@ -90,14 +92,14 @@ public class GeneralAdapterActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindLastOrNextMonthView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+        public void onBindLastOrNextMonthView(View view, LocalDate localDate, List<LocalDate> totalCheckedDateList) {
             View ll_content = view.findViewById(R.id.ll_content);
             TextView tv_item = view.findViewById(R.id.tv_item);
             tv_item.setTextColor(Color.GRAY);
             tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
 
             setLunar(view, localDate);
-            if (selectedDateList.contains(localDate)) {
+            if (totalCheckedDateList.contains(localDate)) {
                 ll_content.setBackgroundResource(R.drawable.bg_last_next_checked);
             } else {
                 ll_content.setBackgroundResource(R.drawable.bg_unchecked);

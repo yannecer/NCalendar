@@ -1,13 +1,16 @@
 package com.necer.ncalendar.activity;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.WeekCalendar;
+import com.necer.enumeration.DateChangeBehavior;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
@@ -31,26 +34,28 @@ public class TestWeekActivity extends BaseActivity {
 
 
         weekCalendar = findViewById(R.id.weekCalendar);
-        weekCalendar.setSelectedMode(selectedModel);
+        weekCalendar.setCheckMode(checkModel);
         weekCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
 
                 Log.d(TAG, "setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
+
             }
+
         });
 
         weekCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currectSelectList, List<LocalDate> allSelectList) {
-                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currectSelectList.size() + "个  总共选中" + allSelectList.size() + "个");
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
 
                 Log.d(TAG, year + "年" + month + "月");
-                Log.d(TAG, "当前页面选中：：" + currectSelectList);
-                Log.d(TAG, "全部选中：：" + allSelectList);
-
+                Log.d(TAG, "当前页面选中：：" + currPagerCheckedList);
+                Log.d(TAG, "全部选中：：" + totalCheckedList);
             }
+
         });
 
     }

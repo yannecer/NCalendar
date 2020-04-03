@@ -1,5 +1,6 @@
 package com.necer.helper;
 
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -7,6 +8,7 @@ import android.view.MotionEvent;
 import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarType;
 import com.necer.painter.CalendarAdapter;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
 
@@ -15,18 +17,25 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author necer
+ */
 public class CalendarHelper {
 
-    private int mLineNum;//行数
-    protected LocalDate mPagerInitialDate;//当前页面的初始化日期
+    //行数
+    private int mLineNum;
+    //当前页面的初始化日期
+    private LocalDate mPagerInitialDate;
     private BaseCalendar mCalendar;
 
     private CalendarType mCalendarType;
-
-    protected RectF mBgRectF;//日历背景
-    private List<LocalDate> mAllSelectListDate;//当前页面选中的日期
-    protected List<LocalDate> mDateList;//页面的数据集合
-    protected List<RectF> mRectFList;
+    //日历背景矩形
+    private Rect mBackgroundRect;
+    //当前页面选中的日期
+    private List<LocalDate> mTotalCheckedListDate;
+    //页面的数据集合
+    private List<LocalDate> mDateList;
+    private List<RectF> mRectFList;
     private GestureDetector mGestureDetector;
 
     public CalendarHelper(BaseCalendar calendar, LocalDate pagerInitialDate, CalendarType calendarType) {
@@ -41,16 +50,36 @@ public class CalendarHelper {
 
         mRectFList = getLocationRectFList();
 
-        mAllSelectListDate = mCalendar.getAllSelectDateList();
+        mTotalCheckedListDate = mCalendar.getTotalCheckedDateList();
 
-        mBgRectF = new RectF(0f, 0f, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
+        mBackgroundRect = new Rect(0, 0, calendar.getMeasuredWidth(), calendar.getMeasuredHeight());
 
+        GestureDetector.SimpleOnGestureListener mSimpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                for (int i = 0; i < mRectFList.size(); i++) {
+                    RectF rectF = mRectFList.get(i);
+                    if (rectF.contains((int) e.getX(), (int) e.getY())) {
+                        LocalDate clickDate = mDateList.get(i);
+                        dealClickDate(clickDate);
+                        break;
+                    }
+                }
+                return true;
+            }
+        };
         mGestureDetector = new GestureDetector(calendar.getContext(), mSimpleOnGestureListener);
     }
 
     /**
      * 分配空间
-     * @return
+     *
+     * @return 返回每个日期的绘制矩形集合
      */
     private List<RectF> getLocationRectFList() {
         List<RectF> rectFList = new ArrayList<>();
@@ -63,9 +92,10 @@ public class CalendarHelper {
 
     /**
      * 获取当前的位置，拉伸日历时会变化，其他状态不会变
-     * @param lineIndex
-     * @param columnIndex
-     * @return
+     *
+     * @param lineIndex   行
+     * @param columnIndex 列
+     * @return 返回所属行列的矩形
      */
     public RectF getRealRectF(int lineIndex, int columnIndex) {
         int index = lineIndex * 7 + columnIndex;
@@ -84,7 +114,7 @@ public class CalendarHelper {
         }
     }
 
-    public RectF resetRectFSize(RectF rectF, int lineIndex, int columnIndex) {
+    private RectF resetRectFSize(RectF rectF, int lineIndex, int columnIndex) {
         //矩形重新确定确定位置
         float width = mCalendar.getMeasuredWidth();
         float height = mCalendar.getMeasuredHeight();
@@ -120,12 +150,16 @@ public class CalendarHelper {
     }
 
 
-    public RectF getBgRectF() {
-        return mBgRectF;
+    public Rect getBackgroundRectF() {
+        return mBackgroundRect;
     }
 
     public CalendarPainter getCalendarPainter() {
         return mCalendar.getCalendarPainter();
+    }
+
+    public CalendarBackground getCalendarBackground() {
+        return mCalendar.getCalendarBackground();
     }
 
     public CalendarAdapter getCalendarAdapter() {
@@ -133,7 +167,7 @@ public class CalendarHelper {
     }
 
     public List<LocalDate> getAllSelectListDate() {
-        return mAllSelectListDate;
+        return mTotalCheckedListDate;
     }
 
     public List<LocalDate> getDateList() {
@@ -145,27 +179,25 @@ public class CalendarHelper {
     }
 
     /**
-     * localDate 到顶部的距离
-     * @param localDate
-     * @return
+     * @param localDate 日期
+     * @return localDate 到顶部的距离
      */
     public int getDistanceFromTop(LocalDate localDate) {
         int monthCalendarOffset;
         //选中的是第几行   对于没有选中的默认折叠中心是第一行，有选中的默认折叠中心是选中的第一个日期
-        int selectIndex = mDateList.indexOf(localDate) / 7;
+        int checkedIndex = mDateList.indexOf(localDate) / 7;
         if (mLineNum == 5) {
             //5行的月份
-            monthCalendarOffset = mCalendar.getMeasuredHeight() / 5 * selectIndex;
+            monthCalendarOffset = mCalendar.getMeasuredHeight() / 5 * checkedIndex;
         } else {
             int rectHeight6 = (mCalendar.getMeasuredHeight() / 5) * 4 / 5;
-            monthCalendarOffset = rectHeight6 * selectIndex;
+            monthCalendarOffset = rectHeight6 * checkedIndex;
         }
         return monthCalendarOffset;
     }
 
     /**
-     * 获取中心点 ，即月周切换的中心日期
-     * @return
+     * @return 获取中心点 ，即月周切换的中心日期
      */
     public LocalDate getPivotDate() {
         LocalDate today = new LocalDate();
@@ -179,8 +211,7 @@ public class CalendarHelper {
     }
 
     /**
-     * 中心点到顶部的距离
-     * @return
+     * @return 中心点到顶部的距离
      */
     public int getPivotDistanceFromTop() {
         return getDistanceFromTop(getPivotDate());
@@ -190,7 +221,7 @@ public class CalendarHelper {
         List<LocalDate> currentSelectDateList = new ArrayList<>();
         for (int i = 0; i < mDateList.size(); i++) {
             LocalDate localDate = mDateList.get(i);
-            if (mAllSelectListDate != null && mAllSelectListDate.contains(localDate)) {
+            if (mTotalCheckedListDate != null && mTotalCheckedListDate.contains(localDate)) {
                 currentSelectDateList.add(localDate);
             }
         }
@@ -201,18 +232,18 @@ public class CalendarHelper {
         return mDateList;
     }
 
-    public void dealClickDate(LocalDate localDate) {
+    private void dealClickDate(LocalDate localDate) {
         if (mCalendarType == CalendarType.MONTH && CalendarUtil.isLastMonth(localDate, mPagerInitialDate)) {
             mCalendar.onClickLastMonthDate(localDate);
         } else if (mCalendarType == CalendarType.MONTH && CalendarUtil.isNextMonth(localDate, mPagerInitialDate)) {
             mCalendar.onClickNextMonthDate(localDate);
         } else {
-            mCalendar.onClickCurrectMonthOrWeekDate(localDate);
+            mCalendar.onClickCurrentMonthOrWeekDate(localDate);
         }
     }
 
 
-    public LocalDate getFirstDate() {
+    public LocalDate getCurrPagerFirstDate() {
         if (mCalendarType == CalendarType.MONTH) {
             return new LocalDate(mPagerInitialDate.getYear(), mPagerInitialDate.getMonthOfYear(), 1);
         } else {
@@ -238,30 +269,8 @@ public class CalendarHelper {
     }
 
 
-    private GestureDetector.SimpleOnGestureListener mSimpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            for (int i = 0; i < mRectFList.size(); i++) {
-                RectF rectF = mRectFList.get(i);
-                if (rectF.contains((int) e.getX(), (int) e.getY())) {
-                    LocalDate clickDate = mDateList.get(i);
-                    dealClickDate(clickDate);
-                    break;
-                }
-            }
-            return true;
-        }
-    };
-
     /**
      * 背景的初始位置为月日历的高度-周日的高度
-     *
-     * @return
      */
     public int getInitialDistance() {
         return mCalendar.getMeasuredHeight() * 4 / 5;

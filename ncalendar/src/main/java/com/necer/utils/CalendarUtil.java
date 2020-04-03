@@ -2,7 +2,6 @@ package com.necer.utils;
 
 import android.content.Context;
 import android.util.TypedValue;
-import android.view.WindowManager;
 
 import com.necer.entity.CalendarDate;
 import com.necer.entity.Lunar;
@@ -21,70 +20,9 @@ import java.util.List;
 public class CalendarUtil {
 
 
-    /**
-     * 屏幕宽度
-     *
-     * @param context
-     * @return
-     */
-    public static int getScreenWith(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        return windowManager.getDefaultDisplay().getWidth();
-    }
-
-
-    /**
-     *
-     * @param color 原来的颜色
-     * @param alpha 透明度，小数
-     * @return
-     */
-/*
-    public static int getAlphaColor(int color, double alpha) {
-        int a = (int) Math.round(alpha * 255);
-        String hex = Integer.toHexString(a).toUpperCase();
-        if (hex.length() == 1) hex = "0" + hex;
-        String hexCode = "#" + hex + String.format("%06X", Integer.valueOf(16777215 & color));
-        int newColor;
-        try {
-            newColor = Color.parseColor(hexCode);
-        } catch (Throwable throwable) {
-            newColor = color;
-        }
-        return newColor;
-    }
-*/
-
-
-    /**
-     * dp转px
-     *
-     * @param context
-     * @param
-     * @return
-     */
-    public static float dp2px(Context context, int dpVal) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dpVal, context.getResources().getDisplayMetrics());
-    }
-
-    /**
-     * sp转px
-     *
-     * @param context
-     * @param spVal
-     * @return
-     */
-    public static float sp2px(Context context, float spVal) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                spVal, context.getResources().getDisplayMetrics());
-    }
 
     /**
      * 两个日期是否同月
-     * @param date1
-     * @param date2
-     * @return
      */
     public static boolean isEqualsMonth(LocalDate date1, LocalDate date2) {
         return date1.getYear() == date2.getYear() && date1.getMonthOfYear() == date2.getMonthOfYear();

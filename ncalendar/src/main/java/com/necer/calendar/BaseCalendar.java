@@ -1,28 +1,28 @@
 package com.necer.calendar;
 
 import android.content.Context;
-import android.graphics.Canvas;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.necer.R;
 import com.necer.adapter.BasePagerAdapter;
 import com.necer.enumeration.CalendarBuild;
-import com.necer.enumeration.MultipleNumModel;
-import com.necer.enumeration.SelectedModel;
+import com.necer.enumeration.DateChangeBehavior;
+import com.necer.enumeration.MultipleCountModel;
+import com.necer.enumeration.CheckModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
 import com.necer.listener.OnMWDateChangeListener;
 import com.necer.painter.CalendarAdapter;
-import com.necer.painter.InnerPainter;
+import com.necer.painter.CalendarBackground;
 import com.necer.painter.CalendarPainter;
+import com.necer.painter.InnerPainter;
+import com.necer.painter.NumBackground;
+import com.necer.painter.WhiteBackground;
 import com.necer.utils.Attrs;
 import com.necer.utils.AttrsUtil;
 import com.necer.view.ICalendarView;
@@ -32,19 +32,26 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+
 /**
- * Created by necer on 2018/9/11.
+ * @author necer
+ * @date 2018/9/11
  * qq群：127278900
  */
 public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
+
     private Context mContext;
     private Attrs mAttrs;
+    private boolean mScrollEnable = true;
+    private CheckModel mCheckModel;//选中模式
+    private final static String mDefaultStartDate = "1901-01-01";
+    private final static String mDefaultEndDateDate = "2099-12-31";
 
-    private SelectedModel mSelectedModel;//选中模式
-
-    private boolean mIsJumpClick;//是否是点击上月、下月或跳转，这个只在默认选中时有用
-    private boolean mIsDefaultSelectFitst;//默认选择时，翻页选中第一个日期
+    private boolean mDefaultCheckedFirstDate;//默认选择时，翻页选中第一个日期
 
     protected OnClickDisableDateListener mOnClickDisableDateListener;//点击区间之外的日期回调
     private OnMWDateChangeListener mOnMWDateChangeListener;//月周切换是折叠中心的回调
@@ -53,46 +60,61 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     protected LocalDate mStartDate, mEndDate, mInitializeDate;
     protected CalendarPainter mCalendarPainter;
-    private List<LocalDate> mAllSelectDateList;
+    private List<LocalDate> mTotalCheckedDateList;
 
-    private boolean mIsInflateFinish;//是否加载完成，
-    private MultipleNumModel mMultipleNumModel;//多选数量模式
-    private int mMultipleNum;//多选个数
+    private MultipleCountModel mMultipleCountModel;//多选数量模式
+    private int mMultipleCount;//多选个数
 
-    private int mCalendarBgColor; //背景颜色
     private int mFirstDayOfWeek;//日历的周一开始、周日开始
-    private boolean mIsAllMonthSixLine;//月日历是否都是6行
+    private boolean mAllMonthSixLine;//月日历是否都是6行
 
     private CalendarBuild mCalendarBuild;
+    private CalendarBackground mCalendarBackground;
 
     private CalendarAdapter mCalendarAdapter;
 
     private int mCalendarPagerSize;//日历总页数
     private int mCalendarCurrIndex;//日历当前页码
-    private boolean mIsLastNextMonthClickEnable;//上下月是否可点击
+    private boolean mLastNextMonthClickEnable;//上下月是否可点击
 
+    private DateChangeBehavior mDateChangeBehavior;
 
     public BaseCalendar(@NonNull Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
         this.mAttrs = AttrsUtil.getAttrs(context, attributeSet);
         this.mContext = context;
-        mSelectedModel = SelectedModel.SINGLE_SELECTED;
+        mCheckModel = CheckModel.SINGLE_DEFAULT_CHECKED;
         mCalendarBuild = CalendarBuild.DRAW;
-        mAllSelectDateList = new ArrayList<>();
+        mDateChangeBehavior = DateChangeBehavior.INITIALIZE;
+        mTotalCheckedDateList = new ArrayList<>();
         mInitializeDate = new LocalDate();
-        mStartDate = new LocalDate("1901-01-01");
-        mEndDate = new LocalDate("2099-12-31");
+        mStartDate = new LocalDate(mDefaultStartDate);
+        mEndDate = new LocalDate(mDefaultEndDateDate);
 
-        mCalendarBgColor = mAttrs.bgCalendarColor;
+        //背景
+        if (mAttrs.showNumberBackground) {
+            mCalendarBackground = new NumBackground(mAttrs.numberBackgroundTextSize, mAttrs.numberBackgroundTextColor, mAttrs.numberBackgroundAlphaColor);
+        } else if (mAttrs.calendarBackground != null) {
+            mCalendarBackground = (localDate, currentDistance, totalDistance) -> mAttrs.calendarBackground;
+        } else {
+            mCalendarBackground = new WhiteBackground();
+        }
+
         mFirstDayOfWeek = mAttrs.firstDayOfWeek;
-        mIsAllMonthSixLine = mAttrs.isAllMonthSixLine;
-        mIsLastNextMonthClickEnable = mAttrs.isLastNextMonthClickEnable;
+        mAllMonthSixLine = mAttrs.allMonthSixLine;
+        mLastNextMonthClickEnable = mAttrs.lastNextMonthClickEnable;
 
-        setBackgroundColor(mCalendarBgColor);
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(final int position) {
-                drawView(position);
+                post(() -> drawView(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+                    mDateChangeBehavior = DateChangeBehavior.PAGE;
+                }
             }
         });
 
@@ -102,25 +124,25 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     private void initAdapter() {
 
-        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {
-            mAllSelectDateList.clear();
-            mAllSelectDateList.add(mInitializeDate);
+        if (mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED) {
+            mTotalCheckedDateList.clear();
+            mTotalCheckedDateList.add(mInitializeDate);
         }
 
         if (mStartDate.isAfter(mEndDate)) {
-            throw new IllegalArgumentException("startDate必须在endDate之前");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_start_after_end));
         }
 
-        if (mStartDate.isBefore(new LocalDate("1901-01-01"))) {
-            throw new IllegalArgumentException("startDate必须在1901-01-01之后");
+        if (mStartDate.isBefore(new LocalDate(mDefaultStartDate))) {
+            throw new IllegalArgumentException(getContext().getString(R.string.N_start_before_19010101));
         }
 
-        if (mEndDate.isAfter(new LocalDate("2099-12-31"))) {
-            throw new IllegalArgumentException("endDate必须在2099-12-31之前");
+        if (mEndDate.isAfter(new LocalDate(mDefaultEndDateDate))) {
+            throw new IllegalArgumentException(getContext().getString(R.string.N_end_after_20991231));
         }
 
         if (mStartDate.isAfter(mInitializeDate) || mEndDate.isBefore(mInitializeDate)) {
-            throw new IllegalArgumentException("日期区间必须包含初始化日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_initialize_date_illegal));
         }
 
         mCalendarPagerSize = getTwoDateCount(mStartDate, mEndDate, mFirstDayOfWeek) + 1;
@@ -138,7 +160,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             mStartDate = new LocalDate(startFormatDate);
             mEndDate = new LocalDate(endFormatDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("startDate、endDate需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
         initAdapter();
     }
@@ -148,7 +170,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             mInitializeDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
         initAdapter();
     }
@@ -160,165 +182,140 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
             mEndDate = new LocalDate(endFormatDate);
             mInitializeDate = new LocalDate(formatInitializeDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("setInitializeDate的参数需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
         initAdapter();
     }
 
 
     private void drawView(int position) {
+
         ICalendarView iCalendarView = findViewWithTag(position);
+
         if (iCalendarView == null) {
             return;
         }
-        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {//每页单个选中
-            LocalDate initialDate = iCalendarView.getPagerInitialDate();//当前页面初始化的日期
-            LocalDate lastDate = mAllSelectDateList.get(0);//上个页面选中的日期
-            //当前面页面的初始值和上个页选中的日期，相差几月或几周，再又上个页面选中的日期得出当前页面选中的日期
-            int currNum = getTwoDateCount(lastDate, initialDate, mFirstDayOfWeek);//得出两个页面相差几个
-            LocalDate tempLocalDate = getIntervalDate(lastDate, currNum);
-            LocalDate currectDate; //当前页面选中的日期
-            if (mIsDefaultSelectFitst && !mIsJumpClick && !tempLocalDate.equals(new LocalDate())) {
-                //默认选中第一个 且 不是点击或跳转 且 不等于今天（为了第一次进来日历选中的是今天）
-                currectDate = getFirstDate();
+
+        //单选并且手势左右滑动、toNextPager、toLastPager 才需要处理这里的日期
+        if (mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED && mDateChangeBehavior == DateChangeBehavior.PAGE) {
+
+            //当前页面初始化的日期
+            LocalDate pagerInitialDate = iCalendarView.getPagerInitialDate();
+            //上个页面选中的日期
+            LocalDate lastDate = mTotalCheckedDateList.get(0);
+            //当前面页面的初始值和上个页选中的日期，相差几月或几周，
+            int dateCount = getTwoDateCount(lastDate, pagerInitialDate, mFirstDayOfWeek);
+            //再由上个页面选中的日期得出当前页面选中的日期
+            LocalDate tempLocalDate = getIntervalDate(lastDate, dateCount);
+            //当前页面需要选中的日期
+            LocalDate currentDate;
+            //默认选中第一个
+            if (mDefaultCheckedFirstDate) {
+                currentDate = getFirstDate();
             } else {
-                currectDate = tempLocalDate;
+                currentDate = tempLocalDate;
             }
+            //判断日期是否在有效日期之内
+            LocalDate localDate = getAvailableDate(currentDate);
 
-            currectDate = getAvailableDate(currectDate);
-
-            mIsJumpClick = false;
-
-            mAllSelectDateList.clear();
-            mAllSelectDateList.add(currectDate);
-            iCalendarView.notifyCalendarView();
-        } else {
-            //分为两种情况，1、单选不选中 2、多选  这两种情况只需要绘制页面
-            iCalendarView.notifyCalendarView();
+            mTotalCheckedDateList.clear();
+            mTotalCheckedDateList.add(localDate);
         }
 
+        iCalendarView.notifyCalendarView();
         callBack();
     }
 
 
-    public void onClickCurrectMonthOrWeekDate(LocalDate localDate) {
-        //判断日期是否合法
-        if (!isAvailable(localDate)) {
-            clickDisableDate(localDate);
-            return;
-        }
-
-        if (mSelectedModel == SelectedModel.MULTIPLE) {
-            //多选  集合不包含就添加，包含就移除
-            if (!mAllSelectDateList.contains(localDate)) {
-                if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_CLEAR) {
-                    mAllSelectDateList.clear();
-                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_REMOVE_FIRST) {
-                    mAllSelectDateList.remove(0);
-                }
-                mAllSelectDateList.add(localDate);
-            } else {
-                mAllSelectDateList.remove(localDate);
-            }
-            notifyCalendar();
-            //当前页面选中改变，需要回调
-            callBack();
-        } else {
-            //单选  集合中有且只有一个元素 ，不包含就清空集合添加，包含该元素不做处理，因为前面已经绘制
-            if (!mAllSelectDateList.contains(localDate)) {
-                mAllSelectDateList.clear();
-                mAllSelectDateList.add(localDate);
-                notifyCalendar();
-                //当前页面选中改变，需要回调
-                callBack();
-
-            }
-        }
+    public void onClickCurrentMonthOrWeekDate(LocalDate localDate) {
+        jump(localDate, true, DateChangeBehavior.CLICK);
     }
 
     public void onClickLastMonthDate(LocalDate localDate) {
-        if (mIsLastNextMonthClickEnable) {
-            jump(localDate, true);
+        if (mLastNextMonthClickEnable && mScrollEnable) {
+            jump(localDate, true, DateChangeBehavior.CLICK_PAGE);
         }
     }
 
     public void onClickNextMonthDate(LocalDate localDate) {
-        if (mIsLastNextMonthClickEnable) {
-            jump(localDate, true);
+        if (mLastNextMonthClickEnable && mScrollEnable) {
+            jump(localDate, true, DateChangeBehavior.CLICK_PAGE);
         }
     }
 
-    public void jump(LocalDate localDate, boolean isDraw) {
+    protected void jump(LocalDate localDate, boolean isCheck, DateChangeBehavior dateChangeBehavior) {
+        this.mDateChangeBehavior = dateChangeBehavior;
         //判断日期是否合法
         if (!isAvailable(localDate)) {
-            clickDisableDate(localDate);
-            return;
-        }
-
-        mIsJumpClick = true;
-        ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
-        int indexOffset = getTwoDateCount(localDate, iCalendarView.getPagerInitialDate(), mFirstDayOfWeek);//得出两个页面相差几个
-        if (mSelectedModel == SelectedModel.MULTIPLE) {
-            //多选  点击的日期不清除，只翻页，如果需要清除，等到翻页之后再次点击
-            if (!mAllSelectDateList.contains(localDate) && isDraw) {
-                if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_CLEAR) {
-                    mAllSelectDateList.clear();
-                } else if (mAllSelectDateList.size() == mMultipleNum && mMultipleNumModel == MultipleNumModel.FULL_REMOVE_FIRST) {
-                    mAllSelectDateList.remove(0);
+            if (getVisibility() == VISIBLE) {
+                if (mOnClickDisableDateListener != null) {
+                    mOnClickDisableDateListener.onClickDisableDate(localDate);
+                } else {
+                    Toast.makeText(getContext(), TextUtils.isEmpty(mAttrs.disabledString) ? getResources().getString(R.string.N_disabledString) : mAttrs.disabledString, Toast.LENGTH_SHORT).show();
                 }
-                mAllSelectDateList.add(localDate);
             }
         } else {
-            //单选
-            if (!mAllSelectDateList.contains(localDate) && isDraw) {
-                mAllSelectDateList.clear();
-                mAllSelectDateList.add(localDate);
+            ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
+            //得出两个页面相差几个
+            int indexOffset = getTwoDateCount(localDate, iCalendarView.getPagerInitialDate(), mFirstDayOfWeek);
+            if (isCheck) {
+                if (mCheckModel == CheckModel.MULTIPLE) {
+                    if (!mTotalCheckedDateList.contains(localDate)) {
+                        if (mTotalCheckedDateList.size() == mMultipleCount && mMultipleCountModel == MultipleCountModel.FULL_CLEAR) {
+                            mTotalCheckedDateList.clear();
+                        } else if (mTotalCheckedDateList.size() == mMultipleCount && mMultipleCountModel == MultipleCountModel.FULL_REMOVE_FIRST) {
+                            mTotalCheckedDateList.remove(0);
+                        }
+                        mTotalCheckedDateList.add(localDate);
+                    } else {
+                        mTotalCheckedDateList.remove(localDate);
+                    }
+                } else {
+                    //单选
+                    mTotalCheckedDateList.clear();
+                    mTotalCheckedDateList.add(localDate);
+                }
             }
-        }
-        if (indexOffset == 0) {
-            drawView(getCurrentItem());
-        } else {
-            setCurrentItem(getCurrentItem() - indexOffset, Math.abs(indexOffset) == 1);
-        }
 
+            if (indexOffset == 0) {
+                drawView(getCurrentItem());
+            } else {
+                setCurrentItem(getCurrentItem() - indexOffset, Math.abs(indexOffset) == 1);
+            }
+        }
     }
 
     private void callBack() {
-        post(new Runnable() {
-            @Override
-            public void run() {
-                ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
-                LocalDate middleLocalDate = iCalendarView.getMiddleLocalDate();
-                List<LocalDate> currentSelectDateList = iCalendarView.getCurrentSelectDateList();
-                LocalDate yearMonthLocalDate;
+        ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
+        LocalDate middleLocalDate = iCalendarView.getMiddleLocalDate();
+        List<LocalDate> currPagerCheckDateList = iCalendarView.getCurrPagerCheckDateList();
+        LocalDate yearMonthLocalDate;
 
-                if (BaseCalendar.this instanceof MonthCalendar) {
-                    //月日历返回初始化的月份
-                    yearMonthLocalDate = iCalendarView.getPagerInitialDate();
-                } else {
-                    if (currentSelectDateList.size() == 0) {
-                        yearMonthLocalDate = middleLocalDate;
-                    } else {
-                        yearMonthLocalDate = currentSelectDateList.get(0);
-                    }
-                }
-
-                if (mOnMWDateChangeListener != null) {
-                    //月周折叠日历使用
-                    mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, iCalendarView.getPivotDate(), mAllSelectDateList);
-                }
-
-                if (mOnCalendarChangedListener != null && !(mSelectedModel == SelectedModel.MULTIPLE) && getVisibility() == VISIBLE) {
-                    //单选
-                    mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currentSelectDateList.size() == 0 ? null : currentSelectDateList.get(0));
-                }
-
-                if (mOnCalendarMultipleChangedListener != null && mSelectedModel == SelectedModel.MULTIPLE && getVisibility() == VISIBLE) {
-                    //多选
-                    mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currentSelectDateList, mAllSelectDateList);
-                }
+        if (BaseCalendar.this instanceof MonthCalendar) {
+            //月日历返回初始化的月份
+            yearMonthLocalDate = iCalendarView.getPagerInitialDate();
+        } else {
+            if (currPagerCheckDateList.size() == 0) {
+                yearMonthLocalDate = middleLocalDate;
+            } else {
+                yearMonthLocalDate = currPagerCheckDateList.get(0);
             }
-        });
+        }
+
+        //月周折叠日历使用
+        if (mOnMWDateChangeListener != null) {
+            mOnMWDateChangeListener.onMwDateChange(BaseCalendar.this, iCalendarView.getPivotDate(), mTotalCheckedDateList);
+        }
+
+        //单选
+        if (mOnCalendarChangedListener != null && mCheckModel != CheckModel.MULTIPLE && getVisibility() == VISIBLE) {
+            mOnCalendarChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currPagerCheckDateList.size() == 0 ? null : currPagerCheckDateList.get(0), mDateChangeBehavior);
+        }
+
+        //多选
+        if (mOnCalendarMultipleChangedListener != null && mCheckModel == CheckModel.MULTIPLE && getVisibility() == VISIBLE) {
+            mOnCalendarMultipleChangedListener.onCalendarChange(BaseCalendar.this, yearMonthLocalDate.getYear(), yearMonthLocalDate.getMonthOfYear(), currPagerCheckDateList, mTotalCheckedDateList, mDateChangeBehavior);
+        }
     }
 
 
@@ -326,7 +323,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     public void notifyCalendar() {
         for (int i = 0; i < getChildCount(); i++) {
             View childAt = getChildAt(i);
-            if (childAt != null && childAt instanceof ICalendarView) {
+            if (childAt instanceof ICalendarView) {
                 ICalendarView iCalendarView = (ICalendarView) childAt;
                 iCalendarView.notifyCalendarView();
             }
@@ -349,32 +346,22 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         this.mOnClickDisableDateListener = onClickDisableDateListener;
     }
 
-    //点击不可用的日期处理
-    private void clickDisableDate(LocalDate localDate) {
-        if (getVisibility() != VISIBLE) {
-            return;
-        }
-        if (mOnClickDisableDateListener != null) {
-            mOnClickDisableDateListener.onClickDisableDate(localDate);
-        } else {
-            Toast.makeText(getContext(), TextUtils.isEmpty(mAttrs.disabledString) ? "日期超出许可范围" : mAttrs.disabledString, Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     @Override
     public void toNextPager() {
+        mDateChangeBehavior = DateChangeBehavior.PAGE;
         setCurrentItem(getCurrentItem() + 1, true);
     }
 
     @Override
     public void toLastPager() {
+        mDateChangeBehavior = DateChangeBehavior.PAGE;
         setCurrentItem(getCurrentItem() - 1, true);
     }
 
     @Override
     public void toToday() {
-        jump(new LocalDate(), true);
+        jump(new LocalDate(), true, DateChangeBehavior.API);
     }
 
 
@@ -384,10 +371,10 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             jumpDate = new LocalDate(formatDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("jumpDate的参数需要 yyyy-MM-dd 格式的日期");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
         }
 
-        jump(jumpDate, true);
+        jump(jumpDate, true, DateChangeBehavior.API);
     }
 
 
@@ -397,9 +384,9 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             jumpDate = new LocalDate(year, month, day);
         } catch (Exception e) {
-            throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
+            throw new IllegalArgumentException("");
         }
-        jump(jumpDate, true);
+        jump(jumpDate, true, DateChangeBehavior.API);
     }
 
     @Override
@@ -408,29 +395,40 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
         try {
             jumpDate = new LocalDate(year, month, 1);
         } catch (Exception e) {
-            throw new IllegalArgumentException("jumpDate的参数需要正确的年月日数据");
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_jump));
         }
-        jump(jumpDate, false);
+        jump(jumpDate, mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED, DateChangeBehavior.API);
     }
 
     @Override
-    public List<LocalDate> getAllSelectDateList() {
-        return mAllSelectDateList;
+    public List<LocalDate> getTotalCheckedDateList() {
+        return mTotalCheckedDateList;
+    }
+
+
+    @Override
+    public void setCheckedDates(List<String> dateList) {
+
+        if (mCheckModel != CheckModel.MULTIPLE) {
+            throw new RuntimeException(getContext().getString(R.string.N_set_checked_dates_illegal));
+        }
+
+        if (mMultipleCountModel != null && dateList.size() > mMultipleCount) {
+            throw new RuntimeException(getContext().getString(R.string.N_set_checked_dates_count_illegal));
+        }
+        mTotalCheckedDateList.clear();
+        try {
+            for (int i = 0; i < dateList.size(); i++) {
+                mTotalCheckedDateList.add(new LocalDate(dateList.get(i)));
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException(getContext().getString(R.string.N_date_format_illegal));
+        }
     }
 
     //点击的日期是否可用
     public boolean isAvailable(LocalDate localDate) {
         return !localDate.isBefore(mStartDate) && !localDate.isAfter(mEndDate);
-    }
-
-    //获取区间开始日期
-    public LocalDate getStartDate() {
-        return mStartDate;
-    }
-
-    //获取区间结束日期
-    public LocalDate getEndDate() {
-        return mEndDate;
     }
 
 
@@ -451,7 +449,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     public boolean isAllMonthSixLine() {
-        return mIsAllMonthSixLine;
+        return mAllMonthSixLine;
     }
 
     public CalendarBuild getCalendarBuild() {
@@ -482,7 +480,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     @Override
     public CalendarPainter getCalendarPainter() {
         if (mCalendarPainter == null) {
-            mCalendarPainter = new InnerPainter(this);
+            mCalendarPainter = new InnerPainter(getContext(), this);
         }
         return mCalendarPainter;
     }
@@ -497,14 +495,14 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     }
 
     //月周切换时交换数据，保证月日历和周日历有相同的选中日期
-    public void exchangeSelectDateList(List<LocalDate> dateList) {
-        mAllSelectDateList.clear();
-        mAllSelectDateList.addAll(dateList);
+    public void exchangeCheckedDateList(List<LocalDate> dateList) {
+        mTotalCheckedDateList.clear();
+        mTotalCheckedDateList.addAll(dateList);
         notifyCalendar();
     }
 
 
-    public void setOnMWDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
+    protected void setOnMWDateChangeListener(OnMWDateChangeListener onMWDateChangeListener) {
         this.mOnMWDateChangeListener = onMWDateChangeListener;
     }
 
@@ -522,7 +520,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     public LocalDate getFirstDate() {
         ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
         if (iCalendarView != null) {
-            return iCalendarView.getFirstDate();
+            return iCalendarView.getCurrPagerFirstDate();
         }
         return null;
     }
@@ -564,29 +562,21 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     //相差count之后的的日期
     protected abstract LocalDate getIntervalDate(LocalDate localDate, int count);
 
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
-        if (!mIsInflateFinish) {
-            drawView(getCurrentItem());
-            mIsInflateFinish = true;
-        }
-    }
 
     @Override
-    public List<LocalDate> getCurrectSelectDateList() {
+    public List<LocalDate> getCurrPagerCheckDateList() {
         ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
         if (iCalendarView != null) {
-            return iCalendarView.getCurrentSelectDateList();
+            return iCalendarView.getCurrPagerCheckDateList();
         }
         return null;
     }
 
     @Override
-    public List<LocalDate> getCurrectDateList() {
+    public List<LocalDate> getCurrPagerDateList() {
         ICalendarView iCalendarView = findViewWithTag(getCurrentItem());
         if (iCalendarView != null) {
-            return iCalendarView.getCurrentDateList();
+            return iCalendarView.getCurrPagerDateList();
         }
         return null;
     }
@@ -599,29 +589,58 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
 
     @Override
     public void setLastNextMonthClickEnable(boolean enable) {
-        this.mIsLastNextMonthClickEnable = enable;
+        this.mLastNextMonthClickEnable = enable;
     }
 
     @Override
-    public void setSelectedMode(SelectedModel selectedMode) {
-        this.mSelectedModel = selectedMode;
-        mAllSelectDateList.clear();
-        if (mSelectedModel == SelectedModel.SINGLE_SELECTED) {
-            mAllSelectDateList.add(mInitializeDate);
+    public void setCheckMode(CheckModel checkModel) {
+        this.mCheckModel = checkModel;
+        mTotalCheckedDateList.clear();
+        if (mCheckModel == CheckModel.SINGLE_DEFAULT_CHECKED) {
+            mTotalCheckedDateList.add(mInitializeDate);
         }
     }
 
     @Override
-    public void setDefaultSelectFitst(boolean isDefaultSelectFitst) {
-        this.mIsDefaultSelectFitst = isDefaultSelectFitst;
+    public CheckModel getCheckModel() {
+        return mCheckModel;
     }
 
     @Override
-    public void setMultipleNum(int multipleNum, MultipleNumModel multipleNumModel) {
-        this.mSelectedModel = SelectedModel.MULTIPLE;
-        this.mMultipleNumModel = multipleNumModel;
-        this.mMultipleNum = multipleNum;
+    public void setDefaultCheckedFirstDate(boolean isDefaultCheckedFirstDate) {
+        this.mDefaultCheckedFirstDate = isDefaultCheckedFirstDate;
+    }
+
+    @Override
+    public void setMultipleCount(int multipleCount, MultipleCountModel multipleCountModel) {
+        this.mCheckModel = CheckModel.MULTIPLE;
+        this.mMultipleCountModel = multipleCountModel;
+        this.mMultipleCount = multipleCount;
     }
 
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (mScrollEnable) {
+            return super.onInterceptTouchEvent(ev);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void setScrollEnable(boolean scrollEnable) {
+        this.mScrollEnable = scrollEnable;
+    }
+
+
+    @Override
+    public void setCalendarBackground(CalendarBackground calendarBackground) {
+        this.mCalendarBackground = calendarBackground;
+    }
+
+    @Override
+    public CalendarBackground getCalendarBackground() {
+        return mCalendarBackground;
+    }
 }

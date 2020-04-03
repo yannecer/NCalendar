@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#cccccc"
-                android:tag="@string/factual_scroll_view" />
+                android:tag="@string/N_factual_scroll_view" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

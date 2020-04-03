@@ -24,15 +24,10 @@ public class StretchPainter implements CalendarPainter {
         mBgPaint = getPaint();
         mTextPaint = getPaint();
         mBgPaint.setColor(Color.parseColor("#ff7575"));
-        mTextPaint.setTextSize(CalendarUtil.dp2px(context, 10));
+      //  mTextPaint.setTextSize(CalendarUtil.dp2px(context, 10));
         mTextPaint.setColor(Color.parseColor("#000000"));
     }
 
-
-    @Override
-    public void onDrawCalendarBackground(ICalendarView calendarView, Canvas canvas, RectF rectF, LocalDate localDate, int totalDistance, int currentDistance) {
-
-    }
 
     @Override
     public void onDrawToday(Canvas canvas, RectF rectF, LocalDate localDate, List<LocalDate> selectedDateList) {

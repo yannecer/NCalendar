@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#999999"
-            android:tag="@string/factual_scroll_view" />
+            android:tag="@string/N_factual_scroll_view" />
 
 
     </com.necer.calendar.Miui9Calendar>

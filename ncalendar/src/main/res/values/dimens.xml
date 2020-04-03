@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="N_solarTextSize">18sp</dimen>
+    <dimen name="N_lunarTextSize">10sp</dimen>
+    <dimen name="N_lunarDistance">15dp</dimen>
+    <dimen name="N_holidayWorkdayTextSize">10sp</dimen>
+    <dimen name="N_holidayWorkdayDistance">15dp</dimen>
+    <dimen name="N_pointDistance">18dp</dimen>
+    <dimen name="N_stretchTextSize">10sp</dimen>
+    <dimen name="N_stretchTextDistance">32dp</dimen>
+    <dimen name="N_numberBackgroundTextSize">260sp</dimen>
+    <dimen name="N_calendarHeight">300dp</dimen>
+    <dimen name="N_stretchCalendarHeight">450dp</dimen>
+    <dimen name="N_checkedCircleRadius">44dp</dimen>
+    <dimen name="N_checkedHollowCircleStroke">1dp</dimen>
+    <dimen name="N_pointSize">5dp</dimen>
+
+
+</resources>

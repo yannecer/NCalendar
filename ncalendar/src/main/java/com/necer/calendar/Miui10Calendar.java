@@ -1,15 +1,20 @@
 package com.necer.calendar;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 
 import com.necer.enumeration.CalendarState;
 
 
 /**
- * Created by necer on 2018/11/12.
+ * 仿miui10日历
+ *
+ * @author necer
+ * @date 2018/11/12
  */
 public class Miui10Calendar extends MiuiCalendar {
 
@@ -20,7 +25,6 @@ public class Miui10Calendar extends MiuiCalendar {
 
     /**
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return
      */
     @Override
     protected float getGestureMonthUpOffset(float dy) {
@@ -40,7 +44,6 @@ public class Miui10Calendar extends MiuiCalendar {
 
     /**
      * @param dy 当前滑动的距离 dy>0向上滑动，dy<0向下滑动
-     * @return
      */
     @Override
     protected float getGestureMonthDownOffset(float dy) {
@@ -67,5 +70,4 @@ public class Miui10Calendar extends MiuiCalendar {
         float maxOffset = childView.getY() - weekHeight;
         return getOffset(dy, maxOffset);
     }
-
 }

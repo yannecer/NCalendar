@@ -70,16 +70,7 @@
         android:id="@+id/emuiCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:holidayColor="#F29B38"
-        app:isShowLunar="false"
-        app:lunarHolidayTextColor="#F29B38"
-        app:pointDistance="15dp"
-        app:bgCalendarColor="#ffeeff"
-        app:selectCircleColor="#F29B38"
-        app:solarHolidayTextColor="#F29B38"
-        app:solarTermTextColor="#F29B38"
-        app:isAllMonthSixLine="true"
-        app:todaySolarTextColor="#F29B38">
+      >
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

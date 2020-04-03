@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">calendar</string>
-    <string name="factual_scroll_view">factual_scroll_view</string>
+    <string name="N_factual_scroll_view">factual_scroll_view</string>
+    <string name="N_holidayText">休</string>
+    <string name="N_workdayText">班</string>
+    <string name="N_disabledString">日期超出许可范围</string>
+    <string name="N_start_after_end">startDate必须在endDate之前</string>
+    <string name="N_start_before_19010101">startDate必须在1901-01-01之后</string>
+    <string name="N_end_after_20991231">endDate必须在2099-12-31之前</string>
+    <string name="N_initialize_date_illegal">日期区间必须包含初始化日期</string>
+    <string name="N_date_format_illegal">需要 yyyy-MM-dd 格式的日期</string>
+    <string name="N_set_checked_dates_illegal">只能多选模式下才能使用此方法</string>
+    <string name="N_set_checked_dates_count_illegal">设置的日期数量和MultipleCountModel冲突</string>
+    <string name="N_date_format_jump">jumpDate的参数需要正确的年月日数据</string>
+    <string name="N_stretch_month_height">日历拉伸之后的高度必须大于正常高度，日历默认的正常高度为300dp</string>
+    <string name="N_NCalendar_child_num">NCalendar中的有且只能有一个直接子view</string>
+    <string name="N_NCalendar_calendar_background_illegal">折叠日历不能使用此方法</string>
+    <string name="N_NCalendar_set_calendar_background_illegal">折叠日历请调用setMonthCalendarBackground()和setWeekCalendarBackground()</string>
+    <string name="N_calendarState_illegal">不允许直接设置成CalendarState.MONTH_STRETCH，可以设置成CalendarState.WEEK或者CalendarState.MONTH</string>
 </resources>

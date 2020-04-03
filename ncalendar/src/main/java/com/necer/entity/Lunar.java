@@ -3,7 +3,9 @@ package com.necer.entity;
 import java.io.Serializable;
 
 /**
- * Created by necer on 2018/11/16.
+ *
+ * @author necer
+ * @date 2018/11/16
  */
 public class Lunar implements Serializable {
 
@@ -54,7 +56,7 @@ public class Lunar implements Serializable {
     public String lunarYearStr;
 
     /**
-     *
+     *生肖
      */
     public String animals;
 

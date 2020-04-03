@@ -8,7 +8,9 @@ import com.necer.enumeration.CalendarType;
 import org.joda.time.LocalDate;
 
 /**
- * Created by necer on 2018/9/11.
+ *
+ * @author necer
+ * @date 2018/9/11
  * qq群：127278900
  */
 public class WeekPagerAdapter extends BasePagerAdapter {
@@ -20,8 +22,7 @@ public class WeekPagerAdapter extends BasePagerAdapter {
 
     @Override
     protected LocalDate getPageInitializeDate(int position) {
-        LocalDate localDate = mInitializeDate.plusDays((position - mPageCurrIndex) * 7);
-        return localDate;
+        return getInitializeDate().plusDays((position - getPageCurrIndex()) * 7);
     }
 
     @Override

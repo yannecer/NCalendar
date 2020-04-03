@@ -12,7 +12,7 @@ import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.ICalendar;
 import com.necer.entity.CalendarDate;
 import com.necer.enumeration.CalendarType;
-import com.necer.enumeration.SelectedModel;
+import com.necer.enumeration.DateChangeBehavior;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.painter.CalendarAdapter;
@@ -41,12 +41,14 @@ public class DingAdapterActivity extends AppCompatActivity {
        // miui10Calendar.setSelectedMode(SelectedModel.MULTIPLE);
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate) {
+            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 Log.e("onCalendarChange", "onCalendarChange:::" + localDate);
             }
+
         });
 
     }
+
 
 
     public static class DingAdapter extends CalendarAdapter {
@@ -55,28 +57,9 @@ public class DingAdapterActivity extends AppCompatActivity {
             return LayoutInflater.from(context).inflate(R.layout.item_calendar, null);
         }
 
-        @Override
-        public View getCalendarBackgroundView(Context context) {
-            return LayoutInflater.from(context).inflate(R.layout.bg_calendar, null);
-        }
 
         @Override
-        public void onBindCalendarBackgroundView(ICalendarView iCalendarView, View calendarBackgroundView, LocalDate localDate, int totalDistance, int currentDistance) {
-            super.onBindCalendarBackgroundView(iCalendarView, calendarBackgroundView, localDate, totalDistance, currentDistance);
-            if (iCalendarView.getCalendarType() == CalendarType.MONTH) {
-                TextView tv_bg = calendarBackgroundView.findViewById(R.id.tv_bg);
-                if (totalDistance != 0) {
-                    float i = (float) currentDistance / (float) totalDistance;
-                    tv_bg.setAlpha(i);
-                    tv_bg.setText(String.valueOf(localDate.getMonthOfYear()));
-
-                    Log.e("onBindCalenww", "onBindCalendarBackgroundView:::" + localDate);
-                }
-            }
-        }
-
-        @Override
-        public void onBindToadyView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+        public void onBindToadyView(View view, LocalDate localDate, List<LocalDate> totalCheckedDateList) {
 
             View ll_content = view.findViewById(R.id.ll_content);
 
@@ -84,9 +67,9 @@ public class DingAdapterActivity extends AppCompatActivity {
 
             tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
 
-            setLunar(view, localDate, selectedDateList);
+            setLunar(view, localDate, totalCheckedDateList);
 
-            if (selectedDateList.contains(localDate)) {
+            if (totalCheckedDateList.contains(localDate)) {
                 tv_item.setTextColor(Color.WHITE);
                 ll_content.setBackgroundResource(R.drawable.bg_checked_ding);
             } else {
@@ -96,7 +79,7 @@ public class DingAdapterActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+        public void onBindCurrentMonthOrWeekView(View view, LocalDate localDate, List<LocalDate> totalCheckedDateList) {
 
             View ll_content = view.findViewById(R.id.ll_content);
 
@@ -104,9 +87,9 @@ public class DingAdapterActivity extends AppCompatActivity {
             tv_item.setTextColor(Color.BLACK);
             tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
 
-            setLunar(view, localDate, selectedDateList);
+            setLunar(view, localDate, totalCheckedDateList);
 
-            if (selectedDateList.contains(localDate)) {
+            if (totalCheckedDateList.contains(localDate)) {
                 tv_item.setTextColor(Color.WHITE);
                 ll_content.setBackgroundResource(R.drawable.bg_checked_ding);
             } else {
@@ -117,12 +100,12 @@ public class DingAdapterActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindLastOrNextMonthView(View view, LocalDate localDate, List<LocalDate> selectedDateList) {
+        public void onBindLastOrNextMonthView(View view, LocalDate localDate, List<LocalDate> totalCheckedDateList) {
             View ll_content = view.findViewById(R.id.ll_content);
             TextView tv_item = view.findViewById(R.id.tv_item);
             tv_item.setText(String.valueOf(localDate.getDayOfMonth()));
-            setLunar(view, localDate, selectedDateList);
-            if (selectedDateList.contains(localDate)) {
+            setLunar(view, localDate, totalCheckedDateList);
+            if (totalCheckedDateList.contains(localDate)) {
                 tv_item.setTextColor(Color.WHITE);
                 ll_content.setBackgroundResource(R.drawable.bg_checked_ding_last_next);
             } else {
