@@ -124,7 +124,7 @@ implementation 'com.necer.ncalendar:ncalendar:5.0.0'
 ```
 日历提供了各种可能用到的方法、回调，5.x版本增加了日历日期变化的行为参数，区分了各种引起日历变化的不同的操作
 ```
-### [日历Api](https://github.com/yannecer/NCalendar/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+### [日历Api](https://github.com/yannecer/NCalendar/wiki/%E6%97%A5%E5%8E%86Api)
 ### [日历Api相关类说明](https://github.com/yannecer/NCalendar/wiki/Api%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%AF%B4%E6%98%8E)
 
 ***
