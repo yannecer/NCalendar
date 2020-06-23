@@ -95,15 +95,11 @@ implementation 'com.necer.ncalendar:ncalendar:5.0.0'
    月日历
    <com.necer.calendar.MonthCalendar
         android:layout_width="match_parent"
-        app:todaySolarTextColor="#ff00ff"
-        app:selectCircleColor="#00c3aa"
-        app:hollowCircleColor="#00c3aa"
         android:layout_height="300dp" />
 
    周日历
    <com.necer.calendar.WeekCalendar
         android:layout_width="match_parent"
-        app:lunarTextColor="#00aa00"
         android:layout_height="50dp" />
 
 ```
