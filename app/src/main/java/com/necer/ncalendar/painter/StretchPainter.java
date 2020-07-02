@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.text.TextUtils;
 
+import com.necer.ncalendar.DensityUtil;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
@@ -24,7 +25,7 @@ public class StretchPainter implements CalendarPainter {
         mBgPaint = getPaint();
         mTextPaint = getPaint();
         mBgPaint.setColor(Color.parseColor("#ff7575"));
-      //  mTextPaint.setTextSize(CalendarUtil.dp2px(context, 10));
+        mTextPaint.setTextSize(DensityUtil.dp2px(context, 10));
         mTextPaint.setColor(Color.parseColor("#000000"));
     }
 

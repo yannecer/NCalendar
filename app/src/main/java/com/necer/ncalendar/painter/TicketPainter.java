@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import android.text.TextUtils;
 
 import com.necer.calendar.ICalendar;
+import com.necer.ncalendar.DensityUtil;
 import com.necer.painter.CalendarPainter;
 import com.necer.utils.CalendarUtil;
 import com.necer.view.CalendarView;
@@ -45,7 +46,7 @@ public class TicketPainter implements CalendarPainter {
         mBgPaint = getPaint();
 
         mBgPaint.setColor(Color.parseColor("#7D7DFF"));
-       // mCircleRadius = (int) CalendarUtil.dp2px(context, 20);
+        mCircleRadius = (int) DensityUtil.dp2px(context, 20);
 
         mPriceMap = new HashMap<>();
         mHolidayList = new ArrayList<>();
@@ -110,7 +111,7 @@ public class TicketPainter implements CalendarPainter {
 
     //绘制公历
     private void drawSolar(Canvas canvas, RectF rectF, LocalDate localDate, boolean isSelected, boolean isCurrectMonthOrWeek) {
-      //  mTextPaint.setTextSize(CalendarUtil.dp2px(mContext, 18));
+        mTextPaint.setTextSize(DensityUtil.dp2px(mContext, 16));
         mTextPaint.setColor(isSelected ? Color.WHITE : Color.BLACK);
         mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
         canvas.drawText(localDate.getDayOfMonth() + "", rectF.centerX(), TextUtils.isEmpty(mPriceMap.get(localDate)) ? getBaseLineY(rectF) : rectF.centerY(), mTextPaint);
@@ -120,26 +121,26 @@ public class TicketPainter implements CalendarPainter {
     private void drawPrice(Canvas canvas, RectF rectF, LocalDate localDate, boolean isSelected, boolean isCurrectMonthOrWeek) {
         String price = mPriceMap.get(localDate);
         if (!TextUtils.isEmpty(price)) {
-          //  mTextPaint.setTextSize(CalendarUtil.dp2px(mContext, 10));
+            mTextPaint.setTextSize(DensityUtil.dp2px(mContext, 10));
             mTextPaint.setColor(isSelected ? Color.WHITE : Color.RED);
             mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
-         //   canvas.drawText(price, rectF.centerX(), rectF.centerY() + CalendarUtil.dp2px(mContext, 12), mTextPaint);
+            canvas.drawText(price, rectF.centerX(), rectF.centerY() + DensityUtil.dp2px(mContext, 12), mTextPaint);
         }
     }
 
 
     //绘制节假日
     private void drawHolidays(Canvas canvas, RectF rectF, LocalDate localDate, boolean isSelected, boolean isCurrectMonthOrWeek) {
-      //  mTextPaint.setTextSize(CalendarUtil.dp2px(mContext, 10));
+        mTextPaint.setTextSize(DensityUtil.dp2px(mContext, 10));
         if (mHolidayList.contains(localDate)) {
             mTextPaint.setColor(isSelected ? Color.WHITE : Color.GREEN);
             mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
-         //   canvas.drawText("休", rectF.centerX() + CalendarUtil.dp2px(mContext, 10), rectF.centerY() - CalendarUtil.dp2px(mContext, 5), mTextPaint);
+            canvas.drawText("休", rectF.centerX() + DensityUtil.dp2px(mContext, 10), rectF.centerY() - DensityUtil.dp2px(mContext, 5), mTextPaint);
         }
         if (mWorkdayList.contains(localDate)) {
             mTextPaint.setColor(isSelected ? Color.WHITE : Color.RED);
             mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
-          //  canvas.drawText("班", rectF.centerX() + CalendarUtil.dp2px(mContext, 10), rectF.centerY() - CalendarUtil.dp2px(mContext, 5), mTextPaint);
+            canvas.drawText("班", rectF.centerX() + DensityUtil.dp2px(mContext, 10), rectF.centerY() - DensityUtil.dp2px(mContext, 5), mTextPaint);
         }
     }
 
