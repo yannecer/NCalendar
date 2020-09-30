@@ -20,7 +20,6 @@ import java.util.List;
 public class CalendarUtil {
 
 
-
     /**
      * 两个日期是否同月
      */
@@ -223,6 +222,7 @@ public class CalendarUtil {
 
     /**
      * 转化一周从周日开始
+     *
      * @param date
      * @return
      */
@@ -236,6 +236,7 @@ public class CalendarUtil {
 
     /**
      * 转化一周从周一开始
+     *
      * @param date
      * @return
      */
@@ -246,6 +247,7 @@ public class CalendarUtil {
 
     /**
      * 获取CalendarDate  CalendarDate包含需要显示的信息 农历，节气等
+     *
      * @param localDate
      * @return
      */
@@ -256,13 +258,14 @@ public class CalendarUtil {
         int solarDay = localDate.getDayOfMonth();
         Lunar lunar = LunarUtil.getLunar(solarYear, solarMonth, solarDay);
 
-        if (solarYear != 1900) {
-            calendarDate.lunar = lunar;
-            calendarDate.localDate = localDate;
-            calendarDate.solarTerm = SolarTermUtil.getSolatName(solarYear, (solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "")) + solarDay);
-            calendarDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
-            calendarDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay);
-        }
+        LocalDate nextLocalDate = localDate.plusDays(1);
+        Lunar nextLunar = LunarUtil.getLunar(nextLocalDate.getYear(), nextLocalDate.getMonthOfYear(), nextLocalDate.getDayOfMonth());
+
+        calendarDate.lunar = lunar;
+        calendarDate.localDate = localDate;
+        calendarDate.solarTerm = SolarTermUtil.getSolatName(solarYear, (solarMonth < 10 ? ("0" + solarMonth) : (solarMonth + "")) + solarDay);
+        calendarDate.solarHoliday = HolidayUtil.getSolarHoliday(solarYear, solarMonth, solarDay);
+        calendarDate.lunarHoliday = HolidayUtil.getLunarHoliday(lunar, nextLunar);
 
         return calendarDate;
     }

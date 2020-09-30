@@ -1,9 +1,7 @@
 package com.necer.ncalendar;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import com.necer.MyLog;
 import com.necer.calendar.BaseCalendar;
 import com.necer.calendar.MonthCalendar;
 import com.necer.enumeration.DateChangeBehavior;
@@ -29,9 +27,8 @@ public class TestActivity2 extends AppCompatActivity {
        monthCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
            @Override
            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
-               MyLog.d("onCalendarChange:::"+localDate);
-           }
 
+           }
        });
 
     }

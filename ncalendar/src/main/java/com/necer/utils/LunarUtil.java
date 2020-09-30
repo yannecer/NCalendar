@@ -100,71 +100,6 @@ public class LunarUtil {
     private static String[] Animals = {"猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗"};
     private static String chineseTen[] = {"初", "十", "廿", "卅"};
 
-    /**
-     * 传回农历year年month月的总天数
-     *
-     * @param year  要计算的年份
-     * @param month 要计算的月
-     * @return 传回天数
-     */
-    public static int daysInMonth(int year, int month) {
-        return daysInMonth(year, month, false);
-    }
-
-    /**
-     * 传回农历year年month月的总天数
-     *
-     * @param year  要计算的年份
-     * @param month 要计算的月
-     * @param leap  当月是否是闰月
-     * @return 传回天数，如果闰月是错误的，返回0.
-     */
-    public static int daysInMonth(int year, int month, boolean leap) {
-        int leapMonth = leapMonth(year);
-        int offset = 0;
-        // 如果本年有闰月且month大于闰月时，需要校正
-        if (leapMonth != 0 && month > leapMonth) {
-            offset = 1;
-        }
-        // 不考虑闰月
-        if (!leap) {
-            return daysInLunarMonth(year, month + offset);
-        } else {
-            // 传入的闰月是正确的月份
-            if (leapMonth != 0 && leapMonth == month) {
-                return daysInLunarMonth(year, month + 1);
-            }
-        }
-        return 0;
-    }
-
-
-    /**
-     * 传回农历year年month月的总天数，总共有13个月包括闰月
-     *
-     * @param year  将要计算的年份
-     * @param month 将要计算的月份
-     * @return 传回农历 year年month月的总天数
-     */
-    public static int daysInLunarMonth(int year, int month) {
-
-        if ((LUNAR_INFO[year - MIN_YEAR] & (0x100000 >> month)) == 0)
-            return 29;
-        else
-            return 30;
-    }
-
-    /**
-     * /**
-     * 传回农历 year年闰哪个月 1-12 , 没闰传回 0
-     *
-     * @param year 将要计算的年份
-     * @return 传回农历 year年闰哪个月1-12, 没闰传回 0
-     */
-    public static int leapMonth(int year) {
-        return (LUNAR_INFO[year - MIN_YEAR] & 0xF00000) >> 20;
-    }
-
 
     private static int getBitInt(int data, int length, int shift) {
         return (data & (((1 << length) - 1) << shift)) >> shift;
@@ -227,7 +162,7 @@ public class LunarUtil {
         lunar.lunarYearStr = getGan(lunar.lunarYear) + getZhi(lunar.lunarYear) + getAnimalString(lunar.lunarYear);
         lunar.lunarMonthStr = getMonthStr(lunar.lunarMonth, lunar.isLeap);
         lunar.lunarDayStr = getDayStr(lunar.lunarDay);
-        lunar.lunarOnDrawStr = getDrawStr(lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
+        lunar.lunarOnDrawStr = getDrawStr(lunar.lunarMonth, lunar.lunarDay, lunar.lunarDayStr, lunar.isLeap);
 
         return lunar;
     }
@@ -254,11 +189,11 @@ public class LunarUtil {
         return isLeap ? "闰" : "" + CHINESE_NUMBER[lunarMonth - 1] + "月";
     }
 
-    private static String getDrawStr(int lunatMonth, int lunatDay, boolean isLeap) {
+    private static String getDrawStr(int lunatMonth, int lunatDay, String lunarDayStr, boolean isLeap) {
         String relust = "";
-        if (relust.equals("初一") && isLeap) {
+        if ("初一".equals(lunarDayStr) && isLeap) {
             relust = "闰" + CHINESE_NUMBER[lunatMonth - 1] + "月";
-        } else if (relust.equals("初一") && !isLeap) {
+        } else if ("初一".equals(lunarDayStr)) {
             relust = CHINESE_NUMBER[lunatMonth - 1] + "月";
         } else if (lunatDay == 10) {
             relust = "初十";

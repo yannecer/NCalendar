@@ -48,7 +48,7 @@ public abstract class BaseCalendar extends ViewPager implements ICalendar {
     private Attrs mAttrs;
     private boolean mScrollEnable = true;
     private CheckModel mCheckModel;//选中模式
-    private final static String mDefaultStartDate = "1901-01-01";
+    private final static String mDefaultStartDate = "1901-02-01";
     private final static String mDefaultEndDateDate = "2099-12-31";
 
     private boolean mDefaultCheckedFirstDate;//默认选择时，翻页选中第一个日期

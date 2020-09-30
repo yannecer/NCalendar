@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListAdapter;
 
-import com.necer.MyLog;
 import com.necer.adapter.GridCalendarAdapter;
 import com.necer.calendar.BaseCalendar;
 import com.necer.enumeration.CalendarType;

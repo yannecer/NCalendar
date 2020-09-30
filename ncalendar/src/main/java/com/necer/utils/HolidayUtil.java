@@ -1,5 +1,7 @@
 package com.necer.utils;
 
+import com.necer.entity.Lunar;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,11 +66,11 @@ public class HolidayUtil {
     /**
      * 用于获取中国的传统节日
      *
-     * @param lunarMonth 农历的月
-     * @param lunarDay   农历日
      * @return 中国传统节日
      */
-    public static String getLunarHoliday(int lunarYear, int lunarMonth, int lunarDay) {
+    public static String getLunarHoliday(Lunar lunar, Lunar nextLunar) {
+        int lunarMonth = lunar.lunarMonth;
+        int lunarDay = lunar.lunarDay;
         String message = "";
         if (lunarMonth == 1 && lunarDay == 1) {
             message = "春节";
@@ -90,13 +92,8 @@ public class HolidayUtil {
             message = "腊八节";
         } else if (lunarMonth == 12 && lunarDay == 23) {
             message = "小年";
-        } else {
-            if (lunarMonth == 12) {
-                if ((((LunarUtil.daysInLunarMonth(lunarYear, lunarMonth) == 29) && lunarDay == 29))
-                        || ((((LunarUtil.daysInLunarMonth(lunarYear, lunarMonth) == 30) && lunarDay == 30)))) {
-                    message = "除夕";
-                }
-            }
+        } else if (lunarMonth == 12 && lunar.lunarMonth != nextLunar.lunarMonth) {
+            message = "除夕";
         }
         return message;
     }

@@ -84,7 +84,7 @@ public class TestMiui9Activity extends BaseActivity {
     }
 
     public void jump_2019_06_20(View view) {
-        miui9Calendar.jumpDate("2019-06-20");
+        miui9Calendar.jumpDate("1901-02-01");
     }
 
     public void jump_2020_08_11(View view) {
