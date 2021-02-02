@@ -65,7 +65,7 @@
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:5.0.1'   
+implementation 'com.necer.ncalendar:ncalendar:5.0.2'   
 
 ```
 
@@ -152,9 +152,21 @@ implementation 'com.necer.ncalendar:ncalendar:5.0.1'
 
 
 ***
+### 常见问题
+```
+1、Activity初始化onCreate中调用jumpDate闪退
+   页面初始化时，日历还未完成初始化，可以使用 setInitializeDate 方法完成初始页面的日期选定，或者使用日历对象post方法设置jumpdate
+           miui10Calendar.post(new Runnable() {
+            @Override
+            public void run() {
+                miui10Calendar.jumpDate("2021-01-01");
+            }
+        });
+        
+2、日历UI问题，请使用自定义CalendarPainter，简单的做法是，复制库中InnerPainter，修改绘制的部分，然后给日历设置CalendarPainter
+   miui10Calendar.setCalendarPainter(myCalendarPainter);
 
-
-
+```
 
 ## 感谢：
 
@@ -166,6 +178,7 @@ implementation 'com.necer.ncalendar:ncalendar:5.0.1'
 ***
 
 ## 更新日志
+* 5.0.2<br/> 修复Android9日期变化回调多次的bug，增加2021年法定休班日
 * 5.0.1<br/> 修复2020年腊月二十九为除夕的描述
 * 5.0.0<br/> 重写InnerPainter，增加大量属性、优化跳转逻辑等
 * 4.4.1<br/> 新增跳转月份的方法
