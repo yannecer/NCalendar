@@ -470,7 +470,7 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     //上次的y
     private float lastY;
     //竖直方向上滑动的临界值，大于这个值认为是竖直滑动
-    private float verticalY = 50.f;
+    private final float verticalY = 50.f;
     //第一次手势滑动，因为第一次滑动的偏移量大于verticalY，会出现猛的一划，这里只对第一次滑动做处理
     private boolean isFirstScroll = true;
 
