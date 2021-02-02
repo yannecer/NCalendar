@@ -48,7 +48,7 @@ public class TestMonthActivity extends BaseActivity {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
 
                 Log.d(TAG, "setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
-
+                Log.e(TAG, "baseCalendar::" + baseCalendar);
             }
 
         });

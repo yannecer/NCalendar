@@ -57,7 +57,6 @@ public class TestMiui10Activity extends BaseActivity {
         innerPainter.setPointList(pointList);
 
 
-
 //        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
 //        miui10Calendar.setMonthCalendarBackground(new CalendarBackground() {
 //            @Override
@@ -65,7 +64,6 @@ public class TestMiui10Activity extends BaseActivity {
 //                return drawable;
 //            }
 //        });
-
 
 
         Map<String, String> strMap = new HashMap<>();
@@ -100,6 +98,7 @@ public class TestMiui10Activity extends BaseActivity {
                 Log.d(TAG, "   当前页面选中 " + localDate);
                 Log.d(TAG, "   dateChangeBehavior " + dateChangeBehavior);
 
+                Log.e(TAG, "baseCalendar::" + baseCalendar);
                 if (localDate != null) {
                     CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
                     Lunar lunar = calendarDate.lunar;

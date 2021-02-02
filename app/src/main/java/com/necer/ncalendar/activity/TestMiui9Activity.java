@@ -55,7 +55,7 @@ public class TestMiui9Activity extends BaseActivity {
             @Override
             public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
-
+                Log.e(TAG, "baseCalendar::" + baseCalendar);
             }
 
         });
@@ -66,6 +66,8 @@ public class TestMiui9Activity extends BaseActivity {
                 Log.d(TAG, year + "年" + month + "月");
                 Log.d(TAG, "当前页面选中：：" + currPagerCheckedList);
                 Log.d(TAG, "全部选中：：" + totalCheckedList);
+
+                Log.e(TAG, "baseCalendar::" + baseCalendar);
             }
 
         });
