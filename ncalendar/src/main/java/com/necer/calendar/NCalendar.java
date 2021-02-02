@@ -194,7 +194,6 @@ public abstract class NCalendar extends FrameLayout implements IICalendar, Neste
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        Log.e("onFinishInflate", "onFinishInflate");
         if (getChildCount() != 3) {
             throw new RuntimeException(getContext().getString(R.string.N_NCalendar_child_num));
         }
