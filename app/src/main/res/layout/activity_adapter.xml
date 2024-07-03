@@ -6,13 +6,8 @@
     android:orientation="vertical">
 
 
-    <com.necer.view.WeekBar
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <com.necer.calendar.Miui10Calendar
+    <com.necer.calendar.NCalendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
         app:showNumberBackground="true"
@@ -30,7 +25,7 @@
                 android:text="测试自定义Adapter " />
         </androidx.core.widget.NestedScrollView>
 
-    </com.necer.calendar.Miui10Calendar>
+    </com.necer.calendar.NCalendar>
 
 
 </LinearLayout>

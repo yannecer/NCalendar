@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="NCalendar">
 
+
         <attr name="solarTextSize" format="dimension" />
         <attr name="solarTextBold" format="boolean" />
         <attr name="todayCheckedSolarTextColor" format="color" />
@@ -57,6 +58,7 @@
         <attr name="disabledString" format="string" />
 
         <attr name="calendarHeight" format="dimension" />
+        <attr name="weekBarHeight" format="dimension" />
         <attr name="stretchCalendarHeight" format="dimension" />
         <attr name="stretchCalendarEnable" format="boolean" />
         <attr name="animationDuration" format="integer" />
@@ -65,15 +67,18 @@
         <attr name="disabledAlphaColor" format="integer" />
 
 
-        <attr name="showHoliday" format="boolean" />
+        <attr name="showHolidayWorkday" format="boolean" />
+        <attr name="defaultCheckedFirstDate" format="boolean" />
         <attr name="allMonthSixLine" format="boolean" />
         <attr name="lastNextMonthClickEnable" format="boolean" />
+        <attr name="horizontalScrollEnable" format="boolean" />
         <attr name="disabledColor" format="color" />
 
         <attr name="defaultCalendar" format="enum">
             <enum name="week" value="100" />
             <enum name="month" value="101" />
         </attr>
+        <attr name="singleCalendar" format="boolean" />
 
         <attr name="pointLocation" format="enum">
             <enum name="up" value="200" />
@@ -101,8 +106,11 @@
         <attr name="showNumberBackground" format="boolean" />
         <attr name="numberBackgroundTextSize" format="dimension" />
         <attr name="numberBackgroundTextColor" format="color" />
-        <attr name="numberBackgroundAlphaColor" format="integer" />
+        <attr name="backgroundAlphaColor" format="integer" />
 
+        <attr name="weekBarTextColor" format="color" />
+        <attr name="weekBarBackgroundColor" format="color" />
+        <attr name="weekBarTextSize" format="dimension" />
 
         <attr name="defaultCheckedBackground" format="reference" />
         <attr name="todayCheckedBackground" format="reference" />

@@ -6,13 +6,13 @@
     android:layout_height="match_parent">
 
 
-    <com.necer.calendar.Miui10Calendar
+    <com.necer.calendar.NCalendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultCalendar="week"
         app:showNumberBackground="true"
-        app:numberBackgroundAlphaColor="100"
+
         app:numberBackgroundTextSize="250sp"
         app:numberBackgroundTextColor="#398FE9">
 
@@ -27,7 +27,7 @@
                 android:text="ceshi "/>
         </androidx.core.widget.NestedScrollView>
 
-    </com.necer.calendar.Miui10Calendar>
+    </com.necer.calendar.NCalendar>
 
 
 <!--    <com.necer.calendar.MonthCalendar-->

@@ -8,22 +8,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.necer.calendar.BaseCalendar;
-import com.necer.calendar.WeekCalendar;
+import com.necer.calendar.NCalendar;
 import com.necer.enumeration.DateChangeBehavior;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
 
-import org.joda.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class TestWeekActivity extends BaseActivity {
 
 
     private TextView tv_result;
-    private WeekCalendar weekCalendar;
+    private NCalendar weekCalendar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,23 +31,22 @@ public class TestWeekActivity extends BaseActivity {
 
         tv_result = findViewById(R.id.tv_result);
 
-
         weekCalendar = findViewById(R.id.weekCalendar);
         weekCalendar.setCheckMode(checkModel);
         weekCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
+            public void onCalendarChange(int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
 
                 Log.d(TAG, "setOnCalendarChangedListener:::" + year + "年" + month + "月" + "   当前页面选中 " + localDate);
-                Log.e(TAG, "baseCalendar::" + baseCalendar);
             }
+
 
         });
 
         weekCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+            public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
 
                 Log.d(TAG, year + "年" + month + "月");

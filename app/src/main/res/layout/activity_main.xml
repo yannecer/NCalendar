@@ -77,21 +77,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="miui9_selected"
-                    android:text="miui9选中" />
+                    android:text="日历1选中" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="miui9_unSelected"
-                    android:text="miui9不选中" />
+                    android:text="日历1不选中" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="miui9_multiple"
-                    android:text="miui9多选" />
+                    android:text="日历1多选" />
             </LinearLayout>
 
             <LinearLayout
@@ -103,21 +103,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="miui10_selected"
-                    android:text="miui10选中" />
+                    android:text="日历2选中" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="miui10_unSelected"
-                    android:text="miui10不选中" />
+                    android:text="日历2不选中" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="miui10_multiple"
-                    android:text="miui10多选" />
+                    android:text="日历2多选" />
 
             </LinearLayout>
 
@@ -130,21 +130,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="emiui_selected"
-                    android:text="emiui选中" />
+                    android:text="日历3选中" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="emiui_unSelected"
-                    android:text="emiui不选中" />
+                    android:text="日历3不选中" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="emiui_multiple"
-                    android:text="emiui多选" />
+                    android:text="日历3多选" />
 
             </LinearLayout>
 
@@ -214,14 +214,6 @@
                 android:text="测试fragment"
                 android:textAllCaps="false" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="testAdapter"
-                android:paddingTop="40dp"
-                android:paddingBottom="40dp"
-                android:text="适配器自定义模式"
-                android:textAllCaps="false" />
 
             <TextView
                 android:id="@+id/tv_version"

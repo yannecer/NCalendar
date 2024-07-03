@@ -7,11 +7,13 @@
     <color name="N_holidayTextColor">#39AF81</color>
     <color name="N_workdayTextColor">#EC7230</color>
     <color name="N_todayCheckedColor">#39AF81</color>
-    <color name="N_white">#ffffff</color>
+    <color name="N_white">#FFFFFF</color>
     <color name="N_defaultSolarTextColor">#444444</color>
     <color name="N_solidCircleColor">#39AF81</color>
     <color name="N_stretchTextColor">#666666</color>
     <color name="N_hollowCircleColor">#B2B2B2</color>
+    <color name="N_weekBarTextColor">#B2B2B2</color>
+    <color name="N_weekBarBackgroundColor">#00000000</color>
 
 
 </resources>

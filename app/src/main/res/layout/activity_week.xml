@@ -14,14 +14,10 @@
         android:padding="15dp" />
 
 
-    <com.necer.view.WeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
-
-    <com.necer.calendar.WeekCalendar
+    <com.necer.calendar.NCalendar
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
+        app:defaultCalendar="week"
         android:layout_height="50dp" />
 
 

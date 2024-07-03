@@ -1,23 +1,44 @@
 package com.necer.calendar;
 
-import com.necer.enumeration.MultipleCountModel;
+
+import com.necer.enumeration.CalendarState;
 import com.necer.enumeration.CheckModel;
+import com.necer.enumeration.MultipleCountModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
+import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.listener.OnClickDisableDateListener;
-import com.necer.painter.CalendarAdapter;
-import com.necer.painter.CalendarBackground;
 import com.necer.painter.CalendarPainter;
-import com.necer.utils.Attrs;
 
-import org.joda.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * 日历功能接口 包含 月日历、周日历、折叠日历
  */
 public interface ICalendar {
+
+
+    /**
+     * 回到周状态
+     */
+    void toWeek();
+
+    /**
+     * 回到月状态
+     */
+    void toMonth();
+
+    /**
+     * 回到拉伸状态
+     */
+    void toStretch();
+
+    /**
+     * 设置是否滑动到周位置固定
+     */
+    void setWeekHoldEnable(boolean isWeekHoldEnable);
 
     /**
      * 设置选中模式
@@ -41,12 +62,6 @@ public interface ICalendar {
      *                           FULL_REMOVE_FIRST-超过清除第一个
      */
     void setMultipleCount(int multipleCount, MultipleCountModel multipleCountModel);
-
-
-    /**
-     * 默认选中时，是否翻页选中第一个，只在checkModel==SINGLE_DEFAULT_CHECKED有效
-     */
-    void setDefaultCheckedFirstDate(boolean isDefaultCheckedFirstDate);
 
 
     /**
@@ -89,12 +104,6 @@ public interface ICalendar {
      */
     void setCalendarPainter(CalendarPainter calendarPainter);
 
-    /**
-     * 设置自定义适配器 继承CalendarAdapter，实现对应方法，自定义
-     *
-     * @param calendarAdapter 继承抽象类CalendarAdapter
-     */
-    void setCalendarAdapter(CalendarAdapter calendarAdapter);
 
     /**
      * 刷新日历 刷新viewpager中存在的view
@@ -140,20 +149,12 @@ public interface ICalendar {
      */
     void setOnClickDisableDateListener(OnClickDisableDateListener onClickDisableDateListener);
 
-    /**
-     * 获取xml参数
-     */
-    Attrs getAttrs();
 
     /**
      * 获取绘制类
      */
     CalendarPainter getCalendarPainter();
 
-    /**
-     * 获取适配器
-     */
-    CalendarAdapter getCalendarAdapter();
 
     /**
      * 获取全部选中的日期集合
@@ -170,38 +171,6 @@ public interface ICalendar {
      */
     List<LocalDate> getCurrPagerDateList();
 
-    /**
-     * 月周折叠日历滑动过程中的滑动距离
-     *
-     * @param currentDistance 当前滑动的距离
-     */
-    void updateSlideDistance(int currentDistance);
-
-    /**
-     * 设置日历上下月能否点击
-     */
-    void setLastNextMonthClickEnable(boolean enable);
-
-
-    /**
-     * 设置日历是否可以左右滑动
-     */
-    void setScrollEnable(boolean scrollEnable);
-
-
-    /**
-     * @param calendarBackground 实现了CalendarBackground接口的背景
-     * @throws IllegalAccessException 月周折叠日历不允许使用此方法
-     *                                折叠日历请调用setMonthCalendarBackground()和setWeekCalendarBackground()
-     */
-    void setCalendarBackground(CalendarBackground calendarBackground) throws IllegalAccessException;
-
-    /**
-     * @return 获取日历的背景
-     * @throws IllegalAccessException 月周折叠日历不允许使用此方法
-     */
-    CalendarBackground getCalendarBackground() throws IllegalAccessException;
-
 
     /**
      * 多选模式下，初始化时选中的日期
@@ -209,6 +178,18 @@ public interface ICalendar {
      * @param dateList 日期几何 yyyy-MM-dd
      */
     void setCheckedDates(List<String> dateList);
+
+
+    /**
+     * 日历月周状态变化回调
+     */
+    void setOnCalendarStateChangedListener(OnCalendarStateChangedListener onCalendarStateChangedListener);
+
+
+    /**
+     * 获取日历状态
+     */
+    CalendarState getCalendarState();
 
 
 }

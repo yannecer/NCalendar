@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NCalendar.iml" filepath="$PROJECT_DIR$/NCalendar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NCalendar.iml" filepath="$PROJECT_DIR$/.idea/modules/NCalendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCalendar.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCalendar.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCalendar.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCalendar.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCalendar.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCalendar.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCalendar.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCalendar.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.iml" filepath="$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="NCalendar/app" />
-      <module fileurl="file://$PROJECT_DIR$/ncalendar/ncalendar.iml" filepath="$PROJECT_DIR$/ncalendar/ncalendar.iml" group="NCalendar/ncalendar" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ncalendar/NCalendar.ncalendar.unitTest.iml" />
     </modules>
   </component>
 </project>

@@ -10,12 +10,8 @@ import android.text.TextUtils;
 import com.necer.calendar.ICalendar;
 import com.necer.ncalendar.DensityUtil;
 import com.necer.painter.CalendarPainter;
-import com.necer.utils.CalendarUtil;
-import com.necer.view.CalendarView;
-import com.necer.view.ICalendarView;
 
-import org.joda.time.LocalDate;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,14 +48,14 @@ public class TicketPainter implements CalendarPainter {
         mHolidayList = new ArrayList<>();
         mWorkdayList = new ArrayList<>();
 
-        List<String> holidayList = CalendarUtil.getHolidayList();
-        for (int i = 0; i < holidayList.size(); i++) {
-            mHolidayList.add(new LocalDate(holidayList.get(i)));
-        }
-        List<String> workdayList = CalendarUtil.getWorkdayList();
-        for (int i = 0; i < workdayList.size(); i++) {
-            mWorkdayList.add(new LocalDate(workdayList.get(i)));
-        }
+//        List<String> holidayList = CalendarUtil.getHolidayList();
+//        for (int i = 0; i < holidayList.size(); i++) {
+//            mHolidayList.add(new LocalDate(holidayList.get(i)));
+//        }
+//        List<String> workdayList = CalendarUtil.getWorkdayList();
+//        for (int i = 0; i < workdayList.size(); i++) {
+//            mWorkdayList.add(new LocalDate(workdayList.get(i)));
+//        }
 
     }
 

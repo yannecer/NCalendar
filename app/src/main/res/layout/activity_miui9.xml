@@ -82,12 +82,9 @@
     </LinearLayout>
 
 
-    <com.necer.view.WeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 
-    <com.necer.calendar.Miui9Calendar
+    <com.necer.calendar.NCalendar
         android:id="@+id/miui9Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -105,7 +102,7 @@
             android:tag="@string/N_factual_scroll_view" />
 
 
-    </com.necer.calendar.Miui9Calendar>
+    </com.necer.calendar.NCalendar>
 
 
 </LinearLayout>

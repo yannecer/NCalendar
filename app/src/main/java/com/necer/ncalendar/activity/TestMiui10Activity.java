@@ -2,6 +2,7 @@ package com.necer.ncalendar.activity;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.icu.util.ChineseCalendar;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -9,21 +10,17 @@ import androidx.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.necer.calendar.BaseCalendar;
-import com.necer.calendar.Miui10Calendar;
-import com.necer.entity.CalendarDate;
-import com.necer.entity.Lunar;
+import com.necer.calendar.NCalendar;
 import com.necer.enumeration.DateChangeBehavior;
 import com.necer.enumeration.MultipleCountModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
 import com.necer.ncalendar.R;
-import com.necer.painter.CalendarBackground;
 import com.necer.painter.InnerPainter;
-import com.necer.utils.CalendarUtil;
+import com.necer.utils.hutool.ChineseDate;
 
-import org.joda.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,7 +33,7 @@ import java.util.Map;
  */
 public class TestMiui10Activity extends BaseActivity {
 
-    private Miui10Calendar miui10Calendar;
+    private NCalendar miui10Calendar;
 
     private TextView tv_result;
     private TextView tv_data;
@@ -93,17 +90,12 @@ public class TestMiui10Activity extends BaseActivity {
 
         miui10Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
+            public void onCalendarChange(int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
-                Log.d(TAG, "   当前页面选中 " + localDate);
-                Log.d(TAG, "   dateChangeBehavior " + dateChangeBehavior);
-
-                Log.e(TAG, "baseCalendar::" + baseCalendar);
                 if (localDate != null) {
-                    CalendarDate calendarDate = CalendarUtil.getCalendarDate(localDate);
-                    Lunar lunar = calendarDate.lunar;
-                    tv_data.setText(localDate.toString("yyyy年MM月dd日"));
-                    tv_desc.setText(lunar.chineseEra + lunar.animals + "年" + lunar.lunarMonthStr + lunar.lunarDayStr);
+                    ChineseDate chineseDate = new ChineseDate(localDate);
+                    tv_data.setText(localDate.toString());
+                    tv_desc.setText(chineseDate.getChineseZodiac() + chineseDate.getChineseYear() + "年" + chineseDate.getChineseMonth() + chineseDate.getChineseDay());
                 } else {
                     tv_data.setText("");
                     tv_desc.setText("");
@@ -113,7 +105,7 @@ public class TestMiui10Activity extends BaseActivity {
         });
         miui10Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+            public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
                 Log.d(TAG, year + "年" + month + "月");
                 Log.d(TAG, "当前页面选中：：" + currPagerCheckedList);

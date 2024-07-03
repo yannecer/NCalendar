@@ -8,8 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.necer.calendar.BaseCalendar;
-import com.necer.calendar.Miui9Calendar;
+import com.necer.calendar.NCalendar;
 import com.necer.enumeration.CalendarState;
 import com.necer.enumeration.DateChangeBehavior;
 import com.necer.listener.OnCalendarChangedListener;
@@ -18,8 +17,8 @@ import com.necer.listener.OnCalendarScrollingListener;
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.RecyclerViewAdapter;
 
-import org.joda.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -29,7 +28,7 @@ import java.util.List;
 public class TestMiui9Activity extends BaseActivity {
 
 
-    private Miui9Calendar miui9Calendar;
+    private NCalendar miui9Calendar;
 
     private TextView tv_result;
 
@@ -42,7 +41,6 @@ public class TestMiui9Activity extends BaseActivity {
 
         miui9Calendar = findViewById(R.id.miui9Calendar);
 
-        miui9Calendar.setCalendarState(CalendarState.WEEK);
         miui9Calendar.setCheckMode(checkModel);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
@@ -53,30 +51,20 @@ public class TestMiui9Activity extends BaseActivity {
 
         miui9Calendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
+            public void onCalendarChange(int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + "   当前页面选中 " + localDate);
-                Log.e(TAG, "baseCalendar::" + baseCalendar);
             }
+
 
         });
         miui9Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
-            public void onCalendarChange(BaseCalendar baseCalendar, int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+            public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
                 tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
-                Log.d(TAG, year + "年" + month + "月");
-                Log.d(TAG, "当前页面选中：：" + currPagerCheckedList);
-                Log.d(TAG, "全部选中：：" + totalCheckedList);
 
-                Log.e(TAG, "baseCalendar::" + baseCalendar);
             }
 
-        });
 
-        miui9Calendar.setOnCalendarScrollingListener(new OnCalendarScrollingListener() {
-            @Override
-            public void onCalendarScrolling(float dy) {
-                Log.d(TAG, "onCalendarScrolling：：" + dy);
-            }
         });
 
     }

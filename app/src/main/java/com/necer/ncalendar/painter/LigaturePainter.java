@@ -7,15 +7,12 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.TypedValue;
 
-import com.necer.entity.CalendarDate;
 import com.necer.ncalendar.DensityUtil;
 import com.necer.painter.CalendarPainter;
-import com.necer.utils.CalendarUtil;
-import com.necer.view.CalendarView;
-import com.necer.view.ICalendarView;
+import com.necer.utils.NDateUtil;
+import com.necer.utils.hutool.ChineseDate;
 
-import org.joda.time.LocalDate;
-
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -81,16 +78,16 @@ public class LigaturePainter implements CalendarPainter {
         LocalDate nextLocalDate = localDate.plusDays(1);
 
         if (selectedDateList.contains(localDate)) {
-            if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(lastLocalDate, nextLocalDate)) {
+            if (selectedDateList.contains(lastLocalDate) && selectedDateList.contains(nextLocalDate) && NDateUtil.INSTANCE.isEqualsMonth(lastLocalDate, nextLocalDate)) {
                 //画全整个矩形
-                RectF rectF1 = new RectF(rectF.left, rectF.centerY() - mCircleRadius, rectF.right, rectF.centerY() + mCircleRadius);
+                RectF rectF1 = new RectF(rectF.left - 1f, rectF.centerY() - mCircleRadius, rectF.right + 1f, rectF.centerY() + mCircleRadius);
                 mBgPaint.setAntiAlias(false);
                 mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawRect(rectF1, mBgPaint);
 
-            } else if (selectedDateList.contains(lastLocalDate) && (!selectedDateList.contains(nextLocalDate) || !CalendarUtil.isEqualsMonth(nextLocalDate, localDate)) && CalendarUtil.isEqualsMonth(lastLocalDate, localDate)) {
+            } else if (selectedDateList.contains(lastLocalDate) && (!selectedDateList.contains(nextLocalDate) || !NDateUtil.INSTANCE.isEqualsMonth(nextLocalDate, localDate)) && NDateUtil.INSTANCE.isEqualsMonth(lastLocalDate, localDate)) {
                 //左矩形 右圆
-                RectF rectF1 = new RectF(rectF.left, rectF.centerY() - mCircleRadius, rectF.centerX(), rectF.centerY() + mCircleRadius);
+                RectF rectF1 = new RectF(rectF.left- 1f, rectF.centerY() - mCircleRadius, rectF.centerX(), rectF.centerY() + mCircleRadius);
                 mBgPaint.setAntiAlias(false);
                 mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawRect(rectF1, mBgPaint);
@@ -104,9 +101,9 @@ public class LigaturePainter implements CalendarPainter {
                 mBgPaint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(rectF2, -90, 180, false, mBgPaint);//右半圆弧
 
-            } else if ((!selectedDateList.contains(lastLocalDate) || !CalendarUtil.isEqualsMonth(lastLocalDate, localDate)) && selectedDateList.contains(nextLocalDate) && CalendarUtil.isEqualsMonth(nextLocalDate, localDate)) {
+            } else if ((!selectedDateList.contains(lastLocalDate) || !NDateUtil.INSTANCE.isEqualsMonth(lastLocalDate, localDate)) && selectedDateList.contains(nextLocalDate) && NDateUtil.INSTANCE.isEqualsMonth(nextLocalDate, localDate)) {
                 //右矩形 左圆
-                RectF rectF1 = new RectF(rectF.centerX(), rectF.centerY() - mCircleRadius, rectF.right, rectF.centerY() + mCircleRadius);
+                RectF rectF1 = new RectF(rectF.centerX(), rectF.centerY() - mCircleRadius, rectF.right+1f, rectF.centerY() + mCircleRadius);
                 mBgPaint.setAntiAlias(false);
                 mBgPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                 canvas.drawRect(rectF1, mBgPaint);
@@ -140,10 +137,10 @@ public class LigaturePainter implements CalendarPainter {
     //绘制农历
     private void drawLunar(Canvas canvas, RectF rectF, LocalDate date, boolean isSelected, boolean isCurrectMonthOrWeek) {
         mTextPaint.setTextSize(DensityUtil.dp2px(mContext, 10));
-        CalendarDate calendarDate = CalendarUtil.getCalendarDate(date);
+        ChineseDate chineseDate = new ChineseDate(date);
         mTextPaint.setColor(isSelected ? Color.WHITE : Color.GRAY);
         mTextPaint.setAlpha(isCurrectMonthOrWeek ? 255 : 100);
-        canvas.drawText(calendarDate.lunar.lunarOnDrawStr, rectF.centerX(), rectF.centerY() + DensityUtil.dp2px(mContext, 12), mTextPaint);
+        canvas.drawText(chineseDate.getChineseMonthName(), rectF.centerX(), rectF.centerY() + DensityUtil.dp2px(mContext, 12), mTextPaint);
     }
 
 

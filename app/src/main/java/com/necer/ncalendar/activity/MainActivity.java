@@ -113,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, TestActivity.class));
     }
 
-    public void testAdapter(View view) {
-        startActivity(new Intent(this, TestAdapterActivity.class));
-    }
-
 
     private Intent getNewIntent(Class<? extends BaseActivity> clazz, CheckModel checkModel, String title) {
         Intent intent = new Intent(this, clazz);

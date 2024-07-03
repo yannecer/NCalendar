@@ -25,13 +25,8 @@
 
     </LinearLayout>
 
-    <com.necer.view.WeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"/>
 
-
-    <com.necer.calendar.Miui10Calendar
+    <com.necer.calendar.NCalendar
         android:id="@+id/miui10Calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -58,7 +53,7 @@
         </androidx.core.widget.NestedScrollView>
 
 
-    </com.necer.calendar.Miui10Calendar>
+    </com.necer.calendar.NCalendar>
 
 
 </LinearLayout>

@@ -5,13 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
-import com.necer.calendar.Miui10Calendar;
+import com.necer.calendar.NCalendar;
 import com.necer.enumeration.CalendarState;
 import com.necer.ncalendar.R;
 
 public class TestAddViewActivity extends AppCompatActivity {
 
-    private Miui10Calendar miui10Calendar;
+    private NCalendar miui10Calendar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

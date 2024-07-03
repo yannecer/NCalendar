@@ -9,12 +9,9 @@ import android.text.TextUtils;
 
 import com.necer.ncalendar.DensityUtil;
 import com.necer.painter.CalendarPainter;
-import com.necer.utils.CalendarUtil;
-import com.necer.view.CalendarView;
-import com.necer.view.ICalendarView;
 
-import org.joda.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class StretchPainter implements CalendarPainter {

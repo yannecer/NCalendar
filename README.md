@@ -2,45 +2,45 @@
 
 ## 特点:
 
- - 3种常见日历交互方式，MIUI系统日历：miui9、miui10、华为emui，miui9和钉钉日历类似，华为emui和365日历类似
- - 月周滑动切换，月周不选中
- - 支持多选，设置多选的数量
- - 支持设置默认视图，默认周日历或者月日历
- - 支持周状态固定，下拉刷新等
- - 支持设置一周开始的是周一还是周日
- - 可设置日期区间，默认区间从1901-01-01到2099-12-31 
- - 支持农历，节气、法定节假日等
- - 支持添加指示点及设置指示点位置
- - 支持各种颜色、距离、位置等属性
- - 支持日历和列表之间添加view
- - 支持替换农历、颜色等
- - 支持自定义日历页面
- - 支持内部TargetView为任意View
- - 支持日历拉伸功能
- - 支持适配器模式自定义日历
+- 月日历、周日历、月周切换
+- 月周滑动切换，月周不选中
+- 支持多选，设置多选的数量
+- 支持设置默认视图，默认周日历或者月日历
+- 支持周状态固定，下拉刷新等
+- 支持设置一周开始的是周一还是周日
+- 可设置日期区间，默认区间从1901-01-01到2099-12-31
+- 支持农历，节气、法定节假日等
+- 支持添加指示点及设置指示点位置
+- 支持各种颜色、距离、位置等属性
+- 支持日历和列表之间添加view
+- 支持替换农历、颜色等
+- 支持自定义日历页面
+- 支持内部TargetView为任意View
+- 支持日历拉伸功能
+- 支持适配器模式自定义日历
 
-## 效果图 
-|Miui9Calendar|Miui10Calendar|EmuiCalendar|
-|:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/miui9_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/miui10_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/emui_gif.gif)|
+## 效果图
+|                                       效果1                                        |  效果2|  效果3|
+|:--------------------------------------------------------------------------------:|:--:|:---:|
+| ![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/miui9_gif.gif) |![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/miui10_gif.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/emui_gif.gif)|
 
 |周固定，下拉刷新|日历和子view添加其他view|自定义日历界面（LigaturePainter）|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/addview.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/LigaturePainter.png)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/week_hold.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/addview.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/LigaturePainter.png)|
 
 |默认不选中|默认多选|自定义日历界面（TicketPainter）|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/111.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/222.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/TicketPainter.png)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/111.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/222.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/TicketPainter.png)|
 
 
 |ViewPager|普通View|demo功能预览|
 |:---:|:---:|:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/viewpager.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/general.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/demo.png)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/viewpager.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/general.gif)|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/demo.png)|
 
 
 |日历拉伸|
 |:---:|
-|![](https://github.com/yannecer/NCalendar/blob/master/app/Stretch.gif)|
+|![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/Stretch.gif)|
 
 # 下载demo：
 [下载demo](https://github.com/yannecer/NCalendar/releases/download/4.3.0/4.3.0.apk)
@@ -52,39 +52,24 @@
 #### 项目build文件
 
 ```
-    android {
 
-       compileOptions {
-           sourceCompatibility JavaVersion.VERSION_1_8
-           targetCompatibility JavaVersion.VERSION_1_8
-       }
-    ...
-    }
 
 ```
 
 #### Gradle
 ```
-implementation 'com.necer.ncalendar:ncalendar:5.0.2'   
+
 
 ```
 
 #### 简单使用
 
 ```
-    miui9 和 钉钉日历
-    <com.necer.calendar.Miui9Calendar
-        android:id="@+id/miui9Calendar"
+     月周切换日历
+     <com.necer.calendar.NCalendar
+        android:id="@+id/monthCalendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <<androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.necer.calendar.Miui9Calendar>
-    
-    Miui10Calendar EmuiCalendar 用法类似
+        android:layout_height="match_parent" />
     
 ```
 
@@ -93,18 +78,20 @@ implementation 'com.necer.ncalendar:ncalendar:5.0.2'
 
 ```
    月日历
-   <com.necer.calendar.MonthCalendar
+       <com.necer.calendar.NCalendar
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="match_parent"
+        app:defaultCalendar="month"/>
 
    周日历
-   <com.necer.calendar.WeekCalendar
+       <com.necer.calendar.NCalendar
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="match_parent"
+        app:defaultCalendar="week"/>
 
 ```
 
-### [详细用法](https://github.com/yannecer/NCalendar/wiki/%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95)
+
 
 ***
 
@@ -170,14 +157,21 @@ implementation 'com.necer.ncalendar:ncalendar:5.0.2'
 
 ## 感谢：
 
-项目中日期计算使用  [joda-time](https://github.com/JodaOrg/joda-time)<br/>
-感谢同事 **魏昌琳**   提出的优化建议<br/>
-感觉农历和节气数据工具类的作者<br/>
+农历和节气数据工具类来自 [Hutool](https://github.com/dromara/hutool)<br/>
 
 
 ***
 
 ## 更新日志
+
+* 6.0.0<br/> 1、日历中日期使用```java.time.LocalDate```，因此```minSdkVersion```最低版本必须为```26```
+             2、去除```MonthCalendar```和```WeekCalendar```,单独月日历和周日历整合进```NCalendar```
+             3、动画切换改为```Draw```绘制
+             4、加入阻断动画和快速滑动处理
+             5、重构减少近半的代码量
+             6、农历、节气等数据改为```Hutool```工具来
+             7、去除```miui9```等几种动画效果，保留了最普遍的```Miui10```的效果
+
 * 5.0.2<br/> 修复Android9日期变化回调多次的bug，增加2021年法定休班日
 * 5.0.1<br/> 修复2020年腊月二十九为除夕的描述
 * 5.0.0<br/> 重写InnerPainter，增加大量属性、优化跳转逻辑等

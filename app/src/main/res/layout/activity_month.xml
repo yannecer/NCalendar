@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:orientation="vertical">
 
@@ -14,15 +15,12 @@
         android:padding="15dp" />
 
 
-    <com.necer.view.WeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
 
-    <com.necer.calendar.MonthCalendar
+    <com.necer.calendar.NCalendar
         android:id="@+id/monthCalendar"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="match_parent"
+        app:defaultCalendar="month"/>
 
 
     <LinearLayout
