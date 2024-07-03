@@ -43,7 +43,7 @@
 |![](https://github.com/yannecer/NCalendar/blob/master/app/doc/pic/Stretch.gif)|
 
 # 下载demo：
-[下载demo](https://github.com/yannecer/NCalendar/releases/download/4.3.0/4.3.0.apk)
+[下载demo](https://github.com/yannecer/NCalendar/releases/download/6.0.0/app-debug6.0.apk)
 
 
 ## 使用方法
@@ -97,9 +97,9 @@
 
 ## 自定义属性
 ```
-5.x版本更新了大量的自定义属性
+6.0版本更新了大量的自定义属性
 ```
-### [自定义属性](https://github.com/yannecer/NCalendar/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+### [自定义属性](https://github.com/yannecer/NCalendar/blob/master/ncalendar/src/main/java/com/necer/utils/NAttrs.kt)
 
 ***
 
@@ -107,8 +107,9 @@
 ```
 日历提供了各种可能用到的方法、回调，5.x版本增加了日历日期变化的行为参数，区分了各种引起日历变化的不同的操作
 ```
-### [日历Api](https://github.com/yannecer/NCalendar/wiki/%E6%97%A5%E5%8E%86Api)
-### [日历Api相关类说明](https://github.com/yannecer/NCalendar/wiki/Api%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%AF%B4%E6%98%8E)
+### [日历Api](https://github.com/yannecer/NCalendar/blob/master/ncalendar/src/main/java/com/necer/calendar/ICalendar.java)
+### [日历回调](https://github.com/yannecer/NCalendar/tree/master/ncalendar/src/main/java/com/necer/listener)
+
 
 ***
 ## 日历设置时间标记、替换文字等Api
@@ -151,7 +152,7 @@
         });
         
 2、日历UI问题，请使用自定义CalendarPainter，简单的做法是，复制库中InnerPainter，修改绘制的部分，然后给日历设置CalendarPainter
-   miui10Calendar.setCalendarPainter(myCalendarPainter);
+   nCalendar.setCalendarPainter(myCalendarPainter);
 
 ```
 
@@ -164,13 +165,14 @@
 
 ## 更新日志
 
-* 6.0.0<br/> 1、日历中日期使用```java.time.LocalDate```，因此```minSdkVersion```最低版本必须为```26```
-             2、去除```MonthCalendar```和```WeekCalendar```,单独月日历和周日历整合进```NCalendar```
-             3、动画切换改为```Draw```绘制
-             4、加入阻断动画和快速滑动处理
-             5、重构减少近半的代码量
-             6、农历、节气等数据改为```Hutool```工具来
-             7、去除```miui9```等几种动画效果，保留了最普遍的```Miui10```的效果
+* 6.0.0<br/> 1、日历中日期使用```java.time.LocalDate```，因此```minSdkVersion```最低版本必须为```26```<br/>
+             2、```NCalendar```改为```kotlin```编写
+             3、去除```MonthCalendar```和```WeekCalendar```,单独月日历和周日历整合进```NCalendar```<br/>
+             4、动画切换改为```Draw```绘制<br/>
+             5、加入阻断动画和快速滑动处理<br/>
+             6、重构减少近半的代码量<br/>
+             7、农历、节气等数据改为```Hutool```工具来<br/>
+             8、去除```miui9```等几种动画效果，保留了最普遍的```Miui10```的效果<br/>
 
 * 5.0.2<br/> 修复Android9日期变化回调多次的bug，增加2021年法定休班日
 * 5.0.1<br/> 修复2020年腊月二十九为除夕的描述
