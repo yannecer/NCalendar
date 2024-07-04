@@ -162,21 +162,20 @@ nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
 });
 
 2、多选回调
- nCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
-      @Override
-      public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
-          tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
-      }
-
-  });
+nCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
+     @Override
+     public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+         tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
+     }
+});
         
  3、日历状态回调 周日历，月日历 状态变化
- nCalendar.setOnCalendarStateChangedListener(new OnCalendarStateChangedListener() {
-      @Override
-      public void onCalendarStateChange(CalendarState calendarState) {
-          
-      }
- });
+nCalendar.setOnCalendarStateChangedListener(new OnCalendarStateChangedListener() {
+     @Override
+     public void onCalendarStateChange(CalendarState calendarState) {
+         
+     }
+});
 
 ```
 ### [日历回调](https://github.com/yannecer/NCalendar/tree/master/ncalendar/src/main/java/com/necer/listener)
@@ -236,14 +235,14 @@ nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
 ## 更新日志
 
 * 6.0.0<br/> 1、日历中日期使用```java.time.LocalDate```，因此```minSdkVersion```最低版本必须为```26```<br/>
-             2、```NCalendar```改为```kotlin```编写
+             2、```NCalendar```改为```kotlin```编写<br/>
              3、去除```MonthCalendar```和```WeekCalendar```,单独月日历和周日历整合进```NCalendar```<br/>
              4、动画切换改为```Draw```绘制<br/>
              5、加入阻断动画和快速滑动处理<br/>
              6、重构减少近半的代码量<br/>
              7、农历、节气等数据改为```Hutool```工具来<br/>
              8、去除```miui9```等几种动画效果，保留了最普遍的```Miui10```的效果<br/>
-             9、```WeekBar```改为日历内部
+             9、```WeekBar```改到日历内部
 
 * 5.0.2<br/> 修复Android9日期变化回调多次的bug，增加2021年法定休班日
 * 5.0.1<br/> 修复2020年腊月二十九为除夕的描述
