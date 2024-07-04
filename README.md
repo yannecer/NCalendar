@@ -53,12 +53,12 @@
 
 ```
 dependencyResolutionManagement {
-		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-		repositories {
-			mavenCentral()
-			maven { url 'https://jitpack.io' }
-		}
+	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+	repositories {
+		mavenCentral()
+		maven { url 'https://jitpack.io' }
 	}
+}
 
 ```
 
@@ -71,11 +71,11 @@ implementation 'com.github.yannecer：NCalendar：6.0.0'
 #### 简单使用
 
 ```
-     月周切换日历
-     <com.necer.calendar.NCalendar
-        android:id="@+id/monthCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+月周切换日历
+<com.necer.calendar.NCalendar
+     android:id="@+id/monthCalendar"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent" />
     
 ```
 
@@ -83,20 +83,21 @@ implementation 'com.github.yannecer：NCalendar：6.0.0'
 
 
 ```
-   月日历
-       <com.necer.calendar.NCalendar
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultCalendar="month"/>
+月日历
+<com.necer.calendar.NCalendar
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     app:defaultCalendar="month"/>
 
-   周日历
-       <com.necer.calendar.NCalendar
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultCalendar="week"/>
-        
-   单独月日历和周日里，通过属性 defaultCalendar 控制，默认为月，日历高度通过 calendarHeight 控制，默认 300dp 
-   周日历高度为 calendarHeight/5 默认为60dp，通过修改 calendarHeight 来修改月日历和周日历的高度 
+周日历
+<com.necer.calendar.NCalendar
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     app:defaultCalendar="week"/>
+     
+单独月日历和周日里，通过属性 defaultCalendar 控制，默认为月，日历高度通过 calendarHeight 控制
+月日历默认 300dp 周日历高度为 calendarHeight/5 默认为60dp
+通过修改 calendarHeight 来修改月日历和周日历的高度 
 
 ```
 
@@ -153,29 +154,29 @@ void toWeek();
 日历回调
 1、单选回调
 
-        nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
-            @Override
-            public void onCalendarChange(int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
-               
-            }
-        });
+nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+     @Override
+     public void onCalendarChange(int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
         
+     }
+});
+
 2、多选回调
  nCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
-            @Override
-            public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
-                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
-            }
+      @Override
+      public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+          tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
+      }
 
-        });
+  });
         
  3、日历状态回调 周日历，月日历 状态变化
-  nCalendar.setOnCalendarStateChangedListener(new OnCalendarStateChangedListener() {
-            @Override
-            public void onCalendarStateChange(CalendarState calendarState) {
-                
-            }
-        });
+ nCalendar.setOnCalendarStateChangedListener(new OnCalendarStateChangedListener() {
+      @Override
+      public void onCalendarStateChange(CalendarState calendarState) {
+          
+      }
+ });
 
 ```
 ### [日历回调](https://github.com/yannecer/NCalendar/tree/master/ncalendar/src/main/java/com/necer/listener)
