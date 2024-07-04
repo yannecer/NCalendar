@@ -17,7 +17,7 @@
 - 支持自定义日历页面
 - 支持内部TargetView为任意View
 - 支持日历拉伸功能
-- 支持适配器模式自定义日历
+
 
 ## 效果图
 |                                       效果1                                        |  效果2|  效果3|
@@ -49,16 +49,22 @@
 ## 使用方法
 
 
-#### 项目build文件
+#### 项目 build.gradle 文件, Gradle7.0以上为 settings.gradle , 添加 jitpack.io
 
 ```
-
+dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
 
 ```
 
 #### Gradle
 ```
-
+implementation 'com.github.yannecer：NCalendar：6.0.0'
 
 ```
 
@@ -88,6 +94,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultCalendar="week"/>
+        
+   单独月日历和周日里，通过属性 defaultCalendar 控制，默认为月，日历高度通过 calendarHeight 控制，默认 300dp 
+   周日历高度为 calendarHeight/5 默认为60dp，通过修改 calendarHeight 来修改月日历和周日历的高度 
 
 ```
 
@@ -97,17 +106,78 @@
 
 ## 自定义属性
 ```
-6.0版本更新了大量的自定义属性
+6.0版本 自定义属性  示例 app:defaultCalendar="week"
+
+defaultCalendar -- 默认展示的日历 月->month 周->week  默认月
+calendarHeight -- 日历中 月日历的高度 默认300dp 周日历高度为 calendarHeight/5
+firstDayOfWeek -- 日历一周开始是周日或周一 周日->monday 周一->monday  默认周日
+weekBarHeight -- 日历顶部星期的高度
+stretchCalendarEnable -- 日历是否可拉伸 
+showNumberBackground -- 是否显示数字背景 
+todayCheckedBackground -- 今天选中的背景 shape drawable
+todayCheckedSolarTextColor -- 今天选中时的公历字体颜色
+......
 ```
-### [自定义属性](https://github.com/yannecer/NCalendar/blob/master/ncalendar/src/main/java/com/necer/utils/NAttrs.kt)
+#### [更多自定义属性](https://github.com/yannecer/NCalendar/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
 
 ***
 
 ## 日历Api
 ```
-日历提供了各种可能用到的方法、回调，5.x版本增加了日历日期变化的行为参数，区分了各种引起日历变化的不同的操作
+日历提供了各种可能用到的方法、回调，6.x版本增加了日历日期变化的行为参数，区分了各种引起日历变化的不同的操作
+
+设置选中模式 
+void setCheckMode(CheckModel checkModel);
+
+跳转日期
+void jumpDate(String formatDate);
+
+上一页 上一周 上一月
+void toLastPager();
+
+下一页 下一周 下一月
+void toNextPager();
+
+回到今天
+void toToday();
+
+回到周状态
+void toWeek();
+
+......
+
 ```
-### [日历Api](https://github.com/yannecer/NCalendar/blob/master/ncalendar/src/main/java/com/necer/calendar/ICalendar.java)
+#### [更多日历Api](https://github.com/yannecer/NCalendar/wiki/%E6%97%A5%E5%8E%86Api)
+
+```
+日历回调
+1、单选回调
+
+        nCalendar.setOnCalendarChangedListener(new OnCalendarChangedListener() {
+            @Override
+            public void onCalendarChange(int year, int month, LocalDate localDate, DateChangeBehavior dateChangeBehavior) {
+               
+            }
+        });
+        
+2、多选回调
+ nCalendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
+            @Override
+            public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
+                tv_result.setText(year + "年" + month + "月" + " 当前页面选中 " + currPagerCheckedList.size() + "个  总共选中" + totalCheckedList.size() + "个");
+            }
+
+        });
+        
+ 3、日历状态回调 周日历，月日历 状态变化
+  nCalendar.setOnCalendarStateChangedListener(new OnCalendarStateChangedListener() {
+            @Override
+            public void onCalendarStateChange(CalendarState calendarState) {
+                
+            }
+        });
+
+```
 ### [日历回调](https://github.com/yannecer/NCalendar/tree/master/ncalendar/src/main/java/com/necer/listener)
 
 
@@ -126,7 +196,6 @@
 ```
 如果自定义属性不能满足日历ui要求，可以使用自定义页面实现个性化需求，项目提供了两种自定义UI的方式，
 1、实现CalendarPainter接口，通过Canvas绘制
-2、继承CalendarAdapter抽象类，和ListView的BaseAdapter用法相似
 ```
 ### [自定义日历UI](https://github.com/yannecer/NCalendar/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E5%8E%86UI)
 
@@ -173,6 +242,7 @@
              6、重构减少近半的代码量<br/>
              7、农历、节气等数据改为```Hutool```工具来<br/>
              8、去除```miui9```等几种动画效果，保留了最普遍的```Miui10```的效果<br/>
+             9、```WeekBar```改为日历内部
 
 * 5.0.2<br/> 修复Android9日期变化回调多次的bug，增加2021年法定休班日
 * 5.0.1<br/> 修复2020年腊月二十九为除夕的描述

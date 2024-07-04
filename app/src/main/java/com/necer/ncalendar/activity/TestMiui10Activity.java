@@ -11,10 +11,12 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.necer.calendar.NCalendar;
+import com.necer.enumeration.CalendarState;
 import com.necer.enumeration.DateChangeBehavior;
 import com.necer.enumeration.MultipleCountModel;
 import com.necer.listener.OnCalendarChangedListener;
 import com.necer.listener.OnCalendarMultipleChangedListener;
+import com.necer.listener.OnCalendarStateChangedListener;
 import com.necer.ncalendar.R;
 import com.necer.painter.InnerPainter;
 import com.necer.utils.hutool.ChineseDate;
@@ -103,6 +105,16 @@ public class TestMiui10Activity extends BaseActivity {
             }
 
         });
+
+
+        miui10Calendar.setOnCalendarStateChangedListener(new OnCalendarStateChangedListener() {
+            @Override
+            public void onCalendarStateChange(CalendarState calendarState) {
+
+            }
+        });
+
+
         miui10Calendar.setOnCalendarMultipleChangedListener(new OnCalendarMultipleChangedListener() {
             @Override
             public void onCalendarChange(int year, int month, List<LocalDate> currPagerCheckedList, List<LocalDate> totalCheckedList, DateChangeBehavior dateChangeBehavior) {
